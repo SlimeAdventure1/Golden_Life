@@ -79,8 +79,10 @@ export default {
   overflow-y: scroll;
   width: 100%;
   text-align: left;
-  border: 0.1rem solid var(--color-text);
+  border: 0.1rem solid var(--color-accent);
+  box-shadow:0 0 1rem black inset;
   border-radius: var(--var-border-radius, 0.4rem);
+  background: linear-gradient(transparent, var(--color-accent) 500%);
   margin: 1rem 0;
   padding: 1.5rem;
 }

@@ -1,6 +1,11 @@
 <script>
+import FillBar from "@/components/FillBar";
+
 export default {
   name: "UnlockInfinityDimButton",
+  components: {
+    FillBar
+  },
   data() {
     return {
       isVisible: false,
@@ -8,6 +13,10 @@ export default {
       hasIPUnlock: true,
       amRequirement: new Decimal(0),
       ipRequirement: 0,
+      antimatter: new Decimal(0),
+      infinitypoints: new Decimal(0),
+      dimensionProgress:"",
+      wobbly:false,
     };
   },
   computed: {
@@ -27,7 +36,8 @@ export default {
       return {
         "o-prestige-button": true,
         "o-infinity-button": true,
-        "o-infinity-button--unavailable": !this.canUnlock
+        "o-infinity-button--unavailable": !this.canUnlock,
+        "a-wobble-multi": this.wobbly
       };
     },
   },
@@ -41,10 +51,20 @@ export default {
       this.hasIPUnlock = nextDimension.hasIPUnlock;
       this.amRequirement = nextDimension.amRequirement;
       this.ipRequirement = nextDimension.ipRequirement;
+
+      this.infinitypoints.copyFrom(Currency.infinityPoints);
+      this.antimatter.copyFrom(Currency.antimatter);
+      this.dimensionProgress = this.Progress()
+      this.wobbly = player.options.animations.wobbly
     },
     tryUnlockNextInfinityDimension() {
       InfinityDimensions.unlockNext();
-    }
+    },
+    Progress() {
+      const progress = !this.hasIPUnlock ? this.antimatter.add(1).log10() / this.amRequirement.add(1).log10() : Math.min((this.antimatter.add(1).log10() / this.amRequirement.add(1).log10())/2,0.5) + Math.min((this.infinitypoints.add(1).log10() / Math.log10(this.ipRequirement+1))/2,0.5);
+      if (progress > 1 || this.canUnlock) return `${formatPercents(1)}`;
+      return `${formatPercents(progress, 2, 2)}`;
+    },
   },
 };
 </script>
@@ -56,6 +76,12 @@ export default {
     @click="tryUnlockNextInfinityDimension"
   >
     {{ text }}
+    <div class="o-fill-container">
+        <FillBar
+          class="o-fill-bar--infinity"
+          :width="dimensionProgress"
+        />
+    </div>
   </button>
 </template>
 

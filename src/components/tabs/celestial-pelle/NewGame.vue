@@ -20,7 +20,7 @@ export default {
   methods: {
     update() {
       this.visible = GameEnd.endState > END_STATE_MARKERS.SHOW_NEW_GAME && !GameEnd.removeAdditionalEnd;
-      this.opacity = (GameEnd.endState - END_STATE_MARKERS.SHOW_NEW_GAME) * 2;
+      this.opacity = Math.min((GameEnd.endState - END_STATE_MARKERS.SHOW_NEW_GAME) * 8,1);
       this.hasMoreCosmetics = GlyphAppearanceHandler.lockedSets.length > 0;
       this.selectedSetName = GlyphAppearanceHandler.chosenFromModal?.name ?? "None (will choose randomly)";
     },
@@ -89,12 +89,19 @@ export default {
   align-items: center;
   transform: translate(-50%, -50%);
   pointer-events: auto;
+  color:white;
+  font-family:cambria;
+  font-size:125%;
+  background:linear-gradient(90deg,transparent,color-mix(in srgb, #00ffaa 25%, transparent), transparent);
+  border-top: 0.1rem solid;
+  border-bottom: 0.1rem solid;
+  border-image: linear-gradient(90deg, transparent, #00ffaa, transparent) 1;
+  padding: 3rem 1rem;
 }
 
 .t-s12 .c-new-game-container {
   color: white;
 }
-
 .c-new-game-button-container {
   display: flex;
   flex-direction: column;
@@ -102,7 +109,9 @@ export default {
 }
 
 .c-new-game-button {
-  font-family: Typewriter;
+  font-family: cambria;
+  font-weight: bold;
+  font-size: 2rem;
   background: grey;
   border: black;
   border-radius: var(--var-border-radius, 0.5rem);

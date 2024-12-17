@@ -40,32 +40,32 @@ export default {
 // secondary is primary -15% l in hsl, apart from reality which is -10%
 const perkColors = () => ({
   [PERK_FAMILY.ANTIMATTER]: {
-    primary: "#22aa48",
-    secondary: "#156a2d"
+    primary: ()=> (ui.view.theme !== "Hex"?"#22aa48":"#ffff00"),
+    secondary: ()=> (ui.view.theme !== "Hex"?"#156a2d":"#888800")
   },
   [PERK_FAMILY.INFINITY]: {
-    primary: "#b67f33",
-    secondary: "#7b5623"
+    primary: ()=> (ui.view.theme !== "Hex"?"#b67f33":"#ff00ff"),
+    secondary: ()=> (ui.view.theme !== "Hex"?"#7b5623":"#880088")
   },
   [PERK_FAMILY.ETERNITY]: {
-    primary: "#b241e3",
-    secondary: "#8b1cba"
+    primary: ()=> (ui.view.theme !== "Hex"?"#b241e3":"#00ffff"),
+    secondary: ()=> (ui.view.theme !== "Hex"?"#8b1cba":"#008888")
   },
   [PERK_FAMILY.DILATION]: {
-    primary: "#64dd17",
-    secondary: "#449810"
+    primary: ()=> (ui.view.theme !== "Hex"?"#64dd17":"#ff9933"),
+    secondary: ()=> (ui.view.theme !== "Hex"?"#449810":"#9b5e22")
   },
   [PERK_FAMILY.REALITY]: {
-    primary: "#0b600e",
-    secondary: "#063207"
+    primary: ()=> (ui.view.theme !== "Hex"?"#0b600e":"#aa7777"),
+    secondary: ()=> (ui.view.theme !== "Hex"?"#063207":"#684747")
   },
   [PERK_FAMILY.AUTOMATION]: {
-    primary: "#ff0000",
-    secondary: "#b30000"
+    primary: ()=> (ui.view.theme !== "Hex"?"#ff0000":"#ff0000"),
+    secondary: ()=> (ui.view.theme !== "Hex"?"#b30000":"#b30000")
   },
   [PERK_FAMILY.ACHIEVEMENT]: {
-    primary: "#fdd835",
-    secondary: "#e3ba02"
+    primary: ()=> (ui.view.theme !== "Hex"?"#fdd835":"#fdd835"),
+    secondary: ()=> (ui.view.theme !== "Hex"?"#e3ba02":"#e3ba02")
   },
 });
 
@@ -147,7 +147,26 @@ export const PerkNetwork = {
     this.lastPerkNotation = notation;
 
     this.makeNetwork();
-
+    this.network.on("beforeDrawing", function (ctx) {
+    var width = ctx.canvas.clientWidth;
+    var height = ctx.canvas.clientHeight;
+    var spacing = 80;
+    var gridExtentFactor = 8;
+    ctx.strokeStyle = Theme.current().name === "S4"?"black":"#88888866";
+    ctx.lineWidth = 1
+  
+  // draw grid
+    ctx.beginPath();
+    for (var x = -width * gridExtentFactor; x <= width * gridExtentFactor; x += spacing) {
+      ctx.moveTo(Theme.current().name === "S4"?x-Math.random()*632:x, height * gridExtentFactor);
+      ctx.lineTo(x, -height * gridExtentFactor);
+    }
+    for (var y = -height * gridExtentFactor; y <= height * gridExtentFactor; y += spacing) {
+      ctx.moveTo(width * gridExtentFactor, Theme.current().name === "S4"?y-Math.random()*632:y);
+      ctx.lineTo(-width * gridExtentFactor, y);
+    }
+    ctx.stroke();
+    });
     this.network.on("click", params => {
       const id = params.nodes[0];
       if (!isFinite(id)) return;
@@ -192,28 +211,29 @@ export const PerkNetwork = {
   },
   makeNetwork() {
     // Need to do some html to be able to apply some css for when in doomed
-    function htmlTitle(html) {
-      const container = document.createElement("div");
-      container.innerHTML = html;
-      return container;
-    }
     // Just for a bit of fun, tangle it up a bit unless the player specifically chooses not to
     const isDisabled = perk => Pelle.isDoomed && Pelle.uselessPerks.includes(perk.id);
     const selectPos = config => PerkLayouts[player.options.perkLayout].position(config);
     this.nodes = new DataSet(Perks.all.map(perk => ({
       id: perk.id,
       label: perk.config.label,
-      shape: perk.config.automatorPoints ? "diamond" : "dot",
+      shape:"circularImage",
       // As far as I am aware, vis.js doesn't support arbitrary CSS styling; nevertheless, we still want the original
       // description to be visible instead of being hidden by disable/lock text
-      title: (isDisabled(perk)
-        ? htmlTitle(
-          `<span style='text-decoration: line-through;'>${perk.config.description}</span>`
-        )
-        : `${perk.config.description} ${perk.config.automatorPoints && !isDisabled(perk)
-          ? `(+${formatInt(perk.config.automatorPoints)} AP)`
-          : ""}`
-      ),
+      title: 
+        `<div class="vis-tooltip__id">(${perk.config.label})</div>
+         <div class='vis-tooltip__title'
+         style="--perk-color:${perkColors()[perk.config.family].primary()}">${perk.config.name}</div>
+        <div class="o-descriptionBlock" style='${isDisabled(perk) ? 'text-decoration: line-through;' : ''}'>
+          ${perk.config.description}
+          ${perk.config.automatorPoints && !isDisabled(perk)? 
+        `<br><div class="vis-tooltip__AP">
+        +${formatInt(perk.config.automatorPoints)} Automator Points from purchasing</div>`: ""}
+        </div>`
+        ,
+        //         <div style="margin: -3.5rem 0 0;display: flex;justify-content: center;">
+        //  <div class='l-perk-display ${perk.config.automatorPoints?"c-perk-display-diamond":""}' style="--bg-bright:${perkColorList[perk.config.family].primary[0]};--bg-dark:${perkColorList[perk.config.family].secondary[0]};"></div>
+        //  </div>
       x: selectPos(perk.config).x,
       y: selectPos(perk.config).y,
     })));
@@ -241,10 +261,12 @@ export const PerkNetwork = {
         tooltipDelay: 0,
       },
       nodes: {
+        image: "images/perks/bought.png",
         shape: "dot",
         size: 18,
         font: {
-          size: 0
+          size: 0,
+          face: "cambria"
         },
         borderWidth: 2,
         shadow: true
@@ -277,7 +299,7 @@ export const PerkNetwork = {
   },
   setEdgeCurve(state) {
     const newState = this.currentLayout.straightEdges === undefined ? state : !this.currentLayout.straightEdges;
-    this.network.setOptions({ edges: { smooth: { enabled: newState } } });
+    this.network.setOptions({ edges: { smooth: { enabled: newState }} });
   },
   moveToDefaultLayoutPositions(layoutIndex) {
     // Things go wonky if we don't turn these off before moving
@@ -314,6 +336,8 @@ export const PerkNetwork = {
         font: {
           size: areVisible ? 20 : 0,
           color: Theme.current().isDark() ? "#DDDDDD" : "#222222",
+          strokeWidth: 2,
+      strokeColor: '#888888aa',
         }
       }
     };
@@ -325,8 +349,8 @@ export const PerkNetwork = {
 
     function nodeColor(perk) {
       const perkColor = perkColorList[perk.config.family];
-      const primaryColor = perkColor.primary;
-      const secondaryColor = perkColor.secondary;
+      const primaryColor = perkColor.primary();
+      const secondaryColor = perkColor.secondary();
 
       const pelleUseless = Pelle.isDoomed && Pelle.uselessPerks.includes(perk.id);
       if (pelleUseless) {
@@ -354,11 +378,13 @@ export const PerkNetwork = {
         if (Theme.current().isDark()) backgroundColor = "#EEEEEE";
         else backgroundColor = "#111111";
       } else if (isBought) backgroundColor = primaryColor;
-      else if (Theme.current().isDark()) backgroundColor = "#333333";
-      else backgroundColor = "#CCCCCC";
+      else if (Theme.current().isDark()) backgroundColor = "#222222";
+      else backgroundColor = "#dddddd";
 
       const hoverColor = canBeBought || isBought ? primaryColor : "#656565";
-      const borderColor = secondaryColor;
+      const borderColor = canBeBought || isBought ?  secondaryColor : (
+        (Theme.current().isDark()) ? "#222222" : "#bbbbbb"
+      );
 
       return {
         background: backgroundColor,
@@ -369,13 +395,39 @@ export const PerkNetwork = {
         },
         highlight: {
           background: backgroundColor,
-          border: borderColor
+          border: secondaryColor
         }
       };
     }
-
+    function nodeSprite(perk) {
+      let hasAP = perk.config.automatorPoints ?"_AP" : ""
+      let state = (Pelle.isDoomed && Pelle.uselessPerks.includes(perk.id))?"pelle":
+      (perk.isBought||perk.canBeBought)?"bought":"locked";
+      return `images/perks/${state}${hasAP}.png`
+    }
+    function nodeShadow(perk) {
+      if (perk.canBeBought&&Theme.current().isDark()) return {
+        enabled:true,
+        color: "white",
+        size:10,
+        x:0,
+        y:0
+      }
+      else return {
+        enabled:true,
+        color: 'rgba(0,0,0,0.5)',
+        size:10,
+        x:5,
+        y:5
+      }
+    }
     const data = Perks.all
-      .map(perk => ({ id: perk.id, color: nodeColor(perk) }));
+      .map(perk => ({ 
+        id: perk.id,
+        color: nodeColor(perk),
+        shadow: nodeShadow(perk),
+        image: nodeSprite(perk),
+      }));
     this.nodes.update(data);
   },
   updatePerkSize() {
@@ -385,10 +437,10 @@ export const PerkNetwork = {
       const mod = Theme.current().name === "S4"
         ? 10 * Math.sin(5 * PerkNetwork.pulseTimer + 0.1 * perk._config.id)
         : 0;
-      if (perk._config.label === "START") return 35 + mod;
+      if (perk._config.label === "START") return 40 + mod;
       if (perk.isBought) return 25 + mod;
       if (perk.canBeBought) return 20 + mod;
-      return 12 + mod;
+      return 18 + mod;
     }
 
     const data = Perks.all
@@ -400,13 +452,10 @@ export const PerkNetwork = {
 
 <template>
   <div
-    ref="tab"
     class="c-perk-tab"
   >
+  <div ref="tab" class="c-perk-container">
     <PerkPointLabel />
   </div>
+  </div>
 </template>
-
-<style scoped>
-
-</style>

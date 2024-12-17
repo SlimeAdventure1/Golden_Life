@@ -16,6 +16,41 @@ if (GlobalErrorHandler.handled) {
 }
 GlobalErrorHandler.cleanStart = true;
 
+export const AudioManagement = {
+  volume() {
+    if (Theme.current().name === "S9") return 0
+    return player.options.audio.volume
+  },
+  playSound(file,volumescale=1,pitch=1){
+    if (this.volume()>0&&document.getElementById("loading").style.display==="none"){
+    var audio = new Audio(`audio/${file}.wav`)
+    if (pitch !== 1){
+      audio.preservesPitch=false;
+      audio.mozPreservesPitch=false;
+      audio.webkitPreservesPitch=false;
+      audio.playbackRate= Array.isArray(pitch) ? pitch[0]+( Math.random()*(pitch[1]-pitch[0]) ) : pitch;
+    }
+    audio.volume = Math.min(.5 / volumescale * this.volume(),1)
+    audio.play()
+    }   
+  },
+  speakQuote(celestial){
+    if (this.volume()<0) return;
+    var audio = new Audio(`audio/quote_${celestial}.wav`)
+    audio.preservesPitch=false;
+    audio.mozPreservesPitch=false;
+    audio.webkitPreservesPitch=false;
+    audio.playbackRate = 0.95+Math.random()*0.1;
+    audio.volume = Math.min(.5 * this.volume(),1)
+    audio.play()
+  },
+  notifyNoise(file){
+    if (this.volume()>0&&player.options.audio.notify){
+    var audio = new Audio(`audio/${file}.wav`)
+    audio.play()
+  }
+  },
+}
 export function playerInfinityUpgradesOnReset() {
 
   const infinityUpgrades = new Set(
@@ -273,7 +308,6 @@ export function gainedInfinities() {
     1,
     Achievement(87)
   ).toDecimal();
-
   infGain = infGain.timesEffectsOf(
     TimeStudy(32),
     RealityUpgrade(5),
@@ -369,6 +403,7 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
 
   // 1e-300 is now possible with max inverted BH, going below it would be possible with
   // an effarig glyph.
+  factor *= dev.gamespeed
   factor = Math.clamp(factor, 1e-300, 1e300);
 
   return factor;
@@ -517,7 +552,6 @@ export function gameLoop(passDiff, options = {}) {
   }
   player.celestials.ra.peakGamespeed = Math.max(player.celestials.ra.peakGamespeed, getGameSpeedupFactor());
   Enslaved.isReleaseTick = false;
-
   // These need to all be done consecutively in order to minimize the chance of a reset occurring between real time
   // updating and game time updating. This is only particularly noticeable when game speed is 1 and the player
   // expects to see identical numbers. We also don't increment the timers if the game has been beaten (Achievement 188)
@@ -1046,14 +1080,26 @@ export function simulateTime(seconds, real, fast) {
       });
   }
 }
-
+document.addEventListener('mousemove', (e) => {
+  let x = e.clientX - (document.documentElement.clientWidth * 1.5);
+  let y = e.clientY - (document.documentElement.clientHeight * 1.5);
+  if (ui.view.theme === "S13")document.getElementById("flashlight").style.transform = 'translate(' + x + 'px, ' + y + 'px)';
+})
+//document.addEventListener('click', (e) => {
+//  if (ui.view.theme === "S13"){
+//    document.getElementById("flashlight").classList.toggle("off");
+//    AudioManagement.playSound("flashlight")
+//}
+//})
 window.onload = function() {
   const supportedBrowser = browserCheck();
   GameUI.initialized = supportedBrowser;
   ui.view.initialized = supportedBrowser;
   setTimeout(() => {
     ElectronRuntime.updateZoom();
-    document.getElementById("loading").style.display = "none";
+    document.getElementById("loading").style.display = "none"
+    //document.getElementById("loading").style.animation = "a-legendary-start 1s ease";
+    //setTimeout(() =>{document.getElementById("loading").style.display = "none"},1000)
   }, 500);
   if (!supportedBrowser) {
     GameIntervals.stop();
@@ -1095,6 +1141,7 @@ export function init() {
   GameStorage.load();
   Tabs.all.find(t => t.config.id === player.options.lastOpenTab).show(true);
   Payments.init();
+  player.thisUpdate = 0
 }
 
 window.tweenTime = 0;

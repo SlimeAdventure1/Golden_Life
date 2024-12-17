@@ -101,6 +101,9 @@ export default {
         ? this.legend.text(this.complete) : this.legend.text;
       return typeof (data) === "string" ? [data] : data;
     },
+    hover() {
+      AudioManagement.playSound("click_hover",undefined,1.5)
+    }
   }
 };
 </script>
@@ -110,6 +113,7 @@ export default {
     class="o-celestial-nav__hoverable"
     :class="nodeClass"
     :transform="baseTransform"
+    @mouseenter="hover()"
     v-on="clickAction ? { click: clickAction } : {}"
   >
     <path

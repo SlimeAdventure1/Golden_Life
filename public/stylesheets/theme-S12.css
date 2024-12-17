@@ -20,7 +20,7 @@ body.t-s12 {
     );
 
   height: 100%;
-  background: url("../images/s12-bg.jpg") no-repeat;
+  background: url("../images/loading.png") no-repeat;
   background-attachment: fixed;
   background-color: #1bb9ee;
 
@@ -161,6 +161,8 @@ body.t-s12 {
   font-weight: normal;
   text-shadow: 0 0 0.7rem white;
   padding-left: 1rem;
+  font-family: "Segoe UI", Typewriter;
+  border-bottom: none;
 }
 
 .c-credits-modal .c-modal__title {

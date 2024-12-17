@@ -38,7 +38,7 @@ export const AutoGlyphProcessor = {
   // on only the glyph itself and not external factors.
   filterValue(glyph) {
     const typeCfg = this.types[glyph.type];
-    if (["companion", "reality"].includes(glyph.type)) return Infinity;
+    if (["companion", "reality","helios"].includes(glyph.type)) return Infinity;
     if (glyph.type === "cursed") return -Infinity;
     switch (this.scoreMode) {
       case AUTO_GLYPH_SCORE.LOWEST_SACRIFICE:
@@ -140,7 +140,7 @@ export const AutoGlyphProcessor = {
   },
   getRidOfGlyph(glyph) {
     // Auto clean calls this function too, which chokes without a special case for these types
-    if (glyph.type === "cursed" || glyph.type === "companion") {
+    if (glyph.type === "cursed" || glyph.type === "companion" || glyph.type === "helios") {
       GlyphSacrificeHandler.deleteGlyph(glyph, true);
       return;
     }
@@ -173,13 +173,13 @@ export const AutoGlyphProcessor = {
       case AUTO_GLYPH_SCORE.LOWEST_SACRIFICE:
         return "Lowest Total Glyph Sacrifice";
       case AUTO_GLYPH_SCORE.EFFECT_COUNT:
-        return "Number of Effects";
+        return "Number of Diacritics";
       case AUTO_GLYPH_SCORE.RARITY_THRESHOLD:
-        return "Rarity Threshold";
+        return "Quality Threshold";
       case AUTO_GLYPH_SCORE.SPECIFIED_EFFECT:
-        return "Specified Effect";
+        return "Specified Diacritic";
       case AUTO_GLYPH_SCORE.EFFECT_SCORE:
-        return "Effect Score";
+        return "Diacritic Score";
       case AUTO_GLYPH_SCORE.LOWEST_ALCHEMY:
         return "Lowest Alchemy Resource";
       case AUTO_GLYPH_SCORE.ALCHEMY_VALUE:

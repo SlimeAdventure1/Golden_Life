@@ -20,7 +20,7 @@ export default {
     };
   },
   computed: {
-    types: () => GLYPH_TYPES.filter(type => type !== "cursed" && type !== "companion"),
+    types: () => GLYPH_TYPES.filter(type => type !== "cursed" && type !== "companion" && type !== "helios"),
     lastMachines() {
       return this.lastMachinesTeresa.lt(DC.E10000)
         ? `${quantify("Reality Machine", this.lastMachinesTeresa, 2)}`
@@ -96,6 +96,7 @@ export default {
       const glyph = Glyphs.findById(id);
       if (!glyph) return;
       GlyphSacrificeHandler.sacrificeGlyph(glyph, true);
+      AudioManagement.playSound("glyph_sacrifice",undefined,[0.9,1.1])
       this.hasDragover = false;
     },
     toggleAlteration() {
@@ -137,15 +138,15 @@ export default {
         <b> Altered Glyphs</b>
       </span>
       <br>
-      <div v-if="hideAlteration">
+      <div v-if="hideAlteration" class="o-descriptionBlock">
         (Details hidden, click to unhide)
       </div>
-      <div v-else>
+      <div v-else class="o-descriptionBlock">
         Glyph types will have one of their effects improved<br>
         when their Glyph type's total sacrifice value is above:
         <br><br>
         <b>
-          <span :style="addStyle">{{ format(addThreshold) }} - an additional secondary effect</span>
+          <span :style="addStyle">{{ format(addThreshold) }} - an additional secondary effect to a diacritic</span>
           <br>
           <span :style="empowerStyle">{{ format(empowerThreshold) }} - formula drastically improved</span>
           <br>

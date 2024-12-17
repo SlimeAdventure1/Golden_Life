@@ -100,7 +100,7 @@ export default {
 </script>
 
 <template>
-  <div class="c-bordered-entry">
+  <div class="o-descriptionBlock c-bordered-entry">
     <h3>Slot #{{ slotData.id }}:</h3>
     <span>{{ progressStr }}</span>
     <span>
@@ -123,7 +123,6 @@ export default {
   flex-direction: column;
   align-items: center;
   font-size: 1.1rem;
-  border: var(--var-border-width, 0.2rem) solid;
   border-radius: var(--var-border-radius, 0.4rem);
   padding: 0.5rem 0.3rem;
   margin: 0.3rem;

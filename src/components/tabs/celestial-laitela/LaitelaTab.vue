@@ -69,10 +69,6 @@ export default {
     maxAll() {
       Laitela.maxAllDMDimensions(4);
     },
-    showLaitelaHowTo() {
-      ui.view.h2pForcedTab = GameDatabase.h2p.tabs.filter(tab => tab.name === "Lai'tela")[0];
-      Modal.h2p.show();
-    },
   }
 };
 </script>
@@ -81,12 +77,6 @@ export default {
   <div class="l-laitela-celestial-tab">
     <CelestialQuoteHistory celestial="laitela" />
     <div class="c-subtab-option-container">
-      <PrimaryButton
-        class="o-primary-btn--subtab-option"
-        @click="showLaitelaHowTo()"
-      >
-        Click for Lai'tela info
-      </PrimaryButton>
       <PrimaryButton
         class="o-primary-btn--subtab-option"
         @click="maxAll"

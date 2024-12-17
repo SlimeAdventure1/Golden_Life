@@ -43,7 +43,7 @@ GameDatabase.celestials.descriptions = [
       Antimatter Dimension multipliers are always Dilated (the Glyph effect still only applies in actual Dilation).
       Time Study 192 (uncapped Replicanti) is locked.
       The Black Hole is disabled.
-      Tachyon Particle production and Dilated Time production are severely reduced.
+      Tachyon production and Dilated Time production are severely reduced.
       Time Theorem generation from Dilation Glyphs is disabled.
       Certain challenge goals are increased.
       Stored game time is discharged at a reduced effectiveness (exponent^${format(0.55, 2, 2)}).`;
@@ -66,8 +66,7 @@ GameDatabase.celestials.descriptions = [
   {
     name: "Ra",
     effects() {
-      return `You only have ${formatInt(4)} Dimension Boosts and can not gain any more.
-      The Tickspeed purchase multiplier is fixed at ${formatX(1.1245, 0, 3)}.`;
+      return `You only have ${formatInt(4)} Dimension Boosts and cannot gain any more. The Tickspeed purchase multiplier is fixed at ${formatX(1.1245, 0, 3)}.`;
     },
   },
   {

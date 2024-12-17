@@ -231,6 +231,8 @@ export default {
           :glyphs="set"
           :flip-tooltip="true"
           :none-text="noSet"
+          :needsCrates="2"
+          marginsize="0.3rem"
         />
       </div>
       <div class="c-glyph-single-set-save-flexbox">
@@ -251,8 +253,9 @@ export default {
             class="c-glyph-set-save-button"
             :class="{'c-glyph-set-save-button--unavailable': !hasEquipped || set.length}"
             @click="saveGlyphSet(id)"
+            ach-tooltip="Save Preset"
           >
-            Save
+          <i class="fa-solid fa-floppy-disk"></i>
           </button>
           <button
             v-tooltip="loadingTooltip(set)"
@@ -260,14 +263,15 @@ export default {
             :class="{'c-glyph-set-save-button--unavailable': !setLengthValid(set)}"
             @click="loadGlyphSet(set, id)"
           >
-            Load
+          <i class="fa-solid fa-upload"></i>
           </button>
           <button
             class="c-glyph-set-save-button"
             :class="{'c-glyph-set-save-button--unavailable': !set.length}"
             @click="deleteGlyphSet(id)"
+            ach-tooltip="Delete Preset"
           >
-            Delete
+          <i class="fa-solid fa-trash"></i>
           </button>
         </div>
       </div>

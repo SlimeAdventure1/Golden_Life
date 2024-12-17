@@ -29,7 +29,7 @@ export default {
   computed: {
     resources: () => AlchemyResources.all,
     layout: () => new AlchemyCircleLayout(),
-    sizeMultiplier: () => 5,
+    sizeMultiplier: () => 6.75,
     infoResource() {
       return this.resources[this.infoResourceId];
     },
@@ -80,6 +80,7 @@ export default {
       if (node.resource.isUnlocked) {
         this.focusedResourceId = node.resource.id;
       }
+      AudioManagement.playSound("click_hover")
     },
     handleMouseLeave() {
       this.focusedResourceId = -1;
@@ -94,6 +95,7 @@ export default {
       }
       if (resource.isBaseResource) return;
       resource.reaction.isActive = !resource.reaction.isActive;
+      AudioManagement.playSound(resource.reaction.isActive?"click_light":"click_light-reverse")
       GameUI.update();
     },
     isUnlocked(reactionArrow) {
@@ -216,6 +218,7 @@ export default {
         View Reality Glyph creation
       </PrimaryButton>
     </div>
+    <br>
     <AlchemyResourceInfo
       :key="infoResourceId"
       :resource="infoResource"
@@ -230,6 +233,7 @@ export default {
     </span>
     <div
       class="l-alchemy-circle"
+      :class="{'c-alchemy-circle__doomed' : isDoomed}"
       :style="circleStyle"
     >
       <span

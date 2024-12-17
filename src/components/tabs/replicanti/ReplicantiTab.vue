@@ -4,6 +4,7 @@ import wordShift from "@/core/word-shift";
 import ReplicantiUpgradeButton, { ReplicantiUpgradeButtonSetup } from "./ReplicantiUpgradeButton";
 import PrimaryButton from "@/components/PrimaryButton";
 import ReplicantiGainText from "./ReplicantiGainText";
+import ReplicantiBar from "./ReplicantiBar";
 import ReplicantiGalaxyButton from "./ReplicantiGalaxyButton";
 
 export default {
@@ -11,21 +12,27 @@ export default {
   components: {
     PrimaryButton,
     ReplicantiGainText,
+    ReplicantiBar,
     ReplicantiUpgradeButton,
     ReplicantiGalaxyButton,
   },
   data() {
     return {
       isUnlocked: false,
+      realityUnlocked:false,
       isUnlockAffordable: false,
       isInEC8: false,
       ec8Purchases: 0,
       amount: new Decimal(),
       mult: new Decimal(),
+      hasADMult: false,
+      multAD: new Decimal(),
       hasTDMult: false,
       multTD: new Decimal(),
       hasDTMult: false,
       multDT: new Decimal(),
+      hasTGPow: false,
+      TGPow: 0,
       hasIPMult: false,
       multIP: new Decimal(),
       hasRaisedCap: false,
@@ -49,7 +56,8 @@ export default {
       return new ReplicantiUpgradeButtonSetup(
         ReplicantiUpgrade.chance,
         value => `Replicate chance: ${formatPercents(value)}`,
-        cost => `+${formatPercents(0.01)} Costs: ${format(cost)} IP`
+        cost => `+${formatPercents(0.01)} Costs: ${format(cost)} IP`,
+        progress => `${formatPercents(progress,2)}`
       );
     },
     replicantiIntervalSetup() {
@@ -74,7 +82,8 @@ export default {
         upgrade,
         value => `Interval: ${formatInterval(value)}`,
         cost =>
-          `➜ ${formatInterval(upgrade.nextValue)} Costs: ${format(cost)} IP`
+          `➜ ${formatInterval(upgrade.nextValue)} Costs: ${format(cost)} IP`,
+        progress => `${formatPercents(progress,2)}`
       );
     },
     maxGalaxySetup() {
@@ -82,7 +91,7 @@ export default {
       return new ReplicantiUpgradeButtonSetup(
         upgrade,
         value => {
-          let description = `Max Replicanti Galaxies: `;
+          let description = `Max ${this.replicantiScalingDisplay()} Replicanti Galaxies: `;
           const extra = upgrade.extra;
           if (extra > 0) {
             const total = value + extra;
@@ -92,39 +101,54 @@ export default {
           }
           return description;
         },
-        cost => `+${formatInt(1)} Costs: ${format(cost)} IP`
+        cost => `+${formatInt(1)} Costs: ${format(cost)} IP`,
+        progress => `${formatPercents(progress,2)}`
       );
     },
     boostText() {
       const boostList = [];
-      boostList.push(`a <span class="c-replicanti-description__accent">${formatX(this.mult, 2, 2)}</span>
-        multiplier on all Infinity Dimensions`);
-      if (this.hasTDMult) {
-        boostList.push(`a <span class="c-replicanti-description__accent">${formatX(this.multTD, 2, 2)}</span>
-          multiplier on all Time Dimensions from a Dilation Upgrade`);
+      const start = `<div class="c-replicanti-effect-container"><span class="c-replicanti-description__accent">`
+      boostList.push(`${start}${formatX(this.mult, 2, 2)}</span>
+        <div>to all Infinity Dimensions</div></div>`);
+      if (this.hasADMult||this.realityUnlocked) {
+        boostList.push(`<div class="c-replicanti-effect-container" ${!this.hasADMult?'style="opacity:0.375"':""}>
+        <span class="c-replicanti-description__accent">${this.hasADMult?formatX(this.multAD, 2, 2):"Locked"}</span>
+        <div>to all Antimatter Dimensions from Time Study 101</div></div>`);
+      }
+      if (this.hasTDMult||this.realityUnlocked) {
+        boostList.push(`<div class="c-replicanti-effect-container" ${!this.hasTDMult?'style="opacity:0.375"':""}>
+        <span class="c-replicanti-description__accent">${this.hasTDMult?formatX(this.multTD, 2, 2):"Locked"}</span>
+        <div>to all Time Dimensions from a Dilation Upgrade</div></div>`);
       }
       if (this.hasDTMult) {
-        const additionalEffect = GlyphAlteration.isAdded("replication") ? "and Replicanti speed " : "";
-        boostList.push(`a <span class="c-replicanti-description__accent">${formatX(this.multDT, 2, 2)}</span>
-          multiplier to Dilated Time ${additionalEffect}from Glyphs`);
+        const additionalEffect = GlyphAlteration.isAdded("replication") ? "and Replicanti speed" : "";
+        boostList.push(`${start}${formatX(this.multDT, 2, 2)}</span>
+        <div>to Dilated Time ${additionalEffect} from Glyphs</div></div>`);
+      }
+      if (this.hasTGPow) {
+        boostList.push(`${start}+${formatPercents(this.TGPow,2)}</span>
+        <div>to Tachyonic Galaxy strength from Glyph Alchemy</div></div>`);
       }
       if (this.hasIPMult) {
-        boostList.push(`a <span class="c-replicanti-description__accent">${formatX(this.multIP)}</span>
-          multiplier to Infinity Points from Glyph Alchemy`);
+        boostList.push(`${start}${formatX(this.multIP)}</span>
+        <div>to Infinity Points from Glyph Alchemy</div></div>`);
       }
-      if (boostList.length === 1) return `${boostList[0]}.`;
-      if (boostList.length === 2) return `${boostList[0]}<br> and ${boostList[1]}.`;
-      return `${boostList.slice(0, -1).join(",<br>")},<br> and ${boostList[boostList.length - 1]}.`;
+      return `${boostList.join("")}`;
     },
     hasMaxText: () => PlayerProgress.realityUnlocked() && !Pelle.isDoomed,
     toMaxTooltip() {
       if (this.amount.lte(this.replicantiCap)) return null;
       return this.estimateToMax.lt(0.01)
-        ? "Currently Increasing"
+        ? "Currently increasing"
         : TimeSpan.fromSeconds(this.estimateToMax.toNumber()).toStringShort();
     }
   },
   methods: {
+    replicantiScalingDisplay(){
+      if (ReplicantiUpgrade.galaxies.value>=ReplicantiUpgrade.galaxies.remoteRGStart)return "Remote"
+      else if (ReplicantiUpgrade.galaxies.value>=ReplicantiUpgrade.galaxies.distantRGStart)return "Distant"
+      return "";
+    },
     update() {
       this.isUnlocked = Replicanti.areUnlocked;
       this.unlockCost = new Decimal(1e140).dividedByEffectOf(PelleRifts.vacuum.milestones[1]);
@@ -139,6 +163,8 @@ export default {
       }
       this.amount.copyFrom(Replicanti.amount);
       this.mult.copyFrom(replicantiMult());
+      this.hasADMult = TimeStudy(101).isBought;
+      this.multAD.copyFrom(TimeStudy(101).effectValue);
       this.hasTDMult = DilationUpgrade.tdMultReplicanti.isBought;
       this.multTD.copyFrom(DilationUpgrade.tdMultReplicanti.effectValue);
       this.hasDTMult = getAdjustedGlyphEffect("replicationdtgain") !== 0 && !Pelle.isDoomed;
@@ -147,6 +173,8 @@ export default {
           getAdjustedGlyphEffect("replicationdtgain"),
         1
       );
+      this.hasTGPow = AlchemyResource.alternation.amount > 0 && !this.isDoomed;
+      this.TGPow = AlchemyResource.alternation.effectValue*Math.floor(Replicanti.amount.exponent/1e6);
       this.hasIPMult = AlchemyResource.exponential.amount > 0 && !this.isDoomed;
       this.multIP = Replicanti.amount.powEffectOf(AlchemyResource.exponential);
       this.isUncapped = PelleRifts.vacuum.milestones[1].canBeApplied;
@@ -168,6 +196,7 @@ export default {
         Replicanti.galaxies.max >= 1 || PlayerProgress.eternityUnlocked();
       this.maxReplicanti.copyFrom(player.records.thisReality.maxReplicanti);
       this.estimateToMax = this.calculateEstimate();
+      this.realityUnlocked = PlayerProgress.realityUnlocked()
     },
     vacuumText() {
       return wordShift.wordCycle(PelleRifts.vacuum.name);
@@ -218,16 +247,19 @@ export default {
         {{ quantifyInt("extra Replicanti Galaxy", effarigInfinityBonusRG) }}
         (Next Replicanti Galaxy at {{ format(nextEffarigRGThreshold, 2) }} cap)
       </div>
+      <div class="c-replicanti-table">
       <p class="c-replicanti-description">
         You have
         <span class="c-replicanti-description__accent">{{ format(amount, 2, 0) }}</span>
         Replicanti, translated to
-        <br>
-        <span v-html="boostText" />
-      </p>
+        </p>
+        <div 
+        class="l-replicanti-effects-list"
+        v-html="boostText" 
+        /> 
       <div
         v-if="hasMaxText"
-        class="c-replicanti-description"
+        class="c-replicanti-description c-replicanti-description-max"
       >
         Your maximum Replicanti reached this Reality is
         <span
@@ -235,33 +267,39 @@ export default {
           class="max-accent"
         >{{ format(maxReplicanti, 2) }}</span>.
       </div>
+      <ReplicantiBar />
+      <ReplicantiGainText />
+      <div class="l-replicanti-seperator">
+          <br  v-if="!isInEC8">
+          <div v-if="isInEC8">
+            You have {{ quantifyInt("purchase", ec8Purchases) }} left within Eternity Challenge 8.
+          </div>
+          <div class="l-replicanti-upgrade-row">
+          <ReplicantiUpgradeButton :setup="replicantiChanceSetup" />
+          <ReplicantiUpgradeButton :setup="maxGalaxySetup" />
+          <ReplicantiUpgradeButton :setup="replicantiIntervalSetup" />
+        </div>
+      </div>
+      <ReplicantiGalaxyButton v-if="canSeeGalaxyButton" />
       <br>
-      <div v-if="isInEC8">
-        You have {{ quantifyInt("purchase", ec8Purchases) }} left within Eternity Challenge 8.
-      </div>
-      <div class="l-replicanti-upgrade-row">
-        <ReplicantiUpgradeButton :setup="replicantiChanceSetup" />
-        <ReplicantiUpgradeButton :setup="replicantiIntervalSetup" />
-        <ReplicantiUpgradeButton :setup="maxGalaxySetup" />
-      </div>
-      <div>
+      <div v-if="canSeeGalaxyButton">
         The Max Replicanti Galaxy upgrade can be purchased endlessly, but costs increase
         <br>
         more rapidly above {{ formatInt(distantRG) }} Replicanti Galaxies
         and even more so above {{ formatInt(remoteRG) }} Replicanti Galaxies.
       </div>
-      <br><br>
-      <ReplicantiGainText />
-      <br>
-      <ReplicantiGalaxyButton v-if="canSeeGalaxyButton" />
+    </div>
     </template>
   </div>
 </template>
 
 <style scoped>
 .max-accent {
-  color: var(--color-accent);
+  color: var(--color-replicanti);
   text-shadow: 0 0 0.2rem var(--color-reality-dark);
+  font-weight: bold;
+  font-family: cambria;
+  font-size:2rem;
   cursor: default;
 }
 

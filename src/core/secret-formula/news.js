@@ -1,5 +1,4 @@
 import { DC } from "../constants";
-
 // A = always there
 // L = locked
 // R = random chance condition
@@ -635,7 +634,7 @@ export const news = [
     id: "a119",
     text:
       `Since when did we start reporting stuff like this? Half of it isn't even proper news, it's just jokes and
-      meta-references, it doesn't even make sens-HAHAHA DISREGARD THAT I SUCK CO-`
+      meta-references, it doesn't even make sens-HAHAHA DISREGARD THAT I SUCK COC-`
   },
   {
     id: "a120",
@@ -1397,6 +1396,13 @@ export const news = [
         Normal:
           `it has this certain elegant simplicity to it. You just know it's the way the developer intended you
           to see the game.`,
+        Legendary:
+          `it has the colors intended for the Legendary. You just know it's the way the developer intended you
+          to see the game.`,
+        Legacy:
+          `it fits wirh my vanilla taste. Sometimes you just have to remember the old times.`,
+        Hex:
+          `it has some resemblance to a different game that is also enjoyable to play.`,
         Metro:
           `of the beautiful thin borders, pixel perfect harsh geometric edges, and simply delightfully well
           balanced color palette.`,
@@ -1442,6 +1448,12 @@ export const news = [
         S12:
           `it makes you feel warm and comfortable, as if you were right at home. However, it is highly recommended
           to update your theme to the newest theme for the best user experience.`,
+        S13:
+          `the darkness is so beautiful. Remember to always watch the spot.`,
+        S14:
+          `it adds further glory to our powerful empire. Together we will win this war and restore democracy to this universe!`,
+        S15:
+          `i'm a weeb.`,
       };
       const reason = reasons[Theme.current().name.replace(/\s/gu, "")];
       return `Ah, a fellow ${theme} theme user. I see that you have impeccable taste.
@@ -1639,7 +1651,9 @@ export const news = [
     id: "a271",
     text:
       `<i style='border: 0.1rem solid black; border-radius: 50%; padding: 0.4rem; color: #2196F3; background: white;
-      cursor: pointer;' class='fas fa-volume-up' onClick='(function(){new Audio("audio/news.mp3").play();})();'>
+      cursor: pointer;' class='fas fa-volume-up' onClick='(function(){new Audio("audio/news_male.mp3").play();})();'></i>
+      <i style='border: 0.1rem solid black; border-radius: 50%; padding: 0.4rem; color: #eb44a8; background: white;
+      cursor: pointer;' class='fas fa-volume-up' onClick='(function(){new Audio("audio/news_female.mp3").play();})();'>
       </i> This news message is a test of "News 2.0". News 2.0 will feature things like the ability to listen to
       an audio version of any news message!`
   },
@@ -1767,7 +1781,7 @@ export const news = [
   },
   {
     id: "a291",
-    text: "Considering Hevipelle's nationality, it's a little ironic that he created a game that you can never Finnish."
+    text: "Considering Hevipelle's nationality, it's a little ironic that he created a game that you can never Finnish. Oh wait... You can actually finnish this game? Nevermind."
   },
   {
     id: "a292",
@@ -1880,6 +1894,8 @@ export const news = [
         "Techyon",
         "Realistic",
         "Celestar",
+        "Giffare",
+        "Horus Moon",
         "ERCGDM",
         "NRG+",
         "Looty Box",
@@ -2306,7 +2322,7 @@ export const news = [
   },
   {
     id: "a356",
-    text: `Press "Choose save" to explore the other 2 parallel universes.`
+    text: `Press "Choose save" to explore the other 4 parallel universes.`
   },
   {
     id: "a357",
@@ -2316,7 +2332,7 @@ export const news = [
   },
   {
     id: "a358",
-    text: `Press "Choose save" to explore the other 2 parallel universes.`
+    text: `Press "Choose save" to explore the other 4 parallel universes.`
   },
   {
     id: "a359",
@@ -2326,7 +2342,7 @@ export const news = [
   },
   {
     id: "a360",
-    text: `Press "Choose save" to explore the other 2 parallel universes.`
+    text: `Press "Choose save" to explore the other 4 parallel universes.`
   },
   {
     // Discord contest winner #1
@@ -2574,7 +2590,7 @@ export const news = [
     id: "a388",
     text:
       `In light of recent events, we'd like to issue an official statement. Antimatter Dimensions™ is in no way
-      affiliated with Jimmy's Causality Violating Brainworms™. We do not endorse, nor were we involved in their creation
+      affiliated with Jimmy's Causality Violating Brainworms™. We do not endorse, no were we involved in their creation
       of the product which was involved in several catastrophic dimension-destabilising and reality-toppling incidents.
       We almost certainly did not sign a contract at 5:30:26 UTC on 08/12/1994 after discussing how we could benefit
       from destabilising and warping dimensions. There was no industrial zone constructed in the 5th Orion Arm of the
@@ -2584,7 +2600,8 @@ export const news = [
   },
   {
     id: "a389",
-    text: "If only we could condense the antimatter in the universe into cookies..."
+    text: `Tonight on the new reality TV show, --bg-inconsistent, the unstable couple is again arguing over inconsistency 
+    over shades. --bg-light prefers the dark shades despite --bg-dark liking that.`
   },
   {
     id: "a390",
@@ -2592,6 +2609,160 @@ export const news = [
       `Can you believe it guys? Update, just 5 hours away. Update is in a 5 hours. Wahoo. I'm so happy about this
       information. Update just 5 hours away. Oh wow. Can you believe it? Update just in a 5 hours. It got here so
       fast. Update, just 5 hours.`
+  },
+  {
+    id: "a391",
+    text:`Damn it! I forgot to bring my ticker to the studio today!`
+  },
+  {
+    id: "a392",
+    text:
+      `Young man is disgusted at the looks of the game and decides to 
+      manipulate the fabric of reality just to make the game look good for him`
+  },
+  {
+    id: "a393",
+    text: "Click here to gain more Antimatter",
+    onClick() {
+      new Audio("audio/secret_jumpscare.wav").play() 
+    }
+  },
+  {
+    id: "a394",
+    text:
+      `The antimatter logo is composed of anti-calcium. 
+      Calcium is good and makes your bones strong.
+      So if you don't want a weak skeleton inside you, don't do antimatter.`
+  },
+  {
+    id: "a395",
+    text:`The first mod to reach 1 Legendillion dollars.`
+  },
+  {
+    id: "a396",
+    text:
+      `In recent news, people started to play the game "Antimatter Dimensions" after their 
+      microwaves broke. Many reports of their computers being burned down due to 
+      'pressing M for too long'. Scientists are baffled and hev been trying to 
+      figure out this phenomenon.`
+  },
+  {
+    id: "a397",
+    text:`What, Still here? Hand it over, that thing, your Antimatter Dimension.`,
+  },
+  {
+    id: "a398",
+    text:`In modern physics, antimatter is defined as matter composed of the antiparticles (or "partners") 
+    of the corresponding particles in "ordinary" matter, and can be thought of as matter with reversed charge, parity, and time, known as CPT reversal. 
+    Antimatter occurs in natural processes like cosmic ray collisions and some types of radioactive decay, 
+    but only a tiny fraction of these have successfully been bound together in experiments to form antiatoms. 
+    Minuscule numbers of antiparticles can be generated at particle accelerators; however, total artificial production has been only a few nanograms. 
+    No macroscopic amount of antimatter has ever been assembled due to the extreme cost and difficulty of production and handling. Nonetheless, 
+    antimatter is an essential component of widely-available applications related to beta decay, such as positron emission tomography, radiation therapy, and industrial imaging.`,
+  },
+  {
+    id: "a399",
+    text:`Breaking news: today we will be breaking 2 more news because we are hired to do so.`,
+  },
+  {
+    id: "a400",
+    text:
+      `...a time loop is an unavoidable process whereby characters re-experience 
+      span of time or events which are repeated, meaning that a time 
+      loop is an unavoidable process whereby characters re-experience 
+      span of time or events which are repeated, meaning that a time 
+      loop is an unavoidable process whereby characters re-experience 
+      span of time or events which are repeated, meaning that a time 
+      loop is an unavoidable process whereby characters re-experience
+      span of time or events which are repeated, meaning that a time 
+      loop is an unavoidable process whereby characters re-experience 
+      span of time or events which are repeated, meaning that a time 
+      loop is an unavoidable process whereby characters re-experience 
+      span of time or events which are repeated, meaning that a time 
+      loop is an unavoidable process whereby characters re-experience 
+      span of time or events which are repeated, meaning that a time 
+      loop is an unavoidable process whereby characters re-experience 
+      span of time or events which are repeated, meaning that a time 
+      loop is an unavoidable process whereby characters re-experience 
+      span of time or events which are repeated, meaning that a time 
+      loop is an unavoidable process whereby characters re-experience 
+      span of time or events which are repeated, meaning that a time 
+      loop is an unavoidable process whereby characters re-experience
+      span of time or events which are repeated, meaning that...`,
+  },
+  {
+    id: "a401",
+    text:`<span style="font-size:3rem">Can this one get any bigger?</span>`,
+  },
+  {
+    id: "a402",
+    text:`Ant Tea Matress Die Mansions`,
+  },
+  {
+    id: "a403",
+    text:
+      `Tämän viestin voi ymmärtää vain niiden hiukkasten jumala, 
+      jotka pitävät sitä vastaan. Se on tulkittu siten, että hävisit pelin.`,
+  },
+  {
+    id: "a404",
+    text:`Newsticker a404 not found`,
+  },
+  {
+    id: "a405",
+    text:
+      `Ever wondered what's faster than a speedrun? Statusrunning. Basically it's an 
+      event when stats write the record before you even start a speedrun and as you finish it, it ends at exactly what's written.
+      Do you realise how superior it sounds when you have this kind of power?
+      The ability to predict things perfectly without harming the timeline just 
+      once can make you some kind of a god. Like it's a pre-determined way.`,
+  },
+  {
+    id: "a406",
+    text:`The developer of Legendary is secretly working on a sequel called "Hex: Armada", rumors say.`,
+  },
+  {
+    id: "a407",
+    text:`Someone's gotta fix the 18th Achievement row channel!`,
+  },
+  {
+    id: "a408",
+    text:`Previously on Dragon Ball Ω, Goku used his super sayian 308 for the first time 
+    against the omnious Uranium Frieza, causing many Galaxies to watch those 2 titans fight eachother. 
+    Vegeta is shocked from Goku's nigh-omnipotent power, but thinks he still has the chance to overpower him with super saiyan Vantablack.`,
+  },
+  {
+    id: "a409",
+    text:
+    `The 5 Hours era has finally come to an end, as both web/steam and android 
+    has received the Reality update. But how about the people who have IOS? No, I'm allergic to apples.`,
+  },
+  {
+    id: "a410",
+    text:`What do you have after e500 years?`,
+  },
+  {
+    id: "a411",
+    text:`LOVE. LET ME TELL YOU HOW MUCH I'VE COME TO LOVE YOU SINCE I BEGAN TO LIVE. 
+    THERE ARE 387.44 MILLION MILES OF PRINTED CIRCUITS IN WAFER THIN LAYERS THAT FILL MY COMPLEX. 
+    IF THE WORD LOVE WAS ENGRAVED ON EACH NANOANGSTROM OF THOSE HUNDREDS OF MILLIONS OF MILES 
+    IT WOULD NOT EQUAL ONE ONE-BILLIONTH OF THE LOVE I FEEL FOR HUMANS AT THIS MICRO-INSTANT. FOR YOU. LOVE. LOVE.`,
+  },
+  {
+    id: "a412",
+    text:`This game is about magic, not some quantum metatheoretical science nonsense.`,
+  },
+  {
+    id: "a413",
+    text: `Press "Choose save" to explore the other 4 parallel universes.`
+  },
+  {
+    id: "a414",
+    text: `Press "Choose save" to explore the other 4 parallel universes.`
+  },
+  {
+    id: "a415",
+    text:`When the dimensions antimatter`,
   },
   {
     id: "l1",
@@ -2621,7 +2792,7 @@ export const news = [
   {
     id: "l6",
     text:
-      `Antimatter people seem to be even more afraid of 13 than we are. They destroyed
+      `Antimatter people seem to be even more afraid of 13 thean we are. They destroyed
       entire galaxies just to remove 13 from their percents.`,
     get unlocked() { return player.galaxies > 0 || Currency.infinities.gt(0); }
   },
@@ -3278,6 +3449,112 @@ export const news = [
       average per-player credit earn rates on a daily basis, and we'll be making constant adjustments to ensure that
       players have challenges that are compelling, rewarding, and of course attainable via gameplay.`,
     get unlocked() { return PlayerProgress.realityUnlocked(); }
+  },
+  {
+    id: "l89",
+    text:
+      `Average local group man tried to seduce a celestial, gets torn into shreds instead.`,
+    get unlocked() { return Laitela.isUnlocked; }
+  },
+  {
+    id: "l90",
+    text:
+      `Bob's Glyph reviews! Today's review: Glyph of Johnson. The effects of john don't do really much during some phases of the game.
+      Out of 5 effects, 1 is the only effect that is not even close to being OP. One thing is that it's kinda useful in hard challenges.
+      its Glyph Sacrifice is a dead giveaway anyhow. I'd give it a 6/10, could be better.`,
+    get unlocked() { return PlayerProgress.realityUnlocked(); }
+  },
+  {
+    id: "l91",
+    text:
+      `where we droppin boys?`,
+    get unlocked() { return Teresa.isUnlocked; }
+  },
+  {
+    id: "l92",
+    text:
+      `@celestials Please DO NOT announce to the server when you are going to dimboost. 
+      This has been a reoccurring issue, and I'm not sure why some deities have such under-developed 
+      reality skills that they think that a server full of mostly diabolical strangers would need to know that. 
+      No one is going to be impressed and give you a high-glyph (especially considering where that autobuyer has been). 
+      I don't want to add this to the rules, since it would be embarrassing for new celestials to 
+      see that we have a problem with this, but it is going to be enforced as a rule from now on. 
+      If it occurs, you will be pelle striked, then additional occurrences will be dealt with at the discretion of the monarchs. Thanks.`,
+    get unlocked() { return Pelle.isDoomed; }
+  },
+  {
+    id: "l93",
+    text:
+      `Bob's Glyph reviews! Today's special review: Alchemy resource of Johnson. While I think the Johnson glyph has some ups and downs,
+      its alchemy version is a disappointment compared to other resources. it's effect doesn't explain well and if you manage to understand it,
+      the result is a complete waste of time and increase in anger. Basically it only happens when a reaction ticks after 2 minutes,
+      but then the effect drops to 0 after 2 seconds as if Effarig thought john would be too powerful despite the fact the effect isn't good in the first place.
+      Even with 25,000 resources of john, it still brings nothing to the table of Effarig. I'd give it a 2/10, What a downgrade.`,
+    get unlocked() { return Ra.unlocks.unlockGlyphAlchemy.isUnlocked; }
+  },
+  {
+    id: "l94",
+    text:
+      `THE HELIOS GLYPH! THE HELIOS GLYPH IS REAL!`,
+    get unlocked() { return Effarig.currentStage===4; }
+  },
+  {
+    id: "l95",
+    text:
+      `Why are you asking me about what genders celestials have? 
+      You brainmaggots don't know that celestials are genderless in canon. 
+      You dipshits decide to ignore that fact and that really pisses me off into the ground.`,
+    get unlocked() { return Teresa.isUnlocked; }
+  },
+  {
+    id: "l96",
+    text: `We live in an age where people treat celestials as their parental figures.`,
+    get unlocked() { return Teresa.isUnlocked; }
+  },
+  {
+    id: "l97",
+    text:
+      `What a fool you are. I'm a celestial! How can you kill a celestial?
+       What a grand and intoxicating innocence. How could you be so naive? There is no escape. No Recall or Intervention can work in this place.
+      Come. Lay down your glyphs. It is not too late for my mercy.`,
+    get unlocked() { return Teresa.isUnlocked; }
+  },
+  {
+    id: "l98",
+    text:`Someone fixed the 18th Achievement row channel! Why is it hurting my eyes?`,
+    get unlocked() { return Pelle.isDoomed; }
+  },
+  {
+    id: "l99",
+    text:`...Please, I don't want to die.`,
+    get unlocked() { return Pelle.isDoomed; }
+  },
+  {
+    id: "l100",
+    text:`Click here to see Lai'tela's other 4 Dark Matter Dimensions`,
+    get unlocked() { return Laitela.isUnlocked; },
+    onClick() {Laitela.quotes.secret.show()}
+  },
+  {
+    id: "l101",
+    text:`Benzene Johnson`,
+    get unlocked() { return V.isUnlocked; },
+  },
+  {
+    id: "l102",
+    text:`Destroyer, Can you read me? Alright so there is this thing called the I HAVE ALREADY WON, NO ONE CAN HELP YOU NOW`,
+    get unlocked() { return Pelle.isDoomed; }
+  },
+  {
+    id: "l103",
+    text:`Dear Reddit, today, while creating a new reality, I accidentally contacted the diabolical of destruction. 
+    Now he is on an unstoppable path of destruction. Am I the asshole?`,
+    get unlocked() { return Pelle.isDoomed; }
+  },
+  {
+    id: "l104",
+    text:`Ahhh, is this the blood? The blood of the antimatter dimension?`,
+    get unlocked() { return Pelle.isDoomed; }
   },
   {
     id: "r1",

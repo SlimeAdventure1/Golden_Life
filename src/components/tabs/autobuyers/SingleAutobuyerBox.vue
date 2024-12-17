@@ -20,13 +20,16 @@ export default {
   data() {
     return {
       isUnlocked: false,
-      // Used to hide the input box if the game is auto-sacrificing every tick without resource resets
-      isHiddenSacrifice: false,
+            // Used to hide the input box if the game is auto-sacrificing every tick without resource resets
+            isHiddenSacrifice: false,
     };
   },
   computed: {
     name() {
       return this.autobuyer.name;
+    },
+    color() {
+      return this.autobuyer.color;
     },
     isSacrifice() {
       return this.name === "Dimensional Sacrifice";
@@ -45,12 +48,12 @@ export default {
   <span
     v-if="isUnlocked"
     class="c-autobuyer-box-row"
+    :style="{'--fade':color}"
   >
     <AutobuyerSingleToggleLabel :autobuyer="autobuyer" />
     <div>
       {{ name }}
       <AutobuyerIntervalLabel :autobuyer="autobuyer" />
-
       <b
         v-if="isHiddenSacrifice"
         class="c-autobuyer-box__small-text"

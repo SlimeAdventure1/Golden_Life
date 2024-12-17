@@ -15,6 +15,7 @@ export default {
   },
   data() {
     return {
+      isNegativeBHUnlocked: false,
       isDoomed: false,
       isUnlocked: false,
       isPaused: false,
@@ -67,7 +68,7 @@ export default {
       this.blackHoleUptime = [BlackHole(1).duration / BlackHole(1).cycleLength,
         BlackHole(2).duration / BlackHole(2).cycleLength];
       this.detailedBH2 = this.bh2Status();
-
+      this.isNegativeBHUnlocked = V.isFlipped && BlackHoles.arePermanent;
       if (player.blackHoleNegative < 1 && !this.isLaitela) this.stateChange = this.isPaused ? "Uninvert" : "Invert";
       else this.stateChange = this.isPaused ? "Unpause" : "Pause";
     },
@@ -141,7 +142,7 @@ export default {
       }, 1);
     },
     gridStyle() {
-      return this.isPermanent ? "l-black-hole-upgrade-permanent" : "l-black-hole-upgrade-grid";
+      return this.isPermanent ? "l-black-hole-upgrade-grid l-black-hole-upgrade-permanent" : "l-black-hole-upgrade-grid";
     },
   },
 };
@@ -158,6 +159,13 @@ export default {
         <br>
       </i>
       The physics of this Reality do not allow the existence of Black Holes.
+      <br>
+      <canvas
+        ref="canvas"
+        class="c-black-hole-canvas"
+        width="400"
+        height="400"
+      />
     </div>
     <div
       v-else-if="!isUnlocked"
@@ -187,18 +195,28 @@ export default {
           Auto-pause: {{ pauseModeString }}
         </button>
       </div>
-      <canvas
+      <BlackHoleStateRow
+          v-for="(blackHole, i) in blackHoles"
+          :key="'state' + i"
+          :black-hole="blackHole"
+        />
+      <div class="l-black-hole-layout">
+        <canvas
         ref="canvas"
         class="c-black-hole-canvas"
         width="400"
         height="400"
       />
-      <div class="l-black-hole-upgrade-grid">
-        <BlackHoleStateRow
+        <div :class="gridStyle()">
+        <BlackHoleUpgradeRow
           v-for="(blackHole, i) in blackHoles"
-          :key="'state' + i"
+          :key="'upgrades' + i"
           :black-hole="blackHole"
         />
+      </div>
+
+      </div>
+      <div class="l-black-hole-text-grid">
         <span v-if="hasBH2 && !isPermanent">
           <b>{{ detailedBH2 }}</b>
           <br>
@@ -206,7 +224,7 @@ export default {
           <br>
           Upgrades affect the internal timer; the header shows real time until next activation.
         </span>
-        <br>
+        <br v-if="!isPermanent">
         <div v-if="!isPermanent">
           Black holes become permanently active when they are active for more than {{ formatPercents(0.9999, 2) }}
           of the time.
@@ -215,15 +233,9 @@ export default {
           <span v-if="hasBH2">and {{ formatPercents(blackHoleUptime[1], 3) }}</span>
         </div>
         <BlackHoleChargingSliders
-          v-if="!isLaitela"
+          v-if="isNegativeBHUnlocked&&!isLaitela"
           class="l-enslaved-shop-container"
-        />
-      </div>
-      <div :class="gridStyle()">
-        <BlackHoleUpgradeRow
-          v-for="(blackHole, i) in blackHoles"
-          :key="'upgrades' + i"
-          :black-hole="blackHole"
+          style="padding:1rem"
         />
       </div>
     </template>

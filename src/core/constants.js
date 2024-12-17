@@ -53,6 +53,7 @@ export const DC = deepFreeze({
   D11111:               new Decimal("11111"),
   D3E4:                 new Decimal("30000"),
   D2E5:                 new Decimal("2e5"),
+  D3E5:                 new Decimal("3e5"),
   D2E6:                 new Decimal("2e6"),
   D5E7:                 new Decimal("5e7"),
   D2E9:                 new Decimal("2e9"),
@@ -239,7 +240,7 @@ window.GlyphRarities = [
   {
     minStrength: 3.5,
     name: "Celestial",
-    darkColor: "#3d3dec",
+    darkColor: "#5151ec",
     lightColor: "#9696ff",
     darkHighContrast: "#ffff00",
     lightHighContrast: "#c0c000"
@@ -300,7 +301,31 @@ window.GLYPH_BG_SETTING = {
   LIGHT: 1,
   DARK: 2,
 };
-
+window.AutomatorVisuals = {
+  COLOR:{
+      DEFAULT:0,
+      RED:1,
+      BLUE:2,
+      YELLOW:3,
+      PURPLE:4,
+      CYAN:5,
+      ORANGE:6,
+      MAGENTA:7,
+      GRAY:8,
+  },
+  COLOR_LABELS: ["Default Green", "Red", "Blue", "Yellow", "Purple","Cyan", "Orange", "Magenta","Gray"],
+  GRAD:{
+      UPDOWN:0,
+      DOWNUP:1,
+      LEFTRIGHT:2,
+      RIGHTLEFT:3,
+      VERTICAL:4,
+      HORIZONTAL:5,
+      RADIAL:6,
+      RADIALVERSE:7,
+  },
+  GRAD_LABELS: ["Top ➜ Bottom", "Bottom ➜ Top", "Left ➜ Right", "Right ➜ Left","Vertical","Horizontal","Radial","Reverse Radial"],
+};
 window.GLYPH_TYPES = [
   "power",
   "infinity",
@@ -310,7 +335,8 @@ window.GLYPH_TYPES = [
   "effarig",
   "reality",
   "cursed",
-  "companion"
+  "companion",
+  "helios"
 ];
 
 window.BASIC_GLYPH_TYPES = [
@@ -339,7 +365,8 @@ window.GLYPH_SYMBOLS = {
   effarig: "Ϙ",
   reality: "Ϟ",
   cursed: "⸸",
-  companion: "♥"
+  companion: "♥",
+  helios: "☼"
 };
 
 window.CANCER_GLYPH_SYMBOLS = {
@@ -351,7 +378,8 @@ window.CANCER_GLYPH_SYMBOLS = {
   effarig: "🦒",
   reality: "⛧",
   cursed: "☠",
-  companion: "³"
+  companion: "³",
+  helios: "🌞"
 };
 
 window.ALTERATION_TYPE = {

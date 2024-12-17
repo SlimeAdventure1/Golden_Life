@@ -36,12 +36,13 @@ export default {
 
 <template>
   <div v-if="shownResources.length !== 0">
-    <span
+    <div
       class="o-catchup-group-title"
+      :class="{'o-catchup-group-title-open' : !collapsed}"
       @click="collapsed = !collapsed"
     >
-      <i :class="dropDownIconClass" /> {{ name }}
-    </span>
+      <i :class="dropDownIconClass" /> <span class="o-catchup-group-title-font">{{ name }}</span>
+  </div>
     <div v-if="!collapsed">
       <CatchupEntry
         v-for="(resource, i) of shownResources"
@@ -58,7 +59,19 @@ export default {
   font-size: 1.5rem;
   cursor: pointer;
 }
-
+.o-catchup-group-title-open {
+border-bottom: 1px solid;
+padding-bottom:0.3rem;
+margin-bottom:0.5rem;
+border-image: linear-gradient(90deg, currentcolor, transparent) 1;
+background: linear-gradient(90deg, currentcolor -500%, transparent);
+}
+.o-catchup-group-title-font{
+  font-family: Cambria;
+    font-weight: bold;
+    font-size: 1.8rem;
+    line-height: 0;
+}
 .l-left {
   text-align: left;
 }

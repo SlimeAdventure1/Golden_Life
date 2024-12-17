@@ -9,6 +9,10 @@ export class DarkMatterDimensionAutobuyerState extends IntervaledAutobuyerState 
     return `Dark Matter Dimensions`;
   }
 
+  get color() {
+    return `var(--color-laitela--accent)`;
+  }
+
   get isUnlocked() {
     return SingularityMilestone.darkDimensionAutobuyers.canBeApplied;
   }

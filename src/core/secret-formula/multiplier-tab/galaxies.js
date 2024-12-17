@@ -40,7 +40,7 @@ export const galaxies = {
     icon: MultiplierTabIcons.SPECIFIC_GLYPH("replication"),
   },
   tachyon: {
-    name: "Tachyon Galaxies",
+    name: "Tachyonic Galaxies",
     displayOverride: () => {
       const num = player.dilation.totalTachyonGalaxies;
       const mult = MultiplierTabHelper.globalGalaxyMult() *

@@ -32,7 +32,10 @@ import HiddenTabsModal from "@/components/modals/options/hidden-tabs/HiddenTabsM
 import HotkeysModal from "@/components/modals/options/HotkeysModal";
 import InfoDisplayOptionsModal from "@/components/modals/options/InfoDisplayOptionsModal";
 import NewsOptionsModal from "@/components/modals/options/NewsOptionsModal";
+import AudioOptionsModal from "@/components/modals/options/AudioOptionsModal";
+import NamingOptionsModal from "@/components/modals/options/NamingOptionsModal";
 import NotationModal from "@/components/modals/options/NotationModal";
+import SidebarModal from "@/components/modals/options/SidebarModal";
 import PreferredTreeModal from "@/components/modals/options/PreferredTreeModal";
 import SingleGlyphAppearanceModal from "@/components/modals/options/glyph-appearance/SingleGlyphAppearanceModal";
 
@@ -55,6 +58,7 @@ import ClearConstantsModal from "@/components/modals/ClearConstantsModal";
 import CreditsModal from "@/components/modals/CreditsModal";
 import DeleteAutomatorScriptModal from "@/components/modals/DeleteAutomatorScriptModal";
 import EnslavedHintsModal from "@/components/modals/EnslavedHintsModal";
+import CelestialPortraitsModal from "@/components/modals/CelestialPortraitsModal";
 import GlyphSetSaveDeleteModal from "@/components/modals/GlyphSetSaveDeleteModal";
 import GlyphShowcasePanelModal from "@/components/modals/GlyphShowcasePanelModal";
 import H2PModal from "@/components/modals/H2PModal";
@@ -227,10 +231,13 @@ Modal.cosmeticSetChoice = new Modal(CosmeticSetChoiceModal);
 Modal.singleGlyphAppearance = new Modal(SingleGlyphAppearanceModal);
 Modal.hotkeys = new Modal(HotkeysModal);
 Modal.newsOptions = new Modal(NewsOptionsModal);
+Modal.audioOptions = new Modal(AudioOptionsModal);
+Modal.namingOptions = new Modal(NamingOptionsModal);
 Modal.animationOptions = new Modal(AnimationOptionsModal);
 Modal.hiddenTabs = new Modal(HiddenTabsModal);
 Modal.preferredTree = new Modal(PreferredTreeModal);
 Modal.notation = new Modal(NotationModal);
+Modal.sidebar = new Modal(SidebarModal);
 
 Modal.upgradeLock = new Modal(UpgradeMechanicLockModal, 1);
 Modal.deleteCompanion = new Modal(DeleteCompanionGlyphModal, 1);
@@ -244,6 +251,7 @@ Modal.deleteAllRejectedGlyphs = new Modal(PurgeAllRejectedGlyphsModal, 1, GAME_E
 Modal.glyphShowcasePanel = new Modal(GlyphShowcasePanelModal);
 Modal.glyphUndo = new Modal(UndoGlyphModal, 1, GAME_EVENT.REALITY_RESET_AFTER);
 Modal.glyphReplace = new Modal(ReplaceGlyphModal, 1, GAME_EVENT.REALITY_RESET_AFTER);
+Modal.celestialPortraits = new Modal(CelestialPortraitsModal, 1);
 Modal.enslavedHints = new Modal(EnslavedHintsModal);
 Modal.realityGlyph = new Modal(RealityGlyphCreationModal);
 Modal.glyphSetSaveDelete = new Modal(GlyphSetSaveDeleteModal);

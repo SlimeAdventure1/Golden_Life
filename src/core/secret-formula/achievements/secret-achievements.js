@@ -2,7 +2,7 @@ export const secretAchievements = [
   {
     id: 11,
     name: "The first one's always free",
-    description: "Click on this Achievement."
+    description: "Click on this Achievement.",
   },
   {
     id: 12,
@@ -191,5 +191,50 @@ export const secretAchievements = [
     id: 48,
     name: "Stack overflow",
     description: "Have more Automator errors than lines."
+  },
+  {
+    id: 51,
+    name: "You got me",
+    description: "Obtain the ancient Glyph of Helios.",
+    checkRequirement: () => Glyphs.activeList.concat(Glyphs.inventoryList).filter(glyph => glyph.type==="helios").length >= 1,
+    checkEvent: GAME_EVENT.GLYPHS_CHANGED
+  },
+  {
+    id: 52,
+    name: "To be developed...",
+    description: "S52"
+  },
+  {
+    id: 53,
+    name: "To be developed...",
+    description: "S53"
+  },
+  {
+    id: 54,
+    name: "To be developed...",
+    description: "S54"
+  },
+  {
+    id: 55,
+    name: "I wish I had gotten 7 number Sevens",
+    description: "Start an Infinity Challenge inside an Eternity Challenge inside Time Dilation inside a Celestial Reality.",
+    checkEvent: GAME_EVENT.ACHIEVEMENT_EVENT_OTHER,
+  },
+  {
+    id: 56,
+    name: "To be developed...",
+    description: "S56"
+  },
+  {
+    id: 57,
+    name: "To be developed...",
+    description: "S57"
+  },
+  {
+    id: 58,
+    name: "Mythical (Unobtainable)",
+    description: "Earn every other secret achievements.",
+    checkRequirement: () => SecretAchievements.all.countWhere(a => a.isUnlocked) >= 39,
+    checkEvent: GAME_EVENT.GAME_TICK_AFTER
   },
 ];

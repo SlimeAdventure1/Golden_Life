@@ -19,6 +19,9 @@ export default {
         "o-dark-matter-dimension-button--ascend": this.hasNew && this.shouldGlow
       };
     },
+    text() {
+      return !this.hasNew ? "Show all milestones" : "Show all milestones (!)"
+    },
   },
   methods: {
     update() {
@@ -35,9 +38,9 @@ export default {
     <div
       class="o-laitela-singularity-modal-button"
       onclick="Modal.singularityMilestones.show()"
+      v-html="text"
       :class="classObject"
     >
-      Show all milestones
     </div>
     <SingularityMilestoneComponent
       v-for="milestone in milestones"

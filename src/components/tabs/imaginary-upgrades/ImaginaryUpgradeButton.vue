@@ -41,10 +41,11 @@ export default {
     classObject() {
       return {
         "c-reality-upgrade-btn--useless": this.upgrade.pelleDisabled,
-        "c-reality-upgrade-btn--bought": this.isBought && !this.upgrade.pelleDisabled,
-        "c-reality-upgrade-btn--unavailable": !this.isBought && !this.canBeBought && this.isAvailableForPurchase,
-        "c-reality-upgrade-btn--possible": !this.isAvailableForPurchase && this.isPossible,
-        "c-reality-upgrade-btn--locked": !this.isAvailableForPurchase && !this.isPossible,
+        "c-imaginary-upgrade-btn--bought": this.isBought && !this.upgrade.pelleDisabled,
+        "c-imaginary-upgrade-btn--unavailable": !this.isBought && !this.canBeBought && this.isAvailableForPurchase,
+        "c-imaginary-upgrade-btn--available": !this.isBought && this.canBeBought && this.isAvailableForPurchase,
+        "c-imaginary-upgrade-btn--possible": !this.isAvailableForPurchase && this.isPossible,
+        "c-imaginary-upgrade-btn--locked": !this.isAvailableForPurchase && !this.isPossible,
       };
     },
     requirementConfig() {
@@ -97,7 +98,7 @@ export default {
   >
     <button
       :class="classObject"
-      class="l-reality-upgrade-btn c-reality-upgrade-btn"
+      class="l-reality-upgrade-btn c-imaginary-upgrade-btn"
       @click.shift.exact="toggleLock(upgrade)"
       @click.exact="upgrade.purchase()"
     >

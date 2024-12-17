@@ -52,6 +52,7 @@ export class TimeDimensionAutobuyerState extends IntervaledAutobuyerState {
 
   static get entryCount() { return 8; }
   static get autobuyerGroupName() { return "Time Dimension"; }
+  static get autobuyerColor() { return "var(--color-eternity)"; }
   static get isActive() { return player.auto.timeDims.isActive; }
   static set isActive(value) { player.auto.timeDims.isActive = value; }
 }

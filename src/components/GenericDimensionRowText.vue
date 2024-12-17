@@ -109,9 +109,21 @@ export default {
   text-align: left;
   margin-right: 1rem;
 }
-
 .c-dim-row__small {
   font-size: 1.2rem;
   margin-right: 1rem;
+  font-style: italic;
+  text-shadow: 0.1rem 0.1rem 0.2rem var(--border),-0.1rem 0.1rem 0.2rem var(--color-text-inverted),0.1rem -0.1rem 0.2rem var(--color-text-inverted),-0.1rem -0.1rem 0.2rem var(--border);
+}
+.c-dim-row--unstable .c-dim-row__large,
+.c-dim-row--unstable .c-dim-row__small {
+  color:var(--color-laitela--base);
+  font-weight: bold;
+  text-shadow: 0.1rem 0.1rem 0.2rem var(--color-laitela--accent),-0.1rem 0.1rem 0.2rem var(--color-laitela--accent),0.1rem -0.1rem 0.2rem var(--color-laitela--accent),-0.1rem -0.1rem 0.2rem var(--color-laitela--accent);
+}
+.c-dim-row__title{
+  font-size:2rem;
+  font-family: cambria;
+  font-weight:bold
 }
 </style>

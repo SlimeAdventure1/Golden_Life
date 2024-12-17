@@ -20,11 +20,16 @@ export default {
     name() {
       return this.pet.name;
     },
+    symbol() {
+      return this.pet.symbol;
+    },
     petStyle() {
       return {
-        backgroundColor: this.hasRemembrance ? this.pet.color : "#555",
-        "box-shadow": this.hasRemembrance ? "0.1rem 0.1rem 0.1rem rgba(0, 0, 0, 0.7)" : "",
-        "border-color": this.hasRemembrance ? "black" : ""
+        color: this.hasRemembrance ? "white" : "#746d81",
+        "--border": this.hasRemembrance ? this.pet.color : "#746d81",
+        "--bg-dark": this.hasRemembrance ? this.pet.color : "#555",
+        "--bg-bright": this.hasRemembrance ? "#170a1e" : "#111",
+        "text-shadow": this.hasRemembrance ? `0.1rem 0.1rem 0.3rem ${this.pet.color}, -0.1rem -0.1rem 0.3rem ${this.pet.color}` : "0.1rem 0.1rem 0.3rem black, -0.1rem -0.1rem 0.3rem black",
       };
     }
   },
@@ -47,13 +52,9 @@ export default {
     v-if="isUnlocked"
     class="c-ra-pet-remembrance-button"
     :style="petStyle"
+    :ach-tooltip="name"
     @click="toggleRemembrance"
   >
-    <span v-if="hasRemembrance">
-      Remembrance given to {{ name }}
-    </span>
-    <span v-else>
-      Give Remembrance to {{ name }}
-    </span>
+  {{ symbol }}
   </button>
 </template>

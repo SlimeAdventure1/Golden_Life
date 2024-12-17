@@ -11,6 +11,8 @@ export default {
       isStopped: false,
       isEC12: false,
       isPulsing: false,
+      gametimeequal:0,
+      fade:0,
     };
   },
   computed: {
@@ -32,6 +34,9 @@ export default {
       return this.baseSpeed === 1
         ? "The game is running at normal speed."
         : `Game speed is altered: ${this.baseSpeedText}`;
+    },
+    equalText(){
+      if (this.baseSpeed !== 1) return `(${this.gametimeequal} / real second)`
     }
   },
   methods: {
@@ -39,9 +44,11 @@ export default {
       this.baseSpeed = getGameSpeedupFactor();
       this.pulsedSpeed = getGameSpeedupForDisplay();
       this.hasSeenAlteredSpeed = PlayerProgress.seenAlteredSpeed();
+      this.gametimeequal = TimeSpan.fromMilliseconds(getGameSpeedupForDisplay()*1000).toStringShort(false)
       this.isStopped = Enslaved.isStoringRealTime;
       this.isEC12 = EternityChallenge(12).isRunning;
       this.isPulsing = (this.baseSpeed !== this.pulsedSpeed) && Enslaved.canRelease(true);
+      this.fade = GameEnd.endState>1&&GameEnd.endState<END_STATE_MARKERS.CREDITS_START? Math.clamp(1-(GameEnd.endState-3),0,1):1
     },
     formatNumber(num) {
       if (num >= 0.001 && num < 10000 && num !== 1) {
@@ -57,7 +64,7 @@ export default {
 </script>
 
 <template>
-  <span class="c-gamespeed">
+  <span class="c-gamespeed" :style="{'opacity':fade}">
     <span>
       {{ baseText }}
     </span>

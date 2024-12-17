@@ -21,7 +21,9 @@ export default {
     },
     textColor(hasBought) {
       return {
-        color: hasBought ? "var(--color-good)" : "var(--color-bad)"
+        color: hasBought ? "var(--color-good)" : "var(--color-bad)",
+        "border-bottom" : "1px solid",
+        "border-image" : "linear-gradient(90deg, transparent, #808080a0, transparent) 1"
       };
     }
   }
@@ -87,7 +89,7 @@ export default {
           class="c-automator-points-list-single-entry l-upgrade-list"
           :style="textColor(upgrade.isBought)"
         >
-          <b>{{ upgrade.name }}</b>
+          <b><i>{{ upgrade.name }}</i></b>
           <span class="c-automator-points-list-ap">{{ formatInt(upgrade.automatorPoints) }} AP</span>
           <br>
           {{ upgrade.shortDescription }}
@@ -121,8 +123,11 @@ export default {
 .c-automator-points-list-col {
   position: relative;
   text-align: left;
-  border: var(--var-border-width, 0.15rem) solid var(--color-text);
+  border: var(--var-border-width, 0.15rem) solid;
+  border-image: var(--leg-border) 3;
   border-radius: var(--var-border-radius, 0.5rem);
+  background-image: var(--leg-base);
+  box-shadow: 0 0 2rem #00000080 inset;
   padding: 1rem;
 }
 
@@ -146,8 +151,11 @@ export default {
   height: 48%;
   position: relative;
   text-align: left;
-  border: var(--var-border-width, 0.15rem) solid var(--color-text);
+  border: var(--var-border-width, 0.15rem) solid;
+  border-image: var(--leg-border) 3;
   border-radius: var(--var-border-radius, 0.5rem);
+  background-image: var(--leg-base);
+  box-shadow: 0 0 2rem #00000080 inset;
   padding: 1rem;
 }
 
@@ -171,12 +179,15 @@ export default {
   width: 3rem;
   max-width: 3rem;
   font-weight: bold;
+  font-style: italic;
 }
 
 .c-automator-points-list-single-entry {
   position: relative;
 }
-
+.c-automator-points-list-single-entry:last-child {
+  border-bottom:none !important
+}
 .c-automator-points-list-ap {
   position: absolute;
   right: 0;
@@ -186,7 +197,9 @@ export default {
 .c-automator-points-list-ap--large {
   position: absolute;
   right: 1rem;
-  font-size: 1.8rem;
+  font-size: 2rem;
+  font-family: cambria;
+  font-weight: bold;
   opacity: 0.6;
 }
 
@@ -195,7 +208,9 @@ export default {
 }
 
 .l-large-text {
-  font-size: 1.8rem;
+  font-size: 2rem;
+    font-family: cambria;
+    font-weight: bold;
 }
 
 .l-upgrade-list {

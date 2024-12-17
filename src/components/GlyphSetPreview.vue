@@ -62,6 +62,26 @@ export default {
       type: Boolean,
       required: false,
       default: true
+    },
+    needsCrates: {
+      type: Number,
+      required: false,
+      default: 0
+    },
+    marginsize: {
+      type: String,
+      required: false,
+      default: "0.2rem"
+    },
+    maxlength: {
+      type: Number,
+      required: false,
+      default: 20
+    },
+    group: {
+      type: String,
+      required: false,
+      default:""
     }
   },
   data() {
@@ -79,6 +99,11 @@ export default {
       order.sort((a, b) => standardOrder.indexOf(a.type) - standardOrder.indexOf(b.type));
       return order;
     },
+    marginstyle(){
+      return{
+        "--margin":this.marginsize
+      }
+    }
   },
   watch: {
     glyphs() {
@@ -111,8 +136,8 @@ export default {
 </script>
 
 <template>
-  <div>
-    <span v-if="text && !textHidden">
+  <div :style="marginstyle">
+    <span v-if="text && !textHidden" style="z-index:2;position: relative;">
       {{ text }}
       <br>
     </span>
@@ -126,8 +151,9 @@ export default {
         :key="glyphHash()"
         :glyph-set="glyphs"
         :force-color="forceNameColor"
+        :maxlength="maxlength"
       />
-      <GlyphComponent
+<GlyphComponent
         v-for="(g, idx) in orderedGlyphs"
         :key="idx"
         class="l-preview"
@@ -143,7 +169,9 @@ export default {
         :text-proportion="0.5"
         glow-blur="0.2rem"
         glow-spread="0.1rem"
-      />
+        :hasCrate="needsCrates"
+        :needsZindex="false"
+      />         
     </span>
     <span v-else>
       <GlyphSetName
@@ -158,6 +186,12 @@ export default {
 
 <style scoped>
 .l-preview {
-  margin: 0.2rem;
+  margin: var(--margin);
+}
+.c-preview-container{
+  background:#00000080;
+  border:0.1rem solid var(--color-reality-dark);
+  box-shadow:0 0 0.5rem black,0 0 0.5rem black inset,0 0 0 0.2rem var(--color-reality-dark) inset;
+  border-radius: var(--var-border-radius,0.5rem);
 }
 </style>

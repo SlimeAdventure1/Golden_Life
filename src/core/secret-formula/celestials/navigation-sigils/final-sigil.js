@@ -1,16 +1,14 @@
 import { CELESTIAL_NAV_DRAW_ORDER } from "../navigation";
-
 function sigilProgress() {
   const riftProgress = PelleRifts.all.map(r => Math.clamp(r.realPercentage, 0, 1)).min();
   const generatorProgress = Math.log10(1 + GalaxyGenerator.generatedGalaxies) / 11;
   return Math.clampMax(0.2 * riftProgress + 0.8 * generatorProgress, 1);
 }
-
 // Determines styling, overall visibility, and placement/scaling of the sigil. Center and size are defined such that
 // keeping the sigil within internal coordinates of ±1 will keep the sigil within a ±size box of the center coordinates
 const SigilAttributes = {
   visible: () => PelleRifts.all.map(r => Math.clamp(r.realPercentage, 0, 1)).min() > 0,
-  center: new Vector(400, 300),
+  center: new Vector(500, 400),
   size: 400,
   color: "#00ffff",
   canvasLayer: CELESTIAL_NAV_DRAW_ORDER.NODE_BG - 500,
@@ -80,7 +78,7 @@ function sigilShape(type, att, fill, colorOverride) {
       drawOrder: SigilAttributes.canvasLayer,
       path,
       fill: colorOverride ?? SigilAttributes.color,
-      completeWidth: SigilAttributes.size / 20,
+      completeWidth: SigilAttributes.size / 30,
       noBG: true,
     },
   };
@@ -107,6 +105,12 @@ const Positions = Object.freeze({
   botC: scaledPos(0, 0.31),
   bot1: scaledPos(0.12, 0.43),
   bot2: scaledPos(0.28, 0.43),
+  harm1: scaledPos(0.95, 0),
+  harm2: scaledPos(1.5, 0),
+  harm3: scaledPos(0.85* Math.cos(Math.PI / 180 * -60), Math.sin(Math.PI / 180 * -60)),
+  harm4: scaledPos(1.5* Math.cos(Math.PI / 180 * -60), -0.425+Math.sin(Math.PI / 180 * -60)),
+  harm5: scaledPos(0.85* Math.cos(Math.PI / 180 * 60), Math.sin(Math.PI / 180 * 60)),
+  harm6: scaledPos(1.5* Math.cos(Math.PI / 180 * 60), 0.425+Math.sin(Math.PI / 180 * 60)),
 });
 
 // List of specified primitive graphics elements with which to construct the sigil; see docstring of sigilShape
@@ -163,6 +167,15 @@ const Shapes = {
   circTopDown: sigilShape("circle",
     { center: Positions.circTop, radius: 0.08, initAngle: 0.75 * Math.PI, finalAngle: -0.25 * Math.PI },
     { init: 0.9, weight: 0.1 }),
+  hexaLine: sigilShape("edge",
+  { start: Positions.harm1, end: Positions.harm2 },
+  { init: 0.7, weight: 0.3 }),
+  hexaLine2: sigilShape("edge",
+  { start: Positions.harm3, end: Positions.harm4 },
+  { init: 0.7, weight: 0.3 }),
+  hexaLine3: sigilShape("edge",
+  { start: Positions.harm5, end: Positions.harm6 },
+  { init: 0.7, weight: 0.3 }),
 };
 
 // The hardcoded elements in Shapes above only specify roughly half of the sigil; here we take all the existing entries
@@ -182,7 +195,7 @@ for (const key of Object.keys(Shapes)) {
 }
 
 // This segment adds multiple circular arcs around the entire sigil, which all fill simultaneously
-const arcSegments = 16;
+const arcSegments = 12;
 for (let arcIndex = 0; arcIndex < arcSegments; arcIndex++) {
   const len = 2 * Math.PI / arcSegments;
   const init = arcIndex * len;
@@ -190,12 +203,22 @@ for (let arcIndex = 0; arcIndex < arcSegments; arcIndex++) {
     { center: SigilAttributes.center, radius: 0.75,
       initAngle: init, finalAngle: init + len },
     { init: 0.1, weight: 0.4 },
-    "crimson");
+    "#ff0088");
   Shapes[`arcOuter${arcIndex}`] = sigilShape("circle",
     { center: SigilAttributes.center, radius: 0.95,
       initAngle: init, finalAngle: init - len },
     { init: 0.5, weight: 0.4 },
-    "crimson");
+    "#ff0088");
+  Shapes[`arcOuterer${arcIndex}`] = sigilShape("circle",
+    { center: SigilAttributes.center, radius: 1.5,
+      initAngle: init, finalAngle: init + len },
+    { init: 0.4, weight: 0.4 },
+    "#ff0088");
+  Shapes[`arcOuterest${arcIndex}`] = sigilShape("circle",
+    { center: SigilAttributes.center, radius: 1.7,
+      initAngle: init, finalAngle: init - len },
+    { init: 0.7, weight: 0.2 },
+    "#ff0088");
 }
 
 export const finalSigil = Object.values(Shapes)

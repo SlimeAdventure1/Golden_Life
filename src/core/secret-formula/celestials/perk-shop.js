@@ -25,7 +25,7 @@ export const perkShop = {
     description: () => `Increase pre-instability Glyph levels by ${formatPercents(0.05)}`,
     effect: bought => Math.pow(1.05, bought),
     formatEffect: value => formatX(value, 2, 2),
-    formatCost: value => format(value, 2),
+    formatCost: value => formatInt(value),
     costCap: () => (Ra.unlocks.perkShopIncrease.canBeApplied ? 1048576 : 2048),
     cap: () => (Ra.unlocks.perkShopIncrease.canBeApplied ? Math.pow(1.05, 20) : Math.pow(1.05, 11))
   }),
@@ -36,7 +36,7 @@ export const perkShop = {
     description: "Double Reality Machine gain",
     effect: bought => Math.pow(2, bought),
     formatEffect: value => formatX(value, 2),
-    formatCost: value => format(value, 2),
+    formatCost: value => formatInt(value),
     costCap: () => (Ra.unlocks.perkShopIncrease.canBeApplied ? 1048576 : 2048),
     cap: () => (Ra.unlocks.perkShopIncrease.canBeApplied ? 1048576 : 2048)
   }),
@@ -47,7 +47,7 @@ export const perkShop = {
     description: "Dilation autobuyers buy twice as many Dilation Upgrades at once.",
     effect: bought => Math.pow(2, bought),
     formatEffect: value => formatX(value, 2),
-    formatCost: value => format(value, 2),
+    formatCost: value => formatInt(value),
     costCap: () => (Ra.unlocks.perkShopIncrease.canBeApplied ? 1638400 : 1600),
     cap: () => (Ra.unlocks.perkShopIncrease.canBeApplied ? 16384 : 16),
   }),
@@ -59,7 +59,7 @@ export const perkShop = {
       and Replicanti autobuyers are ${formatX(2)} faster.`,
     effect: bought => Math.pow(2, bought),
     formatEffect: value => formatX(value, 2),
-    formatCost: value => format(value, 2),
+    formatCost: value => formatInt(value),
     costCap: () => (Ra.unlocks.perkShopIncrease.canBeApplied ? 64000 : 4000),
     cap: () => (Ra.unlocks.perkShopIncrease.canBeApplied ? 64 : 4)
   }),

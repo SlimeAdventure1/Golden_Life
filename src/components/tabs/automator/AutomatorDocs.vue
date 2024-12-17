@@ -9,6 +9,7 @@ import AutomatorDocsIntroPage from "./AutomatorDocsIntroPage";
 import AutomatorDocsTemplateList from "./AutomatorDocsTemplateList";
 import AutomatorErrorPage from "./AutomatorErrorPage";
 import AutomatorEventLog from "./AutomatorEventLog";
+import AutomatorVisuals from "./AutomatorVisuals";
 import AutomatorScriptDropdownEntryList from "./AutomatorScriptDropdownEntryList";
 import ExpandingControlBox from "@/components/ExpandingControlBox";
 
@@ -20,7 +21,8 @@ export const AutomatorPanels = {
   DATA_TRANSFER: 4,
   CONSTANTS: 5,
   TEMPLATES: 6,
-  BLOCKS: 7
+  BLOCKS: 7,
+  VISUALS: 8
 };
 
 export default {
@@ -37,6 +39,7 @@ export default {
     AutomatorDefinePage,
     AutomatorScriptDropdownEntryList,
     ExpandingControlBox,
+    AutomatorVisuals
   },
   data() {
     return {
@@ -49,7 +52,11 @@ export default {
       runningScriptID: 0,
       totalChars: 0,
       scriptCount: 0,
-      canMakeNewScript: true
+      canMakeNewScript: true,
+      panelTheme: 0,
+      panelColor: 0,
+      panelGradient: 0,
+      scanimation:false
     };
   },
   computed: {
@@ -113,6 +120,16 @@ export default {
     currentEditorScriptName() {
       return this.scripts.find(s => s.id === this.currentScriptID).name;
     },
+    autovisuals(){
+      return {
+        "c-autoscan-animation":this.scanimation&&this.panelTheme!==3,
+        "c-autotheme-light":this.panelTheme===1,
+        "c-autotheme-dark":this.panelTheme===2,
+        "c-autotheme-bg":this.panelTheme===3,
+        [`c-autocolor-${this.panelColor}`]:true,
+        [`c-autograd-${this.panelGradient}`]:true,
+      }
+    }
   },
   watch: {
     infoPaneID(newValue) {
@@ -130,6 +147,10 @@ export default {
   },
   methods: {
     update() {
+      this.panelTheme=player.options.automator.theme[1]
+      this.panelColor=player.options.automator.color[1]
+      this.panelGradient=player.options.automator.gradient[1]
+      this.scanimation = player.options.automator.animation
       this.isBlock = player.reality.automator.type === AUTOMATOR_TYPE.BLOCK;
       this.infoPaneID = player.reality.automator.currentInfoPane;
       this.errorCount = AutomatorData.currentErrors().length;
@@ -291,6 +312,12 @@ export default {
           :class="activePanelClass(panelEnum.BLOCKS)"
           @click="infoPaneID = panelEnum.BLOCKS"
         />
+        <AutomatorButton
+          v-tooltip="'Open Visual Options'"
+          class="fa-palette"
+          :class="activePanelClass(panelEnum.VISUALS)"
+          @click="infoPaneID = panelEnum.VISUALS"
+        />
         <span
           v-if="fullScreen"
           class="c-automator__status-text c-automator__status-text--small"
@@ -355,7 +382,7 @@ export default {
         />
       </div>
     </div>
-    <div class="c-automator-docs l-automator-pane__content">
+    <div class="c-automator-docs l-automator-pane__content" :class="autovisuals">
       <AutomatorDocsIntroPage v-if="infoPaneID === panelEnum.INTRO_PAGE" />
       <AutomatorDocsCommandList v-else-if="infoPaneID === panelEnum.COMMANDS" />
       <AutomatorErrorPage v-else-if="infoPaneID === panelEnum.ERRORS" />
@@ -364,6 +391,7 @@ export default {
       <AutomatorDefinePage v-else-if="infoPaneID === panelEnum.CONSTANTS" />
       <AutomatorDocsTemplateList v-else-if="infoPaneID === panelEnum.TEMPLATES" />
       <AutomatorBlocks v-else-if="infoPaneID === panelEnum.BLOCKS" />
+      <AutomatorVisuals v-else-if="infoPaneID === panelEnum.VISUALS" />
     </div>
   </div>
 </template>
@@ -406,6 +434,10 @@ export default {
 
 .c-automator__button--active {
   background-color: var(--color-automator-controls-active);
+  border-color: black;
+}
+
+.s-base--dark .c-automator__button--active {
   border-color: var(--color-reality-light);
 }
 

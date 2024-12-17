@@ -49,6 +49,14 @@ export default {
     dropDownIconClass() {
       return this.shown ? "far fa-minus-square" : "far fa-plus-square";
     },
+    prestigeClass() {
+      return {
+        "c-past-runs-prestige": true,
+        "c-past-runs-prestige__infinity": this.layer.name === "Infinity",
+        "c-past-runs-prestige__eternity": this.layer.name === "Eternity",
+        "c-past-runs-prestige__reality": this.layer.name === "Reality",
+      };
+    },
     points() {
       const rawText = this.layer.currency;
       return rawText === "RM" && this.hasIM ? "iM Cap" : rawText;
@@ -214,10 +222,11 @@ export default {
       }
       return {
         width,
-        border: "0.05rem solid #999999",
+        border: "0.05rem solid #88888870",
         margin: "-0.05rem",
         padding: "0.2rem 0",
         "border-bottom-width": isHeader ? "0.3rem" : "0.1rem",
+        background: isHeader ? "#88888840" : undefined,
         "font-weight": isHeader ? "bold" : null,
         color: "var(--color-text)",
       };
@@ -227,7 +236,7 @@ export default {
 </script>
 
 <template>
-  <div v-if="condition">
+  <div v-if="condition" :class="prestigeClass">
     <div
       class="c-past-runs-header"
       @click="toggleShown"
@@ -239,7 +248,7 @@ export default {
         <h3>Last {{ formatInt(10) }} {{ plural }}:</h3>
       </span>
     </div>
-    <div v-show="shown">
+    <div v-show="shown" class="c-row-container-color">
       <div class="c-row-container">
         <span
           v-for="(entry, col) in infoCol()"
@@ -278,8 +287,7 @@ export default {
           </span>
         </span>
       </div>
-      <br>
-    </div>
+    </div><br v-show="shown">
   </div>
 </template>
 
@@ -289,10 +297,15 @@ export default {
   flex-direction: row;
   width: 100%;
 }
-
+.c-row-container-color{
+  background:#ffffff80
+}
+.s-base--dark .c-row-container-color{
+  background:#00000080
+}
 .c-empty-row {
   display: block;
-  border: 0.05rem solid #999999;
+  border: 0.05rem solid #88888870;
   color: var(--color-text);
   width: 100%;
   padding: 0.2rem 0;
@@ -301,5 +314,26 @@ export default {
 
 .l-no-records {
   height: 5.4rem;
+}
+
+.c-past-runs-prestige {
+  text-align: center;
+  background: linear-gradient(transparent,var(--color) 500%),var(--leg-base);
+  text-shadow: var(--text-shadow);
+  min-width:25rem;
+  padding:0.5rem 1rem;
+  margin:0.5rem;
+  border:var(--var-border-width,0.1rem) solid var(--color);
+  border-radius: var(--var-border-radius,0.5rem);
+  box-shadow: 0 0 1rem black inset, 0 0 0 0.2rem var(--color) inset
+}
+.c-past-runs-prestige__infinity {
+--color:var(--color-infinity)
+}
+.c-past-runs-prestige__eternity {
+--color:var(--color-eternity)
+}
+.c-past-runs-prestige__reality {
+--color:var(--color-reality)
 }
 </style>

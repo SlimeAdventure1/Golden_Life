@@ -1,6 +1,12 @@
 <script>
 export default {
   name: "SelectSidebarDropdown",
+  props: {
+    id: {
+      type: Number,
+      required: true
+    }
+  },
   computed: {
     resourceDB: () => GameDatabase.sidebarResources,
     resources() {
@@ -9,7 +15,7 @@ export default {
   },
   methods: {
     setResource(id) {
-      player.options.sidebarResourceID = id;
+      player.options.sidebarResourceType[this.id] = id;
     }
   }
 };

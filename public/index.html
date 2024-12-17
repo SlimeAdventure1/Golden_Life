@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Antimatter Dimensions</title>
+  <title>Antimatter Dimensions: Legendary</title>
   <link rel="icon" type="image/png" href="icon.png">
-  <meta name="Antimatter Dimensions" content="A game about huge numbers and watching them go up." >
+  <meta name="Antimatter Dimensions" content="A mod that makes game about huge numbers and watching them go up look sexy." >
   <link href="https://fonts.googleapis.com/css?family=PT+Mono" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="stylesheets/fontawesome/css/all.css">
   <link rel="stylesheet" type="text/css" href="stylesheets/codemirror/codemirror.css">
@@ -15,7 +15,12 @@
   <link rel="stylesheet" type="text/css" href="stylesheets/vue-sfc-classes.css">
   <link rel="stylesheet" type="text/css" href="stylesheets/ad-slider-component.css">
   <link rel="stylesheet" type="text/css" href="stylesheets/glyphs.css">
+  <link rel="stylesheet" type="text/css" href="stylesheets/legendary-config.css">
   <link rel="stylesheet" type="text/css" href="stylesheets/styles.css?3">
+  <link rel="stylesheet" type="text/css" href="stylesheets/infinity.css?3">
+  <link rel="stylesheet" type="text/css" href="stylesheets/eternity.css?3">
+  <link rel="stylesheet" type="text/css" href="stylesheets/reality.css?3">
+  <link rel="stylesheet" type="text/css" href="stylesheets/celestials.css?3">
   <link rel="stylesheet" type="text/css" href="stylesheets/automator.css">
   <link rel="stylesheet" type="text/css" href="stylesheets/time-studies.css">
   <link rel="stylesheet" type="text/css" href="stylesheets/tooltips.css">
@@ -30,17 +35,23 @@
   </div>
   <div id="loading"></div>
   <div id="ui"></div>
+  <div id="flashlight" class="flashlight" style="display: none;">
+    <img src="../images/s13/unknown.png">
+  </div>
   <div id="background-animations">
     <div class="videocontainer videocontainer--background">
       <video autoplay muted loop id="stars">
-        <source src="images/stars-bg.webm" type="video/webm">
+        <source src="videos/stars-bg.webm" type="video/webm">
       </video>
     </div>
     <div id="snow" style="display: none;"></div>
   </div>
   <div class="videocontainer">
     <video preload muted id="realityanimbg" style="opacity: 0; display: none;">
-      <source src="images/realityanimbg.webm" type="video/webm">
+      <source src="videos/realityanimbg.webm" type="video/webm">
+    </video>
+    <video preload muted id="doomanimbg" style="opacity: 0; display: none;">
+      <source src="videos/realityanimbg.webm" type="video/webm">
     </video>
   </div>
   <div id="performance-stats" class="c-performance-stats" style="display: none;"></div>

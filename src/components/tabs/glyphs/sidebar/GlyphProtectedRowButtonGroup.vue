@@ -86,6 +86,7 @@ export default {
       v-model="moveGlyphs"
       class="c-glyph-inventory-option"
       label="Move Glyphs on changing row count:"
+      :class="{'c-glyph-inventory-option--active':moveGlyphs}"
     />
   </div>
 </template>

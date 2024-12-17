@@ -43,7 +43,8 @@ export default {
     },
     classObject() {
       return {
-        "c-reality-upgrade-btn--unavailable": !this.isAffordable
+        "c-reality-upgrade-btn--unavailable": !this.isAffordable,
+        "c-reality-upgrade-btn--available": this.isAffordable
       };
     }
   },

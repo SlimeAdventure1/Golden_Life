@@ -6,7 +6,7 @@ import { MultiplierTabIcons } from "./icons";
 // See index.js for documentation
 export const TP = {
   total: {
-    name: "Total Tachyon Particles",
+    name: "Total Tachyons",
     displayOverride: () => {
       const baseTPStr = format(new Decimal(Currency.tachyonParticles.value), 2, 2);
       return PelleRifts.paradox.milestones[1].canBeApplied
@@ -24,7 +24,7 @@ export const TP = {
     icon: MultiplierTabIcons.TACHYON_PARTICLES,
   },
   base: {
-    name: "Base Tachyon Particle Count",
+    name: "Base Tachyon Count",
     isBase: true,
     multValue: () => new Decimal(Currency.tachyonParticles.value).div(tachyonGainMultiplier()),
     isActive: () => new Decimal(Currency.tachyonParticles.value).gt(0),

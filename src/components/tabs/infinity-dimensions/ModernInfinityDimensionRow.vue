@@ -1,4 +1,5 @@
 <script>
+import FillBar from "@/components/FillBar";
 import GenericDimensionRowText from "@/components/GenericDimensionRowText";
 import PrimaryButton from "@/components/PrimaryButton";
 import PrimaryToggleButton from "@/components/PrimaryToggleButton";
@@ -6,6 +7,7 @@ import PrimaryToggleButton from "@/components/PrimaryToggleButton";
 export default {
   name: "ModernInfinityDimensionRow",
   components: {
+    FillBar,
     GenericDimensionRowText,
     PrimaryButton,
     PrimaryToggleButton
@@ -36,6 +38,8 @@ export default {
       hardcap: InfinityDimensions.HARDCAP_PURCHASES,
       eternityReached: false,
       enslavedRunning: false,
+      isDestabilized:false,
+      percentage:0,
     };
   },
   computed: {
@@ -43,7 +47,9 @@ export default {
       return ui.view.shiftDown;
     },
     name() {
-      return `${InfinityDimension(this.tier).shortDisplayName} Infinity Dimension`;
+      return player.options.naming.dimensions?
+      `Infinity ${InfinityDimension(this.tier).uniqueName}`:
+      `${InfinityDimension(this.tier).shortDisplayName} Infinity Dimension`;
     },
     costDisplay() {
       if (this.isUnlocked || this.shiftDown) {
@@ -58,7 +64,7 @@ export default {
       return `Reach ${formatPostBreak(InfinityDimension(this.tier).amRequirement)} AM`;
     },
     hasLongText() {
-      return this.costDisplay.length > 20;
+      return this.costDisplay.length > 25;
     },
     capTooltip() {
       if (this.enslavedRunning) return `Nameless prevents the purchase of more than ${format(10)} Infinity Dimensions`;
@@ -94,6 +100,7 @@ export default {
       this.cost.copyFrom(dimension.cost);
       this.isAvailableForPurchase = dimension.isAvailableForPurchase;
       this.isCapped = dimension.isCapped;
+      this.percentage = formatPercents(dimension.purchases / dimension.purchaseCap,2)
       if (this.isCapped) {
         this.capIP.copyFrom(dimension.hardcapIPAmount);
         this.hardcap = dimension.purchaseCap;
@@ -102,6 +109,9 @@ export default {
       this.isAutobuyerOn = Autobuyer.infinityDimension(tier).isActive;
       this.eternityReached = PlayerProgress.eternityUnlocked();
       this.enslavedRunning = Enslaved.isRunning;
+      if (tier > 8-Laitela.difficultyTier) {
+        this.isDestabilized = Laitela.isRunning ? true : false
+      }
     },
     buySingleInfinityDimension() {
       InfinityDimension(this.tier).buySingle();
@@ -117,12 +127,12 @@ export default {
   <div
     v-show="showRow"
     class="c-dimension-row l-dimension-row-infinity-dim l-dimension-single-row"
-    :class="{ 'c-dim-row--not-reached': !isUnlocked && !canUnlock }"
+    :class="{ 'c-dim-row--not-reached': !isUnlocked && !canUnlock,'c-dim-row--unstable': isDestabilized }"
   >
     <GenericDimensionRowText
       :tier="tier"
       :name="name"
-      :multiplier-text="formatX(multiplier, 2, 1)"
+      :multiplier-text="!isDestabilized?formatX(multiplier, 2, 1) : 'Destabilized'"
       :amount-text="format(amount, 2)"
       :rate="rateOfChange"
     />
@@ -133,10 +143,16 @@ export default {
       <PrimaryButton
         :enabled="isAvailableForPurchase || (!isUnlocked && canUnlock)"
         class="o-primary-btn--buy-id o-primary-btn o-primary-btn--new o-primary-btn--buy-dim"
-        :class="{ 'l-dim-row-small-text': hasLongText }"
+        :class="{ 'l-dim-row-small-text': hasLongText, 'o-primary-btn--infcapped': isCapped&&!enslavedRunning }"
         @click="buySingleInfinityDimension"
       >
-        {{ costDisplay }}
+        <div class="button-content">{{ costDisplay }}</div>
+        <div class="o-fill-container" v-if="!isCapped&&tier!==8">
+          <FillBar
+          class="o-fill-bar--infinity-dim"
+          :width="percentage"
+          />
+        </div>
       </PrimaryButton>
       <PrimaryToggleButton
         v-if="isAutobuyerUnlocked && !isEC8Running"
@@ -172,4 +188,9 @@ export default {
   padding: 0.5rem;
   visibility: hidden;
 }
+.o-fill-bar--infinity-dim {
+  float:right;
+  background: linear-gradient(transparent -50%,var(--color-infinity) 350%);
+}
+
 </style>

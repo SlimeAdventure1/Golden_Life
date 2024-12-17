@@ -5,7 +5,12 @@ import { DarkMatterDimensions } from "./dark-matter-dimension";
 
 export const Laitela = {
   displayName: "Lai'tela",
+  displayTitle: "Goddess Lai'tela",
+  fullName: "Lai'tela, Celestial of Dimensions",
+  celestialOf: "Dimensions",
   possessiveName: "Lai'tela's",
+  RealityName: "Nightfall",
+  LevelName: ["I","II","III","IV","V","VI","VII","VIII","Prime"],
   get celestial() {
     return player.celestials.laitela;
   },

@@ -14,7 +14,11 @@ export const EFFARIG_STAGES = {
 
 export const Effarig = {
   displayName: "Effarig",
+  displayTitle: "Glyphkeeper Effarig",
+  fullName: "Effarig, Celestial of Ancient Relics",
+  celestialOf: "Ancient Relics",
   possessiveName: "Effarig's",
+  RealityName: "Omnidolor",
   initializeRun() {
     clearCelestialRuns();
     player.celestials.effarig.run = true;
@@ -131,6 +135,7 @@ class EffarigUnlockState extends BitUpgradeState {
   purchase() {
     if (this.isUnlocked || !Currency.relicShards.purchase(this.cost)) return;
     this.unlock();
+    AudioManagement.playSound("upgrade_rebuyable")
     this.config.onPurchased?.();
   }
 }

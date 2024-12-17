@@ -71,7 +71,7 @@ export default {
           v-for="(effect, index) in possibleEffects"
           :key="index"
         >
-          {{ formatGlyphEffect(effect) }}
+        Ϟ {{ formatGlyphEffect(effect) }} Ϟ
         </div>
       </div>
       <PrimaryButton

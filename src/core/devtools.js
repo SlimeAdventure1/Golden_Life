@@ -8,6 +8,8 @@ import FullScreenAnimationHandler from "./full-screen-animation-handler";
 // reasonable, since these are the devtools after all
 export const dev = {};
 
+dev.gamespeed = 1
+dev.hardness = 1
 dev.hardReset = function() {
   GameStorage.hardReset();
 };
@@ -16,7 +18,10 @@ dev.giveAllAchievements = function() {
   const allAchievements = Achievements.all.concat(SecretAchievements.all);
   for (const achievement of allAchievements) achievement.unlock();
 };
-
+dev.giveSecretAchievements = function() {
+  const allAchievements = SecretAchievements.all;
+  for (const achievement of allAchievements) achievement.unlock();
+};
 // Know that both dev.doubleEverything and dev.tripleEverything are both broken
 // with this error https://i.imgur.com/ZMEBNTv.png
 
@@ -137,7 +142,10 @@ dev.giveRealityGlyph = function(level) {
   if (GameCache.glyphInventorySpace.value === 0) return;
   Glyphs.addToInventory(GlyphGenerator.realityGlyph(level));
 };
-
+dev.giveHeliosGlyph = function() {
+  if (GameCache.glyphInventorySpace.value === 0) return;
+  Glyphs.addToInventory(GlyphGenerator.heliosGlyph());
+};
 dev.setCompanionGlyphEP = function(eternityPoints) {
   const glyph = player.reality.glyphs.active
     .concat(player.reality.glyphs.inventory)
@@ -528,3 +536,6 @@ dev.forceCloudSave = async function() {
 dev.unlockAllCosmeticSets = function() {
   player.reality.glyphs.cosmetics.unlockedFromNG = Object.keys(GameDatabase.reality.glyphCosmeticSets);
 };
+dev.notifytest = function() {
+  GameUI.notify.info([`Hello there!`, `You have a notifcation from testing`],5000)
+}

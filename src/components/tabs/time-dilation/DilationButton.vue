@@ -12,18 +12,27 @@ export default {
       tachyonGain: new Decimal(),
       remnantRequirement: 0,
       showRequirement: false,
-      creditsClosed: false
+      creditsClosed: false,
+      wobbly: false
     };
   },
   computed: {
     disableText() {
       // Doesn't need to be reactive or check strike status; it's always permanent once entered in Doomed
       return Pelle.isDoomed ? "Dilation is permanent." : "Disable Dilation.";
+    },
+    buttonClassObject() {
+      return {
+        "o-dilation-btn--unlocked": this.isUnlocked,
+        "o-dilation-btn--locked": !this.isUnlocked,
+        "a-wobble-multi": this.wobbly
+      };
     }
   },
   methods: {
     update() {
       this.isUnlocked = PlayerProgress.dilationUnlocked();
+      this.wobbly = PlayerProgress.dilationUnlocked() && player.options.animations.wobbly;
       this.isRunning = player.dilation.active;
       this.remnantRequirement = Pelle.remnantRequirementForDilation;
       this.showRequirement = Pelle.isDoomed && !Pelle.canDilateInPelle;
@@ -51,7 +60,7 @@ export default {
 <template>
   <button
     class="o-dilation-btn"
-    :class="isUnlocked ? 'o-dilation-btn--unlocked' : 'o-dilation-btn--locked'"
+    :class="buttonClassObject"
     @click="dilate()"
   >
     <span v-if="!isUnlocked">Purchase the Dilation Study to unlock.</span>
@@ -64,17 +73,17 @@ export default {
     <span v-else-if="canEternity && hasGain">
       {{ disableText }}
       <br>
-      Gain {{ quantify("Tachyon Particle", tachyonGain, 2, 1) }}.
+      Gain {{ quantify("Tachyon", tachyonGain, 2, 1) }}.
     </span>
     <span v-else-if="hasGain">
       {{ disableText }}
       <br>
-      Reach {{ quantify("Infinity Point", eternityGoal, 1, 0) }} to Eternity and gain Tachyon Particles.
+      Reach {{ quantify("Infinity Point", eternityGoal, 1, 0) }} to Eternity and gain Tachyons.
     </span>
     <span v-else>
       {{ disableText }}
       <br>
-      Reach {{ format(requiredForGain, 2, 1) }} antimatter to gain more Tachyon Particles.
+      Reach {{ format(requiredForGain, 2, 1) }} antimatter to gain more Tachyons.
     </span>
   </button>
 </template>

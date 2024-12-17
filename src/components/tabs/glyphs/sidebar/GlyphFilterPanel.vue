@@ -189,6 +189,9 @@ export default {
     importFilterSettings() {
       Modal.importFilter.show();
     },
+    rarityName(x){
+      return getRarity(x).name
+    }
   }
 };
 </script>
@@ -276,11 +279,12 @@ export default {
       <div
         v-for="type in glyphTypes"
         :key="type.id"
-        class="l-glyph-sacrifice-options__rarity-slider-div"
+        class="l-glyph-sacrifice-options__rarity-slider-div o-descriptionBlock"
       >
         <span @click="bumpRarity(type.id)">
           <GlyphComponent
             :glyph="{type: type.id, strength: strengthThreshold(type.id) }"
+            :ach-tooltip="rarityName(strengthThreshold(type.id))"
             v-bind="glyphIconProps"
             class="o-clickable"
           />
@@ -311,11 +315,12 @@ export default {
         </span>
       </div>
       <br>
-      <div class="l-glyph-sacrifice-options__rarity-slider-div">
+      <div class="l-glyph-sacrifice-options__rarity-slider-div  o-descriptionBlock">
         <span @click="bumpRarity(advancedType)">
           <GlyphComponent
             :glyph="{type: advancedType, strength: strengthThreshold(advancedType) }"
             v-bind="glyphIconProps"
+            :ach-tooltip="rarityName(strengthThreshold(advancedType))"
             class="o-clickable"
           />
         </span>

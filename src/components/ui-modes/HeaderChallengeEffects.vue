@@ -80,9 +80,7 @@ export default {
       {{ enslavedText }}
     </div>
     <div v-if="isInEffarig">
-      Game speed and multipliers are Dilated {{ effarigMultNerfText }}
-      <br>
-      Tickspeed is Dilated {{ effarigTickNerfText }}
+      Game speed and multipliers are Dilated {{ effarigMultNerfText }}, and Tickspeed is Dilated {{ effarigTickNerfText }}
     </div>
     <div v-if="isInLaitela">
       Entropy: {{ laitelaEntropy }} ({{ laitelaTimer }})

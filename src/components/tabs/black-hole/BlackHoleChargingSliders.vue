@@ -54,7 +54,10 @@ export default {
         max: negative ? this.maxNegativeBlackHole : 990,
         interval: 1,
         width: "55rem",
-        tooltip: false
+        tooltip: false,
+        "dot-class": "c-black-hole__slider-handle",
+        "bg-class": "c-black-hole__slider-bg",
+        "process-class": "c-black-hole__slider-process"
       };
     },
   }

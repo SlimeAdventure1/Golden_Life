@@ -29,6 +29,9 @@ export default {
     },
     name() {
       return `IC${this.challenge.id}`;
+    },
+    label() {
+      return `${this.config.label}`;
     }
   },
   methods: {
@@ -45,6 +48,7 @@ export default {
 <template>
   <ChallengeBox
     :name="name"
+    :label="label"
     :is-unlocked="isUnlocked"
     :is-running="isRunning"
     :is-completed="isCompleted"
@@ -66,6 +70,7 @@ export default {
           title="Reward:"
         />
         <EffectDisplay
+          v-if="isCompleted"
           :config="config.reward"
         />
       </div>

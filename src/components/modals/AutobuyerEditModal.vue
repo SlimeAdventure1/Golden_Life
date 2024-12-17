@@ -45,20 +45,27 @@ export default {
       We only include these autobuyers as these are (probably) the ones that users will want to change
       most often.
     -->
+    <div class="c-autoprestige-box-row">
     <RealityAutobuyerBox
+      style="--fade: var(--color-reality);"
       class="c-reality-pos"
       is-modal
     />
     <EternityAutobuyerBox
+      style="--fade: var(--color-eternity);"
       class="c-eternity-pos"
       is-modal
     />
     <BigCrunchAutobuyerBox
+      style="--fade: var(--color-infinity);"
       class="c-infinity-pos"
       is-modal
     />
-    <GalaxyAutobuyerBox is-modal />
-    <DimensionBoostAutobuyerBox is-modal />
+    </div>
+    <div class="c-autoprestige-box-row">
+    <GalaxyAutobuyerBox is-modal class="c-softreset-pos" style="--fade: var(--color-celestials);"/>
+    <DimensionBoostAutobuyerBox is-modal class="c-softreset-pos" style="--fade: #00ee00;"/>
+    </div>
   </ModalWrapper>
 </template>
 

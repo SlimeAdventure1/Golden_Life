@@ -16,8 +16,8 @@ export default {
     descriptionLines() {
       return this.unlock.config.description.split("\n").map(x => x.trim());
     },
-    symbol: () => GLYPH_SYMBOLS.effarig,
     isDoomed: () => Pelle.isDoomed,
+    symbol: () => !Pelle.isDoomed ? GLYPH_SYMBOLS.effarig : Pelle.symbol,
   },
   methods: {
     update() {
@@ -28,9 +28,9 @@ export default {
 </script>
 
 <template>
-  <div class="l-effarig-tab__reward">
+  <div class="l-effarig-tab__reward o-descriptionBlock">
     <div class="c-effarig-tab__reward-label">
-      {{ unlock.config.label }}:
+      {{ unlock.config.label }}
     </div>
     <div
       v-if="isUnlocked"
@@ -52,6 +52,15 @@ export default {
     <span
       v-else
       class="c-effarig-tab__reward-symbol"
-    >?</span>
+    >???</span>
   </div>
 </template>
+<style scoped>
+.c-effarig-tab__reward-label{
+  border-top:none
+}
+.o-descriptionBlock{
+  padding: 0 0.5rem 0.5rem;
+  margin-bottom: 0.3rem;
+}
+</style>

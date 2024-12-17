@@ -3,6 +3,7 @@ import BlackHoleChargingSliders from "@/components/tabs/black-hole/BlackHoleChar
 import CelestialQuoteHistory from "@/components/CelestialQuoteHistory";
 import PrimaryButton from "@/components/PrimaryButton";
 import PrimaryToggleButton from "@/components/PrimaryToggleButton";
+import { Enslaved } from "../../../core/globals";
 
 export default {
   name: "EnslavedTab",
@@ -38,6 +39,7 @@ export default {
     canAutoRelease: false,
     hasNoCharge: true,
     hasReachedCurrentCap: false,
+    labelmode:false,
   }),
   computed: {
     storedRealEfficiencyDesc() {
@@ -53,8 +55,8 @@ export default {
       return Enslaved.storedTimeInsideEnslaved(this.storedBlackHole);
     },
     realityTitle() {
-      if (this.isRunning) return "You are inside The Nameless Ones' Reality";
-      return "Start The Nameless Ones' Reality";
+      if (this.isRunning) return this.labelmode?"You are inside The Nameless Ones' Reality":"You are inside the "+Enslaved.RealityName;
+      return this.labelmode?"Start The Nameless Ones' Reality":"Enter the "+Enslaved.RealityName;
     },
     runButtonClassObject() {
       return {
@@ -143,6 +145,7 @@ export default {
       this.canAutoRelease = Enslaved.canRelease(true);
       this.hasNoCharge = player.celestials.enslaved.stored === 0;
       this.hasReachedCurrentCap = this.storedReal === this.storedRealCap;
+      this.labelmode = !player.options.naming.celestial
     },
     toggleStoreBlackHole() {
       Enslaved.toggleStoreBlackHole();
@@ -168,7 +171,7 @@ export default {
     },
     startRun() {
       if (this.isDoomed) return;
-      Modal.celestials.show({ name: "The Nameless Ones'", number: 2 });
+      Modal.celestials.show({ name: "The Nameless Ones'", number: 2 , celestial: Enslaved });
     },
     hasUnlock(info) {
       return Enslaved.has(info);
@@ -255,8 +258,10 @@ export default {
       <div class="l-enslaved-upgrades-column">
         <PrimaryButton
           v-if="hintsUnlocked"
+          style="width:100%; margin-bottom: 1rem;"
           class="o-primary-btn"
           onclick="Modal.enslavedHints.show()"
+          wid
         >
           Examine the Reality more closely...
         </PrimaryButton>
@@ -321,9 +326,9 @@ export default {
               Maximum stored real time: {{ storedRealCapDesc }}
             </div>
           </div>
-        </div>
-        <BlackHoleChargingSliders />
+          <BlackHoleChargingSliders style="margin-bottom: 1rem;"/>
         <br>
+        </div>
         <div class="l-enslaved-shop-container">
           <button
             v-for="unlock in unlocksInfo"
@@ -354,6 +359,11 @@ export default {
 .l-fixed-setting {
   cursor: pointer;
   pointer-events: none;
-  filter: brightness(70%);
+  color:#888888;
+  --bg-bright: #4b4643;
+  --bg-dark: #3f3227;
+  --border: rgb(123 103 85);
+  box-shadow: 0 0 1rem black inset,0 0 0 0.2rem var(--border) inset;
+  text-shadow: 0.1rem 0.1rem 0.3rem black,-0.1rem -0.1rem 0.3rem black;
 }
 </style>

@@ -32,7 +32,8 @@ export default {
       // Number.MAX_VALUE doesn't really matter here, but we need it because
       // undefined values are not allowed for data properties
       cap: Number.MAX_VALUE,
-      hasCap: false
+      hasCap: false,
+      redacted: false,
     };
   },
   computed: {
@@ -139,6 +140,7 @@ export default {
     update() {
       this.updateEffect();
       this.updateCap();
+      this.redacted = Theme.current().name === "S14"
     }
   }
 };
@@ -147,6 +149,18 @@ export default {
 <template>
   <span v-if="isVisible && effectDisplay !== undefined">
     <br v-if="br">
-    {{ labelDisplay }}{{ effectDisplay }}
+    <span v-if="redacted">
+      {{ labelDisplay }}<span class="o-redacted">{{ effectDisplay }}</span>
+    </span>
+    <span v-else>
+      {{ labelDisplay }}{{ effectDisplay }}
+    </span>   
   </span>
 </template>
+<style scoped>
+.o-redacted{
+  background-color: black;
+  text-shadow: none;
+  color:transparent
+}
+</style>

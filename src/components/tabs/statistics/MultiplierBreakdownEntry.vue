@@ -195,11 +195,14 @@ export default {
         height: `${100 * barSize(percents)}%`,
         width: "100%",
         "transition-duration": this.isRecent(this.lastLayoutChange) ? undefined : "0.2s",
-        border: percents === 0 ? "" : "0.1rem solid var(--color-text)",
+        border: percents === 0 ? "" : "0.1rem solid transparent",
         color: iconObj?.textColor ?? "black",
         background: isNerf
-          ? `repeating-linear-gradient(-45deg, var(--color-bad), ${iconObj?.color} 0.8rem)`
-          : iconObj?.color,
+          ? `url(../../../images/mult-breakdown-bar.png),repeating-linear-gradient(-45deg, #ff000040 0rem 0.4rem, ${iconObj?.color} 0.4rem 0.8rem)`
+          : `url(../../../images/mult-breakdown-bar.png),linear-gradient(${iconObj?.color},${iconObj?.color})`,
+        animation:this.mouseoverIndex !== index?"25s a-mult-bar linear infinite":undefined,
+        "text-shadow":`0.1rem 0.1rem 0.2rem ${(iconObj?.textColor && iconObj.textColor!=="var(--color-laitela--accent)") ?? "white"}, -0.1rem -0.1rem 0.2rem ${(iconObj?.textColor && iconObj.textColor!=="var(--color-laitela--accent)") ?? "white"}`,
+        "box-shadow": `inset 0 0 0.5rem 0 black, inset 0 0 0 0.1rem ${iconObj?.color}`
       };
     },
     singleEntryClass(index) {
@@ -466,11 +469,15 @@ export default {
   justify-content: space-between;
   width: 100%;
   max-width: 100rem;
-  border: var(--var-border-width, 0.2rem) solid var(--color-text);
+  border: var(--var-border-width, 0.2rem) solid;
+  border-image: var(--leg-border) 3;
   padding: 0.5rem;
   font-weight: normal;
-  background-color: var(--color-base);
-
+  background: linear-gradient(transparent,var(--color-accent) 500%),var(--leg-base);
+  background-position: center;
+  box-shadow: 0rem -1rem 2rem #00000080 inset;
+  text-shadow: 0.1rem 0.1rem 0.3rem var(--color-text-inverted);
+  
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -479,9 +486,12 @@ export default {
 }
 
 .c-stacked-bars {
+  border: var(--var-border-width, 0.3rem) solid;
+  border-image: var(--leg-border) 3;
+  box-shadow: 0 0 1rem black inset;
   position: relative;
   width: 5rem;
-  background-color: var(--color-disabled);
+  background: url(../../../../public/images/mult-breakdown-bar-empty.png);
   margin-right: 1.5rem;
 }
 
@@ -502,16 +512,16 @@ export default {
 }
 
 .c-bar-highlight {
-  animation: a-glow-bar 2s infinite;
+  animation: 25s linear infinite a-mult-bar, 2s infinite a-glow-bar;
 }
 
 @keyframes a-glow-bar {
-  0% { box-shadow: inset 0 0 0.3rem 0; }
+  0% { box-shadow: inset 0 0 0.5rem 0; }
   50% {
-    box-shadow: inset 0 0 0.6rem 0;
+    box-shadow: inset 0 0 1rem 0;
     filter: brightness(130%);
   }
-  100% { box-shadow: inset 0 0 0.3rem 0; }
+  100% { box-shadow: inset 0 0 0.5rem 0; }
 }
 
 .c-info-list {
@@ -562,7 +572,8 @@ export default {
 
 .c-single-entry-highlight {
   border: 0.1rem solid;
-  font-weight: bold;
+  font-style: bold;
+  background: linear-gradient(90deg, var(--color-accent) -25%, transparent 50%);
   animation: a-glow-text 2s infinite;
 }
 

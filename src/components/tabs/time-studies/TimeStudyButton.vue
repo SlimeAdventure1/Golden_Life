@@ -1,5 +1,6 @@
 <script>
 import CostDisplay from "@/components/CostDisplay";
+import { playAudio } from "../../../game";
 
 export default {
   name: "TimeStudyButton",
@@ -54,7 +55,7 @@ export default {
         "c-pelle-useless": this.isUseless,
         "c-pelle-useless--bought": this.isUseless && this.isBought,
         "c-pelle-useless--unavailable": this.isUseless && !this.isAvailableForPurchase && !this.isBought,
-        "c-pelle-useless-available": this.isUseless && !this.isAvailableForPurchase && !this.isBought,
+        "c-pelle-useless-available": this.isUseless && this.isAvailableForPurchase && !this.isBought,
         "o-time-study--small": this.setup.isSmall,
         "o-time-study--unavailable": !this.isAvailableForPurchase && !this.isBought && !this.isUseless,
         "o-time-study--available": this.isAvailableForPurchase && !this.isBought,
@@ -64,7 +65,7 @@ export default {
     pathClass() {
       switch (this.study.type) {
         case TIME_STUDY_TYPE.NORMAL:
-          switch (this.setup.path) {
+        switch (this.setup.path) {
             case TIME_STUDY_PATH.ANTIMATTER_DIM: return "o-time-study-antimatter-dim";
             case TIME_STUDY_PATH.INFINITY_DIM: return "o-time-study-infinity-dim";
             case TIME_STUDY_PATH.TIME_DIM: return "o-time-study-time-dim";
@@ -78,6 +79,7 @@ export default {
         case TIME_STUDY_TYPE.ETERNITY_CHALLENGE:
           return "o-time-study-eternity-challenge";
         case TIME_STUDY_TYPE.DILATION:
+          if (this.study.id === 1) return "o-time-study-dilation-glow o-time-study-dilation";
           if (this.study.id === 6) return "o-time-study-reality";
           return "o-time-study-dilation";
         case TIME_STUDY_TYPE.TRIAD:
@@ -147,11 +149,13 @@ export default {
         EternityChallenge(this.study.id).remainingCompletions === 0;
     },
     handleClick() {
+      if (!this.study.isBought&&this.isAvailableForPurchase)AudioManagement.playSound("upgrade")
       if (this.specialClick === null || !this.study.isBought) this.study.purchase();
       else this.specialClick();
     },
     shiftClick() {
       if (this.study.purchaseUntil) this.study.purchaseUntil();
+      if (this.study.purchaseUntil||(!this.study.isBought&&this.isAvailableForPurchase)) AudioManagement.playSound("shiftbuy")
     }
   }
 };

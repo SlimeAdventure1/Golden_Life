@@ -96,7 +96,7 @@ export default {
 .c-automator-docs-template--button {
   margin: 0.4rem;
   border-radius: var(--var-border-radius, 0.4rem);
-  border-width: var(--var-border-width, 0.2rem);
+  border-width: var(--var-border-width, 0.1rem);
   cursor: pointer;
 }
 

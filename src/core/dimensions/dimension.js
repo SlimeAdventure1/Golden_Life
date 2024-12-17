@@ -6,12 +6,15 @@ export class DimensionState {
     this._displayName = DISPLAY_NAMES[tier];
     const SHORT_DISPLAY_NAMES = [null, "1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th"];
     this._shortDisplayName = SHORT_DISPLAY_NAMES[tier];
+    const UNIQUE_NAMES = [null, "Dion", "Polygon", "Polyhedron", "Polychoron", "Polyteron", "Polypeton", "Polyexon", "Polyzetton"];
+    this._uniqueName = UNIQUE_NAMES[tier];
   }
 
   get tier() { return this._tier; }
 
   get displayName() { return this._displayName; }
   get shortDisplayName() { return this._shortDisplayName; }
+  get uniqueName() { return this._uniqueName; }
 
   get data() { return this._getData()[this.tier - 1]; }
 

@@ -29,14 +29,14 @@ export default {
       v-if="!isModal"
       class="c-credits-header"
     >
-      Antimatter Dimensions
+    <img class="o-title" :class="{'o-title_credits':!isModal}" src="images/title-holder.png" alt="">
     </h1>
 
     <div
       v-for="role in roles.count"
       :key="role"
     >
-      <h2 class="c-credits-section">
+      <h2 class="c-credits-section" :class="{'c-credits-section_modal':isModal}">
         {{ pluralize(roles[role], relevantPeople(role).length) }}
       </h2>
       <div :class="{ 'l-credits--bulk': relevantPeople(role).length > 10}">
@@ -49,6 +49,9 @@ export default {
           <span v-if="person.name2">
             ({{ person.name2 }})
           </span>
+          <i v-if="person.name3">
+            - {{ person.name3 }}
+          </i>
         </div>
       </div>
     </div>
@@ -67,7 +70,9 @@ export default {
 }
 
 .c-credits-header {
-  color: black;
+  color: rgb(255, 255, 255);
+  font-family: Cambria;
+  font-weight:bold;
 }
 
 .t-dark .c-credits-header,
@@ -105,12 +110,14 @@ export default {
 }
 
 .c-credits-section {
-  color: var(--color-text);
+  color: white;
   text-shadow: 1px 1px 2px turquoise;
   margin-top: 10rem;
   margin-bottom: 2rem;
 }
-
+.c-credits-section_modal {
+  color: var(--color-text);
+}
 .l-credits--bulk {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

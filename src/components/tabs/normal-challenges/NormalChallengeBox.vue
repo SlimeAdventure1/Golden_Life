@@ -37,6 +37,9 @@ export default {
     name() {
       return `C${this.challenge.id}`;
     },
+    label() {
+      return `${this.challenge.config.label}`;
+    },
     overrideLabel() {
       return this.isBroken ? "Broken" : "";
     },
@@ -58,6 +61,7 @@ export default {
 <template>
   <ChallengeBox
     :name="name"
+    :label="label"
     :is-unlocked="isUnlocked"
     :is-running="isRunning"
     :is-completed="isCompleted"

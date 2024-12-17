@@ -7,6 +7,7 @@ export const glyphTypes = {
   time: {
     id: "time",
     symbol: GLYPH_SYMBOLS.time,
+    //color: "var(--color-eternity)",
     color: "#b241e3",
     primaryEffect: "timepow",
     alchemyResource: ALCHEMY_RESOURCE.TIME,
@@ -15,7 +16,8 @@ export const glyphTypes = {
   dilation: {
     id: "dilation",
     symbol: GLYPH_SYMBOLS.dilation,
-    color: "#64dd17",
+    //color: "var(--color-dilation)",
+    color:"#64dd17",
     alchemyResource: ALCHEMY_RESOURCE.DILATION,
     hasRarity: true
   },
@@ -29,6 +31,7 @@ export const glyphTypes = {
   infinity: {
     id: "infinity",
     symbol: GLYPH_SYMBOLS.infinity,
+    //color: "var(--color-infinity)",
     color: "#b67f33",
     primaryEffect: "infinitypow",
     alchemyResource: ALCHEMY_RESOURCE.INFINITY,
@@ -37,6 +40,7 @@ export const glyphTypes = {
   power: {
     id: "power",
     symbol: GLYPH_SYMBOLS.power,
+    //color: "var(--color-accent)",
     color: "#22aa48",
     primaryEffect: "powerpow",
     alchemyResource: ALCHEMY_RESOURCE.POWER,
@@ -73,6 +77,14 @@ export const glyphTypes = {
     id: "companion",
     symbol: GLYPH_SYMBOLS.companion,
     color: "#feaec9",
+    fixedSymbolColor: true,
+    isUnlocked: () => false,
+    canCustomize: () => false,
+  },
+  helios: {
+    id: "helios",
+    symbol: GLYPH_SYMBOLS.helios,
+    color: "#ffb300",
     fixedSymbolColor: true,
     isUnlocked: () => false,
     canCustomize: () => false,

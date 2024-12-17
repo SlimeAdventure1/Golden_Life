@@ -68,7 +68,7 @@ export default {
         left: this.left,
         top: this.top,
         right: this.right,
-        bottom: this.bottom
+        bottom: this.bottom,
       };
     },
     tooltipType() {

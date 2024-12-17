@@ -36,14 +36,14 @@ export const Notation = (function() {
     shi: painful(notation(N.ShiNotation)),
     blind: painful(notation(N.BlindNotation)),
     blobs: painful(notation(N.BlobsNotation)),
-    all: painful(notation(N.AllNotation))
+    all: painful(notation(N.AllNotation)),
   };
 }());
 
 Notation.emoji.setAsCurrent = (silent = false) => {
   player.options.notation = Notation.emoji.name;
   ui.notationName = Notation.emoji.name;
-  if (!silent) GameUI.notify.success("😂😂😂");
+  if (!silent) GameUI.notify.success(["😂😂😂","😂😂😂"]);
 };
 
 export const Notations = {
@@ -70,7 +70,7 @@ export const Notations = {
     Notation.shi,
     Notation.blind,
     Notation.blobs,
-    Notation.all,
+    Notation.all
   ],
   find: name => {
     const notation = Notations.all.find(n => n.name === name);

@@ -80,10 +80,9 @@ export default {
       }
       this.updateDisplayValue();
       this.isValid = true;
-
       this.isFocused = false;
       event.target.blur();
-    },
+    }
   }
 };
 
@@ -158,11 +157,12 @@ export const AutobuyerInputFunctions = {
 
 <style scoped>
 .o-autobuyer-input--invalid {
-  background-color: var(--color-bad);
+  background: linear-gradient(var(--color-base),var(--color-bad));
 }
 
 .s-base--dark .o-autobuyer-input--invalid,
 .t-s1 .o-autobuyer-input--invalid {
-  background-color: var(--color-bad);
+  /*background-color: var(--color-bad);*/
+  background: linear-gradient(var(--color-base),var(--color-bad));
 }
 </style>

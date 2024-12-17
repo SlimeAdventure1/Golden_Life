@@ -71,6 +71,7 @@ export default {
       if (this.rowVisible) rows.push("upgrade rows");
       if (this.achievementVisible) rows.push("achievements");
       rows.push("level");
+      if (this.penaltyVisible) rows.push("raw");
       rows.push("info");
       rows.push("info2");
       return rows;
@@ -479,6 +480,20 @@ function roundPreservingSum(data) {
     >
       {{ formatLevel(factors.actualLevel) }}
     </div>
+    <template v-if="penaltyVisible">
+      <div
+        :style="rowStyle('raw')"
+        class="l-glyph-levels-and-weights__factor"
+      >
+        <i>Raw Level</i>
+      </div>
+      <div
+      :style="rowStyle('raw')"
+      class="l-glyph-levels-and-weights__factor-val"
+    >
+    <i>{{ formatInt(factors.rawLevel) }}</i>
+    </div>
+    </template>
     <div
       :style="rowStyle('info')"
       class="l-glyph-levels-and-weights__factor l-glyph-level-and-weights-note"

@@ -116,14 +116,19 @@ export const Pelle = {
     for (let tabIndex = 0; tabIndex < GameDatabase.tabs.length; tabIndex++) {
       player.options.hiddenSubtabBits[tabIndex] &= ignoredIDs.includes(tabIndex) ? -1 : 0;
     }
-    Pelle.quotes.initial.show();
+    Pelle.quotes.initial.show()
+    //setTimeout(() => {Pelle.quotes.initial.show()},20000);
     GameStorage.save(true);
   },
 
   get displayName() {
     return Date.now() % 4000 > 500 ? "Pelle" : wordShift.randomCrossWords("Pelle");
   },
-
+  displayTitle: "Pelle, the Eternal",
+  celestialOf: "Antimatter",
+  get fullName() {
+    return Date.now() % 4000 > 500 ? "Pelle, Celestial of Antimatter" : ""+wordShift.randomCrossWords("Pelle") + ", Celestial of " + wordShift.randomCrossWords("Antimatter");
+  },
   get isUnlocked() {
     return ImaginaryUpgrade(25).isBought;
   },
@@ -164,6 +169,7 @@ export const Pelle = {
     player.celestials.enslaved.autoStoreReal = false;
     if (PelleStrikes.dilation.hasStrike) player.dilation.active = true;
     EventHub.dispatch(GAME_EVENT.ARMAGEDDON_AFTER, gainStuff);
+    AudioManagement.playSound("armageddon")
   },
 
   gameLoop(diff) {
@@ -236,20 +242,22 @@ export const Pelle = {
       case "infinity":
         return `Infinity Point gain ${player.challenge.eternity.current <= 8
           ? formatX(Currency.infinityPoints.value.plus(1).pow(0.2), 2)
-          : formatX(DC.D1, 2)} (based on current IP)`;
+          : formatX(DC.D1, 2)} <br>(based on current IP)`;
       case "time":
         return `Eternity Point gain ${formatX(Currency.eternityPoints.value.plus(1).pow(0.3), 2)}
-          (based on current EP)`;
+        <br>(based on current EP)`;
       case "replication":
         return `Replication speed ${formatX(10 ** 53 ** (PelleRifts.vacuum.percentage), 2)} \
-        (based on ${wordShift.wordCycle(PelleRifts.vacuum.name)})`;
+        <br>(based on ${wordShift.wordCycle(PelleRifts.vacuum.name)})`;
       case "dilation":
         return `Dilated Time gain ${formatX(Decimal.pow(player.dilation.totalTachyonGalaxies, 1.5).max(1), 2)}
-          (based on Tachyon Galaxies)`;
+        <br>(based on Tachyonic Galaxies)`;
       case "power":
         return `Galaxies are ${formatPercents(0.02)} stronger`;
       case "companion":
         return `You feel ${formatPercents(0.34)} better`;
+      case "helios":
+        return `Good luck.`;
       // Undefined means that there is no glyph equipped, needs to be here since this function is used in
       // both Current Glyph Effects and Glyph Tooltip
       case undefined:
@@ -266,7 +274,6 @@ export const Pelle = {
   get canDilateInPelle() {
     return this.cel.remnants >= this.remnantRequirementForDilation;
   },
-
   resetResourcesForDilation() {
     this.cel.records.totalAntimatter = new Decimal("1e180000");
     this.cel.records.totalInfinityPoints = new Decimal("1e60000");
@@ -278,7 +285,6 @@ export const Pelle = {
     // softlocked, or starting it too late and getting not-softlocked.
     this.cel.records.totalEternityPoints = new Decimal("1e1050");
   },
-
   get remnantsGain() {
     let am = this.cel.records.totalAntimatter.plus(1).log10();
     let ip = this.cel.records.totalInfinityPoints.plus(1).log10();
@@ -354,11 +360,44 @@ export const Pelle = {
     return zalgo(str, Math.floor(stage ** 2 * 7));
   },
 
-  endTabNames: "End Is Nigh Destruction Is Imminent Help Us Good Bye Forever".split(" "),
+  endTabNames: "FINIS PROPE EST PERDITIO IMMINET ADIUVA NOBIS BENE VALE AETERNA".split(" "),
 
   quotes: Quotes.pelle,
 };
-
+export function runDoomAnimation() {
+  new Audio(`audio/doomtest.wav`).play()
+  document.getElementById("ui").style.userSelect = "none";
+  document.getElementById("ui").style.animation = "a-doom 20s 1";
+  document.getElementById("ui-fixed").style.userSelect = "none";
+  document.getElementById("ui-fixed").style.animation = "a-doom 20s 1";
+  document.getElementById("pelle-button").classList.add("pelle-active")
+  document.getElementById("pelle-button").style.animation = "a-ripandtear 3.03s 1";
+  document.getElementById("doomanimbg").style.animation = "a-doombg 20s 1";
+  document.getElementById("doomanimbg").style.display = "block";
+  document.getElementById("doomanimbg").currentTime = 0;
+  setTimeout(() => {
+    GameUI.notify.strike(`WHAT HAVE YOU DONE???`);
+  }, 2500);
+  setTimeout(() => {
+    document.getElementById("pelle-button").classList.remove("pelle-active")
+    document.getElementById("pelle-button").style.animation = "";
+    document.getElementById("doomanimbg").play();
+    document.getElementById("doomanimbg").currentTime = 0;
+    document.getElementById("doomanimbg").play();
+  }, 3100);
+  setTimeout(() => {
+    document.getElementById("ui").style.userSelect = "auto";
+    document.getElementById("ui").style.animation = "";
+    document.getElementById("ui-fixed").style.userSelect = "auto";
+    document.getElementById("ui-fixed").style.animation = "";
+    document.getElementById("doomanimbg").style.animation = "";
+    document.getElementById("doomanimbg").style.display = "none";
+  }, 20000);
+}
+export function initializeDoom() {
+  runDoomAnimation();
+  setTimeout(Pelle.initializeRun,3100);
+}
 EventHub.logic.on(GAME_EVENT.ARMAGEDDON_AFTER, () => {
   if (Currency.remnants.gte(1)) {
     Pelle.quotes.arm.show();

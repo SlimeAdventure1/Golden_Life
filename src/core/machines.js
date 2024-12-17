@@ -26,6 +26,8 @@ export const MachineHandler = {
     // Increase base RM gain if <10 RM
     if (rmGain.gte(1) && rmGain.lt(10)) rmGain = new Decimal(27 / 4000 * log10FinalEP - 26);
     rmGain = rmGain.times(this.realityMachineMultiplier);
+    // rmGain = rmGain.gt(this.hardcapRM) ? this.hardcapRM.pow(1 + Math.log10(rmGain.log10() / this.hardcapRM.log10())) : rmGain;
+    // scrapped RM softcap
     return rmGain.floor();
   },
 

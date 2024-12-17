@@ -79,7 +79,7 @@ export default {
     </div>
     <div>
       The amount each additional upgrade requires will start
-      increasing above {{ formatInt(tickspeedSoftcap) }} Tickspeed upgrades.
+      increasing above <b style="color:var(--color-eternity)">{{ formatInt(tickspeedSoftcap) }}</b> Tickspeed upgrades.
     </div>
     <div>You are getting {{ format(shardsPerSecond, 2, 0) }} {{ incomeType }} per second.</div>
     <div class="l-dimensions-container">
@@ -91,15 +91,14 @@ export default {
       />
     </div>
     <div>
-      Time Dimension costs jump at {{ format(costIncreases[0], 2, 2) }} and
-      {{ format(costIncreases[1]) }} Eternity Points,
-      <br>
-      and costs increase much faster after {{ format(costIncreases[2]) }} Eternity Points.
+      Time Dimension costs jump at <b style="color:var(--color-eternity)">{{ format(costIncreases[0], 2, 2) }}</b> and
+      <b style="color:var(--color-eternity)">{{ format(costIncreases[1]) }}</b> Eternity Points,
+       and costs increase much faster after <b style="color:var(--color-eternity)">{{ format(costIncreases[2]) }}</b> Eternity Points.
       <br>
       <div v-if="showLockedDimCostNote">
         Hold shift to see the Eternity Point cost for locked Time Dimensions.
       </div>
-      Any 8th Time Dimensions purchased above {{ format(1e8) }} will not further increase the multiplier.
+      Any 8th Time Dimensions purchased above <b style="color:var(--color-eternity)">{{ formatInt(1e8) }}</b> will not further increase the multiplier.
     </div>
   </div>
 </template>

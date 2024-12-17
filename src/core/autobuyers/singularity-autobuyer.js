@@ -9,6 +9,10 @@ export class SingularityAutobuyerState extends AutobuyerState {
     return `Singularity`;
   }
 
+  get color() {
+    return `var(--color-laitela--accent)`;
+  }
+
   get isUnlocked() {
     return SingularityMilestone.autoCondense.canBeApplied;
   }

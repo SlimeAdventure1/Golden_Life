@@ -13,7 +13,7 @@ export default {
 </script>
 
 <template>
-  <div>
+  <div class="c-tab-button-container">
     <ClassicTabButton
       v-for="(tab, i) in tabs"
       :key="i"

@@ -9,6 +9,10 @@ export class SacrificeAutobuyerState extends AutobuyerState {
     return `Dimensional Sacrifice`;
   }
 
+  get color() {
+    return `var(--color-accent)`;
+  }
+
   get isUnlocked() {
     return EternityMilestone.autoIC.isReached || InfinityChallenge(2).isCompleted;
   }

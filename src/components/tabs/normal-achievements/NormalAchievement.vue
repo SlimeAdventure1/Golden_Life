@@ -45,7 +45,8 @@ export default {
     },
     styleObject() {
       return {
-        "background-position": `-${(this.achievement.column - 1) * 104}px -${(this.achievement.row - 1) * 104}px`
+        //"background-position": `-${(this.achievement.column - 1) * 104}px -${(this.achievement.row - 1) * 104}px`
+        "background-position": `${(this.achievement.column - 1) / 7 * 100}% ${(this.achievement.row - 1) / 17 * 100}%`
       };
     },
     classObject() {
@@ -190,17 +191,16 @@ export default {
     <div class="o-achievement__tooltip">
       <template v-if="isMouseOver">
         <div class="o-achievement__tooltip__name">
-          {{ processedName }} ({{ processedId }})
+          <span style="position:relative;z-index:1">{{ processedName }}</span>
+          <i style="font-size:1.2rem;opacity:0.5;top:0.5rem;right:0.5rem;position:absolute;font-family:typewriter;font-weight:normal">({{ processedId }})</i> 
         </div>
         <div class="o-achievement__tooltip__description">
           {{ processedDescription }}
-        </div>
-        <div
-          v-if="config.reward"
+          <div
+          v-if="config.reward&&!isObscured"
           class="o-achievement__tooltip__reward"
         >
           <span
-            v-if="!isObscured"
             :class="{ 'o-pelle-disabled': isDisabled }"
           >
             Reward: {{ config.reward }}
@@ -211,9 +211,10 @@ export default {
             />
           </span>
         </div>
+        </div>
         <div
           v-if="achievedTime"
-          class="o-achievement-time"
+          class="o-achievement__tooltip__description o-achievement-time"
         >
           {{ achievedTime }}
         </div>
@@ -237,59 +238,69 @@ export default {
 <style scoped>
 .o-achievement-time {
   font-weight: bold;
+  font-style: italic;
+  margin-top: 0.5rem;
   color: var(--color-accent);
 }
 
 .o-achievement--disabled {
-  background-color: var(--color-pelle--base);
-  border-color: var(--color-bad);
+  --bg-dark: #701021;
+  --bg-light: #221114;
+  --border: var(--color-pelle--base);
 }
 
 .o-achievement--locked {
-  background-color: #a3a3a3;
-  border-color: var(--color-bad);
+  --bg-dark: #464646;
+  --bg-light: #262626;
+  --border: #a6483f;
 }
-
+.s-base--dark .o-achievement--locked,
 .t-dark-metro .o-achievement--locked {
-  background-color: #9e9e9e;
+  --bg-dark: #262626;
+  --bg-light: #0d0d0d;
 }
 
-.t-metro .o-achievement--locked,
+/*.t-metro .o-achievement--locked,
 .t-inverted-metro .o-achievement--locked,
 .t-s8 .o-achievement--locked {
   background-color: #9e9e9e;
+  --bg: linear-gradient(#262626,#0d0d0d);
   border-color: var(--color-bad);
 }
-
+*/
 .t-s2 .o-achievement--locked {
   background-color: rgba(0, 0, 0, 0%);
 }
 
 .t-s5 .o-achievement--locked {
-  background-color: #222222;
-  border-color: #000000;
+  --bg-dark: #262626;
+  --bg-light: #0d0d0d;
+  --border: #000000;
 }
 
 .t-s7 .o-achievement--locked {
-  background-color: #555555;
-  border-color: #111111;
+  --bg-dark: #262626;
+  --bg-light: #0d0d0d;
+  --border: #111111;
 }
 
 .o-achievement--waiting {
-  background-color: #d1d161;
-  border-color: #acac39;
+  --bg-dark: #43430d;
+  --bg-light: #717115;
+  --border: #313117;
 }
-
-.t-dark-metro .o-achievement--waiting {
-  background-color: #b9b946;
-  border-color: #7d7d36;
+.s-base--dark .o-achievement--waiting {
+  --bg-dark: #111108;
+  --bg-light: #43430a;
+  --border: #acac39;
 }
 
 .t-metro .o-achievement--waiting,
 .t-inverted-metro .o-achievement--waiting,
 .t-s8 .o-achievement--waiting {
-  background-color: #ffee58;
-  border-color: #757575;
+  --bg-dark: #111108;
+  --bg-light: #43430a;
+  --border: #757575;
 }
 
 .o-achievement--blink {
@@ -309,26 +320,31 @@ export default {
   left: 0;
   bottom: 0;
   font-size: 1rem;
-  color: black;
-  background: #5ac467;
-  border-top: var(--var-border-width, 0.2rem) solid #127a20;
-  border-right: var(--var-border-width, 0.2rem) solid #127a20;
+  color: var(--border);
+  background: var(--bg-light);
+  border-top: var(--var-border-width, 0.1rem) solid var(--border);
+  border-right: var(--var-border-width, 0.1rem) solid var(--border);
   border-top-right-radius: var(--var-border-radius, 0.8rem);
   border-bottom-left-radius: var(--var-border-radius, 0.6rem);
 }
 
 .o-achievement__reward--locked {
-  background: #a3a3a3;
-  border-color: var(--color-bad);
+  color: #c06159;
 }
-
+.s-base--dark .o-achievement__reward--locked {
+  color: #a6483f;
+}
 .o-achievement__reward--waiting {
-  background: #d1d161;
-  border-color: #acac39;
+  color:#fdfdab;
+  --border: #d1d161;
 }
-
-.o-achievement__reward--disabled {
-  background: var(--color-pelle--base);
-  border-color: var(--color-bad);
+.s-base--dark .o-achievement__reward--waiting {
+  color:#d1d161;
+  --border: #d1d161;
+}
+.o-achievement__reward--disabled,
+.s-base--dark .o-achievement__reward--disabled {
+  color: var(--color-pelle--base);
+  --border: var(--color-pelle--base);
 }
 </style>

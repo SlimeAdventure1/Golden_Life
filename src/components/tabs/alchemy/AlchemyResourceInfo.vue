@@ -71,11 +71,22 @@ export default {
       return `<span style="color:#${color}">${resourceText}</span>`;
     },
     isDoomed: () => Pelle.isDoomed,
+    Background(){
+      return{
+        background:`linear-gradient(135deg,${this.color} -25%,transparent 37.5%), var(--leg-base)`
+      }
+    },
+    colorStyle(){
+      return {
+        background: this.isUnlocked?`radial-gradient(at top,white -50%,${this.color},black)`:`radial-gradient(at top,white -50%,#444444,black)`,
+      };
+    }
   },
   methods: {
     update() {
       const resource = this.resource;
       this.amount = resource.amount;
+      this.color = resource._config.color;
       this.cap = resource.cap;
       this.capped = resource.capped;
       this.flow = resource.flow;
@@ -94,19 +105,23 @@ export default {
   <div
     v-if="isUnlocked"
     :class="classObject"
+    :style="Background"
   >
+  <div style="margin: -8rem -2rem 0rem;display: flex;position: absolute;">
+    <div class="l-resource-component" :style="colorStyle"><div style="padding-bottom: 0.3rem;">{{ resource.symbol }}</div></div>
+  </div>
     <span class="c-alchemy-resource-info__title">
-      {{ resource.symbol }} {{ resource.name }} {{ resource.symbol }}
+      {{ resource.symbol }} <span style="font-family:cambria;font-size:1.75rem;line-height:1.2">{{ resource.name }}</span> {{ resource.symbol }}
     </span>
+    <span v-if="isBaseResource">Base Resource</span>
+    <span v-else>Reaction: {{ isReactionActive ? "Active" : "Inactive" }} ({{ reactionText }})</span>
     <span v-if="isDoomed">
       Destroyed by Pelle
     </span>
     <span v-else>
-      {{ capped ? "Capped" : "Current" }}: {{ resourceAmount }}/{{ resourceCap }}
+      {{ capped ? "Capped" : "Current" }}: {{ resourceAmount }} / {{ resourceCap }}
       (Recent change: <span v-html="formattedFlow" />)
     </span>
-    <span v-if="isBaseResource">Base Resource</span>
-    <span v-else>Reaction: {{ isReactionActive ? "Active" : "Inactive" }} ({{ reactionText }})</span>
     <span :class="{ 'o-pelle-disabled': isDoomed }">
       <EffectDisplay
         label="Effect"
@@ -118,6 +133,9 @@ export default {
     v-else
     :class="classObject"
   >
+  <div style="margin: -8rem -2rem 0rem;display: flex;position: absolute;">
+    <div class="l-resource-component" :style="colorStyle"><div style="padding-top: 0.3rem;">?</div></div>
+  </div>
     Unlock requirement: {{ unlockRequirement }}
   </div>
 </template>

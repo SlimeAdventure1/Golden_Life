@@ -68,7 +68,6 @@ export default {
       <div
         class="c-autobuyer-box__small-text"
       >
-        <br>
         Activates every X seconds:
       </div>
       <AutobuyerInput
@@ -82,7 +81,7 @@ export default {
       #checkboxSlot
     >
       <label
-        class="o-autobuyer-toggle-checkbox c-autobuyer-box__small-text l-top-margin o-clickable"
+        class="o-autobuyer-toggle-checkbox c-autobuyer-box__small-text o-clickable"
       >
         <input
           v-model="limitDimBoosts"

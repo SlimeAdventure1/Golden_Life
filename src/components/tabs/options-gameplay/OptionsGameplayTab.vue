@@ -159,9 +159,16 @@ export default {
             @input="adjustSliderValueAutomatorLogSize($event)"
           />
         </div>
+        <OptionsButton
+          class="o-primary-btn--option"
+          onclick="Modal.audioOptions.show();"
+        >
+          Open Audio Options
+        </OptionsButton>
       </div>
-      <OpenModalHotkeysButton />
     </div>
+    <br>
+    <OpenModalHotkeysButton />
   </div>
 </template>
 

@@ -32,7 +32,7 @@ export default {
     barStyle() {
       return {
         width: `${100 * Math.min(1, this.memories / this.requiredMemories)}%`,
-        background: this.pet.color
+        //background: this.pet.color
       };
     },
     petStyle() {
@@ -96,6 +96,12 @@ export default {
     },
     reward() {
       return (typeof this.nextUnlock.reward === "function") ? this.nextUnlock.reward() : this.nextUnlock.reward;
+    },
+    symbol() {
+      return this.nextUnlock.displayIcon
+    },
+    name() {
+      return this.nextUnlock.name
     }
   },
   methods: {
@@ -122,6 +128,7 @@ export default {
         class="c-ra-exp-bar-inner"
         :style="barStyle"
       />
+      <!--<div class="c-ra-exp-bar-inner-text">{{ format(memories, 2, 2) }} / {{ format(requiredMemories, 2, 2) }}</div>-->
     </div>
     <div
       :class="classObject"
@@ -132,11 +139,15 @@ export default {
         <div class="c-ra-pet-upgrade__tooltip__name">
           Level {{ pet.name }} to {{ formatInt(level + 1) }}
         </div>
-        <div class="c-ra-pet-upgrade__tooltip__description">
+        <div class="c-ra-pet-upgrade__tooltip__description" v-if="reward">
+          <span v-html="symbol"/> {{ name }} <span v-html="symbol"/> 
+        </div>
+        <div class="c-ra-pet-upgrade__tooltip__description" v-if="reward||showNextScalingUpgrade">
           {{ reward }}
           <div
             v-if="showNextScalingUpgrade"
-            :style="{ 'margin-top': nextUnlock.reward ? '0.6rem' : '0' }"
+            style="border-top: solid 1px;border-image: linear-gradient(90deg, transparent, currentcolor, transparent) 1;"
+            :style="{ 'margin-top': nextUnlock.reward ? '0.6rem' : '0','border-top': nextUnlock.reward ? 'solid 1px' : 'none' }"
           >
             {{ nextScalingUpgrade }}
           </div>
@@ -149,3 +160,16 @@ export default {
     </div>
   </div>
 </template>
+<style scoped>
+.c-ra-exp-bar-inner-text{
+  text-shadow: 0.1rem 0.1rem 0.1rem black, -0.1rem -0.1rem 0.1rem black, 0.1rem -0.1rem 0.1rem black, -0.1rem 0.1rem 0.1rem black;
+  color:white;
+  font-style: italic;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  z-index:1;
+}
+</style>

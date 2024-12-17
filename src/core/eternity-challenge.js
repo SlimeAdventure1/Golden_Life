@@ -46,6 +46,10 @@ export class EternityChallengeState extends GameMechanicState {
     this._reward = new EternityChallengeRewardState(config.reward, this);
   }
 
+  get name() {
+    return this._config.label
+  }
+  
   get fullId() {
     return this._fullId;
   }
@@ -125,6 +129,7 @@ export class EternityChallengeState extends GameMechanicState {
     status.gainedCompletions = totalCompletions - this.completions;
     status.hasMoreCompletions = this.completions + status.gainedCompletions < this.maxCompletions;
     status.nextGoalAt = this.goalAtCompletions(status.totalCompletions);
+    status.nextGoalAtminus = this.goalAtCompletions(status.totalCompletions-1);
     return status;
   }
 

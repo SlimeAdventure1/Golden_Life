@@ -131,11 +131,14 @@ export default {
       v-if="postBreak"
       #toggleSlot
     >
+    <br>
       <AutobuyerInput
         :key="mode"
         :autobuyer="autobuyer"
         v-bind="modeProps(mode).input"
       />
+      <br v-if="postBreak && mode !== amountMode">
+      <br v-if="postBreak && mode !== amountMode">
     </template>
     <template
       v-if="postBreak && mode === amountMode"

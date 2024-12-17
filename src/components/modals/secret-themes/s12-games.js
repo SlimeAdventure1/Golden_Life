@@ -48,6 +48,11 @@ export default {
     name: "Melvor Idle",
     link: "https://melvoridle.com/",
     image: "game--melvor-idle.svg"
+  },
+  {
+    name: "Vanilla Antimatter Dimensions",
+    link: "https://ivark.github.io/AntimatterDimensions/",
+    image: "game--antimatter.png"
   }],
   selected: -1,
 };

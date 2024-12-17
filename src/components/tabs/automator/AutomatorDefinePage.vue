@@ -86,7 +86,7 @@ export default {
     </PrimaryButton>
     <div
       :key="count + refreshConstants"
-      class="l-definition-container"
+      class="o-descriptionBlock l-definition-container"
     >
       <AutomatorDefineSingleEntry
         v-for="(constant, i) in constants"

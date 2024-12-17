@@ -20,9 +20,9 @@ function addReplicantiGalaxies(newGalaxies) {
     player.replicanti.galaxies += newGalaxies;
     player.requirementChecks.eternity.noRG = false;
     const keepResources = Pelle.isDoomed
-      ? PelleUpgrade.replicantiGalaxyEM40.canBeApplied
-      : EternityMilestone.replicantiNoReset.isReached;
-    if (!keepResources) {
+    ? PelleUpgrade.replicantiGalaxyEM40.canBeApplied
+    : EternityMilestone.replicantiNoReset.isReached;
+  if (!keepResources) {
       player.dimensionBoosts = 0;
       softReset(0, true, true);
     }
@@ -300,6 +300,9 @@ class ReplicantiUpgradeState {
   get isCapped() { return false; }
 
   /** @abstract */
+  get progress() { throw new NotImplementedError(); }
+
+  /** @abstract */
   get autobuyerMilestone() { throw new NotImplementedError(); }
 
   get canBeBought() {
@@ -351,6 +354,9 @@ export const ReplicantiUpgrade = {
       return this.nearestPercent(this.value) >= this.cap;
     }
 
+    get progress() {
+      return this.value / this.cap;
+    }
     get autobuyerMilestone() {
       return EternityMilestone.autobuyerReplicantiChance;
     }
@@ -399,6 +405,10 @@ export const ReplicantiUpgrade = {
 
     get isCapped() {
       return this.value <= this.cap;
+    }
+
+    get progress() {
+      return Math.log10(1000/this.value)/Math.log10(1000/this.cap)
     }
 
     get autobuyerMilestone() {
@@ -452,6 +462,11 @@ export const ReplicantiUpgrade = {
       return EternityMilestone.autobuyerReplicantiMaxGalaxies;
     }
 
+    get progress() {
+      if (this.distantRGStart>=this.value) return this.value/this.distantRGStart
+      if (this.remoteRGStart>=this.value) return (this.value-this.distantRGStart)/(this.remoteRGStart-this.distantRGStart)
+      return 0;
+    }
     get extra() {
       return Effects.max(0, TimeStudy(131)) + PelleRifts.decay.milestones[2].effectOrDefault(0);
     }
@@ -539,10 +554,7 @@ export const Replicanti = {
       return player.replicanti.galaxies;
     },
     get extra() {
-      return Math.floor((Effects.sum(
-        TimeStudy(225),
-        TimeStudy(226)
-      ) + Effarig.bonusRG) * TimeStudy(303).effectOrDefault(1));
+      return Math.floor((Effects.sum(TimeStudy(225),TimeStudy(226)) + Effarig.bonusRG) * TimeStudy(303).effectOrDefault(1));
     },
     get total() {
       return this.bought + this.extra;

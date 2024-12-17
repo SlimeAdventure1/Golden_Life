@@ -45,11 +45,13 @@ export class InfinityUpgradeState extends SetPurchasableMechanicState {
       // This applies the 4th column of infinity upgrades retroactively
       if (this.config.id.includes("skip")) skipResetsIfPossible();
       EventHub.dispatch(GAME_EVENT.INFINITY_UPGRADE_BOUGHT);
+      AudioManagement.playSound("upgrade")
       return true;
     }
     if (this.canCharge) {
       this.charge();
       EventHub.dispatch(GAME_EVENT.INFINITY_UPGRADE_CHARGED);
+      AudioManagement.playSound(player.celestials.ra.charged.size<12?"upgrade_charge" : "upgrade_charge-max",0.666,[0.9,1.1])
       return true;
     }
     return false;
@@ -183,6 +185,7 @@ class InfinityIPMultUpgrade extends GameMechanicState {
     }
     Currency.infinityPoints.subtract(Decimal.sumGeometricSeries(amount, this.cost, this.costIncrease, 0));
     player.IPMultPurchases += amount;
+    if (amount === 1)AudioManagement.playSound("upgrade_rebuyable")
     GameUI.update();
   }
 

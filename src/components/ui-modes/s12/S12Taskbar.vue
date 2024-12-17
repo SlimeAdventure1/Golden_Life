@@ -4,7 +4,7 @@ import TaskbarIcon from "./TaskbarIcon";
 
 import { S12Windows } from "./windows";
 
-const startupSound = new Audio("audio/s12-startup.mp3");
+const startupSound = new Audio("audio/secret_s12-startup.mp3");
 export default {
   name: "S12Taskbar",
   components: {

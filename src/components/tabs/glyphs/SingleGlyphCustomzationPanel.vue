@@ -127,13 +127,18 @@ export default {
 
 <style scoped>
 .c-single-glyph-cosmetic {
+  color:var(--color-text);
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: calc(100% - 1rem);
   height: 8rem;
   font-size: 1.2rem;
-  border: 0.1rem solid #b8b8b8;
+  border: var(--var-border-width, 0.2rem) solid;
+  box-shadow: 0 0 1rem #00000080 inset;
+  border-image:var(--leg-border-reality) 3;
+  background-image: var(--leg-base);
+  text-shadow: var(--text-shadow);
   border-radius: var(--var-border-radius, 0.5rem);
   padding: 0.5rem;
   margin-top: 1rem;

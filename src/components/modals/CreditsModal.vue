@@ -15,7 +15,7 @@ export default {
   <ModalWrapper class="l-credits-modal c-credits-modal">
     <template #header>
       <h1 class="c-game-header__antimatter">
-        Antimatter Dimensions
+        <img class="o-title" src="images/title-holder.png" alt="">
       </h1>
     </template>
     <div class="c-credits-modal__body">

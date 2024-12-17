@@ -61,7 +61,8 @@ export default {
         if (!this.isVisible) return;
 
         if (isString(description)) {
-          this.description = capitalize(description);
+          //  this.description = capitalize(description);
+          this.description = Pelle.transitionText(capitalize(description),"FINIS PROPE EST PERDITIO IMMINET ADIUVA NOBIS BENE VALE AETERNA",Math.max(Math.min(GameEnd.endState**1.1, 1), 0));
           return;
         }
 
@@ -82,7 +83,8 @@ export default {
             return;
           }
           this.description = capitalize(value);
-          this.updateFunction = () => this.description = capitalize(description());
+          //this.updateFunction = () => this.description = capitalize(description());
+          this.updateFunction = () => this.description = Pelle.transitionText(capitalize(description()),"FINIS PROPE EST PERDITIO IMMINET ADIUVA NOBIS BENE VALE AETERNA",Math.max(Math.min(GameEnd.endState**1.1, 1), 0));
           return;
 
 

@@ -14,6 +14,8 @@ export default {
       realityShardGain: new Decimal(0),
       nextRealityShardGain: new Decimal(0),
       canArmageddon: false,
+      hasGalaxyGenerator:false,
+      wobbly: false
     };
   },
   computed: {
@@ -26,16 +28,19 @@ export default {
         "l-armageddon-button": !this.isHeader,
         "l-reality-button": this.isHeader,
         "l-armageddon-button--header": this.isHeader,
-        "c-armageddon-button--unavailable": !this.canArmageddon
+        "c-armageddon-button--unavailable": !this.canArmageddon,
+        "a-wobble-multi": this.wobbly
       };
     }
   },
   methods: {
     update() {
+      this.wobbly = player.options.animations.wobbly
       this.remnantsGain = Pelle.remnantsGain;
       this.realityShardGain.copyFrom(Pelle.realityShardGainPerSecond);
       this.nextRealityShardGain.copyFrom(Pelle.nextRealityShardGain);
       this.canArmageddon = Pelle.canArmageddon;
+      this.hasGalaxyGenerator = Pelle.hasGalaxyGenerator;
     },
     manualArmageddon() {
       if (!this.canArmageddon) return;
@@ -52,7 +57,7 @@ export default {
     :class="buttonClassObject"
     @click="manualArmageddon"
   >
-    <span v-if="isHeader">You cannot escape a Doomed Reality!<br></span>
+    <div v-if="isHeader" class="o-prestige-description">{{hasGalaxyGenerator?"You cannot escape a Doomed Reality?":"You cannot escape a Doomed Reality!"}}<br></div>
     <span class="c-remnant-gain-display">
       Armageddon for
       <span class="c-remnant-gain">{{ remnants }}</span>
@@ -70,11 +75,21 @@ export default {
   display: block;
   font-family: Typewriter;
   color: var(--color-text);
-  background: var(--color-text-inverted);
-  border: 0.1rem solid var(--color-pelle--base);
+  text-shadow: -0.1rem -0.1rem 0.3rem black,0.1rem 0.1rem 0.3rem black;
+  background: url(../../../../public/images/prestige/p-arma-bg.png),url(../../../../public/images/prestige/p-arma-bg-2.png),linear-gradient(black,var(--bg-dark) var(--distance));
+  --bg-dark:var(--color-pelle--base);
+  color:var(--color-pelle--base);
+  box-shadow: 0 0 1rem inset, 0 0 2rem;
+  border: 0.1rem solid;
   border-radius: var(--var-border-radius, 0.5rem);
+  --distance:400%;
+  animation: a-pbtn-arma 35s infinite linear;
+  transition-duration: 0.12s;
 }
-
+@keyframes a-pbtn-arma{
+  0%{background-position: 0 0, 0 0, 0;}
+  100%{background-position: -256px -256px,128px 128px,0;}
+}
 .s-base--metro .c-armageddon-button {
   box-shadow: 0.1rem 0.1rem 0.1rem 0 #9e9e9e;
 }
@@ -91,8 +106,9 @@ export default {
 }
 
 .c-armageddon-button:hover {
-  box-shadow: 0.1rem 0.1rem 0.5rem var(--color-pelle--base);
-  transition-duration: 0.12s;
+  --distance:150%;
+  color:white;
+  box-shadow: 0 0 1rem inset, 0 0 2rem var(--color-text);
   cursor: pointer;
 }
 
@@ -114,5 +130,19 @@ export default {
 .c-reality-shard-gain {
   font-weight: bold;
   color: var(--color-pelle--base);
+}
+
+.a-wobble-multi:hover{
+  animation: wobble 0.2s ease-out, a-pbtn-arma 35s infinite linear
+}
+@keyframes wobble
+{
+	0% {transform:scale(1,1);}
+	10% {transform:scale(1.075,0.9);}
+	20% {transform:scale(1.1,0.9);}
+	50% {transform:scale(0.875,1.125);}
+	70% {transform:scale(1.025,0.975);}
+	90% {transform:scale(0.975,1.025);}
+	100% {transform:scale(1,1);}
 }
 </style>

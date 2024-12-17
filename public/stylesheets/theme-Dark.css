@@ -1,6 +1,6 @@
 body.t-dark {
   color: #888888;
-  background-image: url("../images/dark-bg.png");
+  background-image: url("../images/background/dark-bg.png");
   background-position: center;
 }
 
@@ -14,25 +14,10 @@ input.t-dark {
   text-shadow: 0 0 7px #64dd17;
 }
 
-.t-dark .c-tt-buy-button--unlocked {
-  color: #3aacd6;
-  background: #161616;
-  border: 0.1rem solid #3aacd6;
-}
-
-.t-dark .c-tt-buy-button--unlocked:hover {
-  color: #161616;
-  background: #3aacd6;
-}
 
 .t-dark .c-tt-buy-button--locked {
-  background: #263238;
-  border: 0.1rem solid #3aacd6;
-}
-
-.t-dark .c-tt-buy-button--locked:hover {
-  background: var(--color-bad);
-  border: 0.1rem solid var(--color-bad);
+  --bg-bright: #263238;
+  --border: #548b9f;
 }
 
 .t-dark .c-rm-amount__desc {

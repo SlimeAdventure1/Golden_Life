@@ -156,8 +156,10 @@ export default {
 }
 
 .o-bh-charge-disabled {
-  background-color: var(--color-disabled);
+  --bg-dark: #838383 !important;
+  --bg-bright:#a3a3a3;
   user-select: none;
+  pointer-events: none;
   cursor: not-allowed;
 }
 </style>

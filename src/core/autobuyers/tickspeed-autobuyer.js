@@ -11,6 +11,10 @@ export class TickspeedAutobuyerState extends UpgradeableAutobuyerState {
     return `Tickspeed`;
   }
 
+  get color() {
+    return `var(--color-accent)`;
+  }
+
   get isUnlocked() {
     if (Pelle.isDisabled("tickspeedAutobuyer")) return false;
     return this.canBeUpgraded;

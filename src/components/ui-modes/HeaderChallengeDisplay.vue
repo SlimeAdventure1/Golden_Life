@@ -1,4 +1,5 @@
 <script>
+import { EternityChallenge } from "../../core/eternity-challenge";
 import FailableEcText from "./FailableEcText";
 import PrimaryButton from "@/components/PrimaryButton";
 
@@ -16,50 +17,93 @@ export default {
       exitText: "",
       resetCelestial: false,
       inPelle: false,
+      naming: false,
+      celNaming: false,
+      fade:1,
     };
   },
   computed: {
     parts() {
       // We need activityToken for NC/IC/EC because plain check of WhateverChallenge.isRunning
       // won't trigger display update if we, say, switch from one challenge to another
-      function celestialReality(celestial, name, tab) {
+      function celestialReality(celestial, name, tab,newname) {
         return {
           name: () => `${name} Reality`,
+          newname: () => `the ${newname} ${celestial==Laitela?Laitela.LevelName[Laitela.difficultyTier]:""}`,
+          bracket: () => `(${celestial.symbol})`,
+          html: () => `<span class="c-challenge-text c-challenge-text--reality">`,
           isActive: token => token,
           activityToken: () => celestial.isRunning,
           tabName: () => tab,
         };
       }
       return [
-        celestialReality(Teresa, "Teresa's", "teresa"),
-        celestialReality(Effarig, "Effarig's", "effarig"),
-        celestialReality(Enslaved, "The Nameless Ones'", "enslaved"),
-        celestialReality(V, "V's", "v"),
-        celestialReality(Ra, "Ra's", "ra"),
-        celestialReality(Laitela, "Lai'tela's", "laitela"),
+        celestialReality(Teresa, "Teresa's", "teresa", Teresa.RealityName),
+        celestialReality(Effarig, "Effarig's", "effarig", Effarig.RealityName),
+        celestialReality(Enslaved, "The Nameless Ones'","enslaved", Enslaved.RealityName),
+        celestialReality(V, "V's", "v", V.RealityName),
+        celestialReality(Ra, "Ra's", "ra", Ra.RealityName),
+        celestialReality(Laitela, "Lai'tela's", "laitela", Laitela.RealityName),
         {
-          name: () => "Time Dilation",
+          name: () => `Time Dilation`,
+          newname: () => `Time Dilation`,
+          bracket: () => `(Ψ)`,
+          html: () => `<span class="c-challenge-text c-challenge-text--dilation">`,
           isActive: token => token,
           activityToken: () => player.dilation.active
         },
         {
           name: token => `Eternity Challenge ${token}`,
+          newname: token => `${EternityChallenge(token).name}`,
+          bracket: token => `(Δ${token})`,
+          html: () => `<span class="c-challenge-text c-challenge-text--eternity">`,
           isActive: token => token > 0,
           activityToken: () => player.challenge.eternity.current
         },
         {
           name: token => `Infinity Challenge ${token}`,
+          newname: token => `${InfinityChallenge(token).name}`,
+          bracket: token => `(∞${token})`,
+          html: () => `<span class="c-challenge-text c-challenge-text--infinity">`,
           isActive: token => token > 0,
           activityToken: () => player.challenge.infinity.current
         },
         {
           name: token => `${NormalChallenge(token).config.name} Challenge`,
+          newname: token => `${NormalChallenge(token).name}`,
+          bracket: token => `(Ω${token})`,
+          html: () => `<span class="c-challenge-text c-challenge-text--antimatter">`,
           isActive: token => token > 0,
           activityToken: () => player.challenge.normal.current
         },
       ];
     },
     activeChallengeNames() {
+      const names = [];
+      for (let i = 0; i < this.activityTokens.length; i++) {
+        const token = this.activityTokens[i];
+        const part = this.parts[i];
+        if (!part.isActive(token)) continue;
+        const type = part.name(token).includes("Reality") ? this.celNaming : this.naming
+        if (part.name(token).includes("Eternity Challenge")) {
+          const currEC = player.challenge.eternity.current;
+          const nextCompletion = EternityChallenge(currEC).completions + 1;
+          let completionText = "";
+          if (Enslaved.isRunning && currEC === 1) {
+            completionText = `(${formatInt(nextCompletion)}/???)`;
+          } else if (nextCompletion === 6) {
+            completionText = `(already completed)`;
+          } else {
+            completionText = `(${formatInt(nextCompletion)}/${formatInt(5)})`;
+          }
+          names.push(`${this.naming?part.html()+part.name(token)+"</span>":part.html()+part.newname(token)+" "+part.bracket(token)+"</span>"} ${completionText}`);
+        } else {
+          names.push(type?part.html()+part.name(token)+"</span>":part.html()+part.newname(token)+" "+part.bracket(token)+"</span>");
+        }
+      }
+      return names;
+    },
+    activeChallengeNamesnonHTML() {
       const names = [];
       for (let i = 0; i < this.activityTokens.length; i++) {
         const token = this.activityTokens[i];
@@ -76,9 +120,9 @@ export default {
           } else {
             completionText = `(${formatInt(nextCompletion)}/${formatInt(5)})`;
           }
-          names.push(`${part.name(token)} ${completionText}`);
+          names.push(`${this.naming?part.name(token):part.newname(token)} ${completionText}`);
         } else {
-          names.push(part.name(token));
+          names.push(this.naming?part.name(token):part.newname(token));
         }
       }
       return names;
@@ -87,17 +131,20 @@ export default {
       return this.infinityUnlocked || this.activeChallengeNames.length > 0;
     },
     isInFailableEC() {
-      return this.activeChallengeNames.some(str => str.match(/Eternity Challenge (4|12)/gu));
+      return this.activeChallengeNames.some(str => str.match(this.naming ? /Eternity Challenge (4|12)/gu : EternityChallenge(4||8)._config.label));
     },
     challengeDisplay() {
       if (this.inPelle && this.activeChallengeNames.length > 0) {
-        return `${this.activeChallengeNames.join(" + ")} in a Doomed Reality. Good luck.`;
+        return `${this.activeChallengeNames.join(" + ")} in a <span class="c-challenge-text c-challenge-text--doomed"> Doomed Reality.</span> Good luck.`;
       }
-      if (this.inPelle) return "a Doomed Reality. Good luck.";
+      if (this.inPelle) return `a <span class="c-challenge-text c-challenge-text--doomed">Doomed Reality.</span> Good luck.`;
       if (this.activeChallengeNames.length === 0) {
-        return "the Antimatter Universe (no active challenges)";
+        return `<span class="c-challenge-text c-challenge-text--antimatter">the Antimatter Universe</span> (no active challenges)`;
       }
       return this.activeChallengeNames.join(" + ");
+    },
+    truechallengeDisplay() {
+    return "You are currently in " + this.challengeDisplay
     },
   },
   methods: {
@@ -111,6 +158,9 @@ export default {
       this.exitText = this.exitDisplay();
       this.resetCelestial = player.options.retryCelestial;
       this.inPelle = Pelle.isDoomed;
+      this.naming = !player.options.naming.challenges;
+      this.celNaming = !player.options.naming.celestial;
+      this.fade = GameEnd.endState>1&&GameEnd.endState<END_STATE_MARKERS.CREDITS_START? Math.clamp(1-(GameEnd.endState-3),0,1):1
     },
     // Process exit requests from the inside out; Challenges first, then dilation, then Celestial Reality. If the
     // relevant option is toggled, we pass a bunch of information over to a modal - otherwise we immediately exit
@@ -129,7 +179,7 @@ export default {
       if (Player.isInAnyChallenge) {
         // Regex replacement is used to remove the "(X/Y)" which appears after ECs. The ternary statement is there
         // because this path gets called for NCs, ICs, and ECs
-        const toExit = this.activeChallengeNames[this.activeChallengeNames.length - 1].replace(/\W+\(.*\)/u, "");
+        const toExit = this.activeChallengeNamesnonHTML[this.activeChallengeNames.length - 1].replace(/\W+\(.*\)/u, "");
         names = { chall: toExit, normal: isEC ? "Eternity" : "Infinity" };
         clickFn = () => {
           const oldChall = Player.anyChallenge;
@@ -137,7 +187,7 @@ export default {
           if (player.options.retryChallenge) oldChall.requestStart();
         };
       } else {
-        names = { chall: this.activeChallengeNames[0], normal: "Reality" };
+        names = { chall: this.activeChallengeNamesnonHTML[0], normal: "Reality" };
         clickFn = () => beginProcessReality(getRealityProps(true));
       }
 
@@ -196,12 +246,13 @@ export default {
   <div
     v-if="isVisible"
     class="l-game-header__challenge-text"
+    :style="{'opacity':fade}"
   >
     <span
       :class="textClassObject()"
       @click="textClicked"
+      v-html="truechallengeDisplay"
     >
-      You are currently in {{ challengeDisplay }}
     </span>
     <FailableEcText v-if="isInFailableEC" />
     <span class="l-padding-line" />
@@ -230,6 +281,7 @@ export default {
 .l-challenge-display {
   padding: 0.5rem;
   cursor: default;
+  font-style:italic
 }
 
 .l-challenge-display--clickable {

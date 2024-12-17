@@ -55,7 +55,7 @@ export const realityUpgrades = [
     id: 4,
     initialCost: 2,
     costMult: 30,
-    textTemplate: "You gain {value} times more Tachyon Particles",
+    textTemplate: "You gain {value} times more Tachyons",
     effect: 3
   }),
   rebuyable({
@@ -106,7 +106,7 @@ export const realityUpgrades = [
     checkEvent: GAME_EVENT.ETERNITY_RESET_BEFORE,
     canLock: true,
     // We don't have lockEvent because the modal can never show up for this upgrade
-    description: "Tachyon Particle gain is boosted based on Achievement multiplier",
+    description: "Tachyon gain is boosted based on Achievement multiplier",
     effect: () => Math.sqrt(Achievements.power),
     formatEffect: value => formatX(value, 2, 2)
   },
@@ -164,7 +164,8 @@ export const realityUpgrades = [
     name: "The Knowing Existence",
     id: 12,
     cost: 50,
-    requirement: () => `Eternity for ${format(DC.E70)} Eternity Points without completing Eternity Challenge 1`,
+    requirement: () => `Eternity for ${format(DC.E70)} Eternity Points without completing 
+    ${player.options.naming.challenges?EternityChallenge(1).name:"Eternity Challenge 1"}`,
     hasFailed: () => EternityChallenge(1).completions !== 0,
     checkRequirement: () => Currency.eternityPoints.exponent >= 70 && EternityChallenge(1).completions === 0,
     checkEvent: GAME_EVENT.ETERNITY_RESET_AFTER,
@@ -215,7 +216,7 @@ export const realityUpgrades = [
     checkEvent: GAME_EVENT.ETERNITY_RESET_AFTER,
     canLock: true,
     lockEvent: () => `purchase a ${formatX(5)} EP upgrade`,
-    description: () => `Boost Tachyon Particle gain based on ${formatX(5)} Eternity Point multiplier`,
+    description: () => `Boost Tachyon gain based on ${formatX(5)} Eternity Point multiplier`,
     effect: () => Math.max(Math.sqrt(Decimal.log10(EternityUpgrade.epMult.effectValue)) / 9, 1),
     formatEffect: value => formatX(value, 2, 2)
   },
@@ -223,7 +224,7 @@ export const realityUpgrades = [
     name: "Disparity of Rarity",
     id: 16,
     cost: 1500,
-    requirement: () => `Reality with ${formatInt(4)} Glyphs equipped of uncommon or better rarity
+    requirement: () => `Reality with ${formatInt(4)} Glyphs equipped of uncommon or better quality
       (${formatInt(Glyphs.activeWithoutCompanion.countWhere(g => g && g.strength >= 1.5))} equipped)`,
     hasFailed: () => {
       const availableGlyphs = Glyphs.inventory.countWhere(g => g && g.strength >= 1.5);
@@ -233,7 +234,7 @@ export const realityUpgrades = [
     },
     checkRequirement: () => Glyphs.activeWithoutCompanion.countWhere(g => g.strength >= 1.5) === 4,
     checkEvent: GAME_EVENT.REALITY_RESET_BEFORE,
-    description: "Improve the Glyph rarity formula",
+    description: "Improve the Glyph quality formula",
     effect: 1.3,
     formatCost: value => format(value, 1, 0)
   },

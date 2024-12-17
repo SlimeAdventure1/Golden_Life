@@ -4,6 +4,10 @@ const GLYPH_NAMES = {
     adjective: "Huggable",
     noun: "Companion"
   },
+  helios: {
+    adjective: "Solar",
+    noun: "Helios"
+  },
   reality: {
     adjective: "Real",
     noun: "Reality"
@@ -15,8 +19,8 @@ const GLYPH_NAMES = {
     noun: "Music"
   },
   effarig: {
-    adjective: { both: "Meta", glyph: "Stable", rm: "Mechanical", none: "Fragmented" },
-    noun: { both: "Effarig", glyph: "Stability", rm: "Mechanism", none: "Fragmentation" }
+    adjective: { all: "Great Meta", both: "Meta", glyph: "Stable", rm: "Mechanical", none: "Fragmented" },
+    noun: { all: "Great Effarig", both: "Effarig", glyph: "Stability", rm: "Mechanism", none: "Fragmentation" }
   },
   cursed: {
     adjective: { high: "Cursed", mid: "Hexed", low: "Jinxed" },
@@ -55,6 +59,11 @@ export default {
       type: Boolean,
       required: false,
       default: false
+    },
+    maxlength: {
+      type: Number,
+      required: false,
+      default: Infinity
     }
   },
   data() {
@@ -70,8 +79,9 @@ export default {
         { type: "effarig", perc: 0, adjOrder: 2 },
         { type: "music", perc: 0, adjOrder: 3 },
         { type: "reality", perc: 0, adjOrder: 4 },
-        { type: "companion", perc: 0, adjOrder: 5 },
-        { type: "cursed", perc: 0, adjOrder: 6 },
+        { type: "helios", perc: 0, adjOrder: 5 },
+        { type: "companion", perc: 0, adjOrder: 6 },
+        { type: "cursed", perc: 0, adjOrder: 7 },
       ],
       sortedGlyphs: [],
       slotCount: 0
@@ -147,7 +157,7 @@ export default {
     // Check for single-type sets and give them a special name based on how much of the full equipped slots they take up
     singletonName() {
       if (this.sortedGlyphs[0].type === "effarig") return GLYPH_NAMES.effarig.noun[this.getEffarigProp()];
-      const singleGlyphTypes = ["reality", "companion"];
+      const singleGlyphTypes = ["reality", "companion","helios"];
       for (const key of singleGlyphTypes) {
         if (this.sortedGlyphs[0].type === key) return GLYPH_NAMES[key].noun;
       }
@@ -168,6 +178,7 @@ export default {
       if (this.calculateGlyphPercent("cursed")) return CosmeticGlyphTypes.cursed;
       if (this.calculateGlyphPercent("companion")) return CosmeticGlyphTypes.companion;
       if (this.calculateGlyphPercent("reality")) return CosmeticGlyphTypes.reality;
+      if (this.calculateGlyphPercent("helios")) return CosmeticGlyphTypes.helios;
       if (this.calculateGlyphPercent("music") >= 50) return CosmeticGlyphTypes.music;
       const primaryType = this.sortedGlyphs.filter(t => t.adjOrder === 1)[0];
       if (primaryType?.perc >= 50) return CosmeticGlyphTypes[primaryType.type];
@@ -214,8 +225,10 @@ export default {
       this.slotCount = Math.max(Glyphs.activeSlotCount, this.glyphSet.length);
     },
     getEffarigProp() {
+      const great = Glyphs.activeList.concat(this.glyphSet).map(glyph => getGlyphEffectsFromBitmask(glyph.effects, 0, 0).filter(effect => effect.isGenerated).length).max() >= 7
       const effarigRM = this.glyphSet.some(i => getSingleGlyphEffectFromBitmask("effarigrm", i));
       const effarigGlyph = this.glyphSet.some(i => getSingleGlyphEffectFromBitmask("effarigglyph", i));
+      if (great) return "all";
       if (effarigRM && effarigGlyph) return "both";
       if (effarigRM) return "rm";
       if (effarigGlyph) return "glyph";
@@ -260,7 +273,7 @@ export default {
       :style="textStyle"
       class="c-current-glyph-effects__header"
     >
-      {{ setName }}
+      {{ setName.substring(0, maxlength) + (setName.length>=maxlength?'…':"") }}
     </span>
   </div>
 </template>

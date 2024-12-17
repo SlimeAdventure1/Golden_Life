@@ -9,6 +9,7 @@ function isEND() {
 window.format = function format(value, places = 0, placesUnder1000 = 0) {
   if (isEND()) return "END";
   return Notations.current.format(value, places, placesUnder1000, 3);
+  // return Pelle.transitionText(Notations.current.format(value, places, placesUnder1000, 3),"END",Math.max(Math.min(GameEnd.endState**2, 1), 0));
 };
 
 window.formatInt = function formatInt(value) {

@@ -57,7 +57,7 @@ export default {
       return this.effectiveLevel && this.effectiveLevel > this.level;
     },
     levelText() {
-      if (this.type === "companion") return "";
+      if (this.type === "companion" || this.type === "helios") return "";
       // eslint-disable-next-line no-nested-ternary
       const arrow = this.isLevelCapped
         ? "<i class='fas fa-sort-down'></i>"
@@ -66,7 +66,7 @@ export default {
       const color = this.isLevelCapped
         ? "#ff4444"
         : (this.isLevelBoosted ? "#44FF44" : "var(--color-text);");
-      return `<span style="color: ${color}">
+      return `<span style="color: ${color};">
                   ${arrow}${formatInt(this.effectiveLevel)}${arrow}
                   </span>`;
     },
@@ -75,6 +75,9 @@ export default {
       return {
         color: GlyphAppearanceHandler.getBorderColor(this.type),
         "font-weight": "bold",
+        "font-family": "cambria",
+        "font-size": "1.4rem",
+        "line-height": "1",
         "text-shadow": this.type === "cursed" ? "0.05rem 0.05rem var(--color-text)" : undefined,
         animation: this.type === "reality" ? "a-reality-glyph-description-cycle 10s infinite" : undefined,
       };
@@ -86,7 +89,7 @@ export default {
         : getRarity(this.glyph.strength)[Theme.current().isDark() ? "darkColor" : "lightColor"];
       return {
         color,
-        "font-weight": "bold"
+        "font-weight": "bold",
       };
     },
     effectStyle() {
@@ -106,7 +109,8 @@ export default {
       return effectStrings.filter(s => s !== "undefined");
     },
     rarityPercent() {
-      if (this.glyph.type === "companion" || this.glyph.type === "cursed") return "";
+      if (this.glyph.type === "companion" || this.glyph.type === "cursed" || this.glyph.type === "helios") return "";
+      if (this.glyph.type === "reality") return "PURE"
       return formatRarity(strengthToRarity(this.glyph.strength));
     },
   },
@@ -140,7 +144,7 @@ export default {
     },
     clickGlyph(glyph) {
       if (Glyphs.isMusicGlyph(glyph)) {
-        new Audio(`audio/note${GLYPH_TYPES.indexOf(glyph.type) + 1}.mp3`).play();
+        new Audio(`audio/glyph_note${GLYPH_TYPES.indexOf(glyph.type) + 1}.mp3`).play();
       }
     },
   },
@@ -169,6 +173,7 @@ export default {
         :text-proportion="0.5"
         glow-blur="0.4rem"
         glow-spread="0.1rem"
+        :hasCrate="2"
         @clicked="clickGlyph(glyph)"
       />
       <div :style="rarityStyle">

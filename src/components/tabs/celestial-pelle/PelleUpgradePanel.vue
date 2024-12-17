@@ -139,7 +139,7 @@ export default {
 .c-collapse-icon-clickable {
   position: absolute;
   top: 50%;
-  left: 1.5rem;
+  right: 1.5rem;
   width: 3rem;
   align-content: center;
   transform: translateY(-50%);
@@ -174,11 +174,15 @@ export default {
   justify-content: center;
   align-items: flex-start;
   align-self: center;
-  border: var(--var-border-width, 0.2rem) solid var(--color-pelle--base);
+  border: var(--var-border-width, 0.1rem) solid var(--color-pelle--base);
+  box-shadow: 0 0 1rem black inset, 0 0 0 0.2rem var(--color-pelle--base) inset,inset 0 0 1rem 0.1rem rgba(237, 20, 61, 45%), 0 0 1rem 0.1rem rgba(237, 20, 61, 45%);
   border-radius: var(--var-border-radius, 0.5rem);
   padding: 1rem;
+  background: #ffffff40;
 }
-
+.s-base--dark .c-armageddon-container {
+  background: #00000060;
+}
 .c-armageddon-button-container {
   width: 32rem;
   margin-bottom: 0.5rem;

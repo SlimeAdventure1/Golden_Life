@@ -46,7 +46,7 @@ export default {
     },
     toggleVisibility() {
       if (!this.changeEnabled) return;
-      this.subtab.toggleVisibility();
+      this.subtab.toggleVisibility();AudioManagement.playSound(this.hidden ?"click_light-reverse":"click_light");
     },
   },
 };
@@ -80,8 +80,11 @@ export default {
 
 .l-hide-modal-button__subtab-icon {
   font-size: 1.5rem;
-  width: 2rem;
+  width: 2.5rem;
   margin: 0.2rem;
+  padding-right:0.5rem;
+  border-right: 0.1rem solid;
+  border-image: linear-gradient(transparent -25%, currentcolor, transparent 125%) 1
 }
 
 .l-hide-modal-button__subtab-name {

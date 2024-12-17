@@ -112,21 +112,21 @@ export default {
   position: absolute;
   top: 0;
   right: 0;
-  color: black;
+  color: var(--color-text);
   text-shadow: none;
   padding: 0.2rem;
 }
 
 .c-hidden-tabs-background__visible {
-  background-color: var(--color-good);
+  --base-color: var(--color-good);
 }
 
 .c-hidden-tabs-background__hidden {
-  background-color: var(--color-gh-purple);
+  --base-color: var(--color-gh-purple);
 }
 
 .c-hidden-tabs-background__always-visible {
-  background-color: var(--color-disabled);
+  --base-color: gray;
   cursor: default;
 }
 </style>

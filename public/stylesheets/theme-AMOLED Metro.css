@@ -14,26 +14,23 @@ input.t-amoled-metro {
 }
 
 .t-amoled-metro .c-tt-buy-button--unlocked {
-  color: #3aacd6;
-  background: black;
-  border: 0.1rem solid #3aacd6;
+  --border: #3aacd6;
+  --bg-bright: #111111;
+  --bg-dark: #222222;
 }
-
 .t-amoled-metro .c-tt-buy-button--unlocked:hover {
-  color: black;
-  background: #3aacd6;
+  --bg-dark: #3aacd6;
 }
-
 .t-amoled-metro .c-tt-buy-button--locked {
   color: var(--color-bad);
-  background: black;
-  border: 0.1rem solid var(--color-bad);
+  --bg-bright: #222222;
+  --bg-dark: #444444;
+  --border: var(--color-bad);
 }
 
 .t-amoled-metro .c-tt-buy-button--locked:hover {
-  color: black;
-  background: var(--color-bad);
-  border: 0.1rem solid var(--color-bad);
+  color:white;
+  --bg-dark: var(--color-bad);
 }
 
 .t-amoled-metro .c-rm-amount__desc {
@@ -49,9 +46,6 @@ input.t-amoled-metro {
   background-color: #333333;
 }
 
-.t-amoled-metro .c-challenge-box--normal {
-  border-color: var(--color-text);
-}
 
 .t-amoled-metro .c-autobuyer-box-row {
   border-color: #333333;

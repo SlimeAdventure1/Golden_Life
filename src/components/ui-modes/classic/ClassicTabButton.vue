@@ -15,7 +15,7 @@ export default {
     return {
       isAvailable: false,
       hasNotification: false,
-      tabName: ""
+      tabName: "",
     };
   },
   computed: {
@@ -36,6 +36,9 @@ export default {
       } else {
         this.tabName = this.tab.name;
       }
+    },
+    hover() {
+      AudioManagement.playSound("click_hover")
     }
   },
 };
@@ -48,8 +51,9 @@ export default {
       [tab.config.UIClass,
        { 'o-tab-btn--active': isCurrentTab }]
     "
-    class="o-tab-btn"
+    class="o-tab-btn o-tab-btn--bordered"
     @click="tab.show(true)"
+    @mouseenter="hover()"
   >
     {{ tabName }}
     <div
@@ -64,13 +68,13 @@ export default {
   position: relative;
   height: 3.1rem;
   vertical-align: middle;
-  margin: 0.2rem;
-  margin-bottom: 0.7rem;
+  /*margin: 0.2rem;margin-bottom:0.7rem;*/
+  margin: 0.2rem 0.5rem 0.7rem 0.5rem;
+  
 }
 
 .o-tab-btn--active {
   height: 3.1rem;
-  border-bottom-width: 0.5rem;
 }
 
 .s-base--metro .o-tab-btn--active {

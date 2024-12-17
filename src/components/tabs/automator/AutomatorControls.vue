@@ -221,7 +221,6 @@ export default {
   flex-direction: row;
   align-items: center;
 }
-
 .c-automator__status-text {
   font-size: 1.3rem;
   font-weight: bold;
@@ -243,11 +242,16 @@ export default {
 
 .c-automator__button--active {
   background-color: var(--color-automator-controls-active);
-  border-color: var(--color-reality-light);
+  border-color: black;
 }
 
 .c-automator__button--inactive {
   background-color: var(--color-automator-controls-border);
+  border-color: black;
+}
+
+.s-base--dark .c-automator__button--active,
+.s-base--dark .c-automator__button--inactive {
   border-color: var(--color-reality-light);
 }
 

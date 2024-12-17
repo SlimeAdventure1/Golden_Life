@@ -17,18 +17,21 @@ export default {
       dilationUnlocked: false,
       tachyonsUnlocked: false,
       realityUnlocked: false,
+      celestialsUnlocked: false,
       animatedThemeUnlocked: false,
       bigCrunch: false,
       eternity: false,
       dilation: false,
       tachyonParticles: false,
       reality: false,
+      celreality: false,
       background: false,
       blobSnowflakes: 16,
-      isS11Active: false,
       isBlackHoleUnlocked: false,
       blobHole: false,
-      isS11Unlocked: false
+      isS11Active: false,
+      isS11Unlocked: false,
+      wobbly:false,
     };
   },
   computed: {
@@ -61,6 +64,9 @@ export default {
     reality(newValue) {
       player.options.animations.reality = newValue;
     },
+    celreality(newValue) {
+      player.options.animations.celreality = newValue;
+    },
     background(newValue) {
       player.options.animations.background = newValue;
     },
@@ -69,6 +75,9 @@ export default {
     },
     blobHole(newValue) {
       player.options.animations.blobHole = newValue;
+    },
+    wobbly(newValue) {
+      player.options.animations.wobbly = newValue;
     }
   },
   methods: {
@@ -83,7 +92,8 @@ export default {
       this.animatedThemeUnlocked = Theme.animatedThemeUnlocked;
       this.isS11Active = Theme.currentName() === "S11";
       this.isS11Unlocked = Themes.available().map(t => t.name).includes("S11");
-      this.isBlackHoleUnlocked = BlackHoles.areUnlocked;
+      this.isBlackHoleUnlocked = player.blackHole[0].unlocked;
+      this.celestialsUnlocked = Achievement(147).isUnlocked;
 
       const options = player.options.animations;
       this.bigCrunch = options.bigCrunch;
@@ -91,9 +101,11 @@ export default {
       this.dilation = options.dilation;
       this.tachyonParticles = options.tachyonParticles;
       this.reality = options.reality;
+      this.celreality = options.celreality;
       this.background = options.background;
       this.blobSnowflakes = options.blobSnowflakes;
       this.blobHole = options.blobHole;
+      this.wobbly = options.wobbly;
     },
     adjustSliderValue(value) {
       this.blobSnowflakes = value;
@@ -109,6 +121,10 @@ export default {
       Animation Options
     </template>
     <div class="c-modal-options__button-container">
+      <ModalOptionsToggleButton
+        v-model="wobbly"
+        text="Wobbles:"
+      />
       <ModalOptionsToggleButton
         v-if="infinityUnlocked"
         v-model="bigCrunch"
@@ -127,12 +143,17 @@ export default {
       <ModalOptionsToggleButton
         v-if="tachyonsUnlocked"
         v-model="tachyonParticles"
-        text="Tachyon particles:"
+        text="Tachyons:"
       />
       <ModalOptionsToggleButton
         v-if="realityUnlocked"
         v-model="reality"
         text="Reality:"
+      />
+      <ModalOptionsToggleButton
+        v-if="celestialsUnlocked"
+        v-model="celreality"
+        text="Celestial Reality:"
       />
       <ModalOptionsToggleButton
         v-if="isS11Unlocked && isBlackHoleUnlocked"

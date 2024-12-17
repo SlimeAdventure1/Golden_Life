@@ -15,43 +15,28 @@ export default {
   <div class="l-information-modal c-information-modal">
     <ModalCloseButton @click="emitClose" />
     <div class="l-h2p-header">
-      <div class="c-h2p-title">
-        About the game
-      </div>
+      <img class="o-title" src="images/title-holder.png" alt="">
     </div>
     <div class="c-info-body">
-      Antimatter Dimensions is an Idle Incremental game created by Finnish developer Hevipelle. Originating as a solo
-      project in 2016, it was expanded upon by a large team of developers and testers from then on.
+      Antimatter Dimensions is an Idle Incremental game created by Finnish developer Hevipelle. 
+      Originating as a solo project in 2016, it was expanded upon by a large team of developers and testers from then on.
       <br>
       <br>
       The game has unfolding gameplay and multiple prestige layers. The "How to Play" button contains useful
       information about progressing.
+      <br>
+      <br>
+      AD: Legendary is a modified version of the game, created by MrKrutaman. 
+      It focuses on a complete overhaul of the game's graphics and visuals, 
+      along with small additional non-gameplay content.
+      <br><br>
+      This mod is intended for mature audience.
     </div>
     <div class="l-socials">
       <InformationModalButton
         name="GitHub repository"
         icon="fa-brands fa-github"
         link="https://github.com/IvarK/AntimatterDimensionsSourceCode"
-      />
-      <InformationModalButton
-        name="r/AntimatterDimensions"
-        icon="fa-brands fa-reddit-alien"
-        link="https://www.reddit.com/r/AntimatterDimensions/"
-      />
-      <InformationModalButton
-        name="Antimatter Dimensions Discord Server"
-        icon="fa-brands fa-discord"
-        link="https://discord.gg/ST9NaXa"
-      />
-      <InformationModalButton
-        name="Antimatter Dimensions on Google Play"
-        icon="fa-brands fa-google-play"
-        link="https://play.google.com/store/apps/details?id=kajfosz.antimatterdimensions"
-      />
-      <InformationModalButton
-        name="Antimatter Dimensions on Steam"
-        icon="fa-brands fa-steam"
-        link="https://store.steampowered.com/app/1399720/Antimatter_Dimensions/"
       />
       <InformationModalButton
         name="Credits"
@@ -81,13 +66,16 @@ export default {
 }
 
 .c-info-body {
-  text-align: left;
-  font-size: 2rem;
+  text-align: center;
+  font-style: italic;
+  font-size: 1.75rem;
   margin: 1rem;
   padding: 0.5rem;
 }
 
 .t-s12 .c-info-body {
+  text-align: left;
+  font-style: normal;
   font-size: 1.3rem;
   margin: 0;
 }

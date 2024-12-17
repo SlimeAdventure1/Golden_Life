@@ -14,6 +14,7 @@ export default {
       eternityUnlocked: false,
       realityUnlocked: false,
       alchemyUnlocked: false,
+      perkShopUnlocked:false,
 
       showPercentage: false,
       achievements: false,
@@ -23,6 +24,7 @@ export default {
       glyphEffectDots: false,
       realityUpgrades: false,
       perks: false,
+      perkShop: false,
       alchemy: false,
     };
   },
@@ -56,6 +58,9 @@ export default {
     perks(newValue) {
       player.options.showHintText.perks = newValue;
     },
+    perkShop(newValue) {
+      player.options.showHintText.perkShop = newValue;
+    },
     alchemy(newValue) {
       player.options.showHintText.alchemy = newValue;
     },
@@ -66,6 +71,7 @@ export default {
       this.infinityUnlocked = this.fullCompletion || progress.isInfinityUnlocked;
       this.eternityUnlocked = this.fullCompletion || progress.isEternityUnlocked;
       this.realityUnlocked = this.fullCompletion || progress.isRealityUnlocked;
+      this.perkShopUnlocked = TeresaUnlocks.shop.isUnlocked;
       this.alchemyUnlocked = this.fullCompletion || Ra.unlocks.effarigUnlock.canBeApplied;
 
       const options = player.options.showHintText;
@@ -77,6 +83,7 @@ export default {
       this.glyphEffectDots = options.glyphEffectDots;
       this.realityUpgrades = options.realityUpgrades;
       this.perks = options.perks;
+      this.perkShop = options.perkShop;
       this.alchemy = options.alchemy;
     }
   },
@@ -125,6 +132,11 @@ export default {
         v-if="realityUnlocked"
         v-model="perks"
         text="Perk IDs:"
+      />
+      <ModalOptionsToggleButton
+        v-if="perkShopUnlocked"
+        v-model="perkShop"
+        text="Perk Shop Levels:"
       />
       <ModalOptionsToggleButton
         v-if="alchemyUnlocked"

@@ -373,7 +373,6 @@ export const InfinityDimensions = {
     for (let tier = 8; tier > 1; tier--) {
       InfinityDimension(tier).produceDimensions(InfinityDimension(tier - 1), diff / 10);
     }
-
     if (EternityChallenge(7).isRunning) {
       if (!NormalChallenge(10).isRunning) {
         InfinityDimension(1).produceDimensions(AntimatterDimension(7), diff);

@@ -28,7 +28,7 @@ export const pelleRifts = {
       {
         resource: "vacuum",
         requirement: 0.04,
-        description: "You can equip a single basic Glyph with decreased level and rarity"
+        description: "You can equip a single basic Glyph with decreased level and quality"
       },
       {
         resource: "vacuum",
@@ -173,7 +173,7 @@ export const pelleRifts = {
       {
         resource: "recursion",
         requirement: 1,
-        description: "Permanently unlock the Galaxy Generator",
+        description: () => (PelleRifts.recursion._milestones[2].isUnlocked?"Permanently unlock the Galaxy Generator":"???"),
       },
     ],
     galaxyGeneratorText: "Creating more Galaxies is unsustainable, you must focus the $value to allow more"

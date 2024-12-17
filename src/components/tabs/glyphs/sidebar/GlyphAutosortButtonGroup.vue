@@ -80,12 +80,14 @@ export default {
       v-model="autoCollapse"
       class="c-glyph-inventory-option"
       label="Auto-collapse space:"
+      :class="{'c-glyph-inventory-option--active':autoCollapse}"
     />
     <ToggleButton
       v-if="showAutoAutoClean"
       v-model="autoAutoClean"
       class="c-glyph-inventory-option"
       label="Auto-purge on Realities:"
+      :class="{'c-glyph-inventory-option--active':autoAutoClean}"
     />
     <ToggleButton
       v-if="showAutoAutoClean"
@@ -94,6 +96,7 @@ export default {
       label="Never Auto-purge Glyphs accepted by filter:"
       tooltip-class="c-glyph-inventory-option__tooltip"
       :tooltip-content="keepTooltip"
+      :class="{'c-glyph-inventory-option--active':applyFilterToPurge}"
     />
   </div>
 </template>

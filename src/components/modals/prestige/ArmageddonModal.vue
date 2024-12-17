@@ -1,6 +1,6 @@
 <script>
 import ModalWrapperChoice from "@/components/modals/ModalWrapperChoice";
-
+import wordShift from "@/core/word-shift";
 export default {
   name: "ArmageddonModal",
   components: {
@@ -13,11 +13,12 @@ export default {
       realityShardGain: new Decimal(0),
       nextRealityShardGain: new Decimal(0),
       canArmageddon: false,
+      doomtext:undefined,
     };
   },
   computed: {
     topLabel() {
-      if (!this.isDoomed) return `You are about to Doom your Reality`;
+      if (!this.isDoomed) return `You are about to ${this.doomtext[0]}`;
       return `You are about to perform an Armageddon reset`;
     },
     message() {
@@ -37,9 +38,15 @@ export default {
       this.realityShardGain.copyFrom(Pelle.realityShardGainPerSecond);
       this.nextRealityShardGain.copyFrom(Pelle.nextRealityShardGain);
       this.canArmageddon = Pelle.canArmageddon;
+      this.doomtext = [
+      Date.now() % 4000 > 750 ? "Doom your Reality" : wordShift.randomCrossWords("Doom your Reality"),
+      Date.now() % 5000 > 500 ? "Are you sure you want to do this?" : "You are sure you want to do this!",
+      Date.now() % 5555 > 222 ? "reset" : "SAVE"
+    ]
     },
     handleYesClick() {
-      Pelle.initializeRun();
+      if (!this.isDoomed) return initializeDoom();
+      return Pelle.initializeRun()
     },
   },
 };
@@ -57,13 +64,13 @@ export default {
       v-if="!isDoomed"
       class="c-modal-message__text"
     >
-      Dooming your Reality will reset everything except Challenge records, Celestial progress and anything under
+      Dooming your Reality will {{ doomtext[2] }} everything except Challenge records, Celestial progress and anything under
       the General and Reality header on the Statistics tab. You will not gain any rewards from your progress
       in your current Reality. Dooming your Reality will also purge most of your unprotected Glyphs and disable
       certain game mechanics.
       <br>
       <br>
-      Are you sure you want to do this?
+      {{ doomtext[1] }}
     </div>
     <div
       v-else

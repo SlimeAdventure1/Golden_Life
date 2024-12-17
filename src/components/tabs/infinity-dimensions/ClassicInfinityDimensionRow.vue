@@ -36,6 +36,7 @@ export default {
       hardcap: InfinityDimensions.HARDCAP_PURCHASES,
       eternityReached: false,
       enslavedRunning: false,
+      isDestabilized:false,
     };
   },
   computed: {
@@ -43,7 +44,9 @@ export default {
       return ui.view.shiftDown;
     },
     name() {
-      return `${InfinityDimension(this.tier).shortDisplayName} Infinity Dimension`;
+      return player.options.naming.dimensions?
+      `Infinity ${InfinityDimension(this.tier).uniqueName}`:
+      `${InfinityDimension(this.tier).shortDisplayName} Infinity Dimension`;
     },
     costDisplay() {
       if (this.isUnlocked || this.shiftDown) {
@@ -58,7 +61,7 @@ export default {
       return `Reach ${formatPostBreak(InfinityDimension(this.tier).amRequirement)} AM`;
     },
     hasLongText() {
-      return this.costDisplay.length > 20;
+      return this.costDisplay.length > 25;
     },
     hardcapPurchases() {
       return format(this.hardcap, 1, 1);
@@ -106,6 +109,9 @@ export default {
       this.isAutobuyerOn = autobuyer.isActive;
       this.eternityReached = PlayerProgress.eternityUnlocked();
       this.enslavedRunning = Enslaved.isRunning;
+      if (tier > 8-Laitela.difficultyTier) {
+        this.isDestabilized = Laitela.isRunning ? true : false
+      }
     },
     buySingleInfinityDimension() {
       InfinityDimension(this.tier).buySingle();
@@ -120,13 +126,13 @@ export default {
 <template>
   <div
     v-show="showRow"
-    class="c-dimension-row l-dimension-single-row"
-    :class="{ 'c-dim-row--not-reached': !isUnlocked && !canUnlock }"
+    class="c-dimension-row c-infinity-dim-row l-dimension-single-row "
+    :class="{ 'c-dim-row--not-reached': !isUnlocked && !canUnlock,'c-dim-row--unstable': isDestabilized  }"
   >
     <GenericDimensionRowText
       :tier="tier"
       :name="name"
-      :multiplier-text="formatX(multiplier, 2, 1)"
+      :multiplier-text="!isDestabilized?formatX(multiplier, 2, 1) : 'Destabilized'"
       :amount-text="format(amount, 2)"
       :rate="rateOfChange"
     />
@@ -134,7 +140,7 @@ export default {
       <PrimaryButton
         :enabled="isAvailableForPurchase || (!isUnlocked && canUnlock)"
         class="o-primary-btn--buy-id o-primary-btn--buy-dim c-dim-tooltip-container"
-        :class="{ 'l-dim-row-small-text': hasLongText }"
+        :class="{ 'l-dim-row-small-text': hasLongText, 'o-primary-btn--infcapped': isCapped&&!enslavedRunning }"
         @click="buySingleInfinityDimension"
       >
         {{ costDisplay }}

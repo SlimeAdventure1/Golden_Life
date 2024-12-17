@@ -52,13 +52,16 @@ export default {
         v-if="set[0]"
         class="l-glyph-set-entry"
       >
-        {{ set[2] }}:
+      <div class="l-glyph-set-entry-border">{{ set[2] }}</div>
         <GlyphSetPreview
           v-if="set[0]"
           :key="idx"
           :glyphs="set[1]"
           :text="set[2]"
           :text-hidden="true"
+          :needsCrates="1"
+          marginsize="0.5rem 0.7rem"
+          :maxlength="50"
         />
         {{ set[3] }}
         <br>

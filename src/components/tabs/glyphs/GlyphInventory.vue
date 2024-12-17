@@ -1,6 +1,7 @@
 <script>
 import GlyphComponent from "@/components/GlyphComponent";
 
+
 export default {
   name: "GlyphInventory",
   components: {
@@ -45,9 +46,11 @@ export default {
       const glyph = Glyphs.findById(id);
       if (!glyph) return;
       Glyphs.moveToSlot(glyph, idx);
+      AudioManagement.playSound("glyph_drop",undefined,[0.975,1.025])
     },
     removeGlyph(id, force) {
       GlyphSacrificeHandler.removeGlyph(Glyphs.findById(id), force);
+      if(!player.options.confirmations.glyphSacrifice)AudioManagement.playSound("glyph_sacrifice",undefined,[0.9,1.1])
     },
     clickGlyph(col, id) {
       const glyph = Glyphs.findById(id);
@@ -60,14 +63,14 @@ export default {
         this.clickedGlyphId = id;
         if (!glyph) return;
         if (Glyphs.isMusicGlyph(glyph)) {
-          new Audio(`audio/note${col}.mp3`).play();
+          new Audio(`audio/glyph_note${col}.mp3`).play();
         }
         // Else it's double click, so equip a glyph
       } else if (this.clickedGlyphId === id) {
         clearTimeout(this.doubleClickTimeOut);
         this.doubleClickTimeOut = null;
         const idx = Glyphs.active.indexOf(null);
-        if (idx !== -1) Glyphs.equip(glyph, idx);
+        if (idx !== -1) Glyphs.equip(glyph, idx,true);
       }
     },
     glyphsChanged() {
@@ -88,7 +91,9 @@ export default {
 
 <template>
   <div class="l-glyph-inventory">
-    Click and drag or double-click to equip Glyphs.
+    <span ach-tooltip="Click and drag or double-click to equip Glyphs.">
+        <i class="fas fa-question-circle" />
+      </span>
     <div
       v-for="row in rowCount"
       :key="protectedRows + row"
@@ -110,6 +115,7 @@ export default {
           :is-inventory-glyph="true"
           :show-sacrifice="glyphSacrificeUnlocked"
           :draggable="true"
+          glowSpread="0rem"
           @shiftClicked="removeGlyph($event, false)"
           @ctrlShiftClicked="removeGlyph($event, true)"
           @clicked="clickGlyph(col, $event)"

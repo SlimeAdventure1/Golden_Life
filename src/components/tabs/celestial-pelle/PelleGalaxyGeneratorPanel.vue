@@ -33,8 +33,8 @@ export default {
       return GalaxyGeneratorUpgrades.all;
     },
     galaxyText() {
-      let text = format(Math.max(this.galaxies, 0), 2);
-      if (this.galaxies < 0) text += ` [${format(this.galaxies, 2)}]`;
+      let text = formatInt(Math.max(this.galaxies, 0), 2);
+      if (this.galaxies < 0) text += ` [${formatInt(this.galaxies, 2)}]`;
       return text;
     },
     sacrificeText() {
@@ -42,6 +42,10 @@ export default {
     },
     emphasisedStart() {
       return Math.pow(this.generatedGalaxies / this.cap, 0.45);
+    },
+    galaxyamountText() {
+      if (this.cap === Infinity) return formatInt(this.generatedGalaxies, 2)
+      return formatInt(this.generatedGalaxies, 2)+" / "+formatInt(this.cap, 2)
     }
   },
   methods: {
@@ -67,6 +71,7 @@ export default {
     },
     unlock() {
       player.celestials.pelle.galaxyGenerator.unlocked = true;
+      player.options.animations.celreality = true;
       Pelle.quotes.galaxyGeneratorUnlock.show();
     }
   },
@@ -74,7 +79,7 @@ export default {
 </script>
 
 <template>
-  <div class="l-pelle-panel-container">
+  <div class="l-pelle-panel-container c-galgen-panel-container">
     <div class="c-pelle-panel-title">
       <i
         v-if="!isCapped"
@@ -93,14 +98,16 @@ export default {
           You have a total of
           <span class="c-galaxies-amount">{{ galaxyText }}</span>
           Galaxies.
-          <span class="c-galaxies-amount">+{{ format(galaxiesPerSecond, 2, 1) }}/s</span>
+          <span class="c-galaxies-amount c-small-text">+{{ formatInt(galaxiesPerSecond, 2, 1) }}/s</span>
         </div>
         <div>
           <button
             class="c-increase-cap"
             :class="{
               'c-increase-cap-available': isCapped && capRift && !sacrificeActive,
-              'tutorial--glow': cap === Infinity
+              'c-increase-cap-active': sacrificeActive,
+              'tutorial--glow': cap === Infinity,
+              'c-increase-cap-ascended': cap === Infinity
             }"
             @click="increaseCap"
           >
@@ -112,25 +119,29 @@ export default {
               v-if="isCapped && capRift"
               class="c-increase-cap-text"
             >
-              {{ sacrificeText }}. <br><br>
+            <div class="c-sac-text">{{ sacrificeText }}.</div>
               <span
                 v-if="!sacrificeActive"
                 class="c-big-text"
               >
-                Sacrifice your {{ capRiftName }}
+                Sacrifice your 
+                <span style="font-family:Typewriter;font-size:2.5rem">{{ capRiftName }}</span>
               </span>
               <span
                 v-else
                 class="c-big-text"
               >
-                Getting rid of all that {{ capRiftName }}...
+              Getting rid of all that 
+              <span style="font-family:Typewriter;font-size:2.5rem">{{ capRiftName }}</span>
+              ...
               </span>
             </div>
             <div
               v-else
               class="c-increase-cap-text c-medium-text"
             >
-              {{ format(generatedGalaxies, 2) }} / {{ format(cap, 2) }} Galaxies generated
+            {{ galaxyamountText }}<br> 
+            <div class="c-small-text">Galaxies generated</div>
             </div>
           </button>
         </div>
@@ -155,10 +166,21 @@ export default {
 </template>
 
 <style scoped>
+.c-galgen-panel-container{
+  border: var(--var-border-width, 0.1rem) solid var(--color-pelle--secondary);
+  box-shadow: 0 0 2rem black inset, 0 0 0 0.3rem var(--color-pelle--secondary) inset;
+  background: url(../../../../public/images/upgrades/pelle.png),linear-gradient(#000000, var(--color-pelle--secondary) 200%);
+}
+.c-galgen-panel-container .l-pelle-content-container{
+  color:white
+}
+.c-galgen-panel-container .c-pelle-panel-title{
+  color: var(--color-pelle--secondary);
+}
 .c-collapse-icon-clickable {
   position: absolute;
   top: 50%;
-  left: 1.5rem;
+  right: 1.5rem;
   width: 3rem;
   align-content: center;
   transform: translateY(-50%);
@@ -166,18 +188,31 @@ export default {
 }
 
 .c-generator-unlock-button {
-  width: 25rem;
+  width: 50rem;
   height: 10rem;
   font-family: Typewriter;
   font-size: 2rem;
-  font-weight: bold;
-  color: black;
-  background: linear-gradient(var(--color-pelle--secondary), var(--color-pelle--base));
+  color: rgb(255, 255, 255);
+  background: url(../../../../public/images/prestige/galgen-unlock.png),url(../../../../public/images/prestige/galgen-unlock-2.png),url(../../../../public/images/background/galgen-unlock.png);
   border-radius: var(--var-border-radius, 0.5rem);
+  box-shadow: 0 -.3rem 1rem var(--color-pelle--secondary),0 .3rem 1rem var(--color-pelle--base);
+  border: 1px solid;
+  border-image: linear-gradient(var(--color-pelle--secondary),var(--color-pelle--base)) 1;
   padding: 2rem;
   cursor: pointer;
+  transition: 0.2s;
+  animation:a-galgenunlock 5s infinite linear;
 }
-
+.c-generator-unlock-button:hover {
+  color: rgb(255, 255, 255);
+  text-shadow: 1px 1px 0px var(--color-pelle--secondary),-1px -1px 0px var(--color-pelle--base);
+  box-shadow: 0 0 2rem var(--color-pelle--secondary),0 0 2rem var(--color-pelle--base),0 -.3rem 1rem inset var(--color-pelle--secondary),0 .3rem 1rem inset var(--color-pelle--base);
+  border: 1px solid white;
+}
+@keyframes a-galgenunlock{
+  0%{background-position: 0 0, 0 0, 0 0;}
+  100%{background-position: 256px 256px, -256px -256px,0 0;}
+}
 .l-galaxy-generator-upgrades-container {
   display: flex;
   flex-wrap: wrap;
@@ -185,12 +220,12 @@ export default {
 }
 
 .c-galaxies-amount {
-  font-size: 2.5rem;
+  font-size: 2.8rem;
+  color:white;
+  font-family: cambria;
   font-weight: bold;
-  background: linear-gradient(var(--color-pelle--secondary), var(--color-pelle--base));
-  background-clip: text;
-
-  -webkit-text-fill-color: transparent;
+  line-height: 1.1;
+  text-shadow: 0.15rem 0.15rem 0.3rem var(--color-pelle--base),-0.15rem -0.15rem 0.3rem var(--color-pelle--secondary);
 }
 
 .highlight {
@@ -202,30 +237,52 @@ export default {
 .c-increase-cap {
   overflow: hidden;
   width: 100%;
-  height: 11.4rem;
-  max-width: 70rem;
+  height: 8.5rem;
+  max-width: 90rem;
   position: relative;
   font-family: Typewriter;
   font-size: 1.1rem;
-  color: var(--color-text);
-  background-color: #c1eaf0;
+  color: white;
+  text-shadow: 0 0 0.5rem black,0 0 0.5rem black,0 0 0.5rem black;
+  background: url(../../../../public/images/background/galgen-bar.jpg);
   border: var(--var-border-width, 0.1rem) solid var(--color-pelle--base);
   border-radius: var(--var-border-radius, 0.5rem);
   /* box-shadow is here to prevent a weird grey border forming around the background */
-  box-shadow: inset 0 0 0.1rem 0.1rem var(--color-pelle--base);
+  box-shadow: inset 0 0 0.1rem 0.1rem var(--color-pelle--base),inset 0 0 1rem 0.1rem var(--color-pelle--secondary);
   margin: 1rem;
-  padding: 2rem;
+  padding: 1rem;
+  animation:a-galgenbar 15s infinite linear;
+  transition: all 0.2s, background 1s;
 }
-
+.c-increase-cap-active{
+  background: url(../../../../public/images/background/galgen-ascended.jpg);
+}
+.c-increase-cap-ascended {
+  border-color:gold;
+  animation:a-galgenbar-fade 5s infinite linear, a-galgenbar 5s infinite linear;
+  box-shadow: inset 0 0 0.1rem 0.1rem gold,inset 0 0 2rem 0.1rem gold,0 0 1rem gold;
+}
+@keyframes a-galgenbar{
+  0%{background-position-x: 0}
+  100%{background-position-x: -448px}
+}
+@keyframes a-galgenbar-fade{
+  0%{  background: url(../../../../public/images/background/galgen-bar.jpg);}
+  25%{  background: url(../../../../public/images/background/galgen-ascended.jpg);}
+  50%{  background: url(../../../../public/images/background/galgen-cap.jpg);}
+  75%{  background: url(../../../../public/images/background/galgen-ascended.jpg);}
+  100%{  background: url(../../../../public/images/background/galgen-bar.jpg);}
+}
 .s-base--dark .c-increase-cap {
   background-color: #004b55;
 }
 
 .c-increase-cap:hover {
-  box-shadow: inset 0 0 0.1rem 0.1rem var(--color-pelle--base), 0.1rem 0.1rem 0.5rem var(--color-pelle--base);
-  transition-duration: 0.12s;
+  box-shadow: inset 0 0 0.1rem 0.1rem var(--color-pelle--base),inset 0 0 1rem 0.1rem var(--color-pelle--secondary), 0.1rem 0.1rem 0.5rem var(--color-pelle--base);
 }
-
+.c-increase-cap-ascended:hover {
+  box-shadow: inset 0 0 0.1rem 0.1rem gold,inset 0 0 3rem 0.1rem gold, 0 0 2rem gold;
+}
 .c-increase-cap-available {
   cursor: pointer;
 }
@@ -241,25 +298,36 @@ export default {
   top: 0;
   left: 0;
   z-index: 0;
-  background: linear-gradient(var(--color-text-inverted), var(--color-pelle--base));
+  box-shadow: 0 0 2rem var(--color-pelle--base) inset,.5rem 0 1rem var(--color-pelle--base);
+  background: url(../../../../public/images/background/galgen-cap.jpg);
   transition: width 0.1s;
+  animation:a-galgencap 10s infinite linear;
 }
-
+@keyframes a-galgencap{
+  0%{background-position-x: 0}
+  100%{background-position-x: 448px}
+}
 .c-big-text {
-  font-size: 2.5rem;
-  text-shadow: 0.2rem 0.2rem 0.2rem #888888;
-}
-
-.s-base--dark .c-big-text {
-  text-shadow: 0.2rem 0.2rem 0.2rem black;
+  font-size: 2.8rem;
+  font-family: cambria;
+  font-weight: bold;
+  line-height: 1.1;
+  text-shadow: 0.2rem 0.2rem 0.2rem var(--color-pelle--base),-0.2rem -0.2rem 0.2rem var(--color-pelle--base);
 }
 
 .c-medium-text {
-  font-size: 2rem;
-  text-shadow: 0.2rem 0.2rem 0.2rem #888888;
+  font-size: 2.5rem;
+  font-family: cambria;
+  font-weight: bold;
+  line-height: 1.1;
 }
-
-.s-base--dark .c-medium-text {
-  text-shadow: 0.2rem 0.2rem 0.2rem black;
+.c-small-text {
+  font-size: 2rem;
+}
+.c-sac-text{
+  border-bottom: 1px solid;
+  margin:0.2rem;
+  padding:0.2rem;
+  border-image: linear-gradient(90deg, transparent, white, transparent) 1;
 }
 </style>

@@ -37,7 +37,9 @@ export default {
   },
   computed: {
     name() {
-      return `${DarkMatterDimension(this.tier).shortDisplayName} Dark Matter Dimension`;
+      return player.options.naming.dimensions?
+      `Dark Matter ${DarkMatterDimension(this.tier).uniqueName}`:
+      `${DarkMatterDimension(this.tier).shortDisplayName} Dark Matter Dimension`;
     },
     ascensionText() {
       return `(⯅${formatInt(this.ascension)})`;

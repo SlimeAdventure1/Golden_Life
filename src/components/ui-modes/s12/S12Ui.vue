@@ -34,6 +34,7 @@ export default {
       hasReality: false,
       newGameKey: "",
       tabName: "",
+      tabSymbol:"",
       S12Windows,
     };
   },
@@ -57,7 +58,11 @@ export default {
       // if it isn't redrawn
       this.newGameKey = Pelle.isDoomed;
       this.tabName = Tabs.current[this.$viewModel.subtab].name;
+      this.tabSymbol = Tabs.current[this.$viewModel.subtab].symbol;
     },
+    title(){
+      return `<span style="padding-right:.5rem">${this.tabSymbol}</span>${this.tabName}`
+    }
   },
 };
 </script>
@@ -77,9 +82,7 @@ export default {
       class="c-s12-close-button"
       @click="S12Windows.isMinimised = true"
     />
-    <span class="c-modal__title">
-      {{ tabName }}
-    </span>
+    <span class="c-modal__title" v-html="title()"/>
     <div
       :key="newGameKey"
       class="game-container c-s12-window__inner"

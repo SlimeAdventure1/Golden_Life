@@ -26,6 +26,8 @@ export default {
       glyphBorders: false,
       highContrastRarity: false,
       swapGlyphColors: false,
+      realityglyphAnimation:false,
+      realityCreationVisible:false
     };
   },
   computed: {
@@ -74,6 +76,10 @@ export default {
       player.options.swapGlyphColors = newValue;
       EventHub.dispatch(GAME_EVENT.GLYPH_VISUAL_CHANGE);
     },
+    realityglyphAnimation(newValue) {
+      player.options.realityglyphAnimation = newValue;
+      EventHub.dispatch(GAME_EVENT.GLYPH_VISUAL_CHANGE);
+    },
   },
   methods: {
     update() {
@@ -87,11 +93,13 @@ export default {
       this.glyphBorders = options.glyphBorders;
       this.highContrastRarity = options.highContrastRarity;
       this.swapGlyphColors = options.swapGlyphColors;
+      this.realityglyphAnimation = options.realityglyphAnimation;
+      this.realityCreationVisible = Ra.pets.effarig.level === 25;
     },
     noEffectStyle() {
       if (this.glyphInfoType !== 0) return null;
       return {
-        "background-color": "var(--color-disabled)",
+        "--bg-dark": "var(--color-disabled)",
       };
     },
     cycleBG() {
@@ -138,11 +146,16 @@ export default {
         />
         <ModalOptionsToggleButton
           v-model="highContrastRarity"
-          text="High-contrast rarity colors:"
+          text="High-contrast quality colors:"
         />
         <ModalOptionsToggleButton
           v-model="swapGlyphColors"
           text="Swap border and symbol colors:"
+        />
+        <ModalOptionsToggleButton
+        v-if="realityCreationVisible"
+          v-model="realityglyphAnimation"
+          text="New Reality Glyph visuals:"
         />
         <ExpandingControlBox
           class="o-primary-btn c-dropdown-btn"
@@ -161,6 +174,7 @@ export default {
       </div>
       <GlyphCustomization />
     </div>
+
   </ModalWrapperOptions>
 </template>
 
@@ -168,13 +182,11 @@ export default {
 .c-modal-options__glyph {
   width: 55rem;
 }
-
 .c-glyph-visual-options {
   width: 55rem;
   overflow-x: hidden;
   padding-right: 1rem;
 }
-
 .c-dropdown-btn {
   width: 24rem;
   margin: 0.3rem;
@@ -183,7 +195,7 @@ export default {
 
 .c-dropdown-header {
   padding: 0.9rem;
-  height: 6.5rem;
+  height: 5.5rem;
   user-select: none;
 }
 </style>

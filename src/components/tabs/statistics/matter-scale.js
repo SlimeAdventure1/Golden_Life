@@ -5,18 +5,27 @@ export const MatterScale = {
 
   estimate(matter) {
     if (!matter) return ["There is no antimatter yet."];
+    if (matter.gt(new Decimal("1e47300000"))) {
+      const scale = this.timeScale(matter);
+      const amount = (matter.log10() / (scale.amount.log10())).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      return [
+        `If you wrote ${formatInt(3)} numbers a second, it would take you`,
+        `${amount} ${scale.name} ( ${TimeSpan.fromSeconds(matter.log10() / 3).toString()} )`,
+        " to write down your antimatter amount."
+      ];
+    };
     if (matter.gt(DC.E100000)) {
       return [
         `If you wrote ${formatInt(3)} numbers a second, it would take you`,
         TimeSpan.fromSeconds(matter.log10() / 3).toString(),
         "to write down your antimatter amount."
       ];
-    }
+    };
     const planck = new Decimal("4.22419e-105");
     const planckedMatter = matter.times(planck);
     if (planckedMatter.gt(this.proton)) {
       const scale = this.macroScale(planckedMatter);
-      const amount = format(planckedMatter.dividedBy(scale.amount), 2, 1);
+      const amount = !scale.special ? format(planckedMatter.dividedBy(scale.amount), 2, 1) :  format(planckedMatter.dividedBy(scale.amount).log(10)+1, 2, 1);
       return [`If every antimatter were a planck volume, you would have
         enough to ${scale.verb} ${amount} ${scale.name}`];
     }
@@ -52,7 +61,22 @@ export const MatterScale = {
     }
     return macro[high - 1];
   },
-
+  timeScale(matter) {
+    const time = this.timeObjects;
+    const last = time.last();
+    if (matter.gte(last.amount)) return last;
+    let low = 0;
+    let high = time.length;
+    while (low !== high) {
+      const mid = Math.floor((low + high) / 2);
+      if (time[mid].amount.lte(matter)) {
+        low = mid + 1;
+      } else {
+        high = mid;
+      }
+    }
+    return time[high - 1];
+  },
   microObjects: [
     { amount: new Decimal("1e-54"), name: "attometers cubed" },
     { amount: new Decimal("1e-63"), name: "zeptometers cubed" },
@@ -88,8 +112,14 @@ export const MatterScale = {
     { amount: new Decimal("5e68"), name: "Local Groups", verb: "make" },
     { amount: new Decimal("1e73"), name: "Sculptor Voids", verb: "make" },
     { amount: new Decimal("3.4e80"), name: "observable universes", verb: "make" },
-    { amount: new Decimal("1e113"), name: "Dimensions", verb: "make" },
-    { amount: DC.C2P1024, name: "Infinity Dimensions", verb: "make" },
-    { amount: new Decimal("1e65000"), name: "Time Dimensions", verb: "make" }
+    { amount: new Decimal("1e113"), name: "Dimensions", verb: "make", special:true },
+    { amount: DC.C2P1024, name: "Infinity Dimensions", verb: "make", special:true },
+    { amount: new Decimal("1e65000"), name: "Time Dimensions", verb: "make", special:true }
+  ],
+  timeObjects:[
+    { amount: new Decimal("1e47300000"), name: "Semesters"},
+    { amount: new Decimal("1e2650000000"), name: "Generations"},
+    { amount: new Decimal("1e23750000000"), name: "Dynasties"},
+    { amount: new Decimal("1e3850000000000"), name: "Milankovitch cycles"},
   ]
 };

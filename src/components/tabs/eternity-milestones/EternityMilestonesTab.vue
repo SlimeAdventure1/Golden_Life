@@ -38,6 +38,7 @@ export default {
     <div>
       Offline generation milestones are only active under certain conditions, mouse-over to see these conditions.
     </div>
+    <div class="l-eternity-upgrades-actual-grid">  
     <div
       v-for="row in rows"
       :key="row"
@@ -50,6 +51,7 @@ export default {
         class="l-eternity-milestone-grid__cell"
       />
     </div>
+  </div>
   </div>
 </template>
 

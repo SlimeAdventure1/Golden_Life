@@ -53,7 +53,14 @@ export default {
     },
     petStyle() {
       return {
-        color: this.pet.color
+        color: this.pet.color,
+        "--border": this.pet.color,
+        "--base-color": this.pet.color
+      };
+    },
+    petborderStyle() {
+      return {
+        "--bg-bright": this.pet.color
       };
     },
     unlocks() {
@@ -107,8 +114,8 @@ export default {
         "c-ra-pet-upgrade": true,
         "c-ra-pet-upgrade-memory": type === "memory",
         "c-ra-pet-upgrade-chunk": type === "chunk",
-        "c-ra-pet-btn--available": available,
-        [`c-ra-pet-btn--${pet.id}`]: available,
+        "c-ra-pet-btn--available": available || capped,
+        [`c-ra-pet-btn--${pet.id}`]: available || capped,
         "c-ra-pet-btn--available__capped": capped,
         [`c-ra-pet-btn--${pet.id}__capped`]: capped
       };
@@ -120,7 +127,7 @@ export default {
         : this.memories;
       return {
         width: `${100 * Math.min(1, gone / cost)}%`,
-        background: this.pet.color
+        //background: this.pet.color
       };
     },
   },
@@ -128,17 +135,15 @@ export default {
 </script>
 
 <template>
-  <div
-    v-if="isUnlocked"
-    class="l-ra-pet-container"
-  >
+  <!-- v-if="isUnlocked" -->
     <div
+    v-if="isUnlocked"
       class="c-ra-pet-header"
       :style="petStyle"
     >
       <div class="c-ra-pet-title">
         <!-- The full name doesn't fit here, so we shorten it as a special case -->
-        {{ pet.id === "enslaved" ? "Nameless" : name }} Level {{ formatInt(level) }}/{{ formatInt(levelCap) }}
+        {{ pet.id === "enslaved" ? "Nameless" : name }} Level {{ formatInt(level) }} / {{ formatInt(levelCap) }}
       </div>
       <div
         v-if="showScalingUpgrade"
@@ -185,6 +190,7 @@ export default {
               <div
                 v-else
                 class="c-ra-pet-upgrade__tooltip"
+                style="--bg-bright: var(--base-color);--bg-dark:#352841"
               >
                 <div class="c-ra-pet-upgrade__tooltip__name">
                   {{ name }}'s Recollection
@@ -229,6 +235,7 @@ export default {
               <div
                 v-else
                 class="c-ra-pet-upgrade__tooltip"
+                style="--bg-bright: var(--base-color);--bg-dark:#352841"
               >
                 <div class="c-ra-pet-upgrade__tooltip__name">
                   {{ name }}'s Fragmentation
@@ -251,9 +258,10 @@ export default {
           :pet-config="petConfig"
         />
       </div>
+      <div v-else class="l-ra-pet-middle-capped">All {{ pet.id === "enslaved" ? "Nameless" : name }} Memories have been Returned</div>
       <div v-if="!isCapped">
         <div>
-          {{ quantify("Memory Chunk", memoryChunks, 2, 2) }}, {{ quantify("Memory", memoriesPerSecond, 2, 2) }}/sec
+          {{ quantify("Memory Chunk", memoryChunks, 2, 2) }}, {{ quantify("Memory", memoriesPerSecond, 2, 2) }} / sec
         </div>
         <div>
           Gaining {{ quantify("Memory Chunk", memoryChunksPerSecond, 2, 2) }}/sec
@@ -269,27 +277,32 @@ export default {
         </span>
       </div>
       <br v-else-if="!isRaCapped">
-      <br v-if="!isRaCapped">
       <div
         v-else
         class="l-ra-pet-postcompletion-spacer"
       />
       <div class="l-ra-pet-milestones">
         <!-- This choice of key forces a UI update every level up -->
+        
         <RaUpgradeIcon
           v-for="(unlock, i) in unlocks"
           :key="25 * level + i"
+          :style="petborderStyle"
           :unlock="unlock"
         />
       </div>
     </div>
-  </div>
+    <div v-else class="c-ra-pet-header c-ra-pet-header--locked"></div>
+
 </template>
 
 <style scoped>
 .l-ra-pet-milestones {
   display: flex;
   justify-content: center;
+  border-top: 1px solid;
+  padding-top: 0.5rem;
+  border-image: linear-gradient(90deg, transparent, currentcolor, transparent) 1;
 }
 
 .c-ra-pet-upgrade-memory {

@@ -56,11 +56,11 @@ function blendCel(cels) {
     }
 
     if (lastTime <= blendTime) {
-      const t = 0.5 * lastTime / blendTime;
+      const t = .5 * lastTime / blendTime;
       return [[prevCel[0], 0.5 - t], [currCel[0], 0.5 + t]];
     }
     if (-nextTime <= blendTime) {
-      const t = 0.5 * nextTime / blendTime;
+      const t = .5 * nextTime / blendTime;
       return [[currCel[0], 0.5 - t], [nextCel[0], 0.5 + t]];
     }
 
@@ -76,7 +76,7 @@ class QuoteLine {
   constructor(line, parent) {
     this._parent = parent;
     this._showCelestialName = line.showCelestialName ?? true;
-
+    this._image = line.image ?? `placeholder_${this._parent._celestial}.png`;
     this._celestialArray = line.background
       ? () => blendCel(line.background)
       : [[parent.celestial, 1]];
@@ -104,9 +104,13 @@ class QuoteLine {
   get showCelestialName() {
     return this._showCelestialName;
   }
-
+  
   get celestialName() {
-    return Celestials[this._parent.celestial].displayName;
+    return Celestials[this._parent.celestial].fullName;
+  }
+
+  get image() {
+    return this._image;
   }
 }
 

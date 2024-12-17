@@ -1,4 +1,5 @@
 <script>
+import wordShift from "@/core/word-shift";
 import DilationButton from "./DilationButton";
 import DilationUpgradeButton from "./DilationUpgradeButton";
 
@@ -6,7 +7,8 @@ export default {
   name: "TimeDilationTab",
   components: {
     DilationButton,
-    DilationUpgradeButton
+    DilationUpgradeButton,
+    wordShift
   },
   data() {
     return {
@@ -22,6 +24,7 @@ export default {
       maxDT: new Decimal(),
       toMaxTooltip: "",
       isHovering: false,
+      infConv: 0,
     };
   },
   computed: {
@@ -72,6 +75,7 @@ export default {
       return `${formatInt(this.baseGalaxies)} Base`;
     },
     hasMaxText: () => PlayerProgress.realityUnlocked() && !Pelle.isDoomed,
+    hasConvText: () => PelleRifts.paradox.milestones[2].isUnlocked,
     allRebuyables() {
       const upgradeRows = [];
       upgradeRows.push(this.rebuyables);
@@ -114,11 +118,13 @@ export default {
       }
       this.tachyonGalaxyGain *= DilationUpgrade.galaxyMultiplier.effectValue;
       this.maxDT.copyFrom(player.records.thisReality.maxDT);
+      this.infConv = PelleRifts.paradox.milestones[2].effectOrDefault(1)
 
       const estimateText = getDilationTimeEstimate(this.maxDT);
       if (this.dilatedTimeIncome.lte(0)) this.toMaxTooltip = "No DT gain";
       else this.toMaxTooltip = estimateText.startsWith("<") ? "Currently Increasing" : estimateText;
-    }
+    },
+    riftName: () => wordShift.wordCycle(PelleRifts.paradox.name),
   }
 };
 </script>
@@ -128,7 +134,7 @@ export default {
     <span>
       You have
       <span class="c-dilation-tab__tachyons">{{ format(tachyons, 2, 1) }}</span>
-      {{ pluralize("Tachyon Particle", tachyons) }}.
+      {{ pluralize("Tachyon", tachyons) }}.
     </span>
     <div
       @mouseover="isHovering = true"
@@ -145,7 +151,7 @@ export default {
     <span>
       Next
       <span v-if="tachyonGalaxyGain > 1">{{ formatInt(tachyonGalaxyGain) }}</span>
-      {{ pluralize("Tachyon Galaxy", tachyonGalaxyGain) }} at
+      {{ pluralize("Tachyonic Galaxy", tachyonGalaxyGain) }} at
       <span
         class="c-dilation-tab__galaxy-threshold"
         :ach-tooltip="galaxyTimeEstimate"
@@ -155,7 +161,7 @@ export default {
         class="c-dilation-tab__galaxies"
         :ach-tooltip="baseGalaxyText"
       >{{ formatInt(totalGalaxies) }}</span>
-      {{ pluralize("Tachyon Galaxy", totalGalaxies) }}
+      {{ pluralize("Tachyonic Galaxy", totalGalaxies) }}
     </span>
     <span v-if="hasMaxText">
       Your maximum Dilated Time reached this Reality is
@@ -163,6 +169,11 @@ export default {
         v-tooltip="toMaxTooltip"
         class="max-accent"
       >{{ format(maxDT, 2, 1) }}</span>.
+    </span>
+
+    <span v-if="hasConvText">
+      The Infinity Power conversion rate has increased by
+      <span class="c-dilation-tab__galaxies">{{ formatX(infConv, 2, 2)}}</span>, thanks to the third {{riftName()}} milestone.
     </span>
     <div class="l-dilation-upgrades-grid">
       <div
@@ -214,8 +225,12 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  border-bottom:1px solid;
+  border-image:linear-gradient(90deg,transparent,var(--color-dilation),transparent) 1
 }
-
+.l-dilation-upgrades-grid__row:last-child {
+border-bottom:none
+}
 .l-dilation-upgrades-grid__cell {
   margin: 1.2rem 1.5rem;
 }

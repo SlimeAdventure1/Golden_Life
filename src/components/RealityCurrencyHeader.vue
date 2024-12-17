@@ -6,10 +6,12 @@ export default {
       isDoomed: false,
       currencyValue: new Decimal(),
       currencyName: "",
+      firstReality: false,
     };
   },
   methods: {
     update() {
+      this.firstReality = player.realities <= 0
       this.isDoomed = Pelle.isDoomed;
       if (this.isDoomed) {
         const shards = Currency.realityShards.value;
@@ -32,13 +34,14 @@ export default {
 </script>
 
 <template>
-  <div class="c-reality-currency">
+  <div class="c-reality-currency" v-if="!this.firstReality">
     You have
     <b :class="resourceClass()">
       {{ currencyValue }}
     </b>
     {{ currencyName }}.
   </div>
+  <div class="c-reality-currency c-reality-tab__reality-machines" v-else>A new Reality shall be made from the ashes of the old.</div>
 </template>
 
 <style scoped>

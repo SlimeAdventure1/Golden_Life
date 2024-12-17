@@ -116,6 +116,7 @@ export default {
   align-items: center;
   color: var(--color-automator-docs-font);
   background-color: #626262;
+  background-image: linear-gradient(#ffffff88 -100%,transparent 49%, #00000022 50%, transparent 75%);
   border: var(--var-border-width, 0.2rem) solid #767676;
   border-radius: var(--var-border-radius, 0.3rem);
   margin: 0.3rem 0.4rem 0.3rem 0.5rem;
@@ -138,6 +139,7 @@ export default {
   left: 0;
   z-index: 0;
   background-color: var(--color-automator-controls-inactive);
+  background-image: linear-gradient(#ffffff88 -100%,transparent 49%, #00000022 50%, transparent 75%);
   border-radius: var(--var-border-radius, 0.3rem);
   transition: 0.3s ease all;
 }
@@ -145,6 +147,11 @@ export default {
 .c-slider-toggle-button--right::before {
   left: 3rem;
   background-color: var(--color-automator-controls-inactive);
+  background-image: linear-gradient(#ffffff88 -100%,transparent 49%, #00000022 50%, transparent 75%);
+}
+
+.c-slider-toggle-button::before,.c-slider-toggle-button--right::before {
+  background-image: linear-gradient(#ffffff88 -100%,transparent 49%, #00000044 50%, transparent);
 }
 
 .tutorial--glow::after {

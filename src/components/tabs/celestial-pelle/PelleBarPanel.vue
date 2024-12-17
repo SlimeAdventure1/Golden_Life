@@ -70,7 +70,7 @@ export default {
 .c-collapse-icon-clickable {
   position: absolute;
   top: 50%;
-  left: 1.5rem;
+  right: 1.5rem;
   width: 3rem;
   align-content: center;
   transform: translateY(-50%);

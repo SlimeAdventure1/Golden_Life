@@ -256,7 +256,8 @@ class BlackHoleState {
         this._data.phase -= this.duration;
         this._data.active = false;
         if (GameUI.notify.showBlackHoles) {
-          GameUI.notify.blackHole(`${this.description(true)} duration ended.`);
+          AudioManagement.playSound("blackhole_end")
+          GameUI.notify.blackHole(["The Black Hole",`${this.description(true)} duration ended.`]);
         }
       }
     } else if (this.phase >= this.interval) {
@@ -264,7 +265,8 @@ class BlackHoleState {
       this._data.activations++;
       this._data.active = true;
       if (GameUI.notify.showBlackHoles) {
-        GameUI.notify.blackHole(`${this.description(true)} has activated!`);
+        AudioManagement.playSound("blackhole_start")
+        GameUI.notify.blackHole(["The Black Hole",`${this.description(true)} has activated!`]);
       }
     }
   }
@@ -368,7 +370,11 @@ export const BlackHoles = {
     // eslint-disable-next-line no-nested-ternary
     const pauseType = player.blackHolePause ? (BlackHoles.areNegative ? "inverted" : "paused") : "unpaused";
     const automaticString = automatic ? "automatically " : "";
-    GameUI.notify.blackHole(`${blackHoleString} ${automaticString}${pauseType}`);
+    AudioManagement.playSound(`blackhole_${player.blackHolePause ? 
+      (BlackHoles.areNegative ? "invert" : "pause") : 
+      ((player.blackHoleNegative < 1 && !Laitela.isRunning) ? "uninvert" : `unpause${BlackHoles.arePermanent?"perma":""}`)}`)
+    GameUI.notify.blackHole(["The Black Hole",`${blackHoleString} ${automaticString}${pauseType}`]);
+  
   },
 
   get unpauseAccelerationFactor() {

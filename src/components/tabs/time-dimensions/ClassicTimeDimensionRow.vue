@@ -37,6 +37,7 @@ export default {
       ttCost: 0,
       ttGen: new Decimal(),
       currTT: new Decimal(),
+      isDestabilized:false,
     };
   },
   computed: {
@@ -44,7 +45,9 @@ export default {
       return ui.view.shiftDown;
     },
     name() {
-      return `${TimeDimension(this.tier).shortDisplayName} Time Dimension`;
+      return player.options.naming.dimensions?
+      `Time ${TimeDimension(this.tier).uniqueName}`:
+      `${TimeDimension(this.tier).shortDisplayName} Time Dimension`;
     },
     buttonContents() {
       if (this.showTTCost) return this.formattedTTCost;
@@ -65,7 +68,7 @@ export default {
       return this.isCapped ? "Capped" : `${this.showCostTitle ? "Cost: " : ""}${format(this.cost, 2)} EP`;
     },
     hasLongText() {
-      return this.buttonContents.length > 20;
+      return this.buttonContents.length > 25;
     },
     showCostTitle() {
       return this.cost.exponent < 1e5;
@@ -105,6 +108,9 @@ export default {
       if (this.tier > 4) this.ttCost = TimeStudy.timeDimension(this.tier).cost;
       this.currTT.copyFrom(Currency.timeTheorems.value);
       this.ttGen.copyFrom(getTTPerSecond().times(getGameSpeedupFactor()));
+      if (tier > 8-Laitela.difficultyTier) {
+        this.isDestabilized = Laitela.isRunning ? true : false
+      }
     },
     buyTimeDimension() {
       if (!this.isUnlocked) {
@@ -123,14 +129,14 @@ export default {
 <template>
   <div
     v-show="showRow"
-    class="c-dimension-row l-dimension-single-row"
-    :class="{ 'c-dim-row--not-reached': !isUnlocked && !requirementReached }"
+    class="c-dimension-row c-time-dim-row l-dimension-single-row"
+    :class="{ 'c-dim-row--not-reached': !isUnlocked && !requirementReached,'c-dim-row--unstable': isDestabilized  }"
   >
     <GenericDimensionRowText
       :tier="tier"
       :name="name"
-      :multiplier-text="formatX(multiplier, 2, 1)"
-      :amount-text="format(amount, 2)"
+      :multiplier-text="!isDestabilized?formatX(multiplier, 2, 1) : 'Destabilized'"
+      :amount-text="tier===8?formatInt(amount):format(amount, 2)"
       :rate="rateOfChange"
     />
     <div class="l-dim-row-multi-button-container">

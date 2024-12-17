@@ -173,37 +173,64 @@ export default {
   align-items: center;
   font-family: Typewriter;
   font-size: 0.95rem;
-  font-weight: bold;
-  color: var(--color-text);
-  background: var(--color-text-inverted);
-  border: 0.1rem solid var(--color-pelle--secondary);
+  color: var(--color-pelle--secondary);
+  text-shadow: -0.1rem -0.1rem 0.3rem black,0.1rem 0.1rem 0.3rem black;
+  background: var(--bg), linear-gradient(var(--bg-bright),var(--bg-dark));
+  --bg-dark:#002020;
+  --bg-bright:#001111;
+  border: 0.1rem solid var(--border);
+  --border:var(--color-pelle--secondary);
   border-radius: var(--var-border-radius, 0.5rem);
-  box-shadow: inset 0 0 1rem 0.1rem var(--color-pelle--secondary);
+  box-shadow: var(--box-shadow),inset 0 0 1rem 0.1rem;
   margin: 0.6rem 0.55rem;
   padding: 1rem;
   cursor: pointer;
+  background-position: center;
+  --bg:url(../../../../public/images/upgrades/pelle-2.png)
 }
 
 .c-pelle-upgrade:hover {
-  box-shadow: inset 0 0 2rem 0.1rem var(--color-pelle--secondary);
+  color:white;
+  --border:white;
+  box-shadow: inset 0 0 2rem 0.1rem;
   transition-duration: 0.3s;
+  --bg-dark:#006969;
 }
 
 /* stylelint-disable-next-line selector-class-pattern */
 .c-pelle-upgrade--galaxyGenerator {
-  font-weight: bold;
-  color: black;
-  background: linear-gradient(var(--color-pelle--secondary), var(--color-pelle--base));
+  height: 10rem;
+  --border:white;
+  color: white;
+  --bg-dark: #0b3333;
+  --bg-bright: rgb(87, 22, 35);
   box-shadow: none;
+  --bg:url(../../../../public/images/prestige/galgen-unlock.png),url(../../../../public/images/prestige/galgen-unlock-2.png),url(../../../../public/images/upgrades/pelle-2.png);
+  animation: a-galgenunlock 10s infinite linear;
 }
-
+@keyframes a-galgenunlock{
+  0%{background-position: 0 0, 0 0,center,center;}
+  100%{background-position: 256px 256px, -256px -256px,center,center;}
+}
+.c-pelle-upgrade--galaxyGenerator:not(.c-pelle-upgrade--unavailable) {
+  text-shadow:-1px -1px #ff000080, 1px 1px #00ffff80;
+  box-shadow:var(--box-shadow),inset 0 0 1rem 0.1rem,0.2rem 0.2rem 0.3rem var(--color-pelle--base),-0.2rem -0.2rem 0.3rem var(--color-pelle--secondary)
+}
+.c-pelle-upgrade--galaxyGenerator:hover:not(.c-pelle-upgrade--unavailable) {
+  --bg-dark: var(--color-pelle--secondary);
+  box-shadow:var(--box-shadow),inset 0 0 1rem 0.1rem,0.5rem 0.5rem 0.3rem var(--color-pelle--base),-0.5rem -0.5rem 0.3rem var(--color-pelle--secondary)
+}
 .c-pelle-upgrade--unavailable {
-  color: black;
-  background: #5f5f5f;
-  box-shadow: none;
+  --border: #3b696f !important;
+  color: #aaaaaa;
+  --bg-dark: var(--leg-bg-dark) !important;
+  --bg-bright: var(--leg-bg-bright) !important;
+  box-shadow: var(--box-shadow),var(--border) inset 0px 0px 0px 2px;
   cursor: default;
 }
-
+.c-pelle-upgrade--unavailable:hover {
+  --bg-dark: var(--leg-bg-hover) !important;
+}
 .c-pelle-upgrade--faded {
   opacity: 0.3;
   box-shadow: none;
@@ -211,8 +238,11 @@ export default {
 }
 
 .c-pelle-upgrade--bought {
-  color: black;
-  background: var(--color-pelle--secondary);
+  color:white;
+  --border:var(--color-pelle--secondary) !important;
+  --bg-bright: #148585;
+  --bg-dark: #0a3b43 !important;
+  box-shadow: var(--box-shadow),var(--border) inset 0px 0px 0px 2px;
   cursor: default;
 }
 
@@ -221,7 +251,7 @@ export default {
 .c-pelle-upgrade--unavailable:hover,
 .c-pelle-upgrade--faded:hover,
 .c-pelle-upgrade--bought:hover {
-  box-shadow: 0.1rem 0.1rem 0.5rem var(--color-pelle--secondary);
+  box-shadow: var(--box-shadow),0.1rem 0.1rem 0.5rem var(--color-pelle--secondary),var(--border) inset 0px 0px 0px 2px;
   transition-duration: 0.3s;
 }
 

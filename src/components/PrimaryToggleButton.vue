@@ -32,13 +32,18 @@ export default {
       return `${this.label} ${this.value ? this.on : this.off}`.trim();
     }
   },
+  methods:{
+    createSound(){
+      AudioManagement.playSound(this.value ?"click_light-reverse":"click_light")
+    }
+  }
 };
 </script>
 
 <template>
   <PrimaryButton
     v-bind="$attrs"
-    @click="emitInput(!value)"
+    @click="emitInput(!value);createSound()"
   >
     {{ displayText }}
   </PrimaryButton>

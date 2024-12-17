@@ -89,6 +89,7 @@ export default {
   methods: {
     minimize() {
       player.timestudy.shopMinimized = !player.timestudy.shopMinimized;
+      AudioManagement.playSound(!player.timestudy.shopMinimized?"click_open":"click_close")
     },
     formatAM(am) {
       return `${format(am)} AM`;

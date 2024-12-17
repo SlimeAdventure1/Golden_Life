@@ -126,7 +126,7 @@ export default {
 
 .c-script-option-hover-effect:hover {
   filter: brightness(70%);
-  background-color: var(--color-automator-active-line-background);
+  --bg: linear-gradient(90deg,var(--color-automator-controls-inactive),var(--color-automator-active-line-background));
 }
 
 .l-script-option:first-child {
@@ -138,11 +138,11 @@ export default {
 }
 
 .l-active-script {
-  background-color: var(--color-automator-controls-active);
+  --bg: linear-gradient(90deg,var(--color-automator-controls-inactive),var(--color-automator-controls-active))
 }
 
 .l-selected-script {
-  background-color: var(--color-automator-active-line-outline);
+  --bg: linear-gradient(90deg,var(--color-automator-controls-inactive),var(--color-automator-active-line-outline));
 }
 
 .l-max-scripts {

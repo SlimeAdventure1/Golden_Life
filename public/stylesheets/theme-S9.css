@@ -43,7 +43,7 @@
 .o-achievement--normal,
 .o-achievement--secret,
 .o-achievement--cancer {
-  background-image: none;
+  --bg-image: linear-gradient(transparent,transparent);
 }
 
 .o-big-crunch-button:hover span,

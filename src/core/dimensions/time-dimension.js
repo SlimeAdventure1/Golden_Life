@@ -325,7 +325,6 @@ export const TimeDimensions = {
     for (let tier = 8; tier > 1; tier--) {
       TimeDimension(tier).produceDimensions(TimeDimension(tier - 1), diff / 10);
     }
-
     if (EternityChallenge(7).isRunning) {
       TimeDimension(1).produceDimensions(InfinityDimension(8), diff);
     } else {

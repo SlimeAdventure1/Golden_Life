@@ -1,10 +1,12 @@
 <script>
 import GenericDimensionRowText from "@/components/GenericDimensionRowText";
+import PrimaryToggleButton from "@/components/PrimaryToggleButton";
 
 export default {
   name: "ModernAntimatterDimensionRow",
   components: {
-    GenericDimensionRowText
+    GenericDimensionRowText,
+    PrimaryToggleButton
   },
   props: {
     tier: {
@@ -25,9 +27,13 @@ export default {
       until10Cost: new Decimal(0),
       isAffordable: false,
       buyUntil10: true,
+      isAutobuyerUnlocked: false,
+      isAutobuyerOn: false,
+      visibleAutobuyers:false,
       howManyCanBuy: 0,
       isContinuumActive: false,
       continuumValue: 0,
+      isDestabilized:false,
       isShown: false,
       isCostsAD: false,
       amountDisplay: "",
@@ -37,7 +43,9 @@ export default {
   computed: {
     isDoomed: () => Pelle.isDoomed,
     name() {
-      return `${AntimatterDimension(this.tier).shortDisplayName} Antimatter Dimension`;
+      return player.options.naming.dimensions?
+      `Antimatter ${AntimatterDimension(this.tier).uniqueName}`:
+      `${AntimatterDimension(this.tier).shortDisplayName} Antimatter Dimension`;
     },
     costDisplay() {
       return this.buyUntil10 ? format(this.until10Cost) : format(this.singleCost);
@@ -70,8 +78,13 @@ export default {
       return `${prefix}${this.costDisplay} ${suffix}`;
     },
     hasLongText() {
-      return this.buttonValue.length > 20;
+      return this.buttonValue.length > 26;
     },
+  },
+  watch:{
+    isAutobuyerOn(newValue) {
+      Autobuyer.antimatterDimension(this.tier).isActive = newValue;
+    }
   },
   methods: {
     update() {
@@ -93,7 +106,13 @@ export default {
       }
       this.isAffordable = dimension.isAffordable;
       this.buyUntil10 = buyUntil10;
+      this.isAutobuyerUnlocked = Autobuyer.antimatterDimension(tier).isUnlocked;
+      this.isAutobuyerOn = Autobuyer.antimatterDimension(tier).isActive;
+      this.visibleAutobuyers = player.options.adbuyersSubtab
       this.isContinuumActive = Laitela.continuumActive;
+      if (tier > 8-Laitela.difficultyTier) {
+        this.isDestabilized = Laitela.isRunning ? true : false
+      }
       if (this.isContinuumActive) this.continuumValue = dimension.continuumValue;
       this.isShown =
         (DimBoost.totalBoosts > 0 && DimBoost.totalBoosts + 3 >= tier) || PlayerProgress.infinityUnlocked();
@@ -120,6 +139,12 @@ export default {
         "o-non-clickable o-continuum": this.isContinuumActive
       };
     },
+    containerClass() {
+      return {
+        "c-modern-dim-purchase-count-tooltip": true,
+        "multi-buttons": (this.isAutobuyerUnlocked && !this.isContinuumActive) && this.visibleAutobuyers,
+      };
+    },
     buttonTextClass() {
       return {
         "button-content l-modern-buy-ad-text": true,
@@ -134,17 +159,19 @@ export default {
   <div
     v-show="showRow"
     class="c-dimension-row l-dimension-row-antimatter-dim c-antimatter-dim-row l-dimension-single-row"
-    :class="{ 'c-dim-row--not-reached': !isUnlocked }"
+    :class="{ 'c-dim-row--not-reached': !isUnlocked,'c-dim-row--unstable': isDestabilized }"
   >
     <GenericDimensionRowText
       :tier="tier"
       :name="name"
-      :multiplier-text="formatX(multiplier, 2, 2)"
+      :multiplier-text="!isDestabilized?formatX(multiplier, 2, 2) : 'Destabilized'"
       :amount-text="amountDisplay"
       :rate="rateOfChange"
     />
     <div class="l-dim-row-multi-button-container c-modern-dim-tooltip-container">
-      <div class="c-modern-dim-purchase-count-tooltip">
+      <div 
+      :class="containerClass()"
+      >
         {{ boughtTooltip }}
       </div>
       <button
@@ -177,6 +204,12 @@ export default {
           />
         </div>
       </button>
+        <PrimaryToggleButton
+        v-if="(isAutobuyerUnlocked && !isContinuumActive) && visibleAutobuyers"
+        v-model="isAutobuyerOn"
+        class="o-primary-btn--ad-auto"
+        label="Auto:"
+      />
     </div>
   </div>
 </template>
@@ -192,14 +225,31 @@ export default {
 }
 
 .o-continuum {
-  border-color: var(--color-laitela--accent);
+  --border: var(--color-laitela--base);
   color: var(--color-laitela--accent);
   background: var(--color-laitela--base);
+  box-shadow: 0 0 0 0.1rem var(--color-laitela--base) inset, 0 0 1rem -0.2rem inset var(--color-laitela--accent);
+  background-image: url(../../../../public/images/upgrades/button-continuum.png);
+  border: 0.1rem solid var(--color-laitela--accent);
+  background-position-y: center;
+  animation: a-continuum 5s linear infinite
 }
-
+.t-metro .o-continuum,
+.t-inverted-metro .o-continuum {
+  box-shadow: 0.1rem 0.1rem 0.1rem 0 #9e9e9e, var(--border) inset 0px 0px 0px 1px;
+}
+.t-dark-metro .o-continuum {
+  box-shadow: 0.1rem 0.1rem 0.1rem 0 black, var(--border) inset 0px 0px 0px 1px;
+}
 .o-continuum:hover {
-  border-color: var(--color-laitela--accent);
   color: var(--color-laitela--base);
   background: var(--color-laitela--accent);
+  background-position-y: center;
+  box-shadow: 0 0 0 0.1rem var(--color-laitela--base) inset, 0 0 1rem -0.2rem inset var(--color-laitela--base);
+  background-image: url(../../../../public/images/upgrades/button-continuum.png);
+}
+
+.c-modern-dim-tooltip-container .c-modern-dim-purchase-count-tooltip.multi-buttons {
+  transform: translate(calc(-175% - 1rem), -50%);
 }
 </style>

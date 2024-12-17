@@ -141,15 +141,15 @@ export const catchupResources = [
     id: 18,
     requiredStage: PROGRESS_STAGE.EARLY_DILATION,
     description: () => `Time Dilation is a modified Eternity where tickspeed and all Dimension multipliers are
-      severely reduced. Completing Dilated Eternities gives Tachyon Particles.`
+      severely reduced. Completing Dilated Eternities gives Tachyons.`
   },
   {
-    name: "Tachyon Particles",
+    name: "Tachyons",
     id: 19,
     openH2pEntry: "Time Dilation",
     requiredStage: PROGRESS_STAGE.EARLY_DILATION,
-    description: () => `Tachyon Particles are a resource which cannot be farmed and require you to get a higher amount
-      of antimatter in a Dilated Eternity in order to increase your amount. Tachyon Particles produce Dilated Time.`
+    description: () => `Tachyons are a resource which cannot be farmed and require you to get a higher amount
+      of antimatter in a Dilated Eternity in order to increase your amount. Tachyons produce Dilated Time.`
   },
   {
     name: "Reality",
@@ -243,7 +243,7 @@ export const catchupResources = [
     name: "V",
     id: 31,
     requiredStage: PROGRESS_STAGE.V,
-    description: `V is the fourth Celestial, with a modified Reality which is similar to Teresa's Reality but only gives
+    description: `V is the fourth Celestial, with a modified Reality which is similar to Teresa's Reality / Michanipolis but only gives
       rewards by reaching certain milestones of resources within. They give a new resource called Space Theorems, which
       allow you to purchase additional Time Studies without path restrictions.`
   },

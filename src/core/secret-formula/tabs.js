@@ -65,6 +65,7 @@ export const tabs = [
       {
         key: "gameplay",
         name: "Gameplay",
+        //symbol: "<img src='../images/test.png'>",//
         symbol: "<i class='fas fa-wrench'></i>",
         component: "OptionsGameplayTab",
         id: 2,
@@ -144,6 +145,15 @@ export const tabs = [
         id: 6,
         hidable: true,
       },
+      {
+        key: "resource gallery",
+        name: "Resource Gallery",
+        symbol: "<i class='fas fa-gem'></i>",
+        component: "ResourceGalleryTab",
+        condition: () => PlayerProgress.infinityUnlocked(),
+        id: 7,
+        hidable: true,
+      },
     ]
   },
   {
@@ -168,7 +178,7 @@ export const tabs = [
         component: "SecretAchievementTab",
         id: 1,
         hidable: true,
-      }
+      },
     ]
   },
   {
@@ -337,9 +347,9 @@ export const tabs = [
   },
   {
     key: "reality",
-    name: "Reality",
+    get name() { return Pelle.isDoomed ? "Armageddon" : "Reality"},
     hideAt: 2.3,
-    UIClass: "o-tab-btn--reality",
+    get UIClass() { return Pelle.isDoomed ? "o-tab-btn--armageddon" : "o-tab-btn--reality"},
     condition: () => PlayerProgress.realityUnlocked() || TimeStudy.reality.isBought,
     id: 8,
     hidable: true,
@@ -434,7 +444,7 @@ export const tabs = [
       {
         key: "enslaved",
         name: "The Nameless Ones",
-        symbol: "<div class='o-tab-btn--cel3'>\uf0c1</div>",
+        get symbol() {return ui.newUI ? "<div class='o-tab-btn--cel3'>\uf0c1</div>" : "<span class='o-tab-btn--cel3'>\uf0c1</span>"},
         component: "EnslavedTab",
         condition: () => EffarigUnlock.eternity.isUnlocked,
         id: 3,

@@ -13,6 +13,7 @@ export default {
       realTimeDoomed: TimeSpan.zero,
       totalAntimatter: new Decimal(0),
       realTimePlayed: TimeSpan.zero,
+      gametimeequal: 0,
       timeSinceCreation: 0,
       uniqueNews: 0,
       totalNews: 0,
@@ -90,7 +91,7 @@ export default {
       this.totalNews = player.news.totalSeen;
       this.secretAchievementCount = SecretAchievements.all.filter(a => a.isUnlocked).length;
       this.timeSinceCreation = Date.now() - player.records.gameCreatedTime;
-
+      this.gametimeequal = TimeSpan.fromMilliseconds(getGameSpeedupForDisplay()*1000).toStringShort(false)
       const progress = PlayerProgress.current;
       const isInfinityUnlocked = progress.isInfinityUnlocked;
       const infinity = this.infinity;
@@ -152,7 +153,7 @@ export default {
     },
     // Only updates once per second to reduce jitter
     updateMatterScale() {
-      if (Date.now() - this.lastMatterTime > 1000) {
+      if (Date.now() - this.lastMatterTime > 100) {
         this.matterScale = MatterScale.estimate(Currency.antimatter.value);
         this.lastMatterTime = Date.now();
       }
@@ -183,21 +184,21 @@ export default {
         <div v-if="reality.isUnlocked">
           Your existence has spanned {{ reality.totalTimePlayed }} of time. (game time)
         </div>
+        <div v-if="reality.isUnlocked">
+          One real-time second is currently equal to {{ gametimeequal }} in game time
+        </div>
         <div>
           Your save was created on {{ startDate }} ({{ saveAge }} ago)
         </div>
         <br>
         <div>
-          You have seen {{ quantifyInt("news message", totalNews) }} in total.
-        </div>
-        <div>
-          You have seen {{ quantifyInt("unique news message", uniqueNews) }}.
+          Total News Messages seen: {{ formatInt(totalNews) }} / Unique News Messages seen: {{ formatInt(uniqueNews) }}
         </div>
         <div>
           You have unlocked {{ quantifyInt("Secret Achievement", secretAchievementCount) }}.
         </div>
         <div v-if="paperclips">
-          You have {{ quantifyInt("useless paperclip", paperclips) }}.
+          Useless Paperclips owned: {{ formatInt(paperclips) }}
         </div>
         <div v-if="fullGameCompletions">
           <br>
@@ -244,15 +245,15 @@ export default {
         You have no fastest Infinity<span v-if="eternity.isUnlocked"> this Eternity</span>.
       </div>
       <div>
-        You have spent {{ infinity.this.toStringShort() }} in this Infinity.
+        Time spent in this Infinity: {{ infinity.this.toStringShort() }}
         <span v-if="reality.isUnlocked">
           ({{ infinity.thisReal.toStringShort() }} real time)
         </span>
       </div>
       <div>
-        Your best Infinity Points per minute
-        <span v-if="eternity.count.gt(0)">this Eternity </span>
-        is {{ format(infinity.bestRate, 2, 2) }}.
+        Best Infinity Points per minute
+        <span v-if="eternity.count.gt(0)">(this Eternity)</span>:
+        {{ format(infinity.bestRate, 2, 2) }}
       </div>
       <br>
     </div>
@@ -281,15 +282,15 @@ export default {
         You have no fastest Eternity<span v-if="reality.isUnlocked"> this Reality</span>.
       </div>
       <div>
-        You have spent {{ eternity.this.toStringShort() }} in this Eternity.
+        Time spent in this Eternity: {{ eternity.this.toStringShort() }}
         <span v-if="reality.isUnlocked">
           ({{ eternity.thisReal.toStringShort() }} real time)
         </span>
       </div>
       <div>
-        Your best Eternity Points per minute
-        <span v-if="reality.isUnlocked">this Reality </span>
-        is {{ format(eternity.bestRate, 2, 2) }}.
+        Best Eternity Points per minute
+        <span v-if="reality.isUnlocked">(this Reality)</span>:
+        {{ format(eternity.bestRate, 2, 2) }}
       </div>
       <br>
     </div>
@@ -304,8 +305,7 @@ export default {
       <div>Your fastest game-time Reality was {{ reality.best.toStringShort() }}.</div>
       <div>Your fastest real-time Reality was {{ reality.bestReal.toStringShort() }}.</div>
       <div :class="{ 'c-stats-tab-doomed' : isDoomed }">
-        You have spent {{ reality.this.toStringShort() }}
-        in this {{ isDoomed ? "Armageddon" : "Reality" }}.
+        Time spent in this {{ isDoomed ? "Armageddon" : "Reality" }}: {{ reality.this.toStringShort() }}
         ({{ reality.thisReal.toStringShort() }} real time)
       </div>
       <div
@@ -315,9 +315,9 @@ export default {
         You have been Doomed for {{ realTimeDoomed.toStringShort() }}, real time.
       </div>
       <div>
-        Your best Reality Machines per minute is {{ format(reality.bestRate, 2, 2) }}.
+        Best Reality Machines per minute: {{ format(reality.bestRate, 2, 2) }}
       </div>
-      <div>Your best Glyph rarity is {{ formatRarity(reality.bestRarity) }}.</div>
+      <div>Best Glyph rarity: {{ formatRarity(reality.bestRarity) }}</div>
       <br>
     </div>
   </div>
@@ -335,6 +335,10 @@ export default {
 .c-stats-tab-title {
   font-size: 2rem;
   font-weight: bold;
+  font-size: 2.5rem;
+  font-weight: bold;
+  line-height: 1.2;
+  font-family: cambria;
 }
 
 .c-stats-tab-subheader {

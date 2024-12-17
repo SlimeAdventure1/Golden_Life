@@ -12,6 +12,7 @@ export default {
       scroll: 0,
       audio: null,
       isMuted: false,
+      rolls:0,
     };
   },
   computed: {
@@ -27,8 +28,18 @@ export default {
         display: this.rolling ? "block" : "none"
       };
     },
+    skipStyle() {
+      return {
+        top: `calc(${this.scroll + 20}px - 100vh)`,
+        left: "calc(100% - 5rem)",
+        display: this.rolls<END_STATE_MARKERS.CREDITS_END ? "block" : "none"
+      };
+    },
     muteIconClass() {
       return this.isMuted ? "fa-volume-xmark" : "fa-volume-high";
+    },
+    skipIconClass() {
+      return "fa-solid fa-forward";
     },
     celestialDisplays() {
       return {
@@ -46,7 +57,7 @@ export default {
     rolling(newVal, oldVal) {
       if (GameEnd.creditsEverClosed) return;
       if (!oldVal && newVal && this.audio === null) {
-        this.audio = new Audio(`audio/credits.mp3`);
+        this.audio = new Audio(`audio/soundtrack/credits.mp3`);
         this.audio.play();
       }
     }
@@ -62,14 +73,21 @@ export default {
   },
   methods: {
     update() {
-      const height = (this.$refs.creditsDisplay?.offsetHeight || 0) + innerHeight;
-      this.rolling = GameEnd.endState > END_STATE_MARKERS.CREDITS_START;
+      //const height = (this.$refs.creditsDisplay?.offsetHeight || 0) + innerHeight;
+      this.rolling = GameEnd.endState > END_STATE_MARKERS.CREDITS_START && GameEnd.endState < END_STATE_MARKERS.CREDITS_END;
+      this.rolls = GameEnd.endState
       this.scroll = (
         Math.clampMax(GameEnd.endState, END_STATE_MARKERS.CREDITS_END) - END_STATE_MARKERS.CREDITS_START
-      ) / (END_STATE_MARKERS.SONG_END - END_STATE_MARKERS.CREDITS_START) * height;
-      if (this.audio) this.audio.volume = this.isMuted
+      ) * 600;
+      //END_STATE_MARKERS.SONG_END - END_STATE_MARKERS.CREDITS_START) * height
+      if (this.audio) this.audio.volume = this.isMuted || GameEnd.endState > END_STATE_MARKERS.CREDITS_END
         ? 0
         : Math.clamp((GameEnd.endState - END_STATE_MARKERS.CREDITS_START), 0, 0.3);
+    },
+    skipCredits() {
+      GameEnd.skipCredits()
+      this.audio.volume = 0
+      this.audio = null
     },
   }
 };
@@ -85,6 +103,12 @@ export default {
       :class="muteIconClass"
       :style="muteStyle"
       @click="isMuted = !isMuted"
+    />
+    <i
+      class="c-mute-button fa-solid"
+      :class="skipIconClass"
+      :style="skipStyle"
+      @click="skipCredits()"
     />
     <div
       v-for="(celSymbol, celIndex) in celestialDisplays"
@@ -216,9 +240,10 @@ perfectly the same. */
   height: 100%;
   position: absolute;
   left: 0;
-  z-index: 9;
+  z-index: 10;
   transform: translateY(100%);
   pointer-events: none;
+  color:white;
 }
 
 .c-credits-cel-symbol {
@@ -248,8 +273,8 @@ perfectly the same. */
 }
 
 .c-enslaved-credits {
-  top: 240rem;
-  left: 80%;
+  top: 285rem;
+  left: 52%;
   color: var(--color-enslaved--base);
   animation: a-enslaved-credits 10s linear infinite;
 }
@@ -262,8 +287,8 @@ perfectly the same. */
 }
 
 .c-ra-credits {
-  top: 480rem;
-  left: 60%;
+  top: 385rem;
+  left: 44%;
   color: var(--color-ra--base);
   animation: a-ra-credits 10s ease-in-out infinite;
 }

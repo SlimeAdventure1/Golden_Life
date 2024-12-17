@@ -40,6 +40,7 @@ export default {
       currentDT: new Decimal(0),
       currentDTGain: new Decimal(0),
       timeEstimate: "",
+      rebuyableBoost: false,
       isHovering: false,
       hideEstimate: false,
     };
@@ -58,6 +59,7 @@ export default {
       return {
         "o-dilation-upgrade": true,
         "o-dilation-upgrade--rebuyable": this.isRebuyable,
+        "o-dilation-upgrade--pelle": this.upgrade.id >= 11,
         "o-dilation-upgrade--available": !this.isBought && !this.isCapped && this.isAffordable,
         "o-dilation-upgrade--unavailable": !this.isBought && !this.isCapped && !this.isAffordable,
         "o-dilation-upgrade--bought": this.isBought,
@@ -153,55 +155,137 @@ export default {
   height: 9rem;
   font-family: Typewriter, serif;
   font-size: 1rem;
-  font-weight: bold;
-  background: black;
+  background: url(../../../../public/images/time-studies/ts-dilation.png), linear-gradient(var(--bg-bright),var(--bg-dark));
   border: 0.1rem solid;
   border-radius: var(--var-border-radius, 0.4rem);
   transition-duration: 0.2s;
+  border: 0.1rem solid var(--border);
+  box-shadow: 0px 0px 1rem #000000 inset,var(--border) inset 0px 0px 0px 2px;
+  text-shadow: -0.1rem -0.1rem 0.3rem black,0.1rem 0.1rem 0.3rem black;
+  --bg-dark: #0c0b0f;
+  --bg-bright: #2b2f3b;
+  background-position: center;
 }
 
 .o-dilation-upgrade--available {
+  --color: transparent;
   color: var(--color-dilation);
   border-color: var(--color-dilation);
+  --border: var(--color-dilation);
   animation: a-dilation-btn-glow 10s infinite;
   cursor: pointer;
 }
 
 .o-dilation-upgrade--rebuyable.o-dilation-upgrade--available {
   color: #64ddad;
+  --border: #64ddad;
   border-color: #64ddad;
 }
 
+.o-dilation-upgrade--pelle.o-dilation-upgrade--available {
+  color: var(--color-pelle--secondary);
+  --border:  var(--color-pelle--secondary);
+  border-color:  var(--color-pelle--secondary);
+}
+.t-hex .o-dilation-upgrade--rebuyable.o-dilation-upgrade--available {
+  color: #ddc764;
+  --border: #ddc164;
+  border-color: #ddc164;
+}
 .o-dilation-upgrade--available:hover {
-  background-color: white;
+  --bg-dark: #477e09;
+  color:white;
+}
+.o-dilation-upgrade--rebuyable.o-dilation-upgrade--available:hover {
+  --bg-dark: #097e65;
+  color:white;
+}
+.o-dilation-upgrade--pelle.o-dilation-upgrade--available:hover {
+  --bg-dark: #096c7e;
+  color:white;
+}
+.t-hex .o-dilation-upgrade--available:hover {
+  --bg-dark: #7e4b09;
+  color:white;
+}
+.t-hex .o-dilation-upgrade--rebuyable.o-dilation-upgrade--available:hover {
+  --bg-dark: #7e5909;
+  color:white;
 }
 
 .o-dilation-upgrade--bought,
 .o-dilation-upgrade--capped {
-  color: black;
-  background-color: var(--color-dilation);
-  border-color: black;
+  color: #dfffab;
+  --border:#9dff00;
+  --bg-bright: #477e09;
+  --bg-dark: #2c4603;
 }
 
+.t-hex .o-dilation-upgrade--bought,
+.t-hex .o-dilation-upgrade--capped {
+  color: #ffdbab;
+  --border:#ffae00;
+  --bg-bright: #7e4f09;
+  --bg-dark: #462303;
+}
 .o-dilation-upgrade--useless {
-  color: black;
-  background-color: var(--color-pelle--base);
-  filter: grayscale(50%);
+  color: #f089a3;
+  --border: #bb3c5c;
+  --bg-bright: #341213;
+  --bg-dark: #741a28;
 }
 
 .o-dilation-upgrade--unavailable {
-  color: #181818;
-  background-color: #5f5f5f;
-  border-color: #3e8a0f;
+  color: gray;
+  --border: #505050;
+  --bg-bright: #33382e;
+  --bg-dark: #121410;
+}
+.t-hex .o-dilation-upgrade--unavailable {
+  --bg-bright: #38332e;
+  --bg-dark: #141210;
+}
+.o-dilation-upgrade--rebuyable.o-dilation-upgrade--unavailable {
+  --bg-bright: #2e3833;
+  --bg-dark: #101412;
+  --border:#005a3f;
+}
+.o-dilation-upgrade--pelle.o-dilation-upgrade--unavailable {
+  --bg-bright: #20373c;
+  --bg-dark: #101314;
+  --border:#003e5a;
+}
+.o-dilation-upgrade--rebuyable.o-dilation-upgrade--capped {
+  color: #abffd8;
+  --border:#00ffb3;
+  --bg-bright: #097e65;
+  --bg-dark: #034635;
+  background-color: #64ddad;
 }
 
-.o-dilation-upgrade--rebuyable.o-dilation-upgrade--unavailable {
-  border-color: #64ddad;
+.t-hex .o-dilation-upgrade--rebuyable.o-dilation-upgrade--unavailable {
+  --bg-bright: #38372e;
+  --bg-dark: #141310;
+  --border:#5a4200;
+  /*border-color: #64ddad;*/
+}
+.t-hex .o-dilation-upgrade--rebuyable.o-dilation-upgrade--capped {
+  color: #ffebab;
+  --border:#ffd900;
+  --bg-bright: #7e6909;
+  --bg-dark: #463a03;
+}
+.o-dilation-upgrade--pelle.o-dilation-upgrade--bought,
+.o-dilation-upgrade--pelle.o-dilation-upgrade--capped {
+  color: #ffffff;
+  --border:#00bcd4;
+  --bg-bright: #09767e;
+  --bg-dark: #034446;
 }
 
 .o-dilation-upgrade--unavailable:hover {
-  color: #1d1d1d;
-  background-color: #660000;
+  color: white;
+  --bg-dark: var(--leg-bg-hover);
 }
 
 .o-dilation-upgrade__description--small-text {
@@ -210,9 +294,6 @@ export default {
 
 .s-base--metro .o-dilation-upgrade--unavailable,
 .t-s1 .o-dilation-upgrade--unavailable {
-  color: black;
-  background-color: #9e9e9e;
-  border: none;
   box-shadow: 0.1rem 0.1rem 0.1rem 0 black;
 }
 
@@ -249,14 +330,12 @@ export default {
 }
 
 .t-dark .o-dilation-upgrade--unavailable {
-  color: black;
   background-color: #23292a;
 }
 
 .t-dark .o-dilation-upgrade--unavailable:hover,
 .t-s6 .o-dilation-upgrade--unavailable:hover,
 .t-s10 .o-dilation-upgrade--unavailable:hover {
-  color: black;
   background-color: var(--color-bad);
   border-color: var(--color-bad);
 }
@@ -265,10 +344,10 @@ export default {
   animation: a-dilation-btn-glow--cancer 10s infinite;
 }
 
-.t-s6 .o-dilation-upgrade--bought,
+/*.t-s6 .o-dilation-upgrade--bought,
 .t-s6 .o-dilation-upgrade--capped,
 .t-s10 .o-dilation-upgrade--bought,
 .t-s10 .o-dilation-upgrade--capped {
   background: var(--color-dilation);
-}
+}*/
 </style>

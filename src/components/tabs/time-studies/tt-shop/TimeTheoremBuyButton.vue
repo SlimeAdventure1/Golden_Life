@@ -14,7 +14,7 @@ export default {
   },
   data() {
     return {
-      isLocked: false
+      isLocked: false,
     };
   },
   computed: {

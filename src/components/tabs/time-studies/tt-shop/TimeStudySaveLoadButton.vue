@@ -53,7 +53,7 @@ export default {
       this.hideContextMenu();
       this.preset.studies = GameCache.currentStudyTree.value.exportString;
       const presetName = this.name ? `Study preset "${this.name}"` : "Study preset";
-      GameUI.notify.eternity(`${presetName} saved in slot ${this.saveslot}`);
+      GameUI.notify.eternity(["Time Studies",`${presetName} saved in slot ${this.saveslot}`]);
     },
     load() {
       this.hideContextMenu();
@@ -66,7 +66,7 @@ export default {
         TimeStudyTree.commitToGameState(combinedTree.purchasedStudies, false, combinedTree.startEC);
 
         const presetName = this.name ? `Study preset "${this.name}"` : "Study preset";
-        GameUI.notify.eternity(`${presetName} loaded from slot ${this.saveslot}`);
+        GameUI.notify.eternity(["Time Studies",`${presetName} loaded from slot ${this.saveslot}`]);
       } else {
         Modal.message.show("This Time Study list currently contains no Time Studies.");
       }
@@ -88,7 +88,7 @@ export default {
       this.hideContextMenu();
       copyToClipboard(this.preset.studies);
       const presetName = this.name ? `Study preset "${this.name}"` : "Study preset";
-      GameUI.notify.eternity(`${presetName} exported from slot ${this.saveslot} to your clipboard`);
+      GameUI.notify.eternity(["Time Studies",`${presetName} exported from slot ${this.saveslot} to your clipboard`]);
     },
     edit() {
       Modal.studyString.show({ id: this.saveslot - 1 });

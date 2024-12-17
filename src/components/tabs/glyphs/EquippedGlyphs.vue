@@ -51,9 +51,8 @@ export default {
     glyphRespecStyle() {
       if (this.respec) {
         return {
-          color: "var(--color-reality-light)",
-          "background-color": "var(--color-reality)",
-          "border-color": "#094e0b",
+          color: "var(--color-text)",
+          "--bg-dark": "var(--color-reality)",
           cursor: "pointer",
         };
       }
@@ -109,7 +108,8 @@ export default {
       const id = parseInt(event.dataTransfer.getData(GLYPH_MIME_TYPE), 10);
       if (isNaN(id)) return;
       const glyph = Glyphs.findById(id);
-      if (glyph) Glyphs.equip(glyph, idx);
+      const special = (["effarig", "reality","cursed"].includes(glyph.type))
+      if (glyph) Glyphs.equip(glyph, idx,true);
     },
     toggleRespec() {
       player.reality.respec = !player.reality.respec;
@@ -149,7 +149,7 @@ export default {
     clickGlyph(glyph, idx, increaseSound = false) {
       if (Glyphs.isMusicGlyph(glyph)) {
         const sound = idx + (increaseSound ? 6 : 1);
-        new Audio(`audio/note${sound}.mp3`).play();
+        new Audio(`audio/glyph_note${sound}.mp3`).play();
       }
     }
   }
@@ -189,7 +189,7 @@ export default {
     </div>
     <div class="l-equipped-glyphs__buttons">
       <button
-        class="c-reality-upgrade-btn"
+        class="c-reality-upgrade-btn c-reality-upgrade-btn--available"
         :class="unequipClass"
         :style="glyphRespecStyle"
         :ach-tooltip="respecTooltip"
@@ -200,14 +200,16 @@ export default {
       <button
         v-if="undoVisible"
         class="l-glyph-equip-button c-reality-upgrade-btn"
-        :class="{'c-reality-upgrade-btn--unavailable': !undoAvailable}"
+        :class="{'c-reality-upgrade-btn--available': undoAvailable,
+          'c-reality-upgrade-btn--unavailable': !undoAvailable
+        }"
         :ach-tooltip="undoTooltip"
         @click="undo"
       >
         <span>Rewind to <b>undo</b> the last equipped Glyph</span>
       </button>
       <button
-        class="l-glyph-equip-button c-reality-upgrade-btn"
+        class="l-glyph-equip-button c-reality-upgrade-btn c-reality-upgrade-btn--available"
         @click="toggleRespecIntoProtected"
       >
         Unequip Glyphs to:
@@ -216,7 +218,7 @@ export default {
         <span v-else>Main inventory</span>
       </button>
       <button
-        class="l-glyph-equip-button-short c-reality-upgrade-btn"
+        class="l-glyph-equip-button-short c-reality-upgrade-btn c-reality-upgrade-btn--available"
         :class="{'tutorial--glow': cosmeticGlow}"
         @click="showOptionModal"
       >
@@ -229,6 +231,7 @@ export default {
 <style scoped>
 .c-equipped-glyph {
   -webkit-user-drag: none;
+  cursor: unset;
 }
 
 .l-glyph-equip-button {

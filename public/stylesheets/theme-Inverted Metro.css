@@ -5,7 +5,8 @@ body.t-inverted-metro {
 .t-inverted-metro #container,
 .t-inverted-metro #page,
 .t-inverted-metro #ui-fixed,
-.t-inverted-metro .c-glyph-tooltip {
+.t-inverted-metro .c-glyph-tooltip,
+.t-inverted .c-celestial-reality-container  {
   filter: invert(100%);
 }
 

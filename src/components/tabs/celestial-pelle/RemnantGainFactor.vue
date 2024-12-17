@@ -139,12 +139,13 @@ export default {
 
 .c-remnant-factors {
   z-index: 4;
-  font-weight: bold;
-  color: var(--color-text);
-  background-color: var(--color-text-inverted);
-  border: var(--var-border-width, 0.2rem) solid var(--color-pelle--base);
+  color: white;
+  background: url(../../../../public/images/upgrades/pelle.png),linear-gradient(black,var(--color-pelle--base)300%);
+  background-position: center;
+  border: var(--var-border-width, 0.1rem) solid var(--color-pelle--base);
+  box-shadow: 0 0 1rem black inset ,0 0 0 0.2rem var(--color-pelle--base) inset,0 0 1rem 0.1rem black;
   border-radius: var(--var-border-radius, 0.5rem);
-  padding: 0.3rem;
+  padding: 0.4rem;
 }
 
 .c-remnant-factors-text {
@@ -172,5 +173,12 @@ export default {
 .l-remnant-factors-item {
   height: 2rem;
   text-align: left;
+}
+.l-remnant-factors-col--first .l-remnant-factors-item {
+  border-top: 1px solid;
+  border-image: linear-gradient(90deg, var(--color-pelle--base),transparent) 1;
+}
+.l-remnant-factors-col--first .l-remnant-factors-item:first-child {
+  border-top: none;
 }
 </style>

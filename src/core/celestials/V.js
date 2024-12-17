@@ -36,6 +36,9 @@ class VRunUnlockState extends GameMechanicState {
     return (VUnlocks.shardReduction.canBeApplied && this.reduction > 0);
   }
 
+  get isHard() {
+    return this.config.isHard
+  }
   get reductionCost() {
     const stepCount = this.config.reductionStepSize ? this.config.reductionStepSize : 1;
     if (this.config.isHard) {
@@ -82,8 +85,7 @@ class VRunUnlockState extends GameMechanicState {
     Decimal.gte(playerData.runRecords[this.id], this.conditionValue)) {
       if (!V.isFlipped && this.config.isHard) continue;
       this.completions++;
-      GameUI.notify.success(`You have unlocked V-Achievement
-        '${this.config.name}' tier ${formatInt(this.completions)}`);
+      GameUI.notify.success(["V-Achievement unlocked!",`'${this.config.name}' Tier ${formatInt(this.completions)}`]);
 
       V.updateTotalRunUnlocks();
 
@@ -130,7 +132,7 @@ class VUnlockState extends BitUpgradeState {
   }
 
   onUnlock() {
-    GameUI.notify.success(this.description);
+    GameUI.notify.success(["V, the celestial of Achievements",this.description]);
   }
 }
 
@@ -154,7 +156,11 @@ export const VUnlocks = mapGameDataToObject(
 
 export const V = {
   displayName: "V",
+  displayTitle: "Champion V",
+  fullName: "V, Celestial of Achievements",
+  celestialOf: "Achievements",
   possessiveName: "V's",
+  RealityName: "Palace of Pride",
   spaceTheorems: 0,
   checkForUnlocks() {
     for (const unl of VUnlocks.all) {
@@ -178,7 +184,7 @@ export const V = {
   },
   unlockCelestial() {
     player.celestials.v.unlockBits |= (1 << VUnlocks.vAchievementUnlock.id);
-    GameUI.notify.success("You have unlocked V, The Celestial Of Achievements!", 10000);
+    GameUI.notify.celestial(["The Celestials","You have unlocked V, The Celestial Of Achievements!"]);
     V.quotes.unlock.show();
   },
   initializeRun() {

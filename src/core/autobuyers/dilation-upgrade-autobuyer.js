@@ -8,7 +8,7 @@ export class DilationUpgradeAutobuyerState extends IntervaledAutobuyerState {
   }
 
   get name() {
-    return [`Dilated Time Multiplier`, `Tachyon Galaxy Threshold`, "Tachyon Particle Multiplier"][this.id - 1];
+    return [`Dilated Time Multiplier`, `Tachyonic Galaxy Threshold`, "Tachyon Particle Multiplier"][this.id - 1];
   }
 
   get interval() {
@@ -35,6 +35,7 @@ export class DilationUpgradeAutobuyerState extends IntervaledAutobuyerState {
 
   static get entryCount() { return 3; }
   static get autobuyerGroupName() { return "Dilation Upgrade"; }
+  static get autobuyerColor() { return "var(--color-dilation)"; }
   static get isActive() { return player.auto.dilationUpgrades.isActive; }
   static set isActive(value) { player.auto.dilationUpgrades.isActive = value; }
 }

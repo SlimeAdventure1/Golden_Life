@@ -31,7 +31,7 @@ export const effarigUnlocks = {
   },
   run: {
     id: 3,
-    description: "Effarig's Reality",
+    get description(){return player.options.naming.celestial?"Effarig's "+Effarig.RealityName:"Effarig's Reality"},
     cost: 5e11,
     onPurchased: () => {
       Effarig.quotes.unlockRun.show();
@@ -39,26 +39,26 @@ export const effarigUnlocks = {
   },
   infinity: {
     id: 4,
-    label: "Infinity",
+    label: "∞ Infinity ∞",
     get description() {
       return ` Replicanti cap is multiplied by a value based on Infinities
         Infinities increase your max Replicanti Galaxies
-        Base Infinity Point gain is capped at ${format(DC.E200)} in Effarig's Reality
-        Each type of Infinity Point multiplier is capped at ${format(DC.E50)} in Effarig's Reality`;
+        Base Infinity Point gain is capped at ${format(DC.E200)} in Effarig's ${player.options.naming.celestial?Effarig.RealityName:"Reality"}
+        Each type of Infinity Point multiplier is capped at ${format(DC.E50)} in Effarig's ${player.options.naming.celestial?Effarig.RealityName:"Reality"}`;
     },
   },
   eternity: {
     id: 5,
-    label: "Eternity",
+    label: "Δ Eternity Δ",
     get description() {
-      return ` Eternities generates Infinities
-        Infinity Points are no longer limited in any way in Effarig's Reality
-        You have unlocked The Nameless Ones`;
+      return ` Eternities generate Infinities
+        Infinity Points are no longer limited in any way in Effarig's ${player.options.naming.celestial?Effarig.RealityName:"Reality"}
+        You have unlocked The Nameless Ones, Celestial of Time`;
     },
   },
   reality: {
     id: 6,
-    label: "Reality",
+    label: "Ϟ Reality Ϟ",
     get description() {
       return " You have unlocked Effarig Glyphs (You may equip at most one and some effects are mutually exclusive)";
     },

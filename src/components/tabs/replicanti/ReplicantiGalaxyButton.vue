@@ -1,10 +1,12 @@
 <script>
+import FillBar from "@/components/FillBar";
 import PrimaryButton from "@/components/PrimaryButton";
 import PrimaryToggleButton from "@/components/PrimaryToggleButton";
 
 export default {
   name: "ReplicantiGalaxyButton",
   components: {
+    FillBar,
     PrimaryButton,
     PrimaryToggleButton
   },
@@ -15,8 +17,10 @@ export default {
       isAutoActive: false,
       isAutoEnabled: false,
       isDivideUnlocked: false,
+      isCapped:false,
       boughtGalaxies: 0,
-      extraGalaxies: 0
+      extraGalaxies: 0,
+      progress:0,
     };
   },
   computed: {
@@ -47,6 +51,8 @@ export default {
       this.boughtGalaxies = rg.bought;
       this.extraGalaxies = rg.extra;
       this.isDivideUnlocked = Achievement(126).isUnlocked;
+      this.isCapped = rg.bought >= rg.max;
+      this.progress = `${rg.bought / rg.max * 100}%`;
       const auto = Autobuyer.replicantiGalaxy;
       this.isAutoUnlocked = auto.isUnlocked;
       this.isAutoActive = auto.isActive;
@@ -68,11 +74,21 @@ export default {
     <PrimaryButton
       :enabled="isAvailable"
       class="o-primary-btn--replicanti-galaxy"
+      :class="{'o-primary-btn--replicanti-capped' : isCapped}"
       @click="handleClick"
     >
+    <div style="z-index: 1;position: relative;">
       {{ resetActionDisplay }} for a Replicanti Galaxy
       <br>
       {{ galaxyCountDisplay }}
+    </div>
+      <div class="o-fill-container">
+        <FillBar
+        v-if="!isCapped"
+        class="o-fill-bar--replicanti"
+        :width="progress"
+        />
+      </div>
     </PrimaryButton>
     <PrimaryToggleButton
       v-if="isAutoUnlocked"
@@ -86,5 +102,4 @@ export default {
 </template>
 
 <style scoped>
-
 </style>

@@ -58,7 +58,7 @@ export default {
   methods: {
     update() {
       this.resetRealityDisplayed = PlayerProgress.realityUnlocked();
-      this.showInstability = player.records.bestReality.glyphLevel > 800;
+      this.showInstability = player.records.bestReality.glyphLevel > 800 && !Pelle.isDoomed;
       this.instabilityThreshold = Glyphs.instabilityThreshold;
       this.hyperInstabilityThreshold = Glyphs.hyperInstabilityThreshold;
       this.isInCelestialReality = isInCelestialReality();
@@ -73,6 +73,9 @@ export default {
       if (haveBoost) {
         this.enslavedHint = "done... what little... I can... with Glyphs...";
       }
+    },
+    makeglyphsred() {
+      return Pelle.isDoomed;
     },
     toggleAutoRestartCelestial() {
       player.options.retryCelestial = !player.options.retryCelestial;
@@ -110,7 +113,7 @@ export default {
 
 <template>
   <div>
-    <div class="l-glyphs-tab">
+    <div class="l-glyphs-tab" :class="{'c-glyphs-tab-doomed':makeglyphsred()}">
       <div class="l-reality-button-column">
         <GlyphPeek />
 
@@ -144,9 +147,7 @@ export default {
             Repeat this Celestial's Reality
           </label>
         </div>
-
-        <br>
-
+        
         <RealityReminder />
 
         <div v-if="showInstability">
@@ -165,7 +166,7 @@ export default {
           class="l-glyph-level-factors"
         >
           <template #dropdown>
-            <GlyphLevelsAndWeights />
+            <GlyphLevelsAndWeights/>
           </template>
         </ExpandingControlBox>
         <GlyphTabSidebar />

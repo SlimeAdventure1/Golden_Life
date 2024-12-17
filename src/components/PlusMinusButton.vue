@@ -29,17 +29,20 @@ export default {
 <style scoped>
 .c-ad-slider__button {
   display: flex;
-  width: 1.6rem;
-  height: 1.6rem;
+  min-width: 1.6rem;
+  min-height: 1.6rem;
   justify-content: center;
   align-items: center;
   font-size: 1rem;
-  border: 0.1rem solid var(--color-reality-light);
+  text-shadow: none;
+  border: 0.1rem solid var(--color-reality-dark);
   border-radius: var(--var-border-radius, 50%);
   transition-duration: 0.2s;
   cursor: pointer;
 }
-
+.s-base--dark .c-ad-slider__button {
+  border: 0.1rem solid var(--color-reality-light);
+}
 .c-ad-slider__button:hover {
   color: black;
   background-color: var(--color-reality-light);

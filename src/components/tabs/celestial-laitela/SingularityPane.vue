@@ -20,13 +20,20 @@ export default {
       hasAutoSingularity: false,
       nextLowerStep: 0,
       willCondenseOnDecrease: false,
+      progressToNext:0
     };
   },
   computed: {
+    barClass() {
+      return {
+        "c-laitela-milestone__progress": true,
+        "c-laitela-milestone-mask": true,
+      };
+    },
     isDoomed: () => Pelle.isDoomed,
     singularityFormText() {
       const formText = this.singularitiesGained === 1 ? "all Dark Energy into a Singularity"
-        : `all Dark Energy into ${quantify("Singularity", this.singularitiesGained, 2)}`;
+        : `all Dark Energy into ${this.canPerformSingularity?"<br>":""} ${quantify("Singularity", this.singularitiesGained, 2)}`;
       if (this.canPerformSingularity) {
         return `Condense ${formText}`;
       }
@@ -92,6 +99,7 @@ export default {
       this.hasAutoSingularity = Number.isFinite(this.autoSingularityFactor);
       this.nextLowerStep = this.singularityCap * this.autoSingularityFactor / 10;
       this.willCondenseOnDecrease = this.isAutoEnabled && this.darkEnergy > this.nextLowerStep;
+      this.progressToNext = Math.min(this.darkEnergy / this.singularityCap,1)
     },
     doSingularity() {
       Singularity.perform();
@@ -129,12 +137,14 @@ export default {
         :class="condenseClassObject()"
         @click="doSingularity"
       >
-        <h2>
-          {{ singularityFormText }}
-        </h2>
+      <div
+      :class="barClass"
+      :style="{'width':progressToNext*100+'%','transition-duration':'0.1s'}"
+      />
+        <h2 v-html="singularityFormText"/>
         <br v-if="singularityWaitText !== ''">
         <h2>
-          {{ singularityWaitText }}
+          <i>{{ singularityWaitText }}</i>
         </h2>
       </button>
     </div>

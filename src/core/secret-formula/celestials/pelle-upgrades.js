@@ -186,7 +186,7 @@ export const pelleUpgrades = {
   },
   tachyonParticlesNoReset: {
     id: 21,
-    description: "Tachyon Particles no longer reset on Armageddon",
+    description: "Tachyons no longer reset on Armageddon",
     cost: 1e50,
     formatCost,
   },

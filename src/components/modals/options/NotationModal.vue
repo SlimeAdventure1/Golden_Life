@@ -1,9 +1,7 @@
 <script>
 import * as ADNotations from "@antimatter-dimensions/notations";
-
 import ModalWrapper from "@/components/modals/ModalWrapper";
 import SliderComponent from "@/components/SliderComponent";
-
 export default {
   name: "NotationModal",
   components: {
@@ -18,15 +16,15 @@ export default {
   },
   computed: {
     sampleNums() {
-      const largestExponent = "123456789012345";
+      const largestExponent = "1234567890123456";
       const numbers = [];
-      for (let digits = 4; digits < 16; digits++) numbers.push(Decimal.pow10(largestExponent.substring(0, digits)));
+      for (let digits = 4; digits < 17; digits++) numbers.push(Decimal.pow10(largestExponent.substring(0, digits)));
       return numbers;
     },
     sliderProps() {
       return {
         min: 3,
-        max: 15,
+        max: 16,
         interval: 1,
         width: "100%",
         tooltip: false
@@ -55,7 +53,6 @@ export default {
       this.commaDigits = options.comma;
       this.notationDigits = options.notation;
     },
-
     // These need a bit of extra logic to ensure that the notation threshold is always >= the comma threshold
     adjustSliderComma(value) {
       this.commaDigits = value;
@@ -125,22 +122,18 @@ export default {
   flex-direction: row;
   justify-content: space-around;
 }
-
 .o-digit-text {
   width: 40rem;
 }
-
 .o-slider {
   width: 25rem;
 }
-
 .c-sample-numbers {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   font-size: 1.5rem;
 }
-
 .o-single-number {
   width: 33%;
 }

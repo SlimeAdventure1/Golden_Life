@@ -1,12 +1,22 @@
 <script>
+import FillBar from "@/components/FillBar";
+
 export default {
   name: "ModernDimensionBoostRow",
+  components: {
+    FillBar
+  },
   data() {
     return {
       requirement: {
         tier: 1,
         amount: 0
       },
+      previousrequirement: {
+        tier: 1,
+        amount: 0
+      },
+      dimamount:0,
       isBuyable: false,
       purchasedBoosts: 0,
       imaginaryBoosts: 0,
@@ -15,6 +25,7 @@ export default {
       creditsClosed: false,
       requirementText: null,
       hasTutorial: false,
+      fillwidth:0
     };
   },
   computed: {
@@ -48,14 +59,17 @@ export default {
       const requirement = DimBoost.requirement;
       this.requirement.tier = requirement.tier;
       this.requirement.amount = requirement.amount;
+      this.previousrequirement.amount = player.dimensionBoosts>4?DimBoost.bulkRequirement(-1).amount:0;
       this.isBuyable = requirement.isSatisfied && DimBoost.canBeBought;
       this.purchasedBoosts = DimBoost.purchasedBoosts;
       this.imaginaryBoosts = DimBoost.imaginaryBoosts;
       this.lockText = DimBoost.lockText;
       this.unlockedByBoost = DimBoost.unlockedByBoost;
       this.creditsClosed = GameEnd.creditsEverClosed;
+      this.dimamount = Laitela.continuumUnlocked&&Laitela.continuumActive?AntimatterDimension(this.requirement.tier).continuumAmount:AntimatterDimension(this.requirement.tier).bought
       if (this.isDoomed) this.requirementText = formatInt(this.purchasedBoosts);
       this.hasTutorial = Tutorial.isActive(TUTORIAL_STATE.DIMBOOST);
+      this.fillwidth = formatPercents(Math.max((this.dimamount-this.previousrequirement.amount) / (this.requirement.amount-this.previousrequirement.amount),0),2)
     },
     dimensionBoost(bulk) {
       if (!DimBoost.requirement.isSatisfied || !DimBoost.canBeBought) return;
@@ -74,11 +88,27 @@ export default {
       @click.exact="dimensionBoost(true)"
       @click.shift.exact="dimensionBoost(false)"
     >
-      {{ unlockedByBoost }}
+    <div style="z-index: 1;position: relative;">{{ unlockedByBoost }}</div>
       <div
         v-if="hasTutorial"
         class="fas fa-circle-exclamation l-notification-icon"
       />
+      <div class="o-fill-container o-fill-container-full">
+          <FillBar
+          class="o-fill-bar--dimboost"
+          :width="fillwidth"
+          />
+      </div>
     </button>
   </div>
 </template>
+<style scoped>
+.o-fill-container-full{
+  opacity:1
+}
+.o-fill-bar--dimboost {
+  box-shadow: 0 0 1rem #ffffff44 inset;
+  background: linear-gradient(transparent -25%,#00ee0044 200%);
+  transition-duration:0.1s
+}
+</style>

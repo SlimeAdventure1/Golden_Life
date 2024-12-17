@@ -53,6 +53,9 @@ export default {
     },
     isCurrentSubtab(id) {
       return player.options.lastOpenSubtab[this.tab.id] === id && Theme.currentName() !== "S9";
+    },
+    hover(s=false) {
+      AudioManagement.playSound("click_hover",undefined,s?1.1:undefined)
     }
   },
 };
@@ -62,6 +65,7 @@ export default {
   <div
     v-if="!isHidden && isAvailable"
     :class="[classObject, tab.config.UIClass]"
+    @mouseenter="hover()"
   >
     <div
       class="l-tab-btn-inner"
@@ -88,6 +92,7 @@ export default {
             [tab.config.UIClass,
              {'o-subtab-btn--active': isCurrentSubtab(subtab.id)}]
           "
+          @mouseenter="hover(true)"
           @click="subtab.show(true)"
         >
           <span v-html="subtab.symbol" />
@@ -110,32 +115,43 @@ export default {
   width: 0;
   height: 100%;
   position: absolute;
-  right: 0;
   left: 0;
-  background-color: var(--color-accent);
+  --maths: calc(var(--sidebar-width) - 12.8rem);
+  --color-active:var(--color-accent);
+  background-image: url(../../../../public/images/visuals/active_tab.png),
+  linear-gradient(90deg,var(--color-active) 50%,transparent);
+  background-position-x: calc(-16px + var(--maths) / 8), 0;
   transition: width 0.15s;
 }
-
+.c-modern-sidebar-switched > .o-tab-btn::before {
+  left: unset;
+  background-image: url(../../../../public/images/visuals/active_tab.png),
+  linear-gradient(-90deg,var(--color-active) 50%,transparent);
+  background-position-x: -32px, 0;
+  right:0
+}
 .o-tab-btn--active::before {
-  width: 0.5rem;
+  width: calc(var(--sidebar-width) / 8);
 }
 
 .o-tab-btn--infinity::before {
-  background-color: var(--color-infinity);
+  --color-active: var(--color-infinity);
 }
 
 .o-tab-btn--eternity::before {
-  background-color: var(--color-eternity);
+  --color-active: var(--color-eternity);
 }
 
 .o-tab-btn--reality::before {
-  background-color: var(--color-reality);
+  --color-active: var(--color-reality);
 }
 
 .o-tab-btn--celestial::before {
-  background-color: var(--color-celestials);
+  --color-active: var(--color-celestials);
 }
-
+.o-tab-btn--armageddon::before {
+  --color-active: var(--color-pelle--base);
+}
 .o-subtab-btn--active {
   border-bottom-width: 0.5rem;
 }

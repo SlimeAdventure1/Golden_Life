@@ -29,7 +29,11 @@ export const ENSLAVED_UNLOCKS = {
 
 export const Enslaved = {
   displayName: "The Nameless Ones",
+  displayTitle: "The Nameless Ones",
+  fullName: "The Nameless Ones, Celestial of Time",
+  celestialOf: "Time",
   possessiveName: "The Nameless Ones'",
+  RealityName: "Temporal Stasis",
   boostReality: false,
   BROKEN_CHALLENGES: [2, 3, 4, 5, 7, 8, 10, 11, 12],
   nextTickDiff: 50,
@@ -43,6 +47,7 @@ export const Enslaved = {
   toggleStoreBlackHole() {
     if (!this.canModifyGameTimeStorage) return;
     player.celestials.enslaved.isStoring = !player.celestials.enslaved.isStoring;
+    AudioManagement.playSound(`blackhole_${player.celestials.enslaved.isStoring ? "charge" : "uncharge"}`);
     player.celestials.enslaved.isStoringReal = false;
   },
   toggleStoreReal() {
@@ -125,6 +130,7 @@ export const Enslaved = {
         EnslavedProgress.storedTime.giveProgress();
       }
     }
+    if (!autoRelease&&release>0) AudioManagement.playSound(`blackhole_discharge`);
     if (autoRelease) release *= 0.01;
     this.nextTickDiff = Math.clampMax(release, this.timeCap);
     this.isReleaseTick = true;
@@ -159,7 +165,7 @@ export const Enslaved = {
     AutomatorData.recalculateErrors();
     if (AutomatorBackend.state.mode === AUTOMATOR_MODE.RUN && AutomatorData.currentErrors().length) {
       AutomatorBackend.stop();
-      GameUI.notify.error("This Reality forbids Black Holes! (Automator stopped)");
+      GameUI.notify.error(["The Automator","This Reality forbids Black Holes! (Automator stopped)"]);
     }
 
     this.quotes.startRun.show();
@@ -168,6 +174,7 @@ export const Enslaved = {
     return player.celestials.enslaved.run;
   },
   completeRun() {
+    if (!player.celestials.enslaved.completed)new Audio("audio/soundtrack/nameless-end.mp3").play()
     player.celestials.enslaved.completed = true;
     this.quotes.completeReality.show();
   },

@@ -15,8 +15,10 @@ export default {
     return {
       amount: 0,
       effectValue: 0,
+      boostValue: 0,
       isColored: true,
       willSacrifice: false,
+      stars:[false,false,false,false]
     };
   },
   computed: {
@@ -27,15 +29,30 @@ export default {
       return GlyphSacrifice[this.type].config;
     },
     style() {
-      if (!this.isColored) return { };
+      if (!this.isColored) return {
+      "background": `linear-gradient(90deg,var(--fade),#0ba00e40,var(--fade))`,"position": "relative",
+      };
       const color = GlyphAppearanceHandler.getBorderColor(this.type);
       const animateReality = this.typeConfig.id === "reality" && !player.reality.glyphs.cosmetics.colorMap.reality;
+      const bgcolor = this.typeConfig.id === "reality" && !player.reality.glyphs.cosmetics.colorMap.reality 
+      ? "#88888888" : GlyphAppearanceHandler.getBorderColor(this.type)+"40"
       return {
-        color,
+        color: this.typeConfig.id === "dilation"&&!Theme.current().isDark()?"#469713":color,
         "text-shadow": `-1px 1px 1px var(--color-text-base), 1px 1px 1px var(--color-text-base),
                             -1px -1px 1px var(--color-text-base), 1px -1px 1px var(--color-text-base),
                             0 0 3px ${color}`,
         animation: animateReality ? "a-reality-glyph-description-cycle 10s infinite" : undefined,
+        "background": `linear-gradient(90deg,var(--fade),${bgcolor},var(--fade))`,
+        "position": "relative"
+      };
+    },
+    style2() {
+      const bgcolor = this.typeConfig.id === "reality" && !player.reality.glyphs.cosmetics.colorMap.reality
+       ?"#0ba00e40" : GlyphAppearanceHandler.getBorderColor(this.type)+"40"
+      return {
+        "border-bottom": `0.1rem solid`,
+        "border-image": `linear-gradient(90deg,transparent,${this.showNewSacrifice?"var(--color-text)":"currentcolor"},transparent) 1`,
+        "background": this.showNewSacrifice&&this.isColored?`linear-gradient(90deg,transparent,${bgcolor},transparent)`:undefined,
       };
     },
     symbol() {
@@ -49,6 +66,12 @@ export default {
     },
     newDescription() {
       return this.sacConfig.description(this.sacConfig.effect(this.currentSacrifice.sacrificeValue));
+    },
+    boostdescription() {
+      return this.sacConfig.boostdescription(this.boostValue);
+    },
+    newboostDescription() {
+      return this.sacConfig.boostdescription(this.sacConfig.boostValue(this.currentSacrifice.sacrificeValue));
     },
     currentSacrifice() {
       const viewModel = this.$viewModel.tabs.reality;
@@ -78,12 +101,39 @@ export default {
     update() {
       this.amount = player.reality.glyphs.sac[this.type];
       this.effectValue = GlyphSacrifice[this.type].effectValue;
+      this.boostValue = GlyphSacrifice[this.type].config.boostValue();
       this.isColored = player.options.glyphTextColors;
+      this.stars[0] = this.amount>=GlyphAlteration.additionThreshold && this.type!=="reality"
+      this.stars[1] = this.amount>=GlyphAlteration.empowermentThreshold && this.type!=="reality"
+      this.stars[2] = this.amount>=GlyphAlteration.boostingThreshold && this.type!=="reality"
+      this.stars[3] = this.amount>=GlyphSacrificeHandler.maxSacrificeForEffects
       this.willSacrifice = AutoGlyphProcessor.sacMode === AUTO_GLYPH_REJECT.SACRIFICE ||
         (AutoGlyphProcessor.sacMode === AUTO_GLYPH_REJECT.REFINE_TO_CAP &&
           this.currentSacrifice.refineValue === 0);
-    }
-  }
+    },
+    tooltip(n) {
+      let message;
+      switch (n) {
+        case 0:
+          message = `Additional effect <br>
+          Reached ${format(GlyphAlteration.additionThreshold,2)} ${this.symbol}`
+          break;
+        case 1:
+          message = `Improved formula <br>
+          Reached ${format(GlyphAlteration.empowermentThreshold,2)} ${this.symbol}`
+          break;
+        case 2:
+          message = `Sacrificial boost <br>
+          Reached ${format(GlyphAlteration.boostingThreshold,2)} ${this.symbol}`
+          break;
+        case 3:
+          message = `Effect hardcap <br>
+          Reached ${format(GlyphSacrificeHandler.maxSacrificeForEffects,2)} ${this.symbol}`
+          break;
+      }
+      return message
+  },
+  },
 };
 </script>
 
@@ -91,35 +141,68 @@ export default {
   <div
     v-if="amount > 0"
     :style="style"
+    class="o-descriptionBlock"
+    :class="{'o-descriptionBlock-glow':showNewSacrifice}"
   >
-    <div>
+    <div :style="style2">
       <div class="l-sacrificed-glyphs__type-symbol c-sacrificed-glyphs__type-symbol">
         {{ symbol }}
       </div>
       <div class="l-sacrificed-glyphs__type-amount c-sacrificed-glyphs__type-amount">
-        {{ formatAmount }}
-        <span
-          v-if="showNewSacrifice"
-          class="c-sacrificed-glyphs__type-new-amount"
+        {{ formatAmount }}<span
+        :class="{'c-sacrificed-glyphs__type-new-amount-glow':showNewSacrifice}"
+          class="c-sacrificed-glyphs__type-new-amount c-sacrificed-glyphs__type-new-amount-hidden"
         >
-          + {{ formatNewAmount }} ➜ {{ formatTotalAmount }}
+         + {{ formatNewAmount }} ➜ {{ formatTotalAmount }}
         </span>
+      </div>
+      <div class="l-sacrificed-glyphs__type-boosts">
+        <span v-if="stars[0]" v-tooltip="tooltip(0)" style="cursor:pointer">★</span>
+        <span v-if="stars[1]" v-tooltip="tooltip(1)" style="cursor:pointer">★</span>
+        <span v-if="stars[2]" v-tooltip="tooltip(2)" style="cursor:pointer">★</span>
+        <span v-if="stars[3]" v-tooltip="tooltip(3)" style="cursor:pointer">★</span>
       </div>
     </div>
     <span
-      v-if="showNewSacrifice"
-      class="c-sacrificed-glyphs__type-new-amount"
+      :class="{'c-sacrificed-glyphs__type-new-amount':showNewSacrifice}"
+      style="transition:0.15s all, 0s font-style"
     >
-      {{ newDescription }}
-    </span>
-    <span v-else>
-      {{ description }}
+      {{ showNewSacrifice?newDescription:description }}
+    </span><br>
+    <span
+      v-if="stars[2]&&this.type!=='reality'"
+      :class="{'c-sacrificed-glyphs__type-new-amount':showNewSacrifice}"
+      style="transition:0.15s all, 0s font-style"
+    >
+    ★ {{ showNewSacrifice?newboostDescription:boostdescription }} ★
     </span>
   </div>
 </template>
 
 <style scoped>
+.o-descriptionBlock-glow{
+  transition: 0.2s;
+  box-shadow: 0 0 1.5rem inset var(--color-reality-dark), 0.1rem 0.1rem 0.3rem #00000088
+}
+.s-base--dark .o-descriptionBlock-glow{
+  box-shadow: 0 0 1.5rem inset var(--color-reality-light),0px -1rem 1rem #00000080
+}
 .c-sacrificed-glyphs__type-symbol {
   margin-right: 0.7rem;
+}
+.c-sacrificed-glyphs__type-new-amount-hidden{
+  font-size:0rem;
+  transition:0.15s
+}
+.c-sacrificed-glyphs__type-new-amount-glow{
+  font-size:unset;
+}
+.l-sacrificed-glyphs__type-boosts{
+  position: absolute;
+  right: 0rem;
+  top: 0rem;
+  font-size: 1.5rem;
+  line-height: 1;
+  margin-right: 0.5rem;
 }
 </style>

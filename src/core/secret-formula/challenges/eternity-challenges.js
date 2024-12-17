@@ -7,6 +7,7 @@ const specialInfinityGlyphDisabledEffectText = () => (PelleRifts.chaos.milestone
 export const eternityChallenges = [
   {
     id: 1,
+    label: "Adhesive Permanency",
     description: "Time Dimensions are disabled.",
     goal: DC.E1800,
     goalIncrease: DC.E200,
@@ -21,6 +22,7 @@ export const eternityChallenges = [
   },
   {
     id: 2,
+    label: "Inexistent Might",
     description: "Infinity Dimensions are disabled.",
     goal: DC.E975,
     pelleGoal: DC.E1750,
@@ -34,6 +36,7 @@ export const eternityChallenges = [
   },
   {
     id: 3,
+    label: "Dimensional Indolence",
     description: "Antimatter Dimensions 5-8 don't produce anything. Dimensional Sacrifice is disabled.",
     goal: DC.E600,
     pelleGoal: DC.E925,
@@ -46,6 +49,7 @@ export const eternityChallenges = [
   },
   {
     id: 4,
+    label: "Curtailed Abundance",
     description: `all Infinity multipliers and generators are disabled. The goal must be reached within a certain
       number of Infinities or else you will fail the Challenge.`,
     goal: DC.E2750,
@@ -65,6 +69,7 @@ export const eternityChallenges = [
   },
   {
     id: 5,
+    label: "Expeditious Calibration",
     description: () => `Antimatter Galaxy cost increase scaling starts immediately (normally at ${formatInt(100)}
       Galaxies). Dimension Boost costs scaling is massively increased.`,
     goal: DC.E750,
@@ -78,6 +83,7 @@ export const eternityChallenges = [
   },
   {
     id: 6,
+    label: "Cosmic Vacillation",
     // The asterisk, if present, will get replaced with strings generated from the scramble text
     description: () => {
       if (Enslaved.isRunning) return "you *. The cost of upgrading your max Replicanti Galaxies is massively reduced.";
@@ -99,6 +105,7 @@ export const eternityChallenges = [
   },
   {
     id: 7,
+    label: "Refabricational Scheme",
     description:
       "1st Time Dimensions produce 8th Infinity Dimensions and 1st Infinity Dimensions produce " +
       "7th Antimatter Dimensions. Tickspeed also directly applies to Infinity and Time Dimensions.",
@@ -114,6 +121,7 @@ export const eternityChallenges = [
   },
   {
     id: 8,
+    label: "Omnifacsimile Shortage",
     description: () => `you can only upgrade Infinity Dimensions ${formatInt(50)} times and Replicanti
       upgrades ${formatInt(40)} times. Infinity Dimension and Replicanti upgrade autobuyers are disabled.`,
     goal: DC.E1300,
@@ -130,6 +138,7 @@ export const eternityChallenges = [
   },
   {
     id: 9,
+    label: "Fragmented Brawn",
     description: () => `you cannot buy Tickspeed upgrades. Infinity Power instead multiplies
       Time Dimensions with greatly reduced effect. ${specialInfinityGlyphDisabledEffectText()}`,
     goal: DC.E1750,
@@ -144,6 +153,7 @@ export const eternityChallenges = [
   },
   {
     id: 10,
+    label: "Measureless Immensity",
     description: () => {
       let description = `Time Dimensions and Infinity Dimensions are disabled. You gain an immense boost from
         Infinities to Antimatter Dimensions (Infinities${formatPow(950)}). ${specialInfinityGlyphDisabledEffectText()}`;
@@ -171,6 +181,8 @@ export const eternityChallenges = [
   },
   {
     id: 11,
+    label: "Divisions",
+    //label: "Interminable Division",
     description: () => `all Dimension multipliers and powers are disabled except for the multipliers from
       Infinity Power and Dimension Boosts (to Antimatter Dimensions). ${specialInfinityGlyphDisabledEffectText()}`,
     goal: DC.E450,
@@ -188,6 +200,8 @@ export const eternityChallenges = [
   },
   {
     id: 12,
+    label: "Ephemerality",
+    //label: "Comprehensive Ephemerality",
     description: () => (PlayerProgress.realityUnlocked()
       ? `the game runs ×${formatInt(1000)} slower; all other game speed effects are disabled. The goal must be reached
         within a certain amount of time or you will fail the Challenge. ${specialInfinityGlyphDisabledEffectText()}`

@@ -62,10 +62,10 @@ export const Autobuyers = (function() {
 
   const single = [
     Autobuyer.sacrifice,
-    Autobuyer.replicantiGalaxy,
-    Autobuyer.timeTheorem,
     Autobuyer.ipMult,
+    Autobuyer.replicantiGalaxy,
     Autobuyer.epMult,
+    Autobuyer.timeTheorem,
     Autobuyer.darkMatterDims,
     Autobuyer.darkMatterDimsAscension,
     Autobuyer.singularity,

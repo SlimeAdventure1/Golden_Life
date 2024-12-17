@@ -14,6 +14,12 @@ export default {
       still possible.`,
     lockTooltip: () => `This will only function if you have not already failed the condition or
       unlocked the upgrade.`,
+    categoryText: () => [
+      `Amplifier Rebuyables`,
+      `Cost: ${quantify("Reality Machine", 15, 2)}`,
+      `Cost: ${quantify("Reality Machine", 50, 2)}`,
+      `Cost: ${quantify("Reality Machine", 1500, 2)}`,
+      `Cost: ${quantify("Reality Machine", 100000, 2)}`]
   },
   methods: {
     id(row, column) {
@@ -51,16 +57,20 @@ export default {
       <br>
       Every completed row of purchased upgrades increases your Glyph level by {{ formatInt(1) }}.
     </div>
-    <div
+    <div class="l-reality-upgrade-actual-grid">
+      <div
       v-for="row in 5"
       :key="row"
-      class="l-reality-upgrade-grid__row"
     >
+    <div class="c-reality-upgrade-row-title">Row {{row}} - {{ categoryText[row-1] }}</div>
+    <div class="l-reality-upgrade-grid__row">
       <RealityUpgradeButton
         v-for="column in 5"
         :key="id(row, column)"
         :upgrade="upgrades[id(row, column)]"
       />
+    </div>
+    </div>
     </div>
   </div>
 </template>
@@ -69,5 +79,17 @@ export default {
 .c-reality-upgrade-infotext {
   color: var(--color-text);
   margin: -1rem 0 1.5rem;
+}
+.c-reality-upgrade-row-title{
+  border-bottom: 0.1rem solid;
+  border-top: 0.1rem solid;
+  border-image: linear-gradient(90deg,transparent,var(--color-reality),transparent) 1;
+  background: linear-gradient(90deg,transparent,color-mix(in srgb, var(--color-reality) 33%, transparent),transparent);
+  color:var(--color-text);
+  margin-bottom:1rem;
+  font-family:cambria;
+  font-weight: bold;
+  line-height: 1.1;
+  font-size: 1.5rem;
 }
 </style>

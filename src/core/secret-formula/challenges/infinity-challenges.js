@@ -3,6 +3,7 @@ import { DC } from "../../constants";
 export const infinityChallenges = [
   {
     id: 1,
+    label: "Conglomerated Wrath",
     description: `all Normal Challenge restrictions are active at once, with the exception of the
       Tickspeed (C9) and Big Crunch (C12) Challenges.`,
     goal: DC.E650,
@@ -16,6 +17,7 @@ export const infinityChallenges = [
   },
   {
     id: 2,
+    label: "Persistent Purge",
     description: () => `Dimensional Sacrifice happens automatically every ${formatInt(400)} milliseconds once you have
       an 8th Antimatter Dimension.`,
     goal: DC.E10500,
@@ -29,6 +31,7 @@ export const infinityChallenges = [
   },
   {
     id: 3,
+    label: "Contradictory Suspension",
     description: () =>
       `Tickspeed upgrades are always ${formatX(1)}. For every Tickspeed upgrade purchase, you instead get a static
       multiplier on all Antimatter Dimensions which increases based on Antimatter Galaxies.`,
@@ -47,6 +50,7 @@ export const infinityChallenges = [
   },
   {
     id: 4,
+    label: "Inconsistent Conscript",
     description: () =>
       `only the latest bought Antimatter Dimension's production is normal. All other Antimatter Dimensions
       produce less (${formatPow(0.25, 2, 2)}).`,
@@ -61,6 +65,7 @@ export const infinityChallenges = [
   },
   {
     id: 5,
+    label: "Financial Blasphemy",
     description:
       `buying Antimatter Dimensions 1-4 causes all cheaper AD costs to increase.
       Buying Antimatter Dimensions 5-8 causes all more expensive AD costs to increase.`,
@@ -76,6 +81,7 @@ export const infinityChallenges = [
   },
   {
     id: 6,
+    label: "Subatomic Heresy",
     description: () =>
       `exponentially rising matter divides the multiplier on all of your Antimatter Dimensions
       once you have at least ${formatInt(1)} 2nd Antimatter Dimension.`,
@@ -92,6 +98,7 @@ export const infinityChallenges = [
   },
   {
     id: 7,
+    label: "Stellar Jumble",
     description: () => {
       // Copied from DimBoost.power; this is the base amount before any multipliers. Post-eternity this isn't
       // necessarily 2.5x by the time the player sees this challenge; it's probably most accurate to say what it
@@ -116,6 +123,7 @@ export const infinityChallenges = [
   },
   {
     id: 8,
+    label: "Predestined Decay",
     description: () =>
       `AD production rapidly and continually drops over time. Purchasing Antimatter Dimension or Tickspeed
         upgrades sets production back to ${formatPercents(1)} before it starts dropping again.`,

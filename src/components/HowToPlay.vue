@@ -5,12 +5,15 @@ export default {
     return {
       hasTutorial: false,
       isModern: false,
+      sidebarSideSwitch:false,
+      fade:0,
     };
   },
   computed: {
     h2pClassObject() {
       return {
         "o-tab-btn l-help-me": true,
+        "l-help-me-switched": this.sidebarSideSwitch,
       };
     },
     topMargin() {
@@ -21,8 +24,10 @@ export default {
   },
   methods: {
     update() {
+      this.sidebarSideSwitch = Theme.currentName() !== "S12"&&player.options.sidebarSideSwitch && ui.newUI
       this.hasTutorial = Tutorial.emphasizeH2P();
       this.isModern = player.options.newUI;
+      this.fade = GameEnd.endState>1&&GameEnd.endState<END_STATE_MARKERS.CREDITS_START? Math.clamp(1-(GameEnd.endState-3),0,1):1
     },
     showH2P() {
       Modal.h2p.show();
@@ -35,7 +40,7 @@ export default {
 </script>
 
 <template>
-  <div>
+  <div  :style="{'opacity':fade}">
     <div
       :class="h2pClassObject"
       :style="topMargin"
@@ -56,6 +61,7 @@ export default {
     />
     <div
       class="o-tab-btn l-information l-help-me"
+      :class="{'l-help-me-switched': sidebarSideSwitch}"
       @click="showInfo"
     >
       i
@@ -76,9 +82,13 @@ export default {
   pointer-events: auto;
   cursor: pointer;
   transition-delay: 0s;
+  transition:right 0s;
   z-index: 1;
+  font-family:typewriter
 }
-
+.l-help-me-switched {
+  right: calc(2rem + var(--sidebar-width));
+}
 .h2p-tutorial--glow {
   position: absolute;
   top: 0;

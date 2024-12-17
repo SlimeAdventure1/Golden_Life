@@ -2,13 +2,15 @@
 import CostDisplay from "@/components/CostDisplay";
 import DescriptionDisplay from "@/components/DescriptionDisplay";
 import EffectDisplay from "@/components/EffectDisplay";
+import HintText from "@/components/HintText";
 
 export default {
   name: "PerkShopUpgradeButton",
   components: {
     DescriptionDisplay,
     EffectDisplay,
-    CostDisplay
+    CostDisplay,
+    HintText
   },
   props: {
     upgrade: {
@@ -20,6 +22,7 @@ export default {
     return {
       isAvailableForPurchase: false,
       isCapped: false,
+      boughtAmount:0,
     };
   },
   computed: {
@@ -33,11 +36,16 @@ export default {
           (this.upgrade === PerkShopUpgrade.musicGlyph || this.upgrade === PerkShopUpgrade.fillMusicGlyph)
       };
     },
+    LevelDisplay() {
+      if (this.upgrade.id >= 4) return;
+      return `Level ${this.boughtAmount}`
+    }
   },
   methods: {
     update() {
       this.isAvailableForPurchase = this.upgrade.isAvailableForPurchase;
       this.isCapped = this.upgrade.isCapped;
+      this.boughtAmount = this.upgrade.boughtAmount;
     }
   }
 };
@@ -49,6 +57,10 @@ export default {
       :class="classObject"
       @click="upgrade.purchase()"
     >
+    <HintText
+      type="perkShop"
+      class="l-hint-text--perk-shop"
+    >{{LevelDisplay}}</HintText>
       <DescriptionDisplay
         :config="upgrade.config"
         :length="70"

@@ -124,7 +124,7 @@ export default {
 
 .tickspeed-btn {
   position: relative;
-  width: 30rem;
+  width: 35rem;
   height: 2.5rem;
   padding: 0.25rem;
 }
@@ -158,14 +158,27 @@ export default {
 }
 
 .o-continuum {
-  border-color: var(--color-laitela--accent);
+  --border: var(--color-laitela--base);
   color: var(--color-laitela--accent);
   background: var(--color-laitela--base);
+  background-image: url(../../../../public/images/upgrades/button-continuum.png);
+  box-shadow: 0 0 0 0.1rem var(--color-laitela--base) inset, 0 0 1rem -0.2rem inset var(--color-laitela--accent);
+  border: 0.1rem solid var(--color-laitela--accent);
+  background-position-y: center;
+  animation: a-continuum 5s linear infinite
 }
-
+.t-metro .o-continuum,
+.t-inverted-metro .o-continuum {
+  box-shadow: 0.1rem 0.1rem 0.1rem 0 #9e9e9e, var(--border) inset 0px 0px 0px 1px;
+}
+.t-dark-metro .o-continuum {
+  box-shadow: 0.1rem 0.1rem 0.1rem 0 black, var(--border) inset 0px 0px 0px 1px;
+}
 .o-continuum:hover {
-  border-color: var(--color-laitela--accent);
   color: var(--color-laitela--base);
   background: var(--color-laitela--accent);
+  background-position-y: center;
+  box-shadow: 0 0 0 0.1rem var(--color-laitela--base) inset, 0 0 1rem -0.2rem inset var(--color-laitela--base);
+  background-image: url(../../../../public/images/upgrades/button-continuum.png);
 }
 </style>

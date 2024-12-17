@@ -9,6 +9,10 @@ export class IPMultAutobuyerState extends AutobuyerState {
     return `Infinity Point Multiplier`;
   }
 
+  get color() {
+    return `var(--color-infinity)`;
+  }
+
   get isUnlocked() {
     return EternityMilestone.autobuyerIPMult.isReached && !Pelle.isDoomed;
   }
@@ -29,6 +33,10 @@ export class EPMultAutobuyerState extends AutobuyerState {
 
   get name() {
     return `Eternity Point Multiplier`;
+  }
+
+  get color() {
+    return `var(--color-eternity)`;
   }
 
   get isUnlocked() {

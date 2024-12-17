@@ -151,8 +151,9 @@ export default {
         :autobuyer="autobuyer"
       />
       <div v-if="isShowingStateInfo">
-        {{ extraInfo }}
+        <i>{{ extraInfo }}</i>
       </div>
+      <div v-else-if="name!=='Tickspeed Autobuyer'"><br></div>
     </div>
     <div class="c-autobuyer-box-row__intervalSlot">
       <slot name="intervalSlot" />
@@ -193,5 +194,4 @@ export default {
 </template>
 
 <style scoped>
-
 </style>

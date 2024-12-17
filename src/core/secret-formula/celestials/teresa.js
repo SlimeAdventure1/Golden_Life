@@ -3,7 +3,7 @@ export const teresa = {
     run: {
       id: 0,
       price: 1e14,
-      description: "Unlock Teresa's Reality.",
+      description: () => `Unlock Teresa's ${player.options.naming.celestial?Teresa.RealityName:"Reality"}.`,
       onUnlock: () => Teresa.quotes.unlockReality.show(),
     },
     epGen: {
@@ -12,16 +12,16 @@ export const teresa = {
       description: "Unlock passive Eternity Point generation.",
       isDisabledInDoomed: true
     },
+    shop: {
+      id: 2,
+      price: 1e21,
+      description: "Unlock Teresa's Perk Shop.",
+    },
     effarig: {
       id: 3,
       price: 1e24,
       description: "Unlock Effarig, Celestial of Ancient Relics.",
       onUnlock: () => Teresa.quotes.effarig.show(),
-    },
-    shop: {
-      id: 2,
-      price: 1e21,
-      description: "Unlock Teresa's Perk Point Shop.",
     },
     undo: {
       id: 4,

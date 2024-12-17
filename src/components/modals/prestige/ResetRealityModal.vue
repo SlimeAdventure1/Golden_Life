@@ -21,6 +21,7 @@ export default {
       this.canReality = isRealityAvailable();
     },
     handleYesClick() {
+      AudioManagement.playSound("reset_reality-reset")
       beginProcessReality(getRealityProps(true));
       EventHub.ui.offAll(this);
     }

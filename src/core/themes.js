@@ -16,7 +16,7 @@ export const Theme = function Theme(name, config) {
   this.isSecret = config.isSecret;
 
   this.isDefault = function() {
-    return name === "Normal";
+    return name === "Normal" ||  name === "S9";
   };
 
   this.isAvailable = function() {
@@ -89,6 +89,9 @@ Theme.secretThemeIndex = function(name) {
     "73de8a7f9efa1cbffc80a8effc9891a799127cd204b3a8b023bea8f513ed4753",
     "f3a71114261b4af6517a53f89bf0c6b56bb81b6f0e931d0e0d71249eb196628c",
     "1248689171faaa0abb68279199a8d2eb232dba10d2dacb79a705f680b6862c0e",
+    "31a74c1805c3ab57d158ed2b25704efaed0272dc269924ee82c4638288ccd169",
+    "4605bef52c35f050ef036297d77aacef6fb5f344ee3426ea5271022893458375",
+    "4ece46550cf8840f240b2a5f2f9bf9751fde6d02f486dd1886590b790a794c2d",
   ];
   const sha = sha512_256(name.toUpperCase());
   return secretThemes.indexOf(sha);
@@ -114,7 +117,7 @@ Theme.tryUnlock = function(name) {
   Theme.set(prefix);
   SecretAchievement(25).unlock();
   if (!isAlreadyUnlocked) {
-    GameUI.notify.success(`You have unlocked the ${name.capitalize()} theme!`, 5000);
+    GameUI.notify.success([`A new Theme unlocked!`,`The ${name.capitalize()} Theme`], 5000);
     if (Theme.current().isAnimated) {
       setTimeout(Modal.message.show(`This secret theme has animations. If they are giving you performance issues,
         you can turn them off in the Options/Visual tab to reduce lag.`), 100);
@@ -139,12 +142,16 @@ export const Themes = {
     // Note that "Normal" is a special case where dark is overridden elsewhere with whether or not the UI is Modern
     Theme.create("Normal",          {                                                         }),
     Theme.create("Metro",           {              metro: true,                               }),
+    Theme.create("Legacy",          { dark: true,                                             }),
+    Theme.create("Hex",             { dark: true,                                             }),
     Theme.create("Dark",            { dark: true,                                             }),
     Theme.create("Dark Metro",      { dark: true,  metro: true,                               }),
     Theme.create("Inverted",        {                                                         }),
     Theme.create("Inverted Metro",  {              metro: true,                               }),
     Theme.create("AMOLED",          { dark: true,                                             }),
     Theme.create("AMOLED Metro",    { dark: true,  metro: true,                               }),
+    Theme.create("Legendary",       { dark: true,                                             }),
+    Theme.create("Legendary Metro", { dark: true,  metro: true,                               }),
     Theme.create("S1",              {                           animated: true, secret: true, }),
     Theme.create("S2",              {                                           secret: true, }),
     Theme.create("S3",              {                                           secret: true, }),
@@ -157,6 +164,9 @@ export const Themes = {
     Theme.create("S10",             { dark: true,  metro: true, animated: true, secret: true, }),
     Theme.create("S11",             { dark: true,               animated: true, secret: true, }),
     Theme.create("S12",             {                                           secret: true, }),
+    Theme.create("S13",             { dark: true,                               secret: true, }),
+    Theme.create("S14",             { dark: true,                               secret: true, }),
+    Theme.create("S15",             { dark: true,  metro: true, animated: true, secret: true, }),
     /* eslint-enable no-multi-spaces */
   ],
 

@@ -2,6 +2,7 @@
 import CelestialQuoteHistory from "@/components/CelestialQuoteHistory";
 import RaPet from "./RaPet";
 import RaPetRemembranceButton from "./RaPetRemembranceButton";
+import { Ra } from "../../../core/globals";
 
 export default {
   name: "RaTab",
@@ -24,6 +25,8 @@ export default {
       petWithRemembrance: "",
       isRunning: false,
       memoryBoosts: "",
+      labelmode:false,
+      newname:false,
     };
   },
   computed: {
@@ -77,7 +80,7 @@ export default {
       return GameDatabase.celestials.descriptions[4].effects().replace(/^\w/u, c => c.toUpperCase()).split("\n");
     },
     memoryDescription() {
-      return `Within Ra's Reality, Memory Chunks for Celestial Memories
+      return `Within ${this.labelmode?"Ra's Reality":"the "+Ra.RealityName}, Memory Chunks for Celestial Memories
         will be generated based on certain resource amounts.`;
     },
     isDoomed: () => Pelle.isDoomed,
@@ -95,10 +98,12 @@ export default {
       this.petWithRemembrance = Ra.petWithRemembrance;
       this.isRunning = Ra.isRunning;
       this.memoryBoosts = Ra.memoryBoostResources;
+      this.labelmode = !player.options.naming.celestial
+      this.newname = Ra.RealityName
     },
     startRun() {
       if (this.isDoomed) return;
-      Modal.celestials.show({ name: "Ra's", number: 4 });
+      Modal.celestials.show({ name: "Ra's", number: 4 , celestial: Ra});
     },
     toggleMode() {
       Ra.toggleMode();
@@ -130,19 +135,13 @@ export default {
       <br>
       and mouse-over <i class="fas fa-question-circle" /> icons for specific resource information.
     </div>
-    <div class="l-ra-all-pets-container">
-      <RaPet
-        v-for="(pet, i) in pets"
-        :key="i"
-        :pet-config="pet"
-      />
-    </div>
-    <div class="l-ra-non-pets">
-      <button class="c-ra-run-button">
+    <div class="l-mechanics-container">
+      <div class="l-ra-button-mechanics-container">
+    <div class="c-ra-run-button">
         <h2 :class="{ 'o-pelle-disabled': isDoomed }">
           <span v-if="isRunning">You are in </span>
-          <span v-else>Start </span>
-          Ra's Reality
+          <span v-else>{{`${labelmode?"Start":"Enter"}`}} </span>
+          {{`${labelmode?"Ra's Reality":"Ra's "+newname}`}}.
         </h2>
         <div
           :class="runButtonClassObject"
@@ -160,17 +159,19 @@ export default {
         <span>
           {{ memoryDescription }}
         </span>
-      </button>
-      <div
+      </div>
+    <div
         v-if="showRemembrance && !isRaCapped"
         class="c-ra-remembrance-unlock"
       >
-        <h1 :style="petStyle">
-          Remembrance
-        </h1>
+        <h2 :style="petStyle" class="c-ra-shop-title">
+          <span class="fas fa-sun"/> <span style="font-family: cambria;font-size: 2rem;line-height: 1.2;font-weight: bold;">Remembrance</span> <span class="fas fa-sun"/>
+        </h2>
         <span :style="petStyle">
-          Whichever Celestial has Remembrance will get {{ formatX(remembranceMult) }} Memory Chunk gain. The other
+          Whichever Celestial has Remembrance will get {{ formatX(remembranceMult) }} Memory Chunk gain, while the other
           Celestials will get {{ formatX(remembranceNerf, 1, 1) }} Memory Chunk gain.
+        </span>
+        <br v-if="hasRemembrance"><span v-if="hasRemembrance" :style="petStyle">{{ petWithRemembrance!==""?"Remembrance given to " + petWithRemembrance : "No Remembrance given" }}
         </span>
         <div
           v-if="hasRemembrance"
@@ -186,10 +187,51 @@ export default {
           v-else
           class="c-ra-remembrance-unlock-inner"
         >
+        <br>
           Unlocked by getting {{ formatInt(remembranceReq) }} total Celestial Memory levels
           (you need {{ formatInt(remembranceReq - totalLevels) }} more)
         </div>
-      </div>
+    </div>      
+    </div>
+    <div class="l-ra-all-pets-container">
+      <RaPet
+        v-for="(pet, i) in pets"
+        :key="i"
+        :pet-config="pet"
+    />
+    </div>
     </div>
   </div>
 </template>
+<style scoped>
+.c-ra-shop-title {
+    /* stylelint-disable-next-line unit-allowed-list */
+    min-width: 11ch;
+    text-align: center;
+    font-weight: bold;
+    border-top: solid 1px;
+    border-bottom: solid 1px;
+    width:100%;
+    border-image: linear-gradient(90deg,transparent,var(--color-ra--base),transparent) 1;
+    background: linear-gradient(90deg,transparent,#9575cd60,transparent);
+}
+.l-ra-button-mechanics-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+@media screen and (max-width: 82.5rem) {
+.l-ra-button-mechanics-container{
+    flex-direction: row;
+}
+.l-mechanics-container{
+  flex-wrap: wrap;
+  flex-direction: column-reverse;
+  align-items: center;
+}
+.c-ra-run-button,.c-ra-remembrance-unlock{
+  width:34.5rem;
+  margin: 0.5rem;
+}
+}
+</style>

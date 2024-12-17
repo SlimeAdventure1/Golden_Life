@@ -39,7 +39,7 @@ export default {
 </script>
 
 <template>
-  <div class="c-modal-catchup-entry">
+  <div class="c-modal-catchup-entry o-descriptionBlock">
     <span
       class="c-resource-name"
       :info="info"
@@ -53,9 +53,10 @@ export default {
 
 <style scoped>
 .c-resource-name {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   font-weight: bold;
   cursor: pointer;
+  font-family: cambria;
 }
 
 .c-underline {
@@ -63,12 +64,10 @@ export default {
 }
 
 .c-modal-catchup-entry {
-  border-top: 0.1rem solid var(--color-text);
   padding: 0.5rem 0 0.5rem 1.5rem;
   cursor: default;
 }
-
-.c-modal-catchup-entry:nth-child(1) {
-  border-top: none;
+.o-descriptionBlock:last-child {
+  margin-bottom: 0.5rem;
 }
 </style>

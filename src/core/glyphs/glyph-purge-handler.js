@@ -26,6 +26,9 @@ export const GlyphSacrificeHandler = {
       case "cursed":
         Glyphs.removeFromInventory(glyph);
         return true;
+      case "helios":
+        Glyphs.removeFromInventory(glyph);
+        return true;
     }
     return false;
   },

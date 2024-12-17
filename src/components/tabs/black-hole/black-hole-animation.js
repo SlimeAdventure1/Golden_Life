@@ -83,12 +83,16 @@ export const BlackHoleAnimation = (function() {
         glow.addColorStop(0, "rgba(255, 255, 255, 1)");
         glow.addColorStop(0.85, "rgba(190, 190, 190, 1)");
         glow.addColorStop(0.87, "rgba(170, 170, 170, 1)");
-        glow.addColorStop(1, "rgba(135, 135, 135, 0)");
+        glow.addColorStop(0.95, "rgba(55, 55, 255, 1)");
+        glow.addColorStop(1, "rgba(25, 25, 135, 0)");
+        //glow.addColorStop(Math.min(1*((2.25+(Math.sin(Date.now()/1000)/4))/3),1), "rgba(25, 25, 135, 0)");
       } else {
         glow.addColorStop(0, "rgba(0, 0, 0, 1)");
-        glow.addColorStop(0.9, "rgba(0, 0, 0, 1)");
-        glow.addColorStop(0.92, "rgba(100, 100, 100, 1)");
-        glow.addColorStop(1, "rgba(100, 100, 100, 0)");
+        glow.addColorStop(0.5, "rgba(0, 0, 0, 1)");
+        glow.addColorStop(0.87, "rgba(46, 33, 55, 1)");
+        glow.addColorStop(0.92, "rgba(255, 200, 150, 1)");
+        glow.addColorStop(1, "rgba(255, 50, 0, 0)");
+        //glow.addColorStop(Math.min(1*((2.25+(Math.sin(Date.now()/1000)/4))/3),1), "rgba(255, 50, 0, 0)");
       }
       context.fillStyle = glow;
       context.fillRect(0, 0, 400, 400);
@@ -136,7 +140,7 @@ export const BlackHoleAnimation = (function() {
 
       this.preLastDistance = this.lastDistance;
       this.lastDistance = this.distance;
-      const distFactor = 1 + 0.3 * particleSpeed * Math.pow(this.distance / holeSize, -2);
+      const distFactor = 1 + .3 * particleSpeed * Math.pow(this.distance / holeSize, -2);
       if (BlackHoles.areNegative) {
         this.distance *= distFactor;
       } else {
@@ -198,7 +202,7 @@ export const BlackHoleAnimation = (function() {
       if (this.isBlob) {
         this.drawAndRotateBlob(context, x, y);
       } else {
-        context.lineWidth *= 1;
+        context.lineWidth *= 1.5;
         context.moveTo(x + 200, y + 200);
         context.lineTo(lastX + 200, lastY + 200);
       }

@@ -67,8 +67,10 @@ export default {
         :show-sacrifice="canSacrifice"
         :flip-tooltip="true"
         :sort="false"
+        :needsCrates="2"
+        marginsize="0.5rem 0.4rem"
       />
-      (Click to bring up details)
+    (Click to bring up details)
     </div>
     <div v-else>
       Purchase the Reality study to see

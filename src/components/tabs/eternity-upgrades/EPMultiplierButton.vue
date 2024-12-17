@@ -58,6 +58,7 @@ export default {
     purchaseUpgrade() {
       if (RealityUpgrade(15).isLockingMechanics) RealityUpgrade(15).tryShowWarningModal();
       else this.upgrade.purchase();
+      if (this.isAffordable)AudioManagement.playSound("upgrade_rebuyable")
     }
   }
 };
@@ -94,6 +95,6 @@ export default {
 
 <style scoped>
 .l-margin-top {
-  margin-top: 0.55rem;
+  margin-top: 1.05rem;
 }
 </style>

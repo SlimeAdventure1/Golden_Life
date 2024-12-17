@@ -44,7 +44,7 @@ export default {
       <br>
       <div class="c-text-wrapper">
         <br>- Antimatter, Infinity Points, and Eternity Points
-        <br>- Dilation Upgrades, Tachyon Particles, and Dilated Time
+        <br>- Dilation Upgrades, Tachyons, and Dilated Time
         <br>- Time Theorems and Eternity Challenge completions
         <br>- Time Dimension and Reality unlocks
         <br>- Time in current Infinity/Eternity/Reality

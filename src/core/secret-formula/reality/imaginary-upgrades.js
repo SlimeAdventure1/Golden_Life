@@ -124,7 +124,7 @@ export const imaginaryUpgrades = [
     checkEvent: GAME_EVENT.REALITY_RESET_BEFORE,
     description: "Gain free Dimboosts based on Imaginary rebuyable count",
     effect: () => 2e4 * ImaginaryUpgrades.totalRebuyables,
-    formatEffect: value => `${format(value, 1)}`,
+    formatEffect: value => `${formatInt(value)}`,
     isDisabledInDoomed: true
   },
   {
@@ -132,7 +132,7 @@ export const imaginaryUpgrades = [
     id: 13,
     cost: 5e7,
     requirement: () => `Reach ${format(Number.MAX_VALUE, 2)} projected Reality Machines within
-      The Nameless Ones' Reality`,
+      ${player.options.naming.celestial?"the "+Enslaved.RealityName:"The Nameless Ones' Reality"}`,
     hasFailed: () => !Enslaved.isRunning,
     // This is for consistency with the UI, which displays an amplified "projected RM" value on the reality button
     checkRequirement: () => Enslaved.isRunning &&
@@ -148,7 +148,8 @@ export const imaginaryUpgrades = [
     id: 14,
     cost: 3.5e8,
     formatCost: x => format(x, 1),
-    requirement: () => `Reach a tickspeed of ${format("1e75000000000")} / sec within Eternity Challenge 5`,
+    requirement: () => `Reach a tickspeed of ${format("1e75000000000")} / sec within 
+    ${player.options.naming.challenges?EternityChallenge(5).name:"Eternity Challenge 5"}`,
     hasFailed: () => false,
     checkRequirement: () => EternityChallenge(5).isRunning && Tickspeed.perSecond.exponent >= 7.5e10,
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
@@ -258,7 +259,8 @@ export const imaginaryUpgrades = [
     id: 22,
     cost: 1.5e14,
     formatCost: x => format(x, 1),
-    requirement: () => `Reach ${format("1e150000000000")} antimatter in Effarig's Reality with
+    requirement: () => `Reach ${format("1e150000000000")} antimatter in 
+    ${player.options.naming.celestial?"the "+Effarig.RealityName:"Effarig's Reality"} with
       at least ${formatInt(4)} Cursed Glyphs equipped`,
     // Note: 4 cursed glyphs is -12 glyph count, but equipping a positive glyph in the last slot is allowed
     hasFailed: () => !Effarig.isRunning || player.requirementChecks.reality.maxGlyphs > -10,
@@ -273,8 +275,8 @@ export const imaginaryUpgrades = [
     name: "Planar Purification",
     id: 23,
     cost: 6e14,
-    requirement: () => `Reach Glyph level ${formatInt(20000)} in Ra's Reality with
-      at most ${formatInt(0)} Glyphs equipped`,
+    requirement: () => `Reach Glyph level ${formatInt(20000)} in 
+    ${player.options.naming.celestial?"Ra's Reality":"the "+Ra.RealityName} with at most ${formatInt(0)} Glyphs equipped`,
     hasFailed: () => !Ra.isRunning || player.requirementChecks.reality.maxGlyphs > 0,
     checkRequirement: () => Ra.isRunning && player.requirementChecks.reality.maxGlyphs <= 0 &&
       gainedGlyphLevel().actualLevel >= 20000,
@@ -285,13 +287,15 @@ export const imaginaryUpgrades = [
     isDisabledInDoomed: true
   },
   {
-    name: "Absolute Annulment",
+    name: "Consecrated Calamity",
+    //name: "Absolute Annulment",
     id: 24,
     cost: 6e14,
     // We unfortunately don't have the UI space to be more descriptive on this button without causing text overflow,
     // so hopefully the additional modals (from the upgrade lock) will mostly communicate the idea that this is under
     // the same conditions as hard V's Post-destination
-    requirement: () => `Have ${formatInt(13000)} Antimatter Galaxies in Ra's Reality
+    requirement: () => `Have ${formatInt(13000)} Antimatter Galaxies in 
+    ${player.options.naming.celestial?"the "+Ra.RealityName:"Ra's Reality"}
       with a fully inverted Black Hole`,
     hasFailed: () => !Ra.isRunning || player.requirementChecks.reality.slowestBH > 1e-300,
     checkRequirement: () => Ra.isRunning && player.requirementChecks.reality.slowestBH <= 1e-300 &&
@@ -309,8 +313,9 @@ export const imaginaryUpgrades = [
     id: 25,
     cost: 1.6e15,
     formatCost: x => format(x, 1),
-    requirement: () => `Reach Reality in Lai'tela's Reality with all Dimensions disabled and
-      at least ${formatInt(4)} empty Glyph slots`,
+    requirement: () => `Reach Reality in 
+    ${player.options.naming.celestial?"the "+Laitela.RealityName:"Lai'tela's Reality"}
+     with all Dimensions disabled and at least ${formatInt(4)} empty Glyph slots`,
     hasFailed: () => !Laitela.isRunning || Laitela.maxAllowedDimension !== 0 ||
       Glyphs.activeWithoutCompanion.length > 1,
     checkRequirement: () => Laitela.isRunning && Laitela.maxAllowedDimension === 0 &&
@@ -318,6 +323,6 @@ export const imaginaryUpgrades = [
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
     canLock: true,
     lockEvent: "equip another non-Companion Glyph",
-    description: "Unlock Pelle, Celestial of Antimatter",
+    description: `Unlock Pelle, Celestial of Antimatter`,
   },
 ];

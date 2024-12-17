@@ -24,6 +24,10 @@ class InfinityChallengeState extends GameMechanicState {
     this._reward = new InfinityChallengeRewardState(config.reward, this);
   }
 
+  get name() {
+    return this._config.label
+  }
+  
   get unlockAM() {
     return this.config.unlockAM;
   }
@@ -56,6 +60,7 @@ class InfinityChallengeState extends GameMechanicState {
     if (!Enslaved.isRunning) Tab.dimensions.antimatter.show();
     player.break = true;
     if (EternityChallenge.isRunning) Achievement(115).unlock();
+    if (EternityChallenge.isRunning&&player.dilation.active&&isInCelestialReality()) SecretAchievement(55).unlock();
   }
 
   get isCompleted() {
@@ -152,7 +157,8 @@ export const InfinityChallenges = {
       // This has a reasonably high likelihood of happening when the player isn't looking at the game, so
       // we also give it a tab notification
       TabNotification.ICUnlock.clearTrigger();
-      GameUI.notify.infinity(`You have unlocked Infinity Challenge ${ic.id}`, 7000);
+      GameUI.notify.infinity(["Infinity Challenge unlocked!",`You have unlocked 
+        ${player.options.naming.challenges? ic.name : "Infinity Challenge " + ic.id}`], 7000);
       TabNotification.ICUnlock.tryTrigger();
     }
   },

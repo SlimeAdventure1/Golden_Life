@@ -68,7 +68,9 @@ export const GameStorage = {
   saves: {
     0: undefined,
     1: undefined,
-    2: undefined
+    2: undefined,
+    3: undefined,
+    4: undefined,
   },
   saved: 0,
   lastSaveTime: Date.now(),
@@ -120,7 +122,9 @@ export const GameStorage = {
       this.saves = {
         0: root,
         1: undefined,
-        2: undefined
+        2: undefined,
+        3: undefined,
+        4: undefined,
       };
       this.currentSlot = 0;
       this.loadPlayerObject(root);
@@ -260,7 +264,8 @@ export const GameStorage = {
       saves: this.saves
     };
     localStorage.setItem(this.localStorageKey, GameSaveSerializer.serialize(root));
-    if (!silent) GameUI.notify.info("Game saved");
+    //AudioManagement.playSound("save")
+    if (!silent) GameUI.notify.info("Game saved",undefined,"save");
   },
 
   // Saves a backup, updates save timers (this is called before nextBackup is updated), and then saves the timers too.

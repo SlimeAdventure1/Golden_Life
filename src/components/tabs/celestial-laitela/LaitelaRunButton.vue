@@ -15,6 +15,9 @@ export default {
       singularitiesUnlocked: false,
       bestSet: [],
       tierNotCompleted: true,
+      labelmode:false,
+      newname:false,
+      newnamenormal:false,
     };
   },
   computed: {
@@ -39,10 +42,13 @@ export default {
       this.singularitiesUnlocked = Currency.singularities.gt(0);
       this.bestSet = Glyphs.copyForRecords(player.records.bestReality.laitelaSet);
       this.tierNotCompleted = this.realityTime === 3600 || (this.realityTime === 300 && this.maxDimTier < 8);
+      this.labelmode = !player.options.naming.celestial
+      this.newname = `${Laitela.RealityName} ${Laitela.LevelName[Laitela.difficultyTier]}`
+      this.newnamenormal = `${Laitela.RealityName}`
     },
     startRun() {
       if (this.isDoomed) return;
-      Modal.celestials.show({ name: "Lai'tela's", number: 5 });
+      Modal.celestials.show({ name: "Lai'tela's", number: 5, celestial: Laitela });
     },
     classObject() {
       return {
@@ -65,7 +71,7 @@ export default {
 <template>
   <button :class="classObject()">
     <span :class="{ 'o-pelle-disabled': isDoomed }">
-      <b>Start Lai'tela's Reality</b>
+      <b>{{`${labelmode?"Start Lai'tela's":"Enter the"}`}} {{`${labelmode?"Reality":newname}`}}</b>
     </span>
     <div
       :class="runButtonClassObject()"
@@ -89,6 +95,8 @@ export default {
           :text-hidden="true"
           :force-name-color="false"
           :glyphs="bestSet"
+          :needsCrates="2"
+          marginsize="0.2rem 0.4rem"
         />
       </span>
       <span v-else>
@@ -97,7 +105,7 @@ export default {
           You also gain an additional {{ formatX(8) }} Dark Energy.
         </b>
         <br><br>
-        Lai'tela's Reality has been fully destabilized and cannot have its reward further improved.
+        {{`${labelmode?"Lai'tela's Reality":"The "+newnamenormal}`}} has been fully destabilized and cannot have its reward further improved.
       </span>
       <br>
     </div>

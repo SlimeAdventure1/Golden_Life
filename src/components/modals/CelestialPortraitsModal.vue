@@ -1,0 +1,81 @@
+<script>
+import ModalWrapper from "@/components/modals/ModalWrapper";
+
+export default {
+name: "CelestialPortraitsModal",
+  components: {
+    ModalWrapper
+  },
+  props: {
+    name: {
+      type: String,
+      required: true
+    },
+    celestial: {
+      type: Object,
+      required: true
+    }
+  },
+  data() {
+    return {
+        portraitName: undefined,
+    };
+  },
+  computed: {
+    symbol() {
+      return this.celestial.symbol;
+    },
+    color() {
+      return this.name === "laitela" ? `white` : `var(--color-${this.name}--base)`;
+    },
+    imageUrl() {
+      return `../images/celestials/portrait_${this.name}.png`;
+    },
+  },
+  methods: {
+    update() {
+      this.portraitName = this.celestial.displayName
+    },
+  },
+}
+</script>
+
+<template>
+    <ModalWrapper>
+      <template #header>
+        <span v-html="symbol" style="font-family: Typewriter; font-weight: normal" /> 
+         Portrait of {{ portraitName }} 
+        <span v-html="symbol" style="font-family: Typewriter; font-weight: normal" />
+      </template>
+        <div
+        class="o-celportrait--display" 
+        :style="{'--scoped-cel-color':color}"
+        >
+        <img
+        class="o-celportrait--image" 
+        :src="imageUrl"
+        />
+      </div>
+    </ModalWrapper>
+</template>
+
+<style scoped>
+.o-celportrait--display{
+  background-image: linear-gradient(#666666,#333333 75%,#444444 80%,#333333);
+  background-size: contain;
+  overflow: hidden;
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  border-radius: var(--var-border-radius,1rem);
+  width: 65vh;
+  height: 65vh;
+  max-width: 1024px;
+  max-height: 1024px;
+  margin: 0.5rem;
+}
+.o-celportrait--display > img{
+  z-index: 1;
+}
+</style>

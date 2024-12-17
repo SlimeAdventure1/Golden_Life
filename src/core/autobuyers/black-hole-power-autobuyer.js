@@ -24,6 +24,7 @@ export class BlackHolePowerAutobuyerState extends AutobuyerState {
 
   static get entryCount() { return 2; }
   static get autobuyerGroupName() { return "Black Hole Power"; }
+  static get autobuyerColor() { return "var(--color-reality)"; }
   static get isActive() { return player.auto.blackHolePower.isActive; }
   static set isActive(value) { player.auto.blackHolePower.isActive = value; }
 }

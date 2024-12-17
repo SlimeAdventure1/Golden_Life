@@ -70,7 +70,7 @@ export default {
 
 <template>
   <div class="c-perk-tab__header">
-    You have <span class="c-perk-tab__perk-points">{{ format(pp, 2) }}</span> {{ pluralize("Perk Point", pp) }}.
+    You have <span class="c-perk-tab__perk-points">{{ formatInt(pp) }}</span> {{ pluralize("Perk Point", pp) }}.
     <br>
     Perk choices are permanent and cannot be respecced.
     <br>

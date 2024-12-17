@@ -53,8 +53,8 @@ export const dilationUpgrades = {
     increment: 100,
     description: () =>
       (Perk.bypassTGReset.isBought && !Pelle.isDoomed
-        ? "Reset Tachyon Galaxies, but lower their threshold"
-        : "Reset Dilated Time and Tachyon Galaxies, but lower their threshold"),
+        ? "Reset Tachyonic Galaxies, but lower their threshold"
+        : "Reset Dilated Time and Tachyonic Galaxies, but lower their threshold"),
     // The 38th purchase is at 1e80, and is the last purchase.
     effect: bought => (bought < 38 ? Math.pow(0.8, bought) : 0),
     formatEffect: effect => {
@@ -80,14 +80,14 @@ export const dilationUpgrades = {
       if (Pelle.isDoomed) return DC.D1.pow(bought);
       return DC.D3.pow(bought);
     },
-    formatEffect: value => formatX(value, 2),
+    formatEffect: value => PelleRifts.paradox.milestones[2].isUnlocked ? undefined : formatX(value, 2),
     formatCost: value => format(value, 2),
     purchaseCap: Number.MAX_VALUE
   }),
   doubleGalaxies: {
     id: 4,
     cost: 5e6,
-    description: () => `Gain twice as many Tachyon Galaxies, up to ${formatInt(500)} base Galaxies`,
+    description: () => `Gain twice as many Tachyonic Galaxies, up to ${formatInt(500)} base Galaxies`,
     effect: 2
   },
   tdMultReplicanti: {
@@ -161,7 +161,7 @@ export const dilationUpgrades = {
     initialCost: 1e15,
     increment: 1000,
     pelleOnly: true,
-    description: "Multiply Tachyon Galaxies gained, applies after TG doubling upgrade",
+    description: "Multiply Tachyonic Galaxies gained, applies after TG doubling upgrade",
     effect: bought => bought + 1,
     formatEffect: value => `${formatX(value, 2)} ➜ ${formatX(value + 1, 2)}`,
     formatCost: value => format(value, 2),

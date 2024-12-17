@@ -53,12 +53,14 @@ export default {
     :autobuyer="autobuyer"
     :name="name"
     show-interval
+    class="c-autobuyer-box-dimension"
   >
     <template #intervalSlot>
       <DimensionBulkButton :autobuyer="autobuyer" />
       <AutobuyerIntervalButton :autobuyer="autobuyer" />
     </template>
     <template #toggleSlot>
+      <br>
       <button
         class="o-autobuyer-btn"
         @click="toggleMode"
@@ -70,5 +72,10 @@ export default {
 </template>
 
 <style scoped>
-
+.c-autobuyer-box-dimension{
+  width: calc(25% - 1rem);
+    flex-direction: column;
+    --width: none;
+    height: 17rem;
+}
 </style>

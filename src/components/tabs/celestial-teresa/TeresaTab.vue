@@ -5,6 +5,8 @@ import CelestialQuoteHistory from "@/components/CelestialQuoteHistory";
 import CustomizeableTooltip from "@/components/CustomizeableTooltip";
 import GlyphSetPreview from "@/components/GlyphSetPreview";
 import PerkShopUpgradeButton from "./PerkShopUpgradeButton";
+import PrimaryButton from "@/components/PrimaryButton";
+import PseudoChargeButton from "@/components/PseudoChargeButton";
 
 export default {
   name: "TeresaTab",
@@ -12,7 +14,9 @@ export default {
     GlyphSetPreview,
     PerkShopUpgradeButton,
     CelestialQuoteHistory,
-    CustomizeableTooltip
+    CustomizeableTooltip,
+    PrimaryButton,
+    PseudoChargeButton
   },
   data() {
     return {
@@ -35,9 +39,44 @@ export default {
       raisedPerkShop: false,
       isRunning: false,
       canUnlockNextPour: false,
+      newname: undefined,
+      chargeUnlocked: false,
+      autoswitch:false,
+      totalCharges: 0,
+      chargesUsed: 0,
+      disCharge: false,
+      labelmode:false,
     };
   },
   computed: {
+    grid() {
+      return [
+        [
+          InfinityUpgrade.dim18mult,
+          InfinityUpgrade.dim27mult,
+          InfinityUpgrade.dim36mult,
+          InfinityUpgrade.dim45mult
+        ],
+        [
+          InfinityUpgrade.buy10Mult,
+          InfinityUpgrade.resetBoost,
+          InfinityUpgrade.galaxyBoost,
+          InfinityUpgrade.dimboostMult
+        ],
+        [
+          InfinityUpgrade.totalTimeMult,
+          InfinityUpgrade.thisInfinityTimeMult,
+          InfinityUpgrade.unspentIPMult,
+          InfinityUpgrade.ipGen
+        ],
+        [
+          InfinityUpgrade.skipReset1,
+          InfinityUpgrade.skipReset2,
+          InfinityUpgrade.skipReset3,
+          InfinityUpgrade.skipResetGalaxy
+        ]
+      ];
+    },
     unlockInfos: () => TeresaUnlocks.all,
     pouredAmountCap: () => Teresa.pouredAmountCap,
     showRunReward() {
@@ -83,12 +122,18 @@ export default {
         ? `${quantify("Reality Machine", this.lastMachines, 2)}`
         : `${quantify("Imaginary Machine", this.lastMachines.dividedBy(DC.E10000), 2)}`;
     },
-    unlockInfoTooltipArrowStyle() {
+    isDoomed: () => Pelle.isDoomed,
+    disChargeClassObject() {
       return {
-        borderRight: "0.5rem solid var(--color-teresa--base)"
+        "o-primary-btn--subtab-option": true,
+        "o-primary-btn--charged-respec-active": this.disCharge
       };
     },
-    isDoomed: () => Pelle.isDoomed,
+  },
+  watch: {
+    disCharge(newValue) {
+      player.celestials.ra.disCharge = newValue;
+    }
   },
   methods: {
     update() {
@@ -118,10 +163,20 @@ export default {
       this.isRunning = Teresa.isRunning;
       this.canUnlockNextPour = TeresaUnlocks.all
         .filter(unlock => this.rm.plus(this.pouredAmount).gte(unlock.price) && !unlock.isUnlocked).length > 0;
+      this.newname = Teresa.RealityName,
+      this.chargeUnlocked = Ra.unlocks.chargedInfinityUpgrades.canBeApplied && !Pelle.isDoomed;
+      this.totalCharges = Ra.totalCharges;
+      this.chargesUsed = Ra.totalCharges - Ra.chargesLeft;
+      this.disCharge = player.celestials.ra.disCharge;
+      this.autoswitch = player.options.automaticTabSwitching;
+      this.labelmode = !player.options.naming.celestial
+    },
+    clickHandler() {
+    Tab.infinity.upgrades.show();
     },
     startRun() {
       if (this.isDoomed) return;
-      Modal.celestials.show({ name: "Teresa's", number: 0 });
+      Modal.celestials.show({ name: "Teresa's", number: 0, celestial: Teresa });
     },
     unlockDescriptionHeight(unlockInfo) {
       const maxPrice = TeresaUnlocks[Teresa.lastUnlock].price;
@@ -136,6 +191,14 @@ export default {
         "c-teresa-unlock-description": true,
         "c-teresa-unlock-description--unlocked": this.hasUnlock(unlockInfo)
       };
+    },
+    unlockInfoTooltipArrowStyle(unlockInfo) {
+      if (this.hasUnlock(unlockInfo)) return {
+        borderRight: "0.5rem solid #8d8dff"
+      }
+      else return {
+        borderRight: "0.5rem solid var(--color-teresa--base)"
+      };
     }
   }
 };
@@ -148,13 +211,13 @@ export default {
       You have {{ quantify("Reality Machine", rm, 2, 2) }}.
     </div>
     <div class="l-mechanics-container">
-      <div
+      <div style="display: flex;flex-direction: column;justify-content: center;"
         v-if="hasReality"
         class="l-teresa-mechanic-container"
       >
-        <div class="c-teresa-unlock c-teresa-run-button">
+        <div class="c-teresa-run-button c-teresa-container">
           <span :class="{ 'o-pelle-disabled': isDoomed }">
-            Start Teresa's Reality.
+            {{`${labelmode?"Start Teresa's Reality":"Enter Teresa's "+newname}.`}}
           </span>
           <div
             :class="runButtonClassObject"
@@ -168,7 +231,7 @@ export default {
             This Reality can be repeated for a stronger reward based on the antimatter gained within it.
             <br><br>
             <span v-if="showRunReward">
-              Your record antimatter in Teresa's Reality is {{ format(bestAM, 2) }},
+              Your record antimatter in {{`${labelmode?"Teresa's Reality":newname}`}} is {{ format(bestAM, 2) }},
               achieved with {{ lastMachinesString }}.
               <br><br>
               Glyph Set used:
@@ -177,10 +240,12 @@ export default {
                 :text-hidden="true"
                 :force-name-color="false"
                 :glyphs="bestAMSet"
+                :needsCrates="2"
+                marginsize="0.2rem 0.4rem"
               />
             </span>
             <span v-else>
-              You have not completed Teresa's Reality yet.
+              You have not completed {{`${labelmode?"Teresa's Reality":"the "+newname}`}} yet.
             </span>
           </div>
         </div>
@@ -188,7 +253,7 @@ export default {
           v-if="showRunReward"
           class="c-teresa-unlock"
         >
-          Teresa Reality reward: Glyph Sacrifice power {{ formatX(runReward, 2, 2) }}
+        {{`${labelmode?"Teresa's Reality":newname}`}} reward: <br> Glyph Sacrifice power {{ formatX(runReward, 2, 2) }}
         </div>
         <div
           v-if="hasEPGen"
@@ -199,7 +264,7 @@ export default {
           </span>
         </div>
       </div>
-      <div class="l-rm-container l-teresa-mechanic-container">
+      <div class="l-container-container c-teresa-container">
         <button
           :class="pourButtonClassObject"
           @mousedown="pour = true"
@@ -210,6 +275,7 @@ export default {
         >
           {{ pourText }}
         </button>
+      <div class="l-rm-container l-teresa-mechanic-container">
         <div class="c-rm-store">
           <div
             class="c-rm-store-inner c-rm-store-inner--light"
@@ -219,11 +285,6 @@ export default {
             class="c-rm-store-inner"
             :style="{ height: percentage}"
           >
-            <div class="c-rm-store-label">
-              {{ formatX(rmMult, 2, 2) }} RM gain
-              <br>
-              {{ format(pouredAmount, 2, 2) }}/{{ format(pouredAmountCap, 2, 2) }}
-            </div>
           </div>
           <CustomizeableTooltip
             v-for="unlockInfo in unlockInfos"
@@ -233,48 +294,102 @@ export default {
             right="0"
             mode="right"
             :show="true"
-            :tooltip-arrow-style="unlockInfoTooltipArrowStyle"
+            :tooltip-arrow-style="unlockInfoTooltipArrowStyle(unlockInfo)"
             :tooltip-class="unlockInfoTooltipClass(unlockInfo)"
           >
             <template #mainContent>
               <div
                 class="c-teresa-milestone-line"
                 :class="{ 'c-teresa-milestone-line--unlocked': hasUnlock(unlockInfo) }"
-              />
+              >{{ format(unlockInfo.price, 2, 2) }}</div>
             </template>
             <template #tooltipContent>
-              <b :class="{ 'o-pelle-disabled': unlockInfo.pelleDisabled }">
-                {{ format(unlockInfo.price, 2, 2) }}: {{ unlockInfo.description }}
-              </b>
+              <span :class="{ 'o-pelle-disabled': unlockInfo.pelleDisabled }">
+                {{ unlockInfo.description }}
+              </span>
             </template>
           </CustomizeableTooltip>
         </div>
       </div>
-      <div
+      <div class="c-rm-store-label">
+              {{ formatX(rmMult, 2, 2) }} RM gain
+              <br>
+              {{ format(pouredAmount, 2, 2) }} / {{ format(pouredAmountCap, 2, 2) }}
+        </div>
+      <!-- v-if="pouredAmount < pouredAmountCap"
+      <div class="l-rm-container-labels l-teresa-mechanic-container"/> -->        
+      </div>
+      <div style="display: flex;flex-direction: column;justify-content: center;">
+        <div
         v-if="hasPerkShop"
-        class="c-teresa-shop"
+        class="c-teresa-shop c-teresa-container"
       >
+      <div class="c-shop-title c-teresa-shop-title">Ϟ <span style="font-family:cambria;font-size:2rem;line-height:1.2;font-weight:bold">Teresa's Perk shop</span> Ϟ</div>
         <span class="o-teresa-pp">
-          You have {{ quantify("Perk Point", perkPoints, 2, 0) }}.
-        </span>
-        <PerkShopUpgradeButton
+          You have {{ quantifyInt("Perk Point", perkPoints, 2, 0) }}.
+        </span> <br>
+        <div style="display:flex;flex-wrap:wrap;justify-content:center">
+          <PerkShopUpgradeButton
           v-for="upgrade in upgrades"
           :key="upgrade.id"
           :upgrade="upgrade"
         />
+        </div>
         You can now modify the appearance of your Glyphs to look like Music Glyphs.
       </div>
-      <div
-        v-else
-        class="l-rm-container-labels l-teresa-mechanic-container"
-      />
+        <div
+        v-if="chargeUnlocked"
+        class="c-teresa-charger c-teresa-container"
+        >
+        <div class="c-subtab-option-container">
+      <PrimaryButton
+        :class="disChargeClassObject"
+        @click="disCharge = !disCharge"
+      >
+        Respec Charged Infinity Upgrades on next Reality
+      </PrimaryButton>
+      <PrimaryButton
+      v-if="this.autoswitch"
+      class="o-primary-btn--subtab-option" 
+      @click="clickHandler()"
+      >
+        <i class="fas fa-expand-arrows-alt"/>
+      </PrimaryButton>
+      </div>
+          You have charged {{ formatInt(chargesUsed) }}/{{ formatInt(totalCharges) }} Infinity Upgrades.
+       <div class="l-pseudo-charger-grid">
+        <div
+        v-for="(column, columnId) in grid"
+        :key="columnId"
+        class="l-pseudo-charger__column"
+      >
+        <PseudoChargeButton
+          v-for="upgrade in column"
+          :key="upgrade.id"
+          :upgrade="upgrade"
+        />
+      </div>
+       </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
 .c-disabled-pour {
-  opacity: 0.8;
   pointer-events: none;
+}
+.c-teresa-shop-title {
+    /* stylelint-disable-next-line unit-allowed-list */
+    min-width: 11ch;
+    text-align: center;
+    font-weight: bold;
+    border-top: solid 1px;
+    border-bottom: solid 1px;
+    padding: .2rem;
+    margin:0.5rem;
+    border-image: linear-gradient(90deg,transparent,var(--color-teresa--base),transparent) 1;
+    background: linear-gradient(90deg,transparent,#5151ec60,transparent);
 }
 </style>

@@ -9,6 +9,10 @@ export class ReplicantiGalaxyAutobuyerState extends AutobuyerState {
     return `Replicanti Galaxy`;
   }
 
+  get color() {
+    return `#2196f3`;
+  }
+
   get isUnlocked() {
     return EternityMilestone.autobuyerReplicantiGalaxy.isReached;
   }

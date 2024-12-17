@@ -95,6 +95,8 @@ export default {
 .l-changelog-header {
   flex: 0 0.2 5rem;
   text-align: center;
+  font-family: cambria;
+  font-weight: bold;
 }
 
 .l-changelog-search-tab {
@@ -124,12 +126,15 @@ export default {
   overflow-y: auto;
   flex: 1 1 30rem;
   margin: 1rem 1rem 0;
-  padding: 0.5rem;
+  padding: 1rem;
+  border: 0.1rem solid var(--color-accent);
+  box-shadow:0 0 2rem black inset;
+  border-radius: var(--var-border-radius, 1rem);
+  background: linear-gradient(transparent, var(--color-accent) 500%);
 }
 
 .t-s12 .l-changelog-body {
   font-size: 1.3rem;
-  margin-left: 0;
 }
 
 .l-changelog-body::-webkit-scrollbar {
@@ -146,6 +151,8 @@ export default {
 
 .c-changelog-body--title {
   font-size: 2.5rem;
+  font-family: cambria;
+    font-weight: bold;
 }
 
 .c-changelog-search-bar {

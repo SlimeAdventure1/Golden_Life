@@ -73,6 +73,7 @@ export class AutobuyerState {
       allUnlocked: { get: () => zeroIndexed.every(x => x.isUnlocked) },
       allActive: { get: () => zeroIndexed.every(x => x.isActive) },
       groupName: { get: () => this.autobuyerGroupName },
+      groupColor: { get: () => this.autobuyerColor },
       isActive: {
         get: () => this.isActive,
         set: value => { this.isActive = value; },

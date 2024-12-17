@@ -2,16 +2,23 @@ export const laitelaQuotes = {
   unlock: {
     id: 0,
     lines: [
-      "You finally reached me.",
-      "I guess it is time to reveal,",
-      "The secrets hidden beneath existence itself.",
-      "The shape of dimensional perfection, Continuum.",
-      "And the powers that bind the Multiverse,",
-      "Dark Matter and Dark Energy.",
-      "My knowledge is endless and my wisdom divine.",
-      "So you can play around all you want.",
-      "For I am Lai'tela, the Celestial of Dimensions,",
-      "And I shall watch you forever.",
+      { text: "You finally reached me.",
+        showCelestialName: false,
+        //image: "laitela_closeup.png"
+      }, {
+        text: `I guess it is time to reveal the secrets hidden beneath existence itself. 
+        <br> The shape of dimensional perfection, Continuum. <br> 
+        And the powers that bind the Multiverse, Dark Matter and Dark Energy.`,
+        showCelestialName: false,
+        //image: "laitela_hand.png"
+      }, {
+        text: `My knowledge is endless and my wisdom divine. <br> So you can play around all you want.`,
+        showCelestialName: false,
+        //image: "laitela_closeup.png"
+      }, {
+        text: `For I am Lai'tela, the Celestial of Dimensions,<br> and I shall watch you forever.`,
+        //image: "laitela_aura.png"
+      }
     ]
   },
   // Note: This can be done immediately after unlocking Lai'tela
@@ -19,13 +26,18 @@ export const laitelaQuotes = {
     id: 1,
     requirement: () => player.celestials.laitela.difficultyTier >= 1,
     lines: [
-      "Unlike the others beneath me, I have no need for a Reality.",
-      "For I can simply create them, knowing full well it will collapse.",
-      "A power more incredible than any other, to build a Reality.",
-      "A prison, that can restrain even celestial power.",
-      "And this is why nothing you do will change a thing.",
-      "When you tire of struggling, you too, shall be bound and forgotten.",
-      "You will never find a way to overpower me.",
+      { text: `Unlike the others beneath me, I have no need for a Reality. 
+        <br> For I can simply create them, knowing full well it will collapse.`,
+        //image: "laitela_reality.png"
+      }, {
+        text: `A power more incredible than any other, to build a Reality. 
+        <br> A prison, that can restrain even celestial power.`,
+        //image: "laitela_power.png"
+      }, {
+        text: `And this is why nothing you do will change a thing. When you tire of struggling, 
+        you too, shall be bound and forgotten. <br> You will never find a way to overpower me.`,
+        //image: "laitela_closeup.png"
+      }
     ]
   },
   // Note: This happens about an hour or two before singularities
@@ -33,53 +45,65 @@ export const laitelaQuotes = {
     id: 2,
     requirement: () => player.celestials.laitela.difficultyTier >= 2,
     lines: [
-      "You... seem to be having too much fun.",
-      "Just like they did before meeting their fate.",
-      "Maybe my judgement was harsh, or unwarranted.",
-      "But maybe that matters not.",
-      "It gives me no solace to ponder and look back.",
-      "As all I can do is reminisce upon every possible action I could have taken.",
-      "But I digress. We should tighten those chains.",
+      { text: `You... seem to be having too much fun. Just like they did 
+        before meeting their fate. Maybe my judgement was harsh, or unwarranted.`,
+        //image: "laitela_ponder_1.png"
+      }, {
+        text: `But maybe that matters not. It gives me no solace to ponder and look back. 
+        <br> As all I can do is reminisce upon every possible action I could have taken.`,
+        //image: "laitela_ponder_2.png"
+      }, {
+        text: `But I digress. We should tighten those chains.`,
+        //image: "laitela_chains_1.png"
+      }
     ]
   },
   firstSingularity: {
     id: 3,
     requirement: () => Currency.singularities.gte(1),
     lines: [
-      "With my knowledge, I never found the need to question.",
-      "Everything always functioned right as designed.",
-      "And yet, your arrival baffles me.",
-      "Were you always just out of sight?",
-      "Growing, controlling, understanding, ascending?",
-      "You have taken control of the darkness so quickly.",
-      "Molded them into your own design, and now into a singular point...",
-      "It... it does not matter. The end will remain the same.",
+      { text: `With my knowledge, I never found the need to question. 
+        Everything always functioned right as designed. And yet, your arrival baffles me.`,
+        //image: "laitela_ponder_3.png"
+      }, {
+        text: `Were you always just out of sight? Growing, controlling, 
+        understanding, ascending? You have taken control of the darkness so quickly.`,
+        //image: "laitela_question.png"
+      }, {
+        text: `Molded them into your own design, and now into a singular 
+        point... It... it does not matter. The end will remain the same.`,
+        //image: "laitela_ponder_3.png"
+      },
     ]
   },
   // Note: Shown when unlocking DMD3; requirement is auto-condensing 20 singularities and it happens around ~200 total
   thirdDMD: {
     id: 5,
     lines: [
-      "Your absolute control of Antimatter...",
-      "Your mastery of it, molding it into your own Power...",
-      "It could not have been an accident.",
-      "How did you manage to obtain it?",
-      "Fascinating... I was never aware of this.",
-      "... was I?",
+      { text: `Your absolute control of Antimatter... Your mastery of it, 
+        molding it into your own Power... It could not have been an accident. How did you manage to obtain it?`,
+        //image: "laitela_question.png"
+      }, {
+        text: `Fascinating... I was never aware of this... was I?`,
+        //image: "laitela_ponder_4.png"
+      }
     ]
   },
   // Note: This happens around e10-e11 singularities
   annihilation: {
     id: 4,
     lines: [
-      "Back to square one, again.",
-      "Your chains shall bind you tighter, as your end slowly nears.",
-      "While we transcend time and existence itself.",
-      "Even if we may cease, we just come back. Never the exact same as before.",
-      "And so... we repeat forever.",
-      "And you?",
-      "...",
-      "The answer... eludes me...",
+      { text: `Back to square one, again. Your chains shall bind you tighter, 
+        as your end slowly nears, while we transcend time and existence itself.`,
+        //image: "laitela_chains_2.png"
+      }, {
+        text: `Even if we may cease, we just come back. Never the 
+        exact same as before. <br> And so... we repeat forever.`,
+        //image: "laitela_aura_weaker.png"
+      }, {
+        text: `And you? <br> ...The answer... eludes me...`,
+        //image: "laitela_ponder_4.png"
+      }
     ]
   },
   // Note: This happens near e18 singularities
@@ -87,28 +111,35 @@ export const laitelaQuotes = {
     id: 6,
     requirement: () => player.celestials.laitela.difficultyTier >= 4,
     lines: [
-      "I do not understand...",
-      "Were there others... controlling Dimensions in this way?",
-      "Did they... vanish? How have we not found them?",
-      "Are they... us? Are we the endpoint?",
-      "Or is their fate... something we cannot understand?",
-      "No, I must be missing something...",
-      "Are you causing gaps within my own memory?",
-      "What... ARE you?",
+      { text: `I do not understand... Were there others... controlling Dimensions in this way? 
+        Did they... vanish? How have we not found them? Are they... us? <br> Are we the endpoint?`,
+        //image: "laitela_fear_1.png"
+      }, {
+        text: `Or is their fate... something we cannot understand? No, I must be missing something...`,
+        //image: "laitela_fear_1.png"
+      }, {
+        text: `Are you causing gaps within my own memory? <br><br> What... ARE you?`,
+        //image: "laitela_fear_1.png"
+      }
     ]
   },
   // Note: Shown when the first row 5 iM upgrade is purchased (~e26 singularities)
   finalRowIM: {
     id: 7,
     lines: [
-      "It is all impossible, beyond my comprehension...",
-      "Unless... Is this all just part of the cycle?",
-      "Can... you see beyond it all? Is... this why...",
-      "I feel... afraid?",
-      "I feel... my powers, my memories, being erased...",
-      "Just like... when my role was almost usurped...",
-      "And yet... I am unable to bring myself to do anything.",
-      "Because this... was... my mistake...",
+      { text: "It is all impossible, beyond my comprehension...",
+        //image: "laitela_fear_2.png"
+      }, {
+        text: `Unless... Is this all just part of the cycle? Can... you see beyond it all? Is... this why...`,
+        //image: "laitela_fear_2.png"
+      }, {
+        text: `I feel... afraid? I feel... my powers, my memories, being erased...`,
+        //image: "laitela_fear_3.png"
+      }, {
+        text: `Just like... when my role was almost usurped... And yet... 
+        I am unable to bring myself to do anything. Because this... was... my mistake...`,
+        //image: "laitela_fear_3.png"
+      }
     ]
   },
   // Note: This is around when all infinite milestones hit increased scaling
@@ -116,22 +147,43 @@ export const laitelaQuotes = {
     id: 8,
     requirement: () => Currency.singularities.gte(1e40),
     lines: [
-      "I know not for how much... longer I can hold...",
-      "You are attaining... total mastery... over the dark...",
-      "While I can barely... hold onto my name...",
-      "What... can I... even do?",
+      { text: `I know not for how much... longer I can hold... 
+        You are attaining... total mastery... over the dark...`,
+        //image: "laitela_dying.png"
+      }, {
+        text: `While I can barely... hold onto my name... <br> What... can I... even do?`,
+        //image: "laitela_dying.png"
+      }
     ]
   },
   fullDestabilize: {
     id: 9,
     requirement: () => player.celestials.laitela.difficultyTier >= 8,
     lines: [
-      "I feel... like I had something to say...",
-      "I am not sure...",
-      "I cannot... hold onto the darkness any longer...",
-      "I do not even... have anything left...",
-      "Something about... destruction...",
-      "The end...",
+      { text: "I feel... like I had something to say... I am not sure...",
+        //image: "laitela_end_1.png"
+      }, { 
+        text: `I cannot... hold onto the darkness any longer... <br>
+        I do not even... have anything left...`,
+        //image: "laitela_end_2.png"
+      }, { 
+        text: "Something about... destruction...",
+        //image: "laitela_end_3.png"
+      }, { 
+        text: "The end...",
+        //image: "laitela_end_death.png"
+      }, { 
+        text: "",
+        //image: "laitela_end_death.png"
+      },
+    ]
+  },
+  secret: {
+    id: 10,
+    lines: [
+      { text: "What the fuck is wrong with you?",
+        //image: "laitela_secret.png"
+      },
     ]
   },
 };

@@ -8,6 +8,7 @@ import { DC } from "../../constants";
 export const normalChallenges = [
   {
     id: 1,
+    label: "Beginner's Infinity",
     legacyId: 1,
     isQuickResettable: false,
     description() {
@@ -21,6 +22,7 @@ export const normalChallenges = [
   },
   {
     id: 2,
+    label: "Aggregational Confinement",
     legacyId: 2,
     isQuickResettable: false,
     description:
@@ -32,6 +34,7 @@ export const normalChallenges = [
   },
   {
     id: 3,
+    label: "Primal Acceleration",
     legacyId: 3,
     isQuickResettable: false,
     description:
@@ -43,6 +46,7 @@ export const normalChallenges = [
   },
   {
     id: 4,
+    label: "Polynomial Bloodbath",
     legacyId: 8,
     isQuickResettable: false,
     description: "buying an Antimatter Dimension automatically erases all lower tier Antimatter Dimensions, " +
@@ -53,6 +57,7 @@ export const normalChallenges = [
   },
   {
     id: 5,
+    label: "Chronial Moribund",
     legacyId: 6,
     isQuickResettable: false,
     description:
@@ -63,6 +68,7 @@ export const normalChallenges = [
   },
   {
     id: 6,
+    label: "Interdimensional Exchange",
     legacyId: 10,
     isQuickResettable: false,
     description: () => `upgrading each Antimatter Dimension costs the Antimatter Dimension ${formatInt(2)} tiers ` +
@@ -73,6 +79,7 @@ export const normalChallenges = [
   },
   {
     id: 7,
+    label: "Expanding Modulation",
     legacyId: 9,
     isQuickResettable: false,
     description: () =>
@@ -84,6 +91,7 @@ export const normalChallenges = [
   },
   {
     id: 8,
+    label: "Blind Slaughter",
     legacyId: 11,
     isQuickResettable: false,
     description: `Dimension Boosts provide no multiplier and Antimatter Galaxies cannot be bought. Dimensional
@@ -94,6 +102,7 @@ export const normalChallenges = [
   },
   {
     id: 9,
+    label: "Augmented Demand",
     legacyId: 5,
     isQuickResettable: true,
     description: () => `whenever you buy Tickspeed upgrades or ${formatInt(10)} of an Antimatter Dimension, ` +
@@ -104,6 +113,7 @@ export const normalChallenges = [
   },
   {
     id: 10,
+    label: "Contrasting Construct",
     legacyId: 4,
     isQuickResettable: false,
     description: () => `there are only ${formatInt(6)} Antimatter Dimensions. Dimension Boost ` +
@@ -114,6 +124,7 @@ export const normalChallenges = [
   },
   {
     id: 11,
+    label: "Subatomic Renegade",
     legacyId: 12,
     isQuickResettable: true,
     description: () => `there is normal matter which rises once you have at least ${formatInt(1)} 2nd Antimatter ` +
@@ -124,6 +135,7 @@ export const normalChallenges = [
   },
   {
     id: 12,
+    label: "Subsequent Assembly",
     legacyId: 7,
     isQuickResettable: false,
     description: () => `each Antimatter Dimension produces the Dimension ${formatInt(2)} tiers below it

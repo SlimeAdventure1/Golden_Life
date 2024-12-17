@@ -1,6 +1,11 @@
 <script>
+import FillBar from "@/components/FillBar";
+
 export default {
   name: "EternityButton",
+  components: {
+    FillBar
+  },
   data() {
     return {
       isVisible: false,
@@ -18,13 +23,28 @@ export default {
       failedRestriction: undefined,
       hasMoreCompletions: false,
       nextGoalAt: new Decimal(0),
+      nextGoalAtminus: new Decimal(0),
       canEternity: false,
       eternityGoal: new Decimal(0),
       hover: false,
+      wobbly: false,
       headerTextColored: true,
       creditsClosed: false,
       showEPRate: false,
       isDilation: false,
+      currentIP: new Decimal(0),
+      CompletionWidth:"",
+      BulkCompletionWidth:"",
+      autobuyerWidth:"",
+      autobuyer:{
+        value: 0,
+        nextValue:0,
+        time: 0,
+        nextTime:0,
+        highestPrevPrestige:0,
+        mode:0,
+        isActive:false,
+      },
     };
   },
   computed: {
@@ -34,6 +54,7 @@ export default {
         "o-eternity-button--dilation": this.isDilation,
         "o-eternity-button--unavailable": !this.canEternity,
         "o-pelle-disabled-pointer": this.creditsClosed,
+        "a-wobble-multi": this.wobbly
       };
     },
     // Show EP/min below this threshold, color the EP number above it (1e40 is roughly when TS181 is attainable)
@@ -43,7 +64,7 @@ export default {
         "transition-duration": "0s"
       };
       if (this.hover) return {
-        color: "black",
+        //color: "black",
         "transition-duration": "0.2s"
       };
 
@@ -106,14 +127,17 @@ export default {
   },
   methods: {
     update() {
+      this.wobbly = player.options.animations.wobbly
       this.isVisible = Player.canEternity ||
         EternityMilestone.autoUnlockID.isReached || InfinityDimension(8).isUnlocked;
       this.isDilation = player.dilation.active;
       if (!this.isVisible) return;
       this.canEternity = Player.canEternity;
       this.eternityGoal.copyFrom(Player.eternityGoal);
+      this.currentIP.copyFrom(Currency.infinityPoints);
       this.headerTextColored = player.options.headerTextColored;
-
+      this.CompletionWidth = this.ChallengeProgress()
+      this.BulkCompletionWidth = this.BulkChallengeProgress()
       if (!this.canEternity) {
         this.type = EP_BUTTON_DISPLAY_TYPE.CANNOT_ETERNITY;
         return;
@@ -133,7 +157,6 @@ export default {
         this.updateChallengeWithRUPG();
         return;
       }
-
       const gainedEP = gainedEternityPoints();
       this.currentEP.copyFrom(Currency.eternityPoints);
       this.gainedEP.copyFrom(gainedEP);
@@ -148,7 +171,6 @@ export default {
         this.gainedTachyons.copyFrom(getTachyonGain(true));
         return;
       }
-
       this.type = hasNewContent
         ? EP_BUTTON_DISPLAY_TYPE.NORMAL_EXPLORE_NEW_CONTENT
         : EP_BUTTON_DISPLAY_TYPE.NORMAL;
@@ -158,6 +180,16 @@ export default {
       this.peakEPRate.copyFrom(player.records.thisEternity.bestEPmin);
       this.showEPRate = this.peakEPRate.lte(this.rateThreshold);
       this.creditsClosed = GameEnd.creditsEverClosed;
+
+      const autobuyer = Autobuyer.eternity;
+      this.autobuyer.value = new Decimal(autobuyer.amount)
+      this.autobuyer.time = autobuyer.time;
+      this.autobuyer.nextTime = autobuyer.timeToNextTick;
+      this.autobuyer.highestPrevPrestige = new Decimal(autobuyer.highestPrevPrestige);
+      this.autobuyer.nextValue = new Decimal(autobuyer.highestPrevPrestige).times(autobuyer.xHighest);
+      this.autobuyer.isActive = autobuyer.isActive;
+      this.autobuyer.mode = autobuyer.mode;
+      this.autobuyerWidth = this.AutobuyerProgress();
     },
     updateChallengeWithRUPG() {
       const ec = EternityChallenge.current;
@@ -168,7 +200,26 @@ export default {
       this.failedRestriction = status.failedRestriction;
       this.hasMoreCompletions = status.hasMoreCompletions;
       this.nextGoalAt.copyFrom(status.nextGoalAt);
-    }
+      this.nextGoalAtminus.copyFrom(status.nextGoalAtminus);
+    },
+    ChallengeProgress() {
+      const progress = this.currentIP.add(1).log10() / this.eternityGoal.log10();
+      if (progress > 1) return `${formatPercents(1)}`;
+      return `${formatPercents(progress, 2, 2)}`;
+    },
+    BulkChallengeProgress() {
+      const progress = (this.currentIP.add(1).log10()-this.nextGoalAtminus.log10()) / (this.nextGoalAt.log10()-this.nextGoalAtminus.log10());
+      if (progress > 1 || this.fullyCompleted) return `${formatPercents(1)}`;
+      return `${formatPercents(progress, 2, 2)}`;
+    },
+    AutobuyerProgress() {
+      let progress = 1
+      if (this.autobuyer.mode===0) progress = this.gainedEP.div(this.autobuyer.value).toNumber();
+      if (this.autobuyer.mode===1) progress = ( this.autobuyer.time - this.autobuyer.nextTime ) / this.autobuyer.time;
+      if (this.autobuyer.mode===2) progress = Math.max(( this.gainedEP.add(1).log10() - this.autobuyer.highestPrevPrestige.add(1).log10() ) / ( this.autobuyer.nextValue.add(1).log10() - this.autobuyer.highestPrevPrestige.add(1).log10() ),0);
+      if (progress > 1) return `${formatPercents(1)}`;
+      return `${formatPercents(progress, 2, 2)}`;
+    },
   },
 };
 
@@ -193,6 +244,10 @@ const EP_BUTTON_DISPLAY_TYPE = {
     @mouseover="hover = true"
     @mouseleave="hover = false"
   >
+  <div style="z-index: 1;position: relative;">
+    <template v-if="type >= 1">
+      <div class="o-prestige-description">Go Eternal</div>
+    </template>
     <!-- Cannot Eternity -->
     <template v-if="type === -1">
       Reach {{ format(eternityGoal, 2, 2) }}
@@ -207,17 +262,15 @@ const EP_BUTTON_DISPLAY_TYPE = {
 
     <!-- Normal -->
     <template v-else-if="type === 1">
-      Eternity for
+      Gain
       <span :style="amountStyle">{{ format(gainedEP, 2) }}</span>
       <span v-if="showEPRate"> EP</span>
-      <span v-else> Eternity {{ pluralize("Point", gainedEP) }}</span>
+      <span v-else><br> Eternity {{ pluralize("Point", gainedEP) }}</span>
       <br>
       <template v-if="showEPRate">
         Current: {{ format(currentEPRate, 2, 2) }} EP/min
         <br>
-        Peak: {{ format(peakEPRate, 2, 2) }} EP/min
-        <br>
-        at {{ format(peakEPRateVal, 2, 2) }} EP
+        Peak: {{ format(peakEPRate, 2, 2) }} EP/min at {{ format(peakEPRateVal, 2, 2) }} EP
       </template>
     </template>
 
@@ -228,17 +281,17 @@ const EP_BUTTON_DISPLAY_TYPE = {
 
     <!-- Dilation -->
     <template v-else-if="type === 3">
-      Eternity for <span :style="tachyonAmountStyle">{{ format(gainedTachyons, 2, 1) }}</span>
-      {{ pluralize("Tachyon Particle", gainedTachyons) }}
+      Gain <span :style="tachyonAmountStyle">{{ format(gainedTachyons, 2, 1) }}</span>
+      {{ pluralize("Tachyon", gainedTachyons) }}
     </template>
 
     <!-- New content available -->
     <template v-else-if="type === 4 || type === 5">
       <template v-if="type === 4">
-        Eternity for <span :style="amountStyle">{{ format(gainedEP, 2, 2) }}</span> EP
+        Gain <span :style="amountStyle">{{ format(gainedEP, 2, 2) }}</span> EP
       </template>
       <template v-else>
-        Eternity for <span :style="tachyonAmountStyle">{{ format(gainedTachyons, 2, 1) }}</span> TP
+        Gain <span :style="tachyonAmountStyle">{{ format(gainedTachyons, 2, 1) }}</span> Tachyons
       </template>
       <br>
       You should explore a bit and look at new content before clicking me!
@@ -249,7 +302,7 @@ const EP_BUTTON_DISPLAY_TYPE = {
       Other challenges await...
       <template v-if="fullyCompleted">
         <br>
-        (This challenge is already fully completed)
+        ( Already fully completed )
       </template>
       <template v-else>
         <br>
@@ -263,10 +316,45 @@ const EP_BUTTON_DISPLAY_TYPE = {
           Next goal at {{ format(nextGoalAt) }} IP
         </template>
       </template>
-    </template>
+    </template></div>
+    <div class="o-fill-container">
+        <template v-if="type === -1">
+          <FillBar
+          class="o-fill-bar--eternity"
+          :class="{ 'o-fill-bar--dilated': isDilation }"
+          :width="CompletionWidth"
+          style="position: absolute;"
+          />
+        </template>
+        <template v-if="type === 1">
+          <FillBar
+          v-if="autobuyer.isActive"
+          class="o-fill-bar--eternity"
+          :width="autobuyerWidth"
+          style="position: absolute;transition-duration:0.05s"
+          />
+        </template>
+        <template v-if="type === 6">
+          <FillBar
+          class="o-fill-bar--eternity"
+          :class="{ 'o-fill-bar--dilated': isDilation }"
+          :width="BulkCompletionWidth"
+          style="position: absolute;"
+          />
+        </template>
+    </div>
   </button>
 </template>
 
 <style scoped>
-
+.o-fill-bar--dilated {
+  background: linear-gradient(transparent -100%,var(--color-dilation) 250%);
+  box-shadow: 0 0 1rem white inset;
+}
+.o-prestige-button:hover>.o-fill-container>.o-fill-bar--eternity{
+  background: linear-gradient(transparent -100%,var(--color-text) 300%);
+}
+.o-prestige-button:hover>.o-fill-container>.o-fill-bar--dilated{
+  background: linear-gradient(transparent -100%,white 300%);
+}
 </style>

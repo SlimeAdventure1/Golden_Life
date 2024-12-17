@@ -11,7 +11,10 @@ export default {
   data() {
     return {
       isHidden: false,
-      tabVisibilities: []
+      tabVisibilities: [],
+      amount:0,
+      fade:1,
+      sidebarSideSwitch:false
     };
   },
   computed: {
@@ -19,8 +22,11 @@ export default {
   },
   methods: {
     update() {
+      this.sidebarSideSwitch = player.options.sidebarSideSwitch
+      this.amount = player.options.sidebarDisplayAmount
       this.isHidden = AutomatorData.isEditorFullscreen;
       this.tabVisibilities = Tabs.newUI.map(x => x.isAvailable);
+      this.fade = GameEnd.endState>1&&GameEnd.endState<END_STATE_MARKERS.CREDITS_START?Math.clamp((1-(GameEnd.endState-2)),0,1):1
     },
   },
 };
@@ -30,8 +36,13 @@ export default {
   <div
     v-if="!isHidden"
     class="c-modern-sidebar"
+    :class="{'c-modern-sidebar-switched':this.sidebarSideSwitch}"
+    :style="{'opacity':fade}"
   >
-    <ModernSidebarCurrency />
+    <ModernSidebarCurrency :id="0"/>
+    <ModernSidebarCurrency :id="1" v-if="this.amount>1"/>
+    <ModernSidebarCurrency :id="2" v-if="this.amount>2"/>
+    <ModernSidebarCurrency :id="3" v-if="this.amount>3"/>
     <template
       v-for="(tab, tabPosition) in tabs"
     >
@@ -46,5 +57,10 @@ export default {
 </template>
 
 <style scoped>
-
+.c-modern-sidebar-switched{
+  left: unset;
+  right:0;
+  background: linear-gradient(90deg, transparent,var(--color-accent) 600%),var(--leg-base);
+  background-position: center;
+}
 </style>

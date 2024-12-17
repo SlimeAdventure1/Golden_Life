@@ -132,7 +132,8 @@ export const normalAchievements = [
   {
     id: 32,
     name: "The Gods are pleased",
-    get description() { return `Get over ${formatX(600)} from Dimensional Sacrifice outside of Challenge 8.`; },
+    get description() { return `Get over ${formatX(600)} from Dimensional Sacrifice outside of 
+    ${player.options.naming.challenges?`${NormalChallenge(8).name} (C8)`:`Challenge 8`}.`; },
     checkRequirement: () => !NormalChallenge(8).isOnlyActiveChallenge && Sacrifice.totalBoost.gte(600),
     checkEvent: GAME_EVENT.SACRIFICE_RESET_AFTER,
     get reward() {
@@ -163,10 +164,10 @@ export const normalAchievements = [
     name: "Don't you dare sleep",
     get description() {
       return PlayerProgress.realityUnlocked()
-        ? `Be offline for a period of over ${formatInt(6)} hours (real time).`
-        : `Be offline for a period of over ${formatInt(6)} hours.`;
+        ? `Be either online or offline for a period of over ${formatInt(6)} hours (real time).`
+        : `Be either online or offline for a period of over ${formatInt(6)} hours.`;
     },
-    checkRequirement: () => Date.now() - player.lastUpdate >= 21600000,
+    checkRequirement: () => Date.now() - player.lastUpdate >= 21600000 || player.thisUpdate >= 21600000,
     checkEvent: GAME_EVENT.GAME_TICK_BEFORE
   },
   {
@@ -334,7 +335,9 @@ export const normalAchievements = [
     id: 56,
     name: "Many Deaths",
     get description() {
-      return `Complete the 2nd Antimatter Dimension Autobuyer Challenge in ${formatInt(3)} minutes or less.`;
+      return `Complete 
+      ${player.options.naming.challenges?`${NormalChallenge(2).name} (C2)`:`the 2nd Antimatter Dimension Autobuyer Challenge`}
+       in ${formatInt(3)} minutes or less.`;
     },
     checkRequirement: () => NormalChallenge(2).isOnlyActiveChallenge && Time.thisInfinityRealTime.totalMinutes <= 3,
     checkEvent: GAME_EVENT.BIG_CRUNCH_BEFORE,
@@ -349,7 +352,9 @@ export const normalAchievements = [
     id: 57,
     name: "Gift from the Gods",
     get description() {
-      return `Complete the 8th Antimatter Dimension Autobuyer Challenge in ${formatInt(3)} minutes or less.`;
+      return `Complete ${player.options.naming.challenges?`
+        ${NormalChallenge(8).name} (C2)`:`the 8th Antimatter Dimension Autobuyer Challenge`} 
+        in ${formatInt(3)} minutes or less.`;
     },
     checkRequirement: () => NormalChallenge(8).isOnlyActiveChallenge && Time.thisInfinityRealTime.totalMinutes <= 3,
     checkEvent: GAME_EVENT.BIG_CRUNCH_BEFORE,
@@ -363,7 +368,9 @@ export const normalAchievements = [
   {
     id: 58,
     name: "This is fine.",
-    get description() { return `Complete the Tickspeed Autobuyer Challenge in ${formatInt(3)} minutes or less.`; },
+    get description() { return `Complete 
+      ${player.options.naming.challenges?`${NormalChallenge(9).name} (C9)`:`the Tickspeed Autobuyer Challenge`}
+       in ${formatInt(3)} minutes or less.`; },
     checkRequirement: () => NormalChallenge(9).isOnlyActiveChallenge && Time.thisInfinityRealTime.totalMinutes <= 3,
     checkEvent: GAME_EVENT.BIG_CRUNCH_BEFORE,
     get reward() {
@@ -440,7 +447,9 @@ export const normalAchievements = [
     id: 68,
     name: "You did this again just for the achievement right?",
     get description() {
-      return `Complete the 3rd Antimatter Dimension Autobuyer Challenge in ${formatInt(10)} seconds or less.`;
+      return `Complete 
+      ${player.options.naming.challenges?`${NormalChallenge(3).name} (C3)`:`the 3rd Antimatter Dimension Autobuyer Challenge`}
+       in ${formatInt(10)} seconds or less.`;
     },
     checkRequirement: () => NormalChallenge(3).isOnlyActiveChallenge && Time.thisInfinityRealTime.totalSeconds <= 10,
     checkEvent: GAME_EVENT.BIG_CRUNCH_BEFORE,
@@ -450,9 +459,9 @@ export const normalAchievements = [
   {
     id: 71,
     name: "ERROR 909: Dimension not found",
-    description:
-      `Get to Infinity with only a single 1st Antimatter Dimension without Dimension Boosts
-      or Antimatter Galaxies, while in the 2nd Antimatter Dimension Autobuyer Challenge.`,
+    get description() { return `Get to Infinity with only a single 1st Antimatter Dimension without Dimension Boosts
+      or Antimatter Galaxies, while in 
+      ${player.options.naming.challenges?`${NormalChallenge(2).name} (C2)`:`the 2nd Antimatter Dimension Autobuyer Challenge`}.`;},
     checkRequirement: () =>
       NormalChallenge(2).isOnlyActiveChallenge &&
       AntimatterDimension(1).amount.eq(1) &&
@@ -533,7 +542,9 @@ export const normalAchievements = [
   {
     id: 81,
     name: "Game Design Is My Passion",
-    get description() { return `Beat Infinity Challenge 5 in ${formatInt(15)} seconds or less.`; },
+    get description() { return `Beat 
+      ${player.options.naming.challenges?`${InfinityChallenge(5).name} (IC5)`:`Infinity Challenge 5`}
+       in ${formatInt(15)} seconds or less.`; },
     checkRequirement: () => InfinityChallenge(5).isRunning && Time.thisInfinityRealTime.totalSeconds <= 15,
     checkEvent: GAME_EVENT.BIG_CRUNCH_BEFORE
   },
@@ -938,7 +949,6 @@ export const normalAchievements = [
       infinitiesGain: 2,
       bankedInfinitiesGain: () => Currency.infinities.value.times(0.05).floor()
     }
-
   },
   {
     id: 132,
@@ -1004,6 +1014,7 @@ export const normalAchievements = [
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
     get reward() { return `Gain ${formatX(2)} Dilated Time and Time Theorems while Dilated.`; },
     effect: () => (player.dilation.active ? 2 : 1),
+
   },
   {
     id: 138,
@@ -1083,7 +1094,7 @@ export const normalAchievements = [
     description: "Have all Perks bought.",
     checkRequirement: () => player.reality.perks.size === Perks.all.length,
     checkEvent: GAME_EVENT.PERK_BOUGHT,
-    get reward() { return `+${formatPercents(0.01)} Glyph rarity.`; },
+    get reward() { return `+${formatPercents(0.01)} Glyph quality.`; },
     effect: 1
   },
   {
@@ -1141,6 +1152,7 @@ export const normalAchievements = [
   },
   {
     id: 155,
+    displayId: 15983,
     name: "Achievement #15983",
     get description() { return `Play for ${formatFloat(13.7, 1)} billion years.`; },
     checkRequirement: () => Time.totalTimePlayed.totalYears > 13.7e9,
@@ -1246,12 +1258,12 @@ export const normalAchievements = [
     checkRequirement: () => Ra.totalPetLevel >= 50,
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
     get reward() { return `Get ${formatPercents(0.1)} more memories.`; },
-    effect: 1.1
+    effect: 1.1,
   },
   {
     id: 171,
     name: "The god is delighted",
-    description: "Sacrifice every sacrificable Glyph type at least once.",
+    description: "Sacrifice every sacrificable Glyph type at least once. (Companion doesn't count)",
     checkRequirement: () => Object.values(player.reality.glyphs.sac).every(s => s > 0),
     checkEvent: GAME_EVENT.GLYPHS_CHANGED,
     get reward() { return `Glyph sacrifice is ${formatX(2)} stronger.`; },
@@ -1334,7 +1346,9 @@ export const normalAchievements = [
   {
     id: 183,
     name: "Déjà vOoM",
-    description: "Complete Infinity Challenge 5 while Doomed.",
+    get description() { return `Complete 
+      ${player.options.naming.challenges?`${InfinityChallenge(5).name} (IC5)`:`Infinity Challenge 5`}
+       while Doomed.`;},
     checkRequirement: () => Pelle.isDoomed && InfinityChallenge(5).isCompleted,
     checkEvent: GAME_EVENT.INFINITY_CHALLENGE_COMPLETED,
     // Weirdly specific reward? Yes, its V's ST bonus because we forgot to disable it
@@ -1380,6 +1394,7 @@ export const normalAchievements = [
     id: 188,
     name: "The End",
     description: "Beat the game.",
+    reward: "???",
     checkRequirement: () => GameEnd.endState > END_STATE_MARKERS.GAME_END && !GameEnd.removeAdditionalEnd,
     checkEvent: GAME_EVENT.GAME_TICK_AFTER
   },

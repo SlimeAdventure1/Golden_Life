@@ -33,6 +33,9 @@ export default {
     name() {
       return this.type.groupName;
     },
+    color() {
+      return this.type.groupColor;
+    },
     entryCount() {
       return this.type.entryCount;
     },
@@ -74,6 +77,7 @@ export default {
   <span
     v-if="showAutobuyers && !(isADBox && continuumActive)"
     class="c-autobuyer-box-row"
+    :style="{'--fade':color}"
   >
     <AutobuyerGroupToggleLabel
       :is-active="parentActive"
@@ -109,7 +113,7 @@ export default {
   </span>
   <span
     v-else-if="isADBox && continuumActive"
-    class="c-autobuyer-box-row"
+    class="c-autobuyer-box-row c-autobuyer-box-continuum"
   >
     Continuum replaces your Antimatter Dimension and Tickspeed Autobuyers, as your production multipliers
     <br>

@@ -41,13 +41,23 @@ export default {
 </script>
 
 <template>
-  <line
+  <svg>
+    <line
     :x1="percents(setup.x1)"
     :y1="percents(setup.y1)"
     :x2="percents(setup.x2)"
     :y2="percents(setup.y2)"
     :class="classObject"
   />
+  <line
+    :x1="percents(setup.x1)"
+    :y1="percents(setup.y1)"
+    :x2="percents(setup.x2)"
+    :y2="percents(setup.y2)"
+    :class="classObject"
+    class="o-time-study-connection-base"
+  />
+  </svg>
 </template>
 
 <style scoped>

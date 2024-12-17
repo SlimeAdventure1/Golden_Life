@@ -110,11 +110,14 @@ export default {
       <span v-else>{{ modeProps(mode).title }}:</span>
     </template>
     <template #toggleSlot>
+      <br>
       <AutobuyerInput
         :key="mode"
         :autobuyer="autobuyer"
         v-bind="modeProps(mode).input"
       />
+      <br v-if="mode !== amountMode">
+      <br v-if="mode !== amountMode">
     </template>
     <template
       v-if="mode === amountMode"

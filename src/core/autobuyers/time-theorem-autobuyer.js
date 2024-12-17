@@ -9,6 +9,10 @@ export class TimeTheoremAutobuyerState extends AutobuyerState {
     return `Time Theorem`;
   }
 
+  get color() {
+    return `var(--color-eternity)`;
+  }
+
   get isUnlocked() {
     return Perk.ttBuySingle.isBought && !Pelle.isDisabled("timeTheoremAutobuyer");
   }

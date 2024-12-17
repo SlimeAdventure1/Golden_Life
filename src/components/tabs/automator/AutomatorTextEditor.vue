@@ -12,6 +12,10 @@ export default {
       markedLineNumber: 0,
       unclearedLines: false,
       isActiveScript: false,
+      panelTheme: 0,
+      panelColor: 0,
+      panelGradient: 0,
+      scanimation:false,
     };
   },
   computed: {
@@ -22,6 +26,15 @@ export default {
     fullScreen() {
       return this.$viewModel.tabs.reality.automator.fullScreen;
     },
+    autovisuals(){
+      return {
+        "c-autoscan-animation":this.scanimation,
+        "c-autotheme-light":this.panelTheme===1,
+        "c-autotheme-dark":this.panelTheme===2,
+        [`c-autocolor-${this.panelColor}`]:true,
+        [`c-autograd-${this.panelGradient}`]:true,
+      }
+    }
   },
   watch: {
     currentScriptId: {
@@ -64,6 +77,10 @@ export default {
   },
   methods: {
     update() {
+      this.panelTheme=player.options.automator.theme[0]
+      this.panelColor=player.options.automator.color[0]
+      this.panelGradient=player.options.automator.gradient[0]
+      this.scanimation = player.options.automator.animation
       AutomatorBackend.jumpToActiveLine();
       if (this.unclearedLines && !AutomatorBackend.isOn) this.clearAllActiveLines();
       if (AutomatorBackend.isOn) {
@@ -184,5 +201,6 @@ export const AutomatorTextUI = {
   <div
     ref="container"
     class="c-automator-editor l-automator-editor l-automator-pane__content"
+    :class="autovisuals"
   />
 </template>

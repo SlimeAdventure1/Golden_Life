@@ -63,8 +63,14 @@ export default {
         color: this.boostColor,
         "text-shadow": `0 0 0.4rem ${this.boostColor}`
       } : {
-        color: "#76EE76",
+        color: "var(--effect-color)",
+        "font-weight":"bold"
       };
+    },
+    backgroundStyle() {
+      return this.boostColor ? {
+        "background": `Linear-gradient(90deg,transparent -10%, ${this.boostColor}40 10%,transparent, ${this.boostColor}40 90%,transparent 110%)`
+      } : ""
     },
     textShadowColor() {
       return GlyphAppearanceHandler.getBaseColor(true);
@@ -90,6 +96,7 @@ export default {
   <div
     class="c-glyph-tooltip__effect"
     :class="{ 'o-pelle-disabled': isPelleDisabled }"
+    :style="backgroundStyle"
   >
     <span v-html="convertedParts[0]" />
     <!-- Do not "fix" the spacing on these spans; moving effectText to its own line causes extra spaces to appear -->
@@ -108,3 +115,10 @@ export default {
     />
   </div>
 </template>
+<style scoped>
+.o-pelle-disabled{
+  background: Linear-gradient(90deg,transparent -10%, #ed143d20 10%,transparent, #ed143d20 90%,transparent 110%);
+  text-shadow: 0.1rem 0.1rem #ed143d88;
+  color: var(--color-pelle--base);
+}
+</style>

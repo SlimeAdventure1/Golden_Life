@@ -10,7 +10,7 @@ export const orderedEffectList = ["powerpow", "infinitypow", "replicationpow", "
   "effarigforgotten", "effarigdimensions", "effarigantimatter",
   "cursedgalaxies", "cursedtickspeed", "curseddimensions", "cursedEP",
   "realityglyphlevel", "realitygalaxies", "realityrow1pow", "realityDTglyph",
-  "companiondescription", "companionEP"];
+  "companiondescription", "companionEP","heliosLuck"];
 
 export const generatedTypes = ["power", "infinity", "replication", "time", "dilation", "effarig"];
 
@@ -43,7 +43,7 @@ export const Glyphs = {
     return player.reality.glyphs.active;
   },
   get activeWithoutCompanion() {
-    return this.activeList.filter(g => g.type !== "companion");
+    return this.activeList.filter(g => g.type !== "companion").filter(g => g.type !== "helios");
   },
   get allGlyphs() {
     return this.inventoryList.concat(this.activeList);
@@ -262,12 +262,12 @@ export const Glyphs = {
   activeGlyph(activeIndex) {
     return this.active[activeIndex];
   },
-  equip(glyph, targetSlot) {
+  equip(glyph, targetSlot, audio=false) {
     const forbiddenByPelle = Pelle.isDisabled("glyphs") || ["effarig", "reality", "cursed"].includes(glyph.type);
     if (Pelle.isDoomed && forbiddenByPelle) return;
     if (GameEnd.creditsEverClosed) return;
 
-    if (glyph.type !== "companion") {
+    if (glyph.type !== "companion" || glyph.type !== "helios") {
       if (RealityUpgrade(9).isLockingMechanics) {
         if (this.activeWithoutCompanion.length > 0) {
           RealityUpgrade(9).tryShowWarningModal("equip another non-Companion Glyph");
@@ -311,6 +311,7 @@ export const Glyphs = {
       this.updateMaxGlyphCount();
       EventHub.dispatch(GAME_EVENT.GLYPHS_EQUIPPED_CHANGED);
       EventHub.dispatch(GAME_EVENT.GLYPHS_CHANGED);
+      if(audio)AudioManagement.playSound("glyph_equip",undefined,1+(Glyphs.activeList.length-1)/25)
       this.validate();
     } else {
       // We can only replace effarig/reality glyph
@@ -482,7 +483,7 @@ export const Glyphs = {
     const glyphsToSort = player.reality.glyphs.inventory.filter(g => g.idx >= this.protectedSlots);
     const freeSpace = GameCache.glyphInventorySpace.value;
     const sortOrder = ["power", "infinity", "replication", "time", "dilation", "effarig",
-      "reality", "cursed", "companion"];
+      "reality", "cursed", "companion", "helios"];
     const byType = sortOrder.mapToObject(g => g, () => ({ glyphs: [], padding: 0 }));
     for (const g of glyphsToSort) byType[g.type].glyphs.push(g);
     let totalDesiredPadding = 0;
@@ -571,7 +572,7 @@ export const Glyphs = {
     for (let inventoryIndex = this.totalSlots - 1; inventoryIndex >= this.protectedSlots; --inventoryIndex) {
       const glyph = (inventoryCopy ?? this.inventory)[inventoryIndex];
       // Never clean companion, and only clean cursed if we choose to sacrifice all
-      if (glyph === null || glyph.type === "companion" || (glyph.type === "cursed" && threshold !== 0)) continue;
+      if (glyph === null || glyph.type === "companion" || glyph.type === "helios" || (glyph.type === "cursed" && threshold !== 0)) continue;
       // Don't auto-clean individually customized glyphs unless it's harsh or delete all
       const isCustomGlyph = glyph.color !== undefined || glyph.symbol !== undefined;
       if (isCustomGlyph && !isHarsh) continue;
@@ -787,7 +788,7 @@ export const Glyphs = {
     }
     const cursedCount = this.allGlyphs.filter(g => g !== null && g.type === "cursed").length;
     if (cursedCount >= 5) {
-      GameUI.notify.error(`You don't need more than ${format(5)} Cursed Glyphs!`);
+      GameUI.notify.error(`You don't need more than ${format(5)} Cursed Glyphs!`,undefined,"click_wrong");
     } else {
       this.addToInventory(GlyphGenerator.cursedGlyph());
       GameUI.notify.error("Created a Cursed Glyph");

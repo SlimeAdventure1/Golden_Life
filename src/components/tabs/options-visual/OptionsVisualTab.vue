@@ -1,11 +1,11 @@
 <script>
+
 import ExpandingControlBox from "@/components/ExpandingControlBox";
 import OpenModalHotkeysButton from "@/components/OpenModalHotkeysButton";
 import OptionsButton from "@/components/OptionsButton";
 import PrimaryToggleButton from "@/components/PrimaryToggleButton";
 import SelectNotationDropdown from "@/components/tabs/options-visual/SelectNotationDropdown";
 import SelectThemeDropdown from "@/components/tabs/options-visual/SelectThemeDropdown";
-import SelectSidebarDropdown from "@/components/tabs/options-visual/SelectSidebarDropdown";
 import UpdateRateSlider from "./UpdateRateSlider";
 
 export default {
@@ -18,7 +18,6 @@ export default {
     OpenModalHotkeysButton,
     SelectThemeDropdown,
     SelectNotationDropdown,
-    SelectSidebarDropdown
   },
   data() {
     return {
@@ -26,6 +25,9 @@ export default {
       notation: "",
       sidebarResource: "",
       headerTextColored: true,
+      prestigePosition: true,
+      adbuyersSubtab: true,
+      canPosition: true,
     };
   },
   computed: {
@@ -36,16 +38,19 @@ export default {
     notationLabel() {
       return `Notation: ${this.notation}`;
     },
-    sidebarLabel() {
-      return `Sidebar (Modern UI): ${this.sidebarResource}`;
-    },
     UILabel() {
       return `UI: ${this.$viewModel.newUI ? "Modern" : "Classic"}`;
-    }
+    },
   },
   watch: {
     headerTextColored(newValue) {
       player.options.headerTextColored = newValue;
+    },
+    prestigePosition(newValue) {
+      player.options.prestigePosition = newValue;
+    },
+    adbuyersSubtab(newValue) {
+      player.options.adbuyersSubtab = newValue;
     },
   },
   methods: {
@@ -53,10 +58,10 @@ export default {
       const options = player.options;
       this.theme = Theme.currentName();
       this.notation = options.notation;
-      this.sidebarResource = player.options.sidebarResourceID === 0
-        ? "Latest Resource"
-        : this.sidebarDB.find(e => e.id === player.options.sidebarResourceID).optionName;
       this.headerTextColored = options.headerTextColored;
+      this.prestigePosition = options.prestigePosition;
+      this.adbuyersSubtab = options.adbuyersSubtab;
+      this.canPosition = PlayerProgress.hasBroken;
     },
   }
 };
@@ -138,18 +143,35 @@ export default {
           class="o-primary-btn--option l-options-grid__button"
           label="Relative prestige gain text coloring:"
         />
-        <ExpandingControlBox
-          v-if="$viewModel.newUI"
-          class="l-options-grid__button c-options-grid__notations"
-          button-class="o-primary-btn o-primary-btn--option l-options-grid__notations-header"
-          :label="sidebarLabel"
+        <OptionsButton
+          class="o-primary-btn--option"
+          onclick="Modal.namingOptions.show()"
         >
-          <template #dropdown>
-            <SelectSidebarDropdown />
-          </template>
-        </ExpandingControlBox>
+          Open Naming Options
+        </OptionsButton>
       </div>
-      <OpenModalHotkeysButton />
+      <div class="l-options-grid__row">
+        <PrimaryToggleButton
+          v-model="adbuyersSubtab"
+          class="o-primary-btn--option l-options-grid__button"
+          label="Autobuyer Toggles in AD subtab:"
+        />
+        <PrimaryToggleButton
+          v-if="canPosition"
+          v-model="prestigePosition"
+          class="o-primary-btn--option l-options-grid__button"
+          label="Switch Prestige Button Positions:"
+        />
+        <OptionsButton
+          v-if="$viewModel.newUI"
+          class="o-primary-btn--option"
+          onclick="Modal.sidebar.show();"
+        >
+          Open Sidebar Options
+        </OptionsButton>
+      </div>
     </div>
+    <br>
+    <OpenModalHotkeysButton />
   </div>
 </template>

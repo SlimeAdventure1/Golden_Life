@@ -11,6 +11,10 @@ export default {
       type: String,
       required: true
     },
+    label: {
+      type: String,
+      required: true
+    },
     isUnlocked: {
       type: Boolean,
       required: true
@@ -83,7 +87,7 @@ export default {
       type="challenges"
       class="l-hint-text--challenge"
     >
-      {{ name }}
+      {{ name }} : {{ label }}
     </HintText>
     <slot name="top" />
     <div class="l-challenge-box__fill" />
@@ -99,13 +103,17 @@ export default {
 
 <style scoped>
 .o-challenge-btn--broken {
-  background: var(--color-enslaved--base);
+  --bg-dark: var(--color-enslaved--base);
+  --bg-bright: #7b4423;
+  --border: #ff6000;
   clip-path: polygon(0% 0%, 25% 20%, 95% 0%, 100% 25%, 80% 70%, 95% 50%, 100% 100%, 45% 95%,
     65% 70%, 15% 95%, 0% 45%, 10% 50%);
 }
 
 .o-challenge-btn--broken-alt {
-  background: var(--color-enslaved--base);
+  --bg-dark: var(--color-enslaved--base);
+  --bg-bright: #7b4423;
+  --border: #ff6000;
   clip-path: polygon(0% 0%, 15% 0%, 25% 40%, 30% 0%, 55% 0%, 85% 30%, 75% 0%, 100% 0%,
     90% 40%, 100% 65%, 90% 95%, 45% 45%, 70% 100%, 25% 100%, 5% 90%, 10% 60%);
 }

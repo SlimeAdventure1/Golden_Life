@@ -25,19 +25,20 @@ export default {
       isDoomed: false,
       antimatter: new Decimal(0),
       antimatterPerSec: new Decimal(0),
+      needTextFix: false,
     };
   },
   methods: {
     update() {
       this.shouldDisplay = player.break || !Player.canCrunch;
       if (!this.shouldDisplay) return;
-
+      this.needTextFix = Notations.current.name === "Bar"
       this.isModern = player.options.newUI;
       this.isDoomed = Pelle.isDoomed;
       this.antimatter.copyFrom(Currency.antimatter);
       this.hasRealityButton = PlayerProgress.realityUnlocked() || TimeStudy.reality.isBought;
       if (!this.hasRealityButton) this.antimatterPerSec.copyFrom(Currency.antimatter.productionPerSecond);
-    },
+    }
   },
 };
 </script>
@@ -47,7 +48,12 @@ export default {
     v-if="shouldDisplay"
     class="c-prestige-button-container"
   >
-    <span>You have <span class="c-game-header__antimatter">{{ format(antimatter, 2, 1) }}</span> antimatter.</span>
+    <span class="c-game-background__antimatter">
+      You have <span 
+      class="c-game-header__antimatter"
+      :class="{'c-game-header__antimatter--fixed': needTextFix }"
+      >{{ format(antimatter, 2, 1) }}</span> antimatter.
+    </span>
     <div
       v-if="hasRealityButton"
       class="c-reality-container"
@@ -73,5 +79,17 @@ export default {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+}
+.c-game-background__antimatter{
+  border-top:0.1rem solid;
+  border-bottom:0.1rem solid;
+  background: linear-gradient(90deg, transparent,color-mix(in srgb, var(--color-accent) 30%, transparent), transparent);
+  border-image: linear-gradient(90deg, transparent,var(--color-accent), transparent) 1;
+}
+.c-game-header__antimatter--fixed{
+  font-size: 2.5rem;
+  line-height: unset;
+  font-weight: normal;
+  font-family: typewriter;
 }
 </style>

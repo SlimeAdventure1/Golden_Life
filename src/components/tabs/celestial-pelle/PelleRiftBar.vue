@@ -158,7 +158,7 @@ export default {
       />
     </div>
     <div class="o-pelle-rift-bar-percentage">
-      {{ formatPercents(percentage, 3) }}
+      <i>{{ formatPercents(percentage, 3) }} </i>
       <span v-if="!isMaxed">({{ isActive ? "Filling" : "Idle" }})</span>
     </div>
     <CustomizeableTooltip
@@ -169,8 +169,7 @@ export default {
       content-class="o-pelle-rift-bar-milestone-hover-area"
     >
       <template #tooltipContent>
-        {{ selectedMilestoneResourceText }}
-        <br>
+        <div class="o-pelle-rift-bar-milestone-title">{{ selectedMilestoneResourceText }}</div>
         <br>
         {{ selectedMilestoneDescriptionText }}
       </template>
@@ -231,19 +230,18 @@ export default {
   position: relative;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(45deg, #ffffff, #e6e6e6);
+  background: url(../../../../public/images/celestials/pelle-bar-empty-light.png);
   border: var(--var-border-width, 0.2rem) solid var(--color-pelle--secondary);
   border-radius: var(--var-border-radius, 0.5rem);
   margin-bottom: 1rem;
 }
-
 .s-base--metro .c-pelle-rift-bar {
   width: 31.9rem;
   height: 4.8rem;
 }
 
 .s-base--dark .c-pelle-rift-bar {
-  background: linear-gradient(45deg, #1e1e1e, #262626);
+  background: url(../../../../public/images/celestials/pelle-bar-empty.png);
 }
 
 .c-pelle-rift-bar--filling,
@@ -292,7 +290,9 @@ export default {
   left: 0;
   z-index: 0;
   opacity: 0.7;
-  background: var(--color-pelle--secondary);
+  background: url(../../../../public/images/celestials/pelle-bar.png);
+  animation: a-bar 25s linear infinite;
+  box-shadow: 0 0 0.5rem black inset;
 }
 
 .o-pelle-rift-bar-reducedto {
@@ -301,8 +301,8 @@ export default {
   right: 0;
   bottom: 0;
   z-index: 0;
-  background: var(--color-pelle--base);
-  filter: brightness(0.5);
+  background: url(../../../../public/images/celestials/pelle-bar-reduced.png);
+  animation: a-bar 25s linear infinite;
 }
 /* #endregion FILLING STYLES */
 
@@ -315,8 +315,9 @@ export default {
   left: 0;
   z-index: 0;
   opacity: 0.5;
-  background: var(--color-pelle--secondary);
+  background: url(../../../../public/images/celestials/pelle-bar.png);
   filter: grayscale(0.6);
+  animation: a-bar 25s linear infinite;
 }
 
 .o-pelle-rift-bar-overfilled {
@@ -325,11 +326,13 @@ export default {
   position: absolute;
   z-index: 1;
   opacity: 0.5;
-  background: var(--color-pelle--base);
+  background: linear-gradient(90deg,var(--color-pelle--base),#ff5200);
+  mix-blend-mode: color;
 }
 
 .c-pelle-rift-bar-overfill-container {
   animation: a-pelle-bar-overfill-pulse 1s infinite linear;
+  border-color: var(--color-pelle--base);
 }
 
 .t-s1 .c-pelle-rift-bar-overfill-container {
@@ -341,7 +344,7 @@ export default {
   position: absolute;
   z-index: 1;
   opacity: 0.3;
-  background: var(--color-pelle--base);
+  background: linear-gradient(90deg,transparent,var(--color-pelle--base),transparent);
   animation: a-pelle-bar-filling-sweep infinite 2s linear;
 }
 /* #endregion SPECIAL BAR OVERLAY STYLES */
@@ -351,7 +354,7 @@ export default {
   z-index: 2;
   font-size: 1.5rem;
   color: var(--color-text);
-  filter: drop-shadow(0.1rem 0.1rem 0.1rem var(--color-pelle--base));
+  text-shadow: 0.1rem 0.1rem 0.3rem var(--color-pelle--base),-0.1rem -0.1rem 0.3rem var(--color-pelle--base);
 
   /* This keeps the percentage from blocking the hover area */
   pointer-events: none;
@@ -379,6 +382,7 @@ export default {
 
 .o-pelle-rift-bar-milestone-line--unlocked {
   animation: none;
+  background: var(--color-pelle--base);
 }
 
 .o-pelle-rift-bar-milestone-line--disabled {
@@ -395,13 +399,17 @@ export default {
 }
 
 .c-pelle-milestone-tooltip {
-  width: 20rem;
+  width: 24rem;
   z-index: 4;
   font-size: 1.1rem;
-  font-weight: bold;
-  color: var(--color-text);
+  color: var(--color-pelle--base);
+  background: url(../../../../public/images/upgrades/pelle.png),linear-gradient(var(--bg-bright),var(--bg-dark));
+  background-position: center;
+  --bg-bright:black;
+  --bg-dark:#330910;
   background-color: var(--color-base);
   border: 0.1rem solid var(--color-pelle--base);
+  box-shadow: 0 0 1rem black inset ,0 0 0 0.2rem var(--color-pelle--base) inset;
 }
 
 .s-base--dark .c-pelle-milestone-tooltip {
@@ -409,12 +417,20 @@ export default {
 }
 
 .c-pelle-milestone-tooltip--unlocked {
-  color: black;
+  color: white;
+  --bg-bright:#741224;
+  --bg-dark:var(--color-pelle--base);
   background-color: var(--color-pelle--base);
-  box-shadow: 0 0 0 0.1rem black;
+  box-shadow: 0 0 1rem black inset ,0 0 0 0.2rem var(--color-pelle--base) inset,0 0 0 0.1rem black;
 }
 
 .s-base--dark .c-pelle-milestone-tooltip--unlocked {
   background-color: var(--color-pelle--base);
+}
+.o-pelle-rift-bar-milestone-title{
+  border-bottom: 0.1rem solid;
+  padding-bottom: 0.5rem;
+  margin-bottom: -1rem;
+  border-image: linear-gradient(90deg,transparent,currentcolor,transparent) 1;
 }
 </style>

@@ -81,7 +81,7 @@ export default {
   >
     <div class="c-pelle-rift">
       <div class="c-pelle-rift-row">
-        <div class="c-pelle-rift-column c-pelle-rift-status">
+        <div class="c-pelle-rift-status">
           <h2 class="c-pelle-rift-name-header">
             {{ riftName() }}
           </h2>
@@ -136,15 +136,17 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: var(--var-border-width, 0.2rem) solid var(--color-pelle--base);
+  border: var(--var-border-width, 0.1rem) solid var(--color-pelle--base);
   border-radius: var(--var-border-radius, 0.5rem);
-
+  background: linear-gradient(90deg, var(--color-pelle--base) -200%,#ffffff40 25% 75%,var(--color-pelle--base) 300%);;
   /* transparent crimson */
-  box-shadow: inset 0 0 1rem 0.1rem rgba(237, 20, 61, 45%), 0 0 1rem 0.1rem rgba(237, 20, 61, 45%);
+  box-shadow: 0 0 1rem var(--color-background) inset, 0 0 0 0.2rem var(--color-pelle--base) inset, 
+  inset 0 0 1rem 0.1rem #ed143d73, 0 0 1rem 0.1rem #ed143d73;
   margin-top: 1.2rem;
-  padding: 0.5rem;
 }
-
+.s-base--dark .c-pelle-rift{
+  background: linear-gradient(90deg, var(--color-pelle--base) -200%,#00000060 25% 75%,var(--color-pelle--base) 300%);
+}
 .t-s1 .c-pelle-rift {
   box-shadow: none;
 }
@@ -159,8 +161,14 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding:0 1rem;
+  border-left: 0.1rem solid var(--color-pelle--base);
+  border-right: 0.1rem solid var(--color-pelle--base);
+  box-shadow: 0 0 1rem var(--color-background) inset, 0 0 0 0.2rem var(--color-pelle--base) inset;
 }
-
+.s-base--dark .c-pelle-rift-column {
+  background:#00000080
+}
 .c-pelle-rift-rift-info-container {
   height: 5rem;
   font-weight: 400;
@@ -176,7 +184,10 @@ export default {
 
 .c-pelle-rift-name-header {
   font-weight: bold;
+  width:28rem;
   color: var(--color-pelle--base);
   padding: 0.2rem;
+  border-bottom:0.1rem solid;
+  border-image:linear-gradient(90deg,transparent,currentcolor,transparent)1
 }
 </style>

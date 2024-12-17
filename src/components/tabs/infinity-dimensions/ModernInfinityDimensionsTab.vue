@@ -23,12 +23,14 @@ export default {
       nextDimCapIncrease: 0,
       tesseractCost: new Decimal(0),
       totalDimCap: 0,
+      nextDimCap:0,
       canBuyTesseract: false,
       enslavedCompleted: false,
       boughtTesseracts: 0,
       extraTesseracts: 0,
       creditsClosed: false,
       showLockedDimCostNote: true,
+      showNewCap:false,
     };
   },
   computed: {
@@ -59,6 +61,7 @@ export default {
       this.nextDimCapIncrease = Tesseracts.nextTesseractIncrease;
       this.tesseractCost.copyFrom(Tesseracts.nextCost);
       this.totalDimCap = InfinityDimensions.totalDimCap;
+      this.nextDimCap = InfinityDimensions.totalDimCap+Tesseracts.nextTesseractIncrease;
       this.canBuyTesseract = Tesseracts.canBuyTesseract;
       this.enslavedCompleted = Enslaved.isCompleted;
       this.boughtTesseracts = Tesseracts.bought;
@@ -73,7 +76,10 @@ export default {
     },
     buyTesseract() {
       Tesseracts.buyTesseract();
-    }
+    },
+    showNextCap(x) {
+      return this.showNewCap = x
+    },
   }
 };
 </script>
@@ -127,11 +133,13 @@ export default {
           'o-pelle-disabled-pointer': creditsClosed
         }"
         @click="buyTesseract"
+        @mouseenter="showNextCap(true)"
+        @mouseleave="showNextCap(false)"
       >
         <p>
           Buy a Tesseract ({{ tesseractCountString }})
         </p>
-        <p>Increase dimension caps by {{ format(nextDimCapIncrease, 2) }}</p>
+        <p>Increase dimension caps by {{ formatInt(nextDimCapIncrease, 2) }}</p>
         <p><b>Costs: {{ format(tesseractCost) }} IP</b></p>
       </button>
     </div>
@@ -139,7 +147,12 @@ export default {
       All Infinity Dimensions are limited to a single purchase.
     </div>
     <div v-else>
-      All Infinity Dimensions except for the 8th are limited to a maximum of {{ format(totalDimCap, 2) }}
+      All Infinity Dimensions except for the 8th are limited to a maximum of <b style="color:var(--color-infinity)">
+        {{ formatInt(totalDimCap) }}<i
+        class="c-infinity-dim-tesseract__accent"
+        :class="{'c-infinity-dim-tesseract__glow':showNewCap}"
+        > ➜ {{ formatInt(nextDimCap) }}</i>
+      </b>
       purchases each.
     </div>
     <div>You are getting {{ format(powerPerSecond, 2, 0) }} {{ incomeType }} per second.</div>
@@ -161,3 +174,15 @@ export default {
     </div>
   </div>
 </template>
+<style scoped>
+.c-infinity-dim-tesseract__accent{
+  color:var(--color-text);
+  font-weight:normal;
+  font-size:0rem;
+  transition: 0.15s;
+  text-shadow: 0.1rem 0.1rem 0.3rem #2ebce6,0.1rem 0.1rem 0.1rem #2ebce6;
+}
+.c-infinity-dim-tesseract__glow{
+  font-size:unset
+}
+</style>

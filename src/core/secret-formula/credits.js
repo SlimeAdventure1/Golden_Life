@@ -11,7 +11,7 @@ export const credits = {
     8: "Lead Design Consultant",
     9: "Design Consultant",
     10: "Writer",
-    11: "Achievement Art",
+    11: "Artist",
     12: "Modal Maker, Lady Taker, Pie Baker",
     13: "Lurker Tester",
     14: "Web Tester",
@@ -24,7 +24,12 @@ export const credits = {
     {
       name: "Hevipelle",
       name2: "Ivar Kerajärvi",
+      name3: "Vanilla",
       roles: 1
+    }, {
+      name: "MrKrutaman",
+      name3: "Legendary",
+      roles: [1,11]
     }, {
       name: "Razenpok",
       name2: "Andrei Andreev",

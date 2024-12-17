@@ -107,6 +107,7 @@ export default {
     },
     openRequest(newOpen) {
       this.processRequest(this.state, newOpen);
+      AudioManagement.playSound(this.openRequest?"click_open":"click_close")
     },
   },
   created() {
@@ -205,10 +206,10 @@ export default {
         ref="expandButton"
         @click="handleClick"
       >
-        <slot name="header" />
+        <slot name="header"/>
       </div>
       <div ref="dropdown">
-        <slot name="dropdown" />
+        <slot name="dropdown"/>
       </div>
     </div>
   </div>
@@ -249,6 +250,9 @@ export default {
   align-items: center;
   border: none !important;
   cursor: pointer;
+  font-family: cambria;
+    font-weight: bold;
+    font-size: 1.5rem;
 }
 
 .c-indicator-arrow--flipped {

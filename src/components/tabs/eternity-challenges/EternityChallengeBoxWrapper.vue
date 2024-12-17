@@ -11,6 +11,10 @@ export default {
       type: String,
       required: true
     },
+    label: {
+      type: String,
+      required: true,
+    },
     isUnlocked: {
       type: Boolean,
       required: true
@@ -66,9 +70,9 @@ export default {
     completionOverlay() {
       return {
         position: "absolute",
-        width: `${15 * Math.clampMax(this.completionCount / 5, 1)}rem`,
+        width: `${25 * Math.clampMax(this.completionCount / 5, 1)}rem`,
         height: "3rem",
-        background: "var(--color-good)",
+        background: "linear-gradient(#00ee0040,#00ee00)",
         opacity: this.completionCount >= 5 ? 0 : 0.3,
         "border-top-left-radius": "var(--var-border-radius, 1rem)",
         "border-bottom-left-radius": "var(--var-border-radius, 1rem)",
@@ -96,7 +100,7 @@ export default {
       type="challenges"
       class="l-hint-text--challenge"
     >
-      {{ name }}
+      {{ name }} : {{ label }}
     </HintText>
     <slot name="top" />
     <div class="l-challenge-box__fill" />

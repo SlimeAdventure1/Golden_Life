@@ -12,18 +12,23 @@ export default {
     },
     sortByLevel() {
       Glyphs.sortByLevel();
+      AudioManagement.playSound(`glyph_sort`);
     },
     sortByPower() {
       Glyphs.sortByPower();
+      AudioManagement.playSound(`glyph_sort`);
     },
     sortByScore() {
       Glyphs.sortByScore();
+      AudioManagement.playSound(`glyph_sort`);
     },
     sortByEffect() {
       Glyphs.sortByEffect();
+      AudioManagement.playSound(`glyph_sort`);
     },
     collapseEmpty() {
       Glyphs.collapseEmptySlots();
+      AudioManagement.playSound(`glyph_sort`);
     }
   }
 };

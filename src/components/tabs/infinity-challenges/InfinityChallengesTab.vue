@@ -50,6 +50,7 @@ export default {
       reaching an Infinity Challenge's antimatter goal, regardless of settings.
     </div>
     <div>{{ nextAtDisplay }}</div>
+    <br>
     <ChallengeGrid
       v-slot="{ challenge }"
       :challenges="challenges"

@@ -32,13 +32,13 @@ const rarityBorderStyles = {
   legendary: [
     {
       lineType: "bump",
-      colorSplit: [15, 25],
+      colorSplit: [18, 25],
     }
   ],
   mythical: [
     {
       lineType: "bump",
-      colorSplit: [15, 25],
+      colorSplit: [18, 25],
     },
     {
       lineType: "linear",
@@ -49,7 +49,7 @@ const rarityBorderStyles = {
   transcendent: [
     {
       lineType: "bump",
-      colorSplit: [15, 35],
+      colorSplit: [18, 35],
     },
     {
       lineType: "linear",
@@ -60,11 +60,11 @@ const rarityBorderStyles = {
   celestial: [
     {
       lineType: "bump",
-      colorSplit: [15, 35],
+      colorSplit: [18, 35],
     },
     {
       lineType: "radial",
-      colorSplit: [65, 85],
+      colorSplit: [65, 75],
     },
   ],
   cursed: [
@@ -93,7 +93,7 @@ const rarityBorderStyles = {
     {
       lineType: "companion",
     },
-  ]
+  ],
 };
 
 // This function does all the parsing of the above gradient specifications
@@ -121,7 +121,7 @@ function generateGradient(data, color, glyph, isCircular) {
       // These bumps overlap some dots on effarig glyphs, so we conditionally make them more transparent (effectively
       // shrinking them so they don't overlap)
       specialData = glyph.type === "effarig"
-        ? `${color}60`
+        ? `${color}80`
         : color;
       centers = ["50% -25%", "50% 125%", "-25% 50%", "125% 50%"];
       scaleFn = perc => (isCircular ? perc : 0.9 * perc);
@@ -256,6 +256,25 @@ export default {
       type: Boolean,
       required: false,
       default: false,
+    },
+    disableTooltip: {
+      type: Boolean,
+      required: false
+    },
+    hasCrate: {
+      type: Number,
+      required: false,
+      default: 0
+    },
+    needsZindex: {
+      type: Boolean,
+      required: false,
+      default: true
+    },
+    group: {
+      type: String,
+      required: false,
+      default:""
     }
   },
   data() {
@@ -274,11 +293,13 @@ export default {
       tooltipLoaded: false,
       logTotalSacrifice: 0,
       realityColor: "",
+      realitydirection:0,
+      animationenabled:false
     };
   },
   computed: {
     hasTooltip() {
-      return Boolean(this.glyph.effects);
+      return Boolean(this.glyph.effects) && !this.disableTooltip;
     },
     typeConfig() {
       return GlyphTypes[this.glyph.type];
@@ -329,7 +350,7 @@ export default {
 
       return {
         border: overrideColor?.border ?? GlyphAppearanceHandler.getBorderColor(this.glyph.type),
-        symbol: overrideColor?.border ?? symbolColor,
+        symbol: !player.celestials.pelle.doomed ? overrideColor?.border ?? symbolColor : overrideColor?.border ?? "crimson",
         bg: overrideColor?.bg ?? this.cosmeticConfig.currentColor.bg
       };
     },
@@ -344,36 +365,55 @@ export default {
     },
     overStyle() {
       return {
-        width: this.size,
-        height: this.size,
+        width: `calc(${this.size} - ${this.isRealityGlyph&&this.animationenabled?0.4:0.2}rem)`,
+        height: `calc(${this.size} - ${this.isRealityGlyph&&this.animationenabled?0.4:0.2}rem)`,
         position: "absolute",
         "background-color": "rgba(0, 0, 0, 0)",
-        "box-shadow": `0 0 ${this.glowBlur} calc(${this.glowSpread} + 0.1rem) ${this.borderColor} inset`,
-        "border-radius": this.circular ? "50%" : "0",
+        "box-shadow": `0 0 ${this.isRealityGlyph&&this.animationenabled?"0.5rem":"1rem"} 
+        ${this.bgColor === "black"?"black":"#00000080"} inset ,0 0 0 0.2rem ${this.borderColor} inset`,
+        "border-radius": this.circular ? "50%" : "15%",
       };
     },
     outerStyle() {
       return {
         width: this.size,
         height: this.size,
-        "background-color": this.borderColor,
+        "--crate-size":this.hasCrate>0?`calc(${this.size} * ${this.hasCrate===2?1.2:1.4})`:undefined,
+        //"--crate-position":this.hasCrate>0?`calc(-${this.size} * ${this.hasCrate===2?1.1:1.2} + ${this.size})`:undefined,
+        "background": this.isRealityGlyph&&this.animationenabled?
+        `linear-gradient(${this.realitydirection}deg,${this.borderColor} -50%,white,${this.borderColor} 150%)`:this.borderColor,
         "box-shadow": `0 0 ${this.glowBlur} ${this.glowSpread} ${this.borderColor}`,
-        "border-radius": this.circular ? "50%" : "0",
-        "-webkit-user-drag": this.draggable ? "" : "none"
+        "border-radius": this.circular ? "50%" : "15%",
+        "-webkit-user-drag": this.draggable ? "" : "none",
+        "z-index":this.hasCrate>=1&&this.needsZindex?1:undefined
       };
     },
     innerStyle() {
       const color = this.symbolColor;
+      //const bgimg = getRarity(this.glyph.strength).name !== "Celestial" ? "url(../images/glyphs-alchemy/glyph-pattern.png)" : "url(../images/glyphs-alchemy/glyph-pattern-celestial.png)"
       return {
-        width: `calc(${this.size} - 0.2rem)`,
-        height: `calc(${this.size} - 0.2rem)`,
+        width: `calc(${this.size} - ${this.isRealityGlyph&&this.animationenabled?0.4:0.2}rem)`,
+        height: `calc(${this.size} - ${this.isRealityGlyph&&this.animationenabled?0.4:0.2}rem)`,
         "font-size": `calc( ${this.size} * ${this.textProportion} )`,
-        color,
-        "text-shadow": this.symbolBlur ? `-0.04em 0.04em 0.08em ${color}` : undefined,
-        "border-radius": this.circular ? "50%" : "0",
+        color:this.isRealityGlyph&&this.animationenabled?(this.bgColor==="white"?"black":"white"):color,
+        "text-shadow": this.symbolBlur ? (this.isRealityGlyph&&this.animationenabled?`0 0 0.3rem 
+        ${(this.bgColor==="white"?"black":"white")},0 0 0.3em ${color},0 0 0.3em ${color},0 0 0.3em ${color}`:
+        `0.1rem 0.2rem 0.3rem ${this.isCursedGlyph?"black":this.bgColor}, -0.04em 0.04em 0.08em ${color}`) : undefined,
+        "border-radius": this.circular ? "50%" : "15%",
         "padding-bottom": this.bottomPadding,
-        background: this.bgColor
+        "background-image": `url(../images/glyphs-alchemy/glyph-${this.bgColor === `black`?`pattern`:`pattern-light`}.png),
+        linear-gradient(${this.bgColor} -20%,${this.borderColor} 200%)`,
+        //"background-image": `${bgimg},linear-gradient(${this.bgColor} -20%,${this.borderColor} 250%)`,
+        //"animation": getRarity(this.glyph.strength).name === "Celestial" ? "10s infinite linear a-celglyph": undefined,
+        "background-position":"center"
       };
+    },
+    crateStyle(){
+      if (this.hasCrate<0) return;
+      return {
+        "c-glyph-component-hascrate-cursed":this.isCursedGlyph,
+        "c-glyph-component-hascrate-reality":this.isRealityGlyph
+      }
     },
     mouseEventHandlers() {
       const handlers = this.hasTooltip ? {
@@ -415,6 +455,7 @@ export default {
       switch (this.glyph.type) {
         case "time":
         case "cursed":
+        case "helios":
         case "companion":
           minEffectID = 0;
           break;
@@ -443,6 +484,7 @@ export default {
         if ((remainingEffects & 1) === 1) effectIDs.push(id);
         remainingEffects >>= 1;
       }
+      if (this.glyph.effects >> 27 === 1)effectIDs.pop(28)
       return effectIDs;
     },
     isRealityGlyph() {
@@ -454,11 +496,14 @@ export default {
     isCompanionGlyph() {
       return this.glyph.type === "companion";
     },
+    isHeliosGlyph() {
+      return this.glyph.type === "helios";
+    },
     showGlyphEffectDots() {
       return player.options.showHintText.glyphEffectDots;
     },
     displayedInfo() {
-      const blacklist = ["companion", "cursed"];
+      const blacklist = ["companion", "cursed","helios"];
       if (!this.isInventoryGlyph || blacklist.includes(this.glyph.type)) return null;
 
       const options = player.options.showHintText;
@@ -535,6 +580,8 @@ export default {
       this.refineReward = ALCHEMY_BASIC_GLYPH_TYPES.includes(this.glyph.type)
         ? GlyphSacrificeHandler.glyphRefinementGain(this.glyph)
         : 0;
+      this.animationenabled = player.options.realityglyphAnimation
+      this.realitydirection = this.animationenabled ? (Date.now()/(10000/180))%360 : 180
       if (this.tooltipLoaded) this.updateDisplayLevel();
     },
     updateDisplayLevel() {
@@ -691,16 +738,19 @@ export default {
     // Translates 0...3 into equally-spaced coordinates around a circle 90deg apart (0...6 and 45deg for effarig)
     effectIconPos(id) {
       // Place dots clockwise starting from the bottom left
+      const realdots = this.glyphEffects.length
       const angle = this.glyph.type === "effarig"
         ? (Math.PI / 4) * (id + 1)
-        : (Math.PI / 2) * (id + 0.5);
+        : this.glyph.type === "reality" 
+        ? (Math.PI / (0.5*realdots)) * (id + (this.isRealityGlyph&&this.animationenabled?this.realitydirection/(360/realdots):0.5))
+        : (Math.PI / 2) * (id + 0.5)
       const scale = 0.28 * this.size.replace("rem", "");
       const dx = -scale * Math.sin(angle);
       const dy = scale * (Math.cos(angle) + 0.15);
       return { dx, dy };
     },
     glyphEffectDots(id) {
-      if (["companion", "cursed"].includes(this.glyph.type)) return {};
+      if (["companion", "cursed","helios"].includes(this.glyph.type)) return {};
       const pos = this.effectIconPos(id);
 
       return {
@@ -708,15 +758,16 @@ export default {
         width: "0.3rem",
         height: "0.3rem",
         "border-radius": "50%",
-        background: this.symbolColor,
+        background: this.isRealityGlyph&&this.animationenabled?(this.bgColor==="white"?"black":"white"):this.symbolColor,
         transform: `translate(${pos.dx - 0.15 * 0.3}rem, ${pos.dy - 0.15 * 0.3}rem)`,
-        opacity: Theme.current().name === "S9" ? 0 : 0.8
+        opacity: Theme.current().name === "S9" ? 0 : 0.8,
+        //"box-shadow": this.isRealityGlyph&&this.animationenabled?`0 0 0.2rem 0.1rem ${this.bgColor}, 0 0 0.25rem 0.15rem ${this.symbolColor}`:`0 0 0.2rem 0.1rem ${this.bgColor}`
       };
     },
     glyphBorderStyle() {
       if (!this.showBorders) return null;
       let borderAttrs;
-      if (this.isCursedGlyph) borderAttrs = rarityBorderStyles.cursed;
+      if (this.isCursedGlyph||this.isHeliosGlyph) borderAttrs = rarityBorderStyles.cursed;
       else if (this.isCompanionGlyph) borderAttrs = rarityBorderStyles.companion;
       else borderAttrs = rarityBorderStyles[getRarity(this.glyph.strength).name.toLowerCase()];
       const lines = borderAttrs.map(attr => generateGradient(attr, this.borderColor, this.glyph, this.circular));
@@ -726,11 +777,12 @@ export default {
         left: "2%",
         width: "96%",
         height: "96%",
-        "border-radius": this.circular ? "50%" : "0",
+        "border-radius": this.circular ? "50%" : "15%",
         // Some cases will have undefined lines which need to be removed to combine everything together properly
-        background: lines.filter(l => l).join(",")
+        background: lines.filter(l => l).join(","),
+        "transform":(this.isRealityGlyph&&this.circular&&this.animationenabled)?`rotate(-${this.realitydirection}deg)`:undefined
       };
-    }
+    },
   }
 };
 </script>
@@ -742,7 +794,7 @@ export default {
   -->
   <div
     :style="outerStyle"
-    :class="['l-glyph-component', {'c-glyph-component--dragging': isDragging}]"
+    :class="['l-glyph-component', {'c-glyph-component--dragging': isDragging}, {'c-glyph-component-hascrate': hasCrate>=1}, crateStyle]"
     :draggable="draggable"
     v-on="draggable ? { dragstart: dragStart, dragend: dragEnd, drag: drag } : {}"
   >
@@ -777,6 +829,7 @@ export default {
       :display-level="displayLevel"
       :component="componentID"
       :change-watcher="logTotalSacrifice"
+      :glyph="glyph"
     />
     <div
       v-if="isNew"
@@ -816,16 +869,30 @@ export default {
 }
 
 .l-new-glyph {
-  top: -0.7rem;
-  left: -0.7rem;
-  font-size: 1rem;
-  background-color: yellow;
+  position: absolute;
+  top: -0.5rem;
+  z-index: 5;
+  color: white;
+  line-height: 1.1;
+  text-shadow: 1px 1px black,-1px 1px black,1px -1px black,-1px -1px black;
+  background: linear-gradient(#aa9675,yellow);
+  border: solid #caba9b 1px;
+  border-top: none;
+  border-radius: 0px 0px 5px 5px;
+  padding: 0 0.5rem;
 }
 
 .l-unequipped-glyph {
+  position: absolute;
   top: -0.5rem;
-  left: -0.5rem;
-  font-size: 1.2rem;
-  background-color: orange;
+  z-index: 5;
+  color: white;
+  line-height: 1.1;
+  text-shadow: 1px 1px black,-1px 1px black,1px -1px black,-1px -1px black;
+  background: linear-gradient(#aa8175,orange);
+  border: solid #d36d29 1px;
+  border-top: none;
+  border-radius: 0px 0px 5px 5px;
+  padding: 0 0.5rem;
 }
 </style>

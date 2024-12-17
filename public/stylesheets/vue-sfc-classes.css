@@ -47,6 +47,7 @@
   font-weight: bold;
   -webkit-user-select: none;
   user-select: none;
+  text-shadow: var(--text-shadow);
 }
 
 .c-news-line a {
@@ -56,6 +57,7 @@
 .new-ui .c-news-ticker {
   width: 100%;
   height: 3.9rem;
+  background: linear-gradient(transparent,var(--color-accent) 400%);
   border-bottom: 0.1rem solid var(--color-accent);
   padding: 0.8rem 0;
 }

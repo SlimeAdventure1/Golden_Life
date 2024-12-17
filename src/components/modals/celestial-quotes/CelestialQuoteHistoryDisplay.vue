@@ -131,7 +131,10 @@ export default {
     },
     close() {
       Quote.clearHistory();
-    }
+    },
+    quoteRange(x1,x2,range) {
+      return x1===Math.clamp(x1,x2-range,x2+range) ? true : false
+    },
   }
 };
 
@@ -153,11 +156,13 @@ function easeOut(x) {
     <div
       v-for="(quote, quoteId) in unlockedQuotes"
       :key="quoteId"
+      :class="{'c-quote-hidden':!quoteRange(quoteId,focusedQuoteId,4)}"
       @click="focusedQuoteId = quoteId"
     >
       <div
         v-for="(_, lineId) in quote.quote.config.lines"
         :key="lineId"
+        :class="{'c-quote-hidden':!quoteRange(lineId,quote.currentLine,3)}"
         @click="quote.currentLine = lineId"
       >
         <CelestialQuoteLine
@@ -165,6 +170,7 @@ function easeOut(x) {
           :class="{ 'c-quote-overlay--background': !isFocused(quoteId, lineId) }"
           :quote="quote.quote"
           :current-line="lineId"
+          :has-type-effect="false"
           primary
           :style="quoteStyle(quoteId, lineId)"
         />
@@ -172,10 +178,12 @@ function easeOut(x) {
     </div>
     <div class="c-quote-history-modal__controls">
       <i
+        v-if="unlockedQuotes.length>1"
         :class="upClass"
         @click="progressUp"
       />
       <i
+        v-if="unlockedQuotes.length>1"
         :class="downClass"
         @click="progressDown"
       />
@@ -214,49 +222,56 @@ function easeOut(x) {
   z-index: 1;
   font-size: 2.5rem;
   cursor: pointer;
+  transition:0.15s
 }
-
+.c-modal-celestial-quote-history__arrow:hover,
+.c-modal-celestial-quote-history__close:hover {
+  font-size: 3rem;
+}
 .o-light-button {
   color: white;
+  text-shadow:0.1rem 0.1rem 0.1rem black,-0.1rem 0.1rem 0.1rem black,0.1rem -0.1rem 0.1rem black,-0.1rem -0.1rem 0.1rem black
 }
 
 .o-dark-button {
   color: black;
+  text-shadow:0.1rem 0.1rem 0.1rem white,-0.1rem 0.1rem 0.1rem white,0.1rem -0.1rem 0.1rem white,-0.1rem -0.1rem 0.1rem white
 }
 
 .c-modal-celestial-quote-history__arrow--disabled {
   opacity: 0.4;
   cursor: default;
+  pointer-events: none;
 }
 
 .c-modal-celestial-quote-history__arrow-down {
-  top: calc(50% + 16rem);
+  top: calc(50% + 25rem);
   left: 50%;
   transform: translateX(-50%);
 }
 
 .c-modal-celestial-quote-history__arrow-up {
-  bottom: calc(50% + 16rem);
+  bottom: calc(50% + 25rem);
   left: 50%;
   transform: translateX(-50%);
 }
 
 .c-modal-celestial-quote-history__arrow-left {
   top: 50%;
-  right: calc(50% + 16rem);
+  right: calc(50% + 33rem);
   transform: translateY(-50%);
 }
 
 .c-modal-celestial-quote-history__arrow-right {
   top: 50%;
-  left: calc(50% + 16rem);
+  left: calc(50% + 33rem);
   transform: translateY(-50%);
 }
 
 .c-modal-celestial-quote-history__close {
   position: absolute;
-  bottom: calc(50% + 16rem);
-  left: calc(50% + 16rem);
+  bottom: calc(50% + 25rem);
+  left: calc(50% + 33rem);
   z-index: 1;
   animation: a-fade-in 0.5s;
 }
@@ -277,5 +292,8 @@ function easeOut(x) {
 @keyframes a-fade-in {
   0% { opacity: 0; }
   100% { opacity: 1; }
+}
+.c-quote-hidden {
+  display:none
 }
 </style>

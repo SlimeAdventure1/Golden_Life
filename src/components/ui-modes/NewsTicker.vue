@@ -1,12 +1,14 @@
 <script>
 import { openExternalLink } from "@/utility/open-external-link";
 import { STEAM } from "@/env";
+import { Pelle } from "../../core/globals";
 
 export default {
   name: "NewsTicker",
   data() {
     return {
       enableAnimation: false,
+      fade:1,
     };
   },
   computed: {
@@ -30,6 +32,7 @@ export default {
         this.$refs.line.innerHTML = this.currentNews.text;
       }
       this.enableAnimation = player.options.news.includeAnimated;
+      this.fade = GameEnd.endState>1&&GameEnd.endState<END_STATE_MARKERS.CREDITS_START? Math.clamp(1-(GameEnd.endState-3),0,1):1
     },
     restart() {
       if (!GameUI.initialized) {
@@ -76,6 +79,7 @@ export default {
       }
 
       let text = this.currentNews.text;
+      if (Pelle.isDoomed) text = Pelle.transitionText(text,"THE END IS THE END IS THE END IS THE END IS THE END IS THE END IS THE END IS THE END IS THE END IS THE END IS THE END IS THE END IS THE END IS THE END IS THE END IS THE END IS THE END IS THE END IS THE END IS THE END IS THE END IS THE END IS THE END",Math.max(Math.min(GameEnd.endState**0.15,1),0))
       if (STEAM) {
         window.openNewsLink = openExternalLink;
         text = text.replace(
@@ -92,7 +96,7 @@ export default {
         line.style.transform = "translateX(0)";
       }
 
-      const DELAY = 1000;
+      const DELAY = !Pelle.hasGalaxyGenerator?1000:0;
       this.delayTimeout = setTimeout(this.scrollMessage.bind(this), DELAY);
     },
     scrollMessage() {
@@ -132,6 +136,7 @@ export default {
   <div
     ref="ticker"
     class="c-news-ticker"
+    :style="{'opacity':fade}"
   >
     <span
       ref="line"

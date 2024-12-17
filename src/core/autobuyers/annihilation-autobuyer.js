@@ -9,6 +9,10 @@ export class AnnihilationAutobuyerState extends AutobuyerState {
     return `Annihilation`;
   }
 
+  get color() {
+    return `var(--color-laitela--accent)`;
+  }
+
   get isUnlocked() {
     return SingularityMilestone.annihilationAutobuyer.canBeApplied;
   }

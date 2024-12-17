@@ -64,6 +64,9 @@ export default {
     },
     name() {
       return `EC${this.challenge.id}`;
+    },
+    label() {
+      return `${this.config.label}`;
     }
   },
   methods: {
@@ -95,6 +98,7 @@ export default {
 <template>
   <EternityChallengeBoxWrapper
     :name="name"
+    :label="label"
     :is-unlocked="isUnlocked"
     :is-running="isRunning"
     :is-completed="isCompleted"
@@ -106,7 +110,7 @@ export default {
       <DescriptionDisplay :config="config" />
     </template>
     <template #bottom>
-      <div :style="{ visiblity: completions < 5 ? 'visible' : 'hidden' }">
+      <div :style="{ visiblity: completions < 5 ? 'visible' : 'hidden'}">
         <div>
           Completed {{ quantifyInt("time", completions) }}
         </div>

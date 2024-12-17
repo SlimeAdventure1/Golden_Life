@@ -15,6 +15,7 @@ export default {
       purchasableTS: 0,
       hasDilated: 0,
       availableCharges: 0,
+      doomed:false,
     };
   },
   computed: {
@@ -91,6 +92,7 @@ export default {
       this.hasDilated = Perk.startTP.canBeApplied ? player.dilation.lastEP.gt(0)
         : player.dilation.tachyonParticles.gt(0);
       this.availableCharges = Ra.chargesLeft;
+      this.doomed = Pelle.isDoomed
     },
     clicked() {
       if (!this.canBeExpanded) return;
@@ -107,7 +109,10 @@ export default {
     :style="styleObject"
     @click="clicked"
   >
-    <span v-if="!canReality">
+    <span v-if="doomed">
+      You cannot escape a Doomed Reality.
+    </span>
+    <span v-else-if="!canReality&&!doomed">
       You still need to unlock Reality in the Time Study Tree.
     </span>
     <span v-else-if="suggestions.length === 0">

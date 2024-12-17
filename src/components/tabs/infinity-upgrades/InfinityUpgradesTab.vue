@@ -28,21 +28,21 @@ export default {
     grid() {
       return [
         [
-          InfinityUpgrade.totalTimeMult,
           InfinityUpgrade.dim18mult,
+          InfinityUpgrade.dim27mult,
           InfinityUpgrade.dim36mult,
-          InfinityUpgrade.resetBoost
+          InfinityUpgrade.dim45mult
         ],
         [
           InfinityUpgrade.buy10Mult,
-          InfinityUpgrade.dim27mult,
-          InfinityUpgrade.dim45mult,
-          InfinityUpgrade.galaxyBoost
+          InfinityUpgrade.resetBoost,
+          InfinityUpgrade.galaxyBoost,
+          InfinityUpgrade.dimboostMult
         ],
         [
+          InfinityUpgrade.totalTimeMult,
           InfinityUpgrade.thisInfinityTimeMult,
           InfinityUpgrade.unspentIPMult,
-          InfinityUpgrade.dimboostMult,
           InfinityUpgrade.ipGen
         ],
         [
@@ -92,15 +92,21 @@ export default {
       const classObject = {
         "l-infinity-upgrade-grid__cell": true
       };
-      if (column > 0) {
+      if (column > -1) {
         // Indexing starts from 0, while css classes start from 2 (and first column has default css class)
         classObject[`o-infinity-upgrade-btn--color-${column + 1}`] = true;
       }
+      else {
+        classObject[`o-infinity-upgrade-btn--multiplier`] = true;
+      }
       return classObject;
+    },
+    ColumnObject(column) {
+      return `c-infinity-upgrade-grid__column--background c-infinity-upgrade-grid__column--background--color-${column + 1}`;
     },
     getColumnColor(location) {
       if (location.isCharged) return "var(--color-teresa--base)";
-      if (location.isBought) return "var(--color-infinity)";
+      if (location.isBought) return "var(--column-color)";
       return "transparent";
     },
     setStyleOfColumnBg() {
@@ -155,7 +161,7 @@ export default {
           :class="btnClassObject(columnId)"
         />
         <div
-          class="c-infinity-upgrade-grid__column--background"
+          :class="ColumnObject(columnId)"
           :style="styleOfColumnBg[columnId]"
         />
       </div>
@@ -167,7 +173,7 @@ export default {
       <IpMultiplierButton class="l-infinity-upgrades-tab__mult-btn" />
       <InfinityUpgradeButton
         :upgrade="offlineIpUpgrade"
-        :class="btnClassObject(1)"
+        :class="btnClassObject(-1)"
       />
     </div>
     <div v-if="eternityUnlocked && bottomRowUnlocked">
@@ -195,10 +201,12 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: -1;
+  box-shadow: 0 0 1rem black inset;
   opacity: 0.7;
 }
-
+.t-s14 .c-infinity-upgrade-grid__column--background {
+  --color-teresa--base: rgb(182, 182, 182);
+}
 .s-base--dark .c-infinity-upgrade-grid__column--background {
   opacity: 0.5;
 }

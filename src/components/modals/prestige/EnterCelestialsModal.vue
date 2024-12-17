@@ -1,6 +1,7 @@
 <script>
 import EnterCelestialsRaPet from "@/components/modals/prestige/EnterCelestialsRaPet";
 import ModalWrapperChoice from "@/components/modals/ModalWrapperChoice";
+import { Ra } from "../../../core/globals";
 
 export default {
   name: "EnterCelestialsModal",
@@ -16,6 +17,10 @@ export default {
     name: {
       type: String,
       required: true
+    },
+    celestial: {
+      type: Object,
+      required: true
     }
   },
   data() {
@@ -27,6 +32,8 @@ export default {
       effarigLayer: "",
       enslavedDone: false,
       laitelaTime: "",
+      laitelaTier: 0,
+      labelmode:false,
     };
   },
   computed: {
@@ -38,10 +45,10 @@ export default {
       return description ? description() : "";
     },
     topLabel() {
-      return `${this.name} Reality`;
+      return `${this.labelmode ? this.name+" Reality" : this.name+" "+this.celestial.RealityName}`;
     },
     message() {
-      return `Perform a Reality reset and enter ${this.name} Reality, in which:`;
+      return `Perform a Reality reset and enter ${this.labelmode ? this.name+" Reality" : this.name+" "+this.celestial.RealityName}, in which:`;
     },
     extraLine() {
       switch (this.number) {
@@ -58,9 +65,9 @@ export default {
           ? "Have... we... not helped enough..."
           : "We... can help... Let us... help...";
         case 3: return "";
-        case 4: return `Within Ra's Reality, some resources will generate Memory Chunks
+        case 4: return `Within ${this.labelmode?"Ra's Reality":"the "+Ra.RealityName}, some resources will generate Memory Chunks
           for Celestial Memories based on their amounts:`;
-        case 5: return this.laitelaFastest >= 300
+        case 5: return this.laitelaTier >= 8?"Lai'tela is fully destabilized." : this.laitelaFastest >= 300
           ? "You have not completed Lai'tela at this tier."
           : `Your fastest completion on this tier is ${this.laitelaTime}.`;
         case 6: return "";
@@ -78,9 +85,12 @@ export default {
       this.enslavedDone = Enslaved.isCompleted;
       this.laitelaFastest = player.celestials.laitela.fastestCompletion;
       this.laitelaTime = TimeSpan.fromSeconds(this.laitelaFastest).toStringShort();
+      this.laitelaTier = Laitela.difficultyTier
+      this.labelmode =  !player.options.naming.celestial
     },
     handleYesClick() {
       beginProcessReality(getRealityProps(true));
+      AudioManagement.playSound("reset_reality-enter")
       switch (this.number) {
         case 0: return Teresa.initializeRun();
         case 1: return Effarig.initializeRun();

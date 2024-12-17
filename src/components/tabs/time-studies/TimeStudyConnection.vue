@@ -95,6 +95,14 @@ export class TimeStudyConnectionSetup {
 </script>
 
 <template>
+ <svg><line
+    v-if="!isOverridden && isBought"
+    :x1="percents(setup.x1)"
+    :y1="percents(setup.y1)"
+    :x2="percents(setup.x2)"
+    :y2="percents(setup.y2)"
+    :class="classObject"
+  />
   <line
     v-if="!isOverridden"
     :x1="percents(setup.x1)"
@@ -102,7 +110,8 @@ export class TimeStudyConnectionSetup {
     :x2="percents(setup.x2)"
     :y2="percents(setup.y2)"
     :class="classObject"
-  />
+    class="o-time-study-connection-base"
+  /></svg>
 </template>
 
 <style scoped>

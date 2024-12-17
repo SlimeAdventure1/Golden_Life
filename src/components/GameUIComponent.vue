@@ -21,6 +21,14 @@ export default {
     S12UiFixed,
     S12DesktopIcons,
   },
+  data(){
+    return {
+      transform:5,
+      width:0,
+      fade:1,
+      sidebarSideSwitch:false
+    }
+  },
   computed: {
     view() {
       return this.$viewModel;
@@ -41,6 +49,13 @@ export default {
     },
     themeCss() {
       return `stylesheets/theme-${this.view.theme}.css`;
+    },
+  },
+  methods:{
+    update(){
+      this.sidebarSideSwitch = Theme.currentName() !== "S12"&&player.options.sidebarSideSwitch && ui.newUI
+      this.width=Theme.currentName() === "S12"?0:player.options.sidebarWidth*Math.clamp(GameEnd.endState>1&&GameEnd.endState<END_STATE_MARKERS.CREDITS_START?(1-(GameEnd.endState-2)):1,0,1)+"rem"
+      this.fade = GameEnd.endState>1&&GameEnd.endState<END_STATE_MARKERS.CREDITS_START? Math.clamp(1-(GameEnd.endState-3),0,1):1
     }
   }
 };
@@ -51,6 +66,7 @@ export default {
     v-if="view.initialized"
     id="ui-container"
     :class="containerClass"
+    :style="{'--sidebar-width':width,'width':sidebarSideSwitch?'calc(100% - var(--sidebar-width))':undefined}"
     class="ui-wrapper"
   >
     <div
@@ -61,6 +77,7 @@ export default {
         <component
           :is="page"
           class="c-game-tab"
+          :style="{'opacity':fade}"
         />
       </component>
       <S12DesktopIcons v-if="isThemeS12" />

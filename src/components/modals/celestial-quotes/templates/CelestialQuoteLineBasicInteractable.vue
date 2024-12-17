@@ -36,6 +36,16 @@ export default {
       required: false,
       default: true
     },
+    skipVisible: {
+      type: Boolean,
+      required: false,
+      default: true
+    },
+    hasTypeEffect: {
+      type: Boolean,
+      required: false,
+      default: true
+    },    
   },
   data() {
     return {
@@ -94,6 +104,8 @@ export default {
     :left-visible="!isQuoteStart && leftVisible"
     :right-visible="!isQuoteEnd && rightVisible"
     :close-visible="isQuoteEnd && closeVisible"
+    :skip-visible="totalLines>1 && skipVisible"
+    :has-type-effect="hasTypeEffect"
     primary
     @close="close"
     @progress-in="progressIn"

@@ -94,7 +94,7 @@ export const GlyphSelection = {
     }
     this.glyphs = [];
     this.realityProps = undefined;
-  },
+    },
 
   // Normally shows all of the possible choices, but we need to treat START-less saves differently due to the fact
   // that we actually generate all of them and pick randomly. In this case, we also do exactly that and then present
@@ -162,7 +162,6 @@ export function startManualReality(sacrifice, glyphID) {
 
 export function processManualReality(sacrifice, glyphID) {
   if (!isRealityAvailable()) return;
-
   if (player.realities === 0) {
     // If this is our first Reality, lock in the initial seed and then give the companion and starting glyphs
     player.reality.seed = player.reality.initialSeed;
@@ -200,9 +199,9 @@ export function processManualReality(sacrifice, glyphID) {
     }
   } else {
     // We can't get a random glyph directly here because that makes the RNG depend on when you get the first
-    // perk. We explicitly generate 4 glyphs every time here because otherwise this has some poor interactions
-    // when the uniformity code is still active (selected types become highly biased). Therefore, we generate
-    // the whole group and then choose a glyph randomly (but deterministically) instead
+    // perk. The internals of generate() still advance the seed properly as if we actually had a choice of
+    // more than one glyph, but always selecting the first glyph results in highly biased types when the
+    // uniformity code is still active. Therefore, we choose a glyph randomly (but deterministically) instead
     GlyphSelection.generate(4);
     GlyphSelection.select(GlyphSelection.indexWithoutSTART, sacrifice);
   }
@@ -214,6 +213,7 @@ export function processManualReality(sacrifice, glyphID) {
   // Should be here so that the perk graphics update even when we're on the perk subtab, while also keeping its
   // relatively expensive operations off of the reality reset hot path for when realities are significantly faster
   PerkNetwork.updatePerkColor();
+  AudioManagement.playSound("reset_reality-create")
 }
 
 export function runRealityAnimation() {
@@ -279,6 +279,7 @@ export function getRealityProps(isReset, alreadyGotGlyph = false) {
 export function autoReality() {
   if (GlyphSelection.active || !isRealityAvailable()) return;
   beginProcessReality(getRealityProps(false, false));
+  AudioManagement.playSound("reset_reality-auto")
 }
 
 function updateRealityRecords(realityProps) {
@@ -328,10 +329,11 @@ function giveRealityRewards(realityProps) {
     const current = Teresa.runRewardMultiplier;
     const newMultiplier = Teresa.rewardMultiplier(player.antimatter);
     const isHigher = newMultiplier > current;
-    const modalText = `You have completed Teresa's Reality! ${isHigher
+    const realname =  player.options.naming.celestial ? "the "+Teresa.RealityName : "Teresa's Reality"
+    const modalText = `You have completed ${realname}! ${isHigher
       ? `Since you gained more Antimatter, you increased your
       Glyph Sacrifice multiplier from ${format(current, 2, 2)} to ${format(newMultiplier, 2, 2)}`
-      : `You did not gain more Antimatter during this run, so the Glyph Sacrifice multiplier
+      : `However, you did not gain more Antimatter during this run, so the Glyph Sacrifice multiplier
       from Teresa did not increase`}.`;
     Modal.message.show(modalText, {}, 2);
     if (Currency.antimatter.gt(player.celestials.teresa.bestRunAM)) {
@@ -394,6 +396,7 @@ export function beginProcessReality(realityProps) {
       } else {
         GlyphSelection.select(Math.floor(Math.random() * GlyphSelection.choiceCount), false);
       }
+      if (Math.floor(Math.random() * 5e5)==1)Glyphs.addToInventory(GlyphGenerator.heliosGlyph());
     }
     Glyphs.processSortingAfterReality();
     return;
@@ -730,7 +733,6 @@ export function finishProcessReality(realityProps) {
   Lazy.invalidateAll();
   ECTimeStudyState.invalidateCachedRequirements();
   EventHub.dispatch(GAME_EVENT.REALITY_RESET_AFTER);
-
   if (TeresaUnlocks.startEU.canBeApplied) {
     for (const id of [1, 2, 3, 4, 5, 6]) player.eternityUpgrades.add(id);
   } else if (RealityUpgrade(14).isBought) {

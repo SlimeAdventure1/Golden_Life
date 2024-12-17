@@ -49,6 +49,7 @@ export function startDilatedEternity(auto) {
   }
   Achievement(136).unlock();
   eternity(false, auto, { switchingDilation: true });
+  AudioManagement.playSound(auto?"dilation_auto":"dilation_enter")
   player.dilation.active = true;
   if (Pelle.isDoomed) PelleStrikes.dilation.trigger();
   return true;
@@ -216,9 +217,12 @@ export function getDilationTimeEstimate(goal) {
 export function dilatedValueOf(value) {
   const log10 = value.log10();
   const dilationPenalty = 0.75 * Effects.product(DilationUpgrade.dilationPenalty);
-  return Decimal.pow10(Math.sign(log10) * Math.pow(Math.abs(log10), dilationPenalty));
+  return Decimal.pow10(Math.sign((log10)) * Math.pow(Math.abs(log10), dilationPenalty));
 }
-
+/*export function dilatedValueOf(value) {
+  const log10 = Decimal.add((value.add(1)).log10(),1);
+  return new Decimal(log10)
+}*/
 class DilationUpgradeState extends SetPurchasableMechanicState {
   get currency() {
     return Currency.dilatedTime;

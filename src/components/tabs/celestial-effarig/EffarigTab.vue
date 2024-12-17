@@ -24,7 +24,10 @@ export default {
       quote: "",
       isRunning: false,
       vIsFlipped: false,
-      relicShardRarityAlwaysMax: false
+      relicShardRarityAlwaysMax: false,
+      curseness:0,
+      labelmode:false,
+      newname:undefined,
     };
   },
   computed: {
@@ -82,10 +85,13 @@ export default {
       this.isRunning = Effarig.isRunning;
       this.vIsFlipped = V.isFlipped;
       this.relicShardRarityAlwaysMax = Ra.unlocks.extraGlyphChoicesAndRelicShardRarityAlwaysMax.canBeApplied;
+      this.curseness = Glyphs.allGlyphs.filter(g => g !== null && g.type === "cursed").length
+      this.labelmode = !player.options.naming.celestial,
+      this.newname = Effarig.RealityName
     },
     startRun() {
       if (this.isDoomed) return;
-      Modal.celestials.show({ name: "Effarig's", number: 1 });
+      Modal.celestials.show({ name: "Effarig's", number: 1, celestial: Effarig });
     },
     createCursedGlyph() {
       Glyphs.giveCursedGlyph();
@@ -98,15 +104,16 @@ export default {
   <div class="l-teresa-celestial-tab">
     <CelestialQuoteHistory celestial="effarig" />
     <div class="l-effarig-shop-and-run">
-      <div class="l-effarig-shop">
+      <div style="display:flex;flex-direction: column;">
+        <div class="l-effarig-relics">
         <div class="c-effarig-relics">
           You have {{ quantify("Relic Shard", relicShards, 2, 0) }}.
           <br>
           <span v-if="relicShardRarityAlwaysMax">
-            The rarity of new Glyphs is being increased by +{{ formatPercents(shardRarityBoost, 2) }}.
+            The quality of new Glyphs is being increased by +{{ formatPercents(shardRarityBoost, 2) }}.
           </span>
           <span v-else>
-            Each new Glyph will have its rarity increased
+            Each new Glyph will have its quality increased
             <br>
             by a random value between +{{ formatPercents(0) }} and +{{ formatPercents(shardRarityBoost, 2) }}.
           </span>
@@ -134,22 +141,30 @@ export default {
           <br>
           increases Relic Shards gained.
         </div>
+        <br>
+      </div>
+      <div class="l-effarig-shop">
+        <br v-if="!runUnlocked"><div class="c-effarig-tab__reward-label c-shop-title"> Ϙ  <span style="font-family:cambria;font-size:2rem;line-height:1.2;font-weight:bold">Effarig's Glyph shop</span>  Ϙ </div><br>
+        <div style="display: flex;flex-wrap: wrap;justify-content: center;">
         <EffarigUnlockButton
           v-for="(unlock, i) in shopUnlocks"
           :key="i"
           :unlock="unlock"
         />
         <EffarigUnlockButton
-          v-if="!runUnlocked"
           :unlock="runUnlock"
         />
         <button
           v-if="vIsFlipped"
           class="c-effarig-shop-button c-effarig-shop-button--available"
+          style="width: 47rem;margin: 0.5rem 1rem;"
           @click="createCursedGlyph"
         >
-          Get a Cursed Glyph...
+          Get a Cursed Glyph... <br>
+          ( {{ curseness }} / 5 )
         </button>
+        </div>
+      </div>
       </div>
       <div
         v-if="runUnlocked"
@@ -157,7 +172,7 @@ export default {
       >
         <div class="c-effarig-run-description">
           <span :class="{ 'o-pelle-disabled': isDoomed }">
-            Enter Effarig's Reality.
+            {{`${labelmode?"Start Effarig's Reality":"Enter Effarig's "+newname}.`}}
           </span>
         </div>
         <div

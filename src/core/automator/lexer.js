@@ -163,7 +163,6 @@ createInCategory(AutomatorCurrency, "SpentTT", /spent[ \t]+tt/i, {
   $autocomplete: "spent TT",
   $getter: () => new Decimal(GameCache.currentStudyTree.value.spentTheorems[0]),
 });
-
 createInCategory(AutomatorCurrency, "TotalCompletions", /total[ \t]+completions/i, {
   $autocomplete: "total completions",
   $getter: () => EternityChallenges.completions,

@@ -22,6 +22,9 @@ export default {
       withinLimit: false,
     };
   },
+  created(){
+    EventHub.ui.dispatch(GAME_EVENT.UPDATE)
+  },
   computed: {
     fullScreen() {
       return this.$viewModel.tabs.reality.automator.fullScreen;
@@ -90,10 +93,10 @@ export default {
           split="vertical"
         >
           <template #paneL>
-            <AutomatorEditor />
+            <AutomatorEditor/>
           </template>
           <template #paneR>
-            <AutomatorDocs />
+            <AutomatorDocs/>
           </template>
         </SplitPane>
       </div>
@@ -110,6 +113,7 @@ export default {
 
 .c-automator-tab {
   width: 80%;
+  /*width: calc(80% + 2rem);*/
   min-width: 100rem;
 }
 
@@ -118,16 +122,42 @@ export default {
   align-self: center;
   margin-top: 0.5rem;
 }
-
+.c-automator-monitor{
+  padding:0rem 1rem 1rem 1rem;
+  border: var(--var-border-width, 0.3rem) solid;
+  border-image:url(../../../../public/images/frames/automation.png) 3;
+  background:url(../../../../public/images/background/automator-light.png)
+}
+.s-base--dark .c-automator-monitor{
+  background:url(../../../../public/images/background/automator.png)
+}
+.c-automator-monitor-info{
+  margin-bottom:1rem;
+  background:var(--leg-base);
+  color:var(--color-text);
+  border: var(--var-border-width, 0.3rem) solid;
+  border-image:url(../../../../public/images/frames/automation.png) 3;
+  border-top:none;
+  box-shadow: 0 0 1rem #00000080 inset;
+}
 .c-automator-split-pane {
   width: 100%;
-  height: 57rem;
+  height: 60rem;
   background-color: #bbbbbb;
+  border: 1.2rem solid;
+  border-image-source:url(../../../../public/images/frames/automation-light.png);
+  border-image-repeat: round;
+  border-image-slice: 12;
 }
-
+.s-base--metro .c-automator-split-pane {
+  border: 0.3rem solid;
+  border-image-slice: 3;
+  height: 57rem;
+}
 .s-base--dark .c-automator-split-pane {
   width: 100%;
   background-color: #474747;
+  border-image-source:url(../../../../public/images/frames/automation.png);
 }
 
 .c-automator-tab--full-screen .c-automator-split-pane {

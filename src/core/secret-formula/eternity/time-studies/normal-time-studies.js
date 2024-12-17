@@ -63,7 +63,7 @@ export const normalTimeStudies = [
       const oldVal = Decimal.pow(Decimal.log2(Replicanti.amount.clampMin(1)), 2);
       const newVal = oldVal.plus(value);
       return formatX(newVal.div(oldVal).clampMin(1), 2, 2);
-    }
+    },
   },
   {
     id: 22,
@@ -71,7 +71,7 @@ export const normalTimeStudies = [
     requirement: [11],
     reqType: TS_REQUIREMENT_TYPE.AT_LEAST_ONE,
     description: () => `Base Replicanti interval limit ${formatInt(50)}ms ➜ ${formatInt(1)}ms`,
-    effect: 1
+    effect: 1,
   },
   {
     id: 31,
@@ -95,7 +95,7 @@ export const normalTimeStudies = [
     cost: 2,
     requirement: [22],
     reqType: TS_REQUIREMENT_TYPE.AT_LEAST_ONE,
-    description: "You keep half of your Replicanti Galaxies on Infinity"
+    description: "You keep half of your Replicanti Galaxies on Infinity",
   },
   {
     id: 41,
@@ -137,7 +137,7 @@ export const normalTimeStudies = [
     requirement: [42, () => Perk.bypassEC5Lock.isBought || EternityChallenge(5).completions > 0],
     reqType: TS_REQUIREMENT_TYPE.ALL,
     description: () => `You gain Replicanti ${formatInt(3)} times faster`,
-    effect: 3
+    effect: 3,
   },
   {
     id: 71,
@@ -301,10 +301,12 @@ export const normalTimeStudies = [
     requirement: [111],
     reqType: TS_REQUIREMENT_TYPE.AT_LEAST_ONE,
     requiresST: [121, 122],
-    description: "You gain more Eternity Points based on time spent this Eternity",
+    description: () =>(Perk.studyIdleEP.isBought
+      ?"You gain more Eternity Points based on time spent this Reality"
+      :"You gain more Eternity Points based on time spent this Eternity"),
     effect: () => {
       const perkEffect = TimeSpan.fromMinutes(Perk.studyIdleEP.effectOrDefault(0));
-      const totalSeconds = Time.thisEternity.plus(perkEffect).totalSeconds;
+      let totalSeconds = Perk.studyIdleEP.isBought?Time.thisReality.plus(perkEffect).totalSeconds:Time.thisEternity.totalSeconds;
       return Math.sqrt(1.39 * totalSeconds);
     },
     formatEffect: value => formatX(value, 1, 1)
@@ -380,10 +382,12 @@ export const normalTimeStudies = [
     requirement: [133],
     reqType: TS_REQUIREMENT_TYPE.AT_LEAST_ONE,
     requiresST: [141, 142],
-    description: "Multiplier to Infinity Points, which increases over this Infinity",
+    description: () =>(Perk.studyIdleEP.isBought
+    ?"Multiplier to Infinity Points, which increases over this Reality"
+    :"Multiplier to Infinity Points, which increases over this Infinity"),
     effect: () => {
       const perkEffect = TimeSpan.fromMinutes(Perk.studyIdleEP.effectOrDefault(0));
-      const totalSeconds = Time.thisInfinity.plus(perkEffect).totalSeconds;
+      let totalSeconds = Perk.studyIdleEP.isBought?Time.thisReality.plus(perkEffect).totalSeconds:Time.thisInfinity.totalSeconds;
       return thisInfinityMult(totalSeconds);
     },
     formatEffect: value => formatX(value, 2, 1),
@@ -630,7 +634,7 @@ export const normalTimeStudies = [
     reqType: TS_REQUIREMENT_TYPE.AT_LEAST_ONE,
     requiresST: [234],
     description: "Max Replicanti Galaxy upgrade is cheaper based on current Replicanti",
-    effect: () => Replicanti.amount.pow(0.3),
+    effect: () => (Replicanti.amount.add(1)).pow(0.3),
     formatEffect: value => `/ ${format(value, 1, 2)}`
   },
   {

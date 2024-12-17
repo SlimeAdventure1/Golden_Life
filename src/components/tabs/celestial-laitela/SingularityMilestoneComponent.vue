@@ -51,7 +51,9 @@ export default {
       return {
         "c-laitela-milestone": true,
         "o-laitela-milestone--glow": !this.suppressGlow &&
-          this.milestone.previousGoal > this.lastCheckedMilestones
+          this.milestone.previousGoal > this.lastCheckedMilestones,
+        "c-laitela-milestone__main": this.milestone.config.upgradeDirection === LAITELA_UPGRADE_DIRECTION.BOOSTS_MAIN,
+        "c-laitela-milestone__lai": this.milestone.config.upgradeDirection === LAITELA_UPGRADE_DIRECTION.BOOSTS_LAITELA,
       };
     },
     upgradeDirectionIcon() {
@@ -66,8 +68,9 @@ export default {
       return this.isUnique ? 1 : this.limit;
     },
     completionsDisplay() {
-      const maxStr = Number.isFinite(this.limit) ? formatInt(this.maxCompletions) : "∞";
-      return `${formatInt(this.completions)}/${maxStr} ${pluralize("completion", this.completions)}`;
+      const maxStr = Number.isFinite(this.limit) ? "/"+formatInt(this.maxCompletions) : "";
+      if (this.limit <= 1) return this.completions<1?"Not completed":"Completed"
+      return `${formatInt(this.completions)}${maxStr} ${pluralize("completion", this.completions)}`;
     },
     progressDisplay() {
       const condenseCount = this.remainingSingularities / this.singularitiesPerCondense;
@@ -147,10 +150,26 @@ export default {
 <style scoped>
 .o-laitela-milestone--glow {
   font-weight: bold;
-  color: var(--color-laitela--base);
-  background: var(--color-laitela--accent);
+  color: var(--color-laitela--accent);
+  background: url(../../../../public/images/celestials/laitela-unstable.png), linear-gradient(90deg, var(--bg-bright) -20%,var(--bg-dark) 40% 60%,var(--bg-bright) 120%);
+  --bg-dark: var(--color-laitela--base);
+  --bg-bright: var(--color-laitela--accent);
   border-color: var(--color-laitela--accent);
-  box-shadow: 0 0 0.5rem 0.1rem inset, 0 0 0.3rem 0;
-  animation: 3s a-laitela-flash infinite;
+  box-shadow: 0 0 0.5rem 0.1rem inset;
+  background-position: center;
+  animation: a-unstable 20s linear infinite, 3s a-laitela-flash-alternative infinite;
+}
+@keyframes a-laitela-flash-alternative {
+    0% {
+      filter: invert(0);
+    }
+
+    50% {
+      filter: invert(1);
+    }
+
+    100% {
+      filter: invert(0);
+    }
 }
 </style>

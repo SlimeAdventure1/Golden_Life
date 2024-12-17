@@ -85,17 +85,18 @@ export class TimeStudyTreeLayout {
       normalRow(               EC(6), TS(131), TS(132), TS(133), EC(8)                ),
       normalRow(                      TS(141), TS(142), TS(143)                       ),
       normalRow(               null,   EC(9), TS(151),   null,   EC(4)                ),
-      normalRow(                          TS(161), TS(162)                            )
     );
 
     if (type === STUDY_TREE_LAYOUT_TYPE.ALTERNATIVE_181 || type === STUDY_TREE_LAYOUT_TYPE.ALTERNATIVE_62_181 ||
       type === STUDY_TREE_LAYOUT_TYPE.ALTERNATIVE_TRIAD_STUDIES) {
       this.rows.push(
-        normalRow(                         null, TS(171),  EC(2)                        ),
-        normalRow(                        EC(1), TS(181),  EC(3)                        )
+        normalRow(                        TS(161), EC(2), TS(162)                       ),
+        normalRow(                        EC(1), TS(171),  EC(3)                        ),
+        normalRow(                               TS(181)                                )
       );
     } else {
       this.rows.push(
+        normalRow(                          TS(161), TS(162)                            ),
         normalRow(                               TS(171)                                ),
         normalRow(                         EC(1), EC(2), EC(3)                          ),
         normalRow(                               TS(181)                                )
@@ -115,7 +116,6 @@ export class TimeStudyTreeLayout {
         normalRow(                 TS(301), TS(302), TS(303), TS(304)                 )
       );
     }
-
     this.rows.push(
       normalRow(    TS(231),          TS(232),          TS(233),          TS(234)     ),
       normalRow(              EC(11),                             EC(12)              ),

@@ -85,9 +85,9 @@ export class DimBoost {
 
   static get lockText() {
     if (DimBoost.purchasedBoosts >= this.maxBoosts) {
-      if (Ra.isRunning) return "Locked (Ra's Reality)";
-      if (InfinityChallenge(1).isRunning) return "Locked (Infinity Challenge 1)";
-      if (NormalChallenge(8).isRunning) return "Locked (8th Antimatter Dimension Autobuyer Challenge)";
+      if (Ra.isRunning) return `Locked (Ra's ${player.options.naming.celestial?Ra.RealityName:"Reality"})`;
+      if (InfinityChallenge(1).isRunning) return `Locked (${player.options.naming.challenges?InfinityChallenge(1).name:"Infinity Challenge 1"})`;
+      if (NormalChallenge(8).isRunning) return `Locked (${player.options.naming.challenges?NormalChallenge(8).name:"8th Antimatter Dimension Autobuyer Challenge"})`;
     }
     return null;
   }
@@ -174,7 +174,7 @@ export class DimBoost {
 }
 
 // eslint-disable-next-line max-params
-export function softReset(tempBulk, forcedADReset = false, forcedAMReset = false, enteringAntimatterChallenge = false) {
+export function softReset(tempBulk, forcedADReset = false, forcedAMReset = false, enteringAntimatterChallenge = false,playaudio=true) {
   if (Currency.antimatter.gt(Player.infinityLimit)) return;
   const bulk = Math.min(tempBulk, DimBoost.maxBoosts - player.dimensionBoosts);
   EventHub.dispatch(GAME_EVENT.DIMBOOST_BEFORE, bulk);
@@ -198,6 +198,7 @@ export function softReset(tempBulk, forcedADReset = false, forcedAMReset = false
     Currency.antimatter.reset();
   }
   EventHub.dispatch(GAME_EVENT.DIMBOOST_AFTER, bulk);
+  if (player.options.audio.softreset&&playaudio)AudioManagement.playSound("reset_boost",Math.log10(player.dimensionBoosts+1)/2+1)
 }
 
 export function skipResetsIfPossible(enteringAntimatterChallenge) {

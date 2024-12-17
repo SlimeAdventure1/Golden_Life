@@ -88,10 +88,10 @@ export class Galaxy {
 
   static get lockText() {
     if (this.canBeBought) return null;
-    if (EternityChallenge(6).isRunning) return "Locked (Eternity Challenge 6)";
-    if (InfinityChallenge(7).isRunning) return "Locked (Infinity Challenge 7)";
-    if (InfinityChallenge(1).isRunning) return "Locked (Infinity Challenge 1)";
-    if (NormalChallenge(8).isRunning) return "Locked (8th Antimatter Dimension Autobuyer Challenge)";
+    if (EternityChallenge(6).isRunning) return `Locked (${player.options.naming.challenges?EternityChallenge(6).name:"Eternity Challenge 6"})`;
+    if (InfinityChallenge(7).isRunning) return `Locked (${player.options.naming.challenges?InfinityChallenge(7).name:"Infinity Challenge 7"})`;
+    if (InfinityChallenge(1).isRunning) return `Locked (${player.options.naming.challenges?InfinityChallenge(1).name:"Infinity Challenge 1"})`;
+    if (NormalChallenge(8).isRunning) return `Locked (${player.options.naming.challenges?NormalChallenge(8).name:"8th Antimatter Dimension Autobuyer Challenge"})`;
     return null;
   }
 
@@ -125,11 +125,12 @@ function galaxyReset() {
   if (!Achievement(143).isUnlocked || (Pelle.isDoomed && !PelleUpgrade.galaxyNoResetDimboost.canBeApplied)) {
     player.dimensionBoosts = 0;
   }
-  softReset(0);
+  softReset(0,false,false,false,false);
   if (Notations.current === Notation.emoji) player.requirementChecks.permanent.emojiGalaxies++;
   // This is specifically reset here because the check is actually per-galaxy and not per-infinity
   player.requirementChecks.infinity.noSacrifice = true;
   EventHub.dispatch(GAME_EVENT.GALAXY_RESET_AFTER);
+  if (player.options.audio.softreset)AudioManagement.playSound("reset_galaxy",Math.log10(player.galaxies+1)+1)
 }
 
 export function manualRequestGalaxyReset(bulk) {

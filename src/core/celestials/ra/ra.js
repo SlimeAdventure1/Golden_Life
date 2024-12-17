@@ -34,6 +34,10 @@ class RaUnlockState extends BitUpgradeState {
     return Ra.pets[this.config.pet];
   }
 
+  get name() {
+    return this.config.name;
+  }
+
   get level() {
     return this.config.level;
   }
@@ -73,6 +77,9 @@ class RaPetState extends GameMechanicState {
     return this.config.color;
   }
 
+  get symbol() {
+    return this.config.symbol();
+  }
   get requiredUnlock() {
     return this.config.requiredUnlock?.();
   }
@@ -175,6 +182,8 @@ class RaPetState extends GameMechanicState {
 
     this.memories -= this.memoryUpgradeCost;
     this.data.memoryUpgrades++;
+
+    AudioManagement.playSound("upgrade_memories");
   }
 
   purchaseChunkUpgrade() {
@@ -182,6 +191,8 @@ class RaPetState extends GameMechanicState {
 
     this.memories -= this.chunkUpgradeCost;
     this.data.chunkUpgrades++;
+
+    AudioManagement.playSound("upgrade_memories");
   }
 
   levelUp() {
@@ -190,6 +201,8 @@ class RaPetState extends GameMechanicState {
     this.memories -= this.requiredMemories;
     this.level++;
     Ra.checkForUnlocks();
+
+    AudioManagement.playSound("upgrade_level")
   }
 
   get unlocks() {
@@ -227,7 +240,11 @@ const pets = mapGameDataToObject(
 
 export const Ra = {
   displayName: "Ra",
+  displayTitle: "Memorator Ra",
+  fullName: "Ra, Celestial of the Forgotten",
+  celestialOf: "the Forgotten",
   possessiveName: "Ra's",
+  RealityName: "Cosmic Library",
   unlocks,
   pets,
   remembrance: {
@@ -417,18 +434,18 @@ export const GlyphAlteration = {
   isBoosted(type) {
     return this.isUnlocked && this.getSacrificePower(type) >= this.boostingThreshold;
   },
-  sacrificeBoost(type) {
-    const capped = Math.clampMax(this.getSacrificePower(type), GlyphSacrificeHandler.maxSacrificeForEffects);
+  sacrificeBoost(type,extras=0) {
+    const capped = Math.clampMax(this.getSacrificePower(type)+extras, GlyphSacrificeHandler.maxSacrificeForEffects);
     return Math.log10(Math.clampMin(capped / this.boostingThreshold, 1)) / 2;
   },
   baseAdditionColor(isDark = Theme.current().isDark()) {
     return isDark ? "#CCCCCC" : "black";
   },
   baseEmpowermentColor(isDark = Theme.current().isDark()) {
-    return isDark ? "#EEEE30" : "#C6C610";
+    return isDark ? "#EEEE30" : "#99990c";
   },
   baseBoostColor(isDark = Theme.current().isDark()) {
-    return isDark ? "#60DDDD" : "#28BDBD";
+    return isDark ? "#60DDDD" : "#1f9494";
   },
   getAdditionColor(type) {
     const isDark = CosmeticGlyphTypes[type].currentColor.bg === "black";

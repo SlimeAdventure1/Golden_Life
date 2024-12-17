@@ -12,6 +12,7 @@ export default {
       isUnlocked: false,
       level: 0,
       description: "",
+      wobbly: false,
     };
   },
   computed: {
@@ -21,6 +22,9 @@ export default {
     petName() {
       return this.unlock.pet.name;
     },
+    upgradeName() {
+      return this.unlock.name;
+    },
     icon() {
       return this.unlock.displayIcon;
     },
@@ -28,7 +32,8 @@ export default {
       return {
         "c-ra-upgrade-icon": true,
         "c-ra-upgrade-icon--inactive": !this.isUnlocked,
-        [`c-ra-upgrade-icon--${this.petID}`]: true
+        [`c-ra-upgrade-icon--${this.petID}`]: true,
+        "a-wobble": this.wobbly
       };
     },
     isUseless() {
@@ -41,13 +46,17 @@ export default {
       this.isUnlocked = unlock.isUnlocked;
       this.level = unlock.level;
       this.description = unlock.reward;
+      this.wobbly = player.options.animations.wobbly
+    },
+    hover() {
+      AudioManagement.playSound("click_hover")
     }
   }
 };
 </script>
 
 <template>
-  <div :class="classObject">
+  <div :class="classObject"  @mouseenter="hover()">
     <div
       v-html="icon"
     />
@@ -55,6 +64,7 @@ export default {
       <div class="c-ra-pet-upgrade__tooltip__name">
         {{ petName }} Level {{ formatInt(level) }}
       </div>
+      <div class="c-ra-pet-upgrade__tooltip__description"><span v-html="icon"/> {{ upgradeName }} <span v-html="icon"/></div>
       <div
         class="c-ra-pet-upgrade__tooltip__description"
         :class="{ 'o-pelle-disabled': isUseless }"

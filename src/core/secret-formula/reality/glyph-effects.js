@@ -82,7 +82,7 @@ export const glyphEffects = {
     isGenerated: true,
     glyphTypes: ["time"],
     singleDesc: () => (GlyphAlteration.isAdded("time")
-      ? "Eternity Point gain \n×{value} [and ^]{value2}"
+      ? "Eternity Point gain ×{value} [and ^]{value2}"
       : "Multiply Eternity Point gain by {value}"),
     totalDesc: () => (GlyphAlteration.isAdded("time")
       ? "Eternity Point gain ×{value} and ^{value2}"
@@ -122,8 +122,8 @@ export const glyphEffects = {
     bitmaskIndex: 5,
     isGenerated: true,
     glyphTypes: ["dilation"],
-    singleDesc: "Tachyon Galaxy threshold multiplier ×{value}",
-    genericDesc: "Tachyon Galaxy cost multiplier",
+    singleDesc: "Tachyonic Galaxy threshold multiplier ×{value}",
+    genericDesc: "Tachyonic Galaxy cost multiplier",
     shortDesc: "TG threshold ×{value}",
     effect: (level, strength) => 1 - Math.pow(level, 0.17) * Math.pow(strength, 0.35) / 100 -
       GlyphAlteration.sacrificeBoost("dilation") / 50,
@@ -148,7 +148,7 @@ export const glyphEffects = {
       ? "Generates {value} Time Theorems/hour \n[and multiplies Time Theorem \ngeneration by] {value2}"
       : "Generates {value} Time Theorems per hour"),
     totalDesc: () => (GlyphAlteration.isAdded("dilation")
-      ? "Generating {value} Time Theorems/hour and Time Theorem generation ×{value2}"
+      ? "Generating {value} Time Theorems/hour <br> Time Theorem generation ×{value2}"
       : "Generating {value} Time Theorems per hour"),
     genericDesc: () => (GlyphAlteration.isAdded("dilation")
       ? "Time Theorem generation and multiplier"
@@ -220,10 +220,10 @@ export const glyphEffects = {
     isGenerated: true,
     glyphTypes: ["replication"],
     singleDesc: () => (GlyphAlteration.isAdded("replication")
-      ? `Multiply Dilated Time \n[and Replicanti speed] by \n+{value} per ${format(DC.E10000)} replicanti`
+      ? `Multiply Dilated Time [and Replicanti speed] \nby +{value} per ${format(DC.E10000)} replicanti`
       : `Multiply Dilated Time gain by \n+{value} per ${format(DC.E10000)} replicanti`),
     totalDesc: () => (GlyphAlteration.isAdded("replication")
-      ? `Multiply Dilated Time and Replication speed by +{value} per ${format(DC.E10000)} replicanti`
+      ? `Multiply Dilated Time and Replication speed <br> by +{value} per ${format(DC.E10000)} replicanti`
       : `Multiply Dilated Time gain by +{value} per ${format(DC.E10000)} replicanti`),
     genericDesc: () => (GlyphAlteration.isAdded("replication")
       ? "Dilated Time+Replicanti mult from replicanti"
@@ -309,7 +309,7 @@ export const glyphEffects = {
     isGenerated: true,
     glyphTypes: ["infinity"],
     singleDesc: () => (GlyphAlteration.isAdded("infinity")
-      ? "Infinity Point gain \n×{value} [and ^]{value2}"
+      ? "Infinity Point gain ×{value} [and ^]{value2}"
       : "Multiply Infinity Point gain by {value}"),
     totalDesc: () => (GlyphAlteration.isAdded("infinity")
       ? "Infinity Point gain ×{value} and ^{value2}"
@@ -353,10 +353,10 @@ export const glyphEffects = {
     isGenerated: true,
     glyphTypes: ["power"],
     singleDesc: () => (GlyphAlteration.isAdded("power")
-      ? "Antimatter Dimension power +{value}\n[and Antimatter Galaxy cost ×]{value2}"
+      ? "Antimatter Dimension power +{value}\n[Antimatter Galaxy cost ×]{value2}"
       : "Antimatter Dimension power +{value}"),
     totalDesc: () => (GlyphAlteration.isAdded("power")
-      ? "Antimatter Dimension multipliers ^{value} and Antimatter Galaxy cost ×{value2}"
+      ? "Antimatter Dimension multipliers ^{value} <br> Antimatter Galaxy cost ×{value2}"
       : "Antimatter Dimension multipliers ^{value}"),
     genericDesc: () => (GlyphAlteration.isAdded("power")
       ? "Antimatter Dimensions multipliers ^x and Antimatter Galaxy cost multiplier"
@@ -485,10 +485,10 @@ export const glyphEffects = {
     isGenerated: true,
     glyphTypes: ["effarig"],
     singleDesc: () => (GlyphAlteration.isAdded("effarig")
-      ? `"Buy ${formatInt(10)}" multiplier ^{value} [and\nDimension Boost multiplier ^]{value2}`
+      ? `"Buy ${formatInt(10)}" multiplier ^{value} [\nDimension Boost multiplier ^]{value2}`
       : `Bonus from buying ${formatInt(10)} Dimensions ^{value}`),
     totalDesc: () => (GlyphAlteration.isAdded("effarig")
-      ? `Multiplier from "Buy ${formatInt(10)}" ^{value} and Dimension Boost multiplier ^{value2}`
+      ? `Multiplier from "Buy ${formatInt(10)}" ^{value} <br> Dimension Boost multiplier ^{value2}`
       : `Multiplier from "Buy ${formatInt(10)}" ^{value}`),
     genericDesc: () => (GlyphAlteration.isAdded("effarig")
       ? `"Buy ${formatInt(10)}" and Dimension Boost multipliers ^x`
@@ -681,6 +681,24 @@ export const glyphEffects = {
     // eslint-disable-next-line no-unused-vars
     effect: (level, strength) => Decimal.pow10(1e6 * strengthToRarity(strength)),
     formatEffect: x => formatPostBreak(x, 2),
+    combine: GlyphCombiner.multiplyDecimal,
+    enabledInDoomed: true,
+  },
+  heliosLuck: {
+    id: "heliosLuck",
+    bitmaskIndex: 10,
+    isGenerated: false,
+    glyphTypes: ["helios"],
+    singleDesc: "You have a 1 / {value} chance of getting this Glyph every Reality.",
+    shortDesc: "1 in {value} Glyphs",
+    totalDesc: () => (
+      (Enslaved.isRunning || Glyphs.active.countWhere(g => g?.type === "cursed"))
+       ? "This luck doesn't help you." : "You have the luck of the sun."),
+    // The EP value for this is entirely encoded in rarity, but level needs to be present to
+    // make sure the proper parameter is being used. The actual glyph level shouldn't do anything.
+    // eslint-disable-next-line no-unused-vars
+    effect: () => {return 5e5 / (AlchemyResource.multiversal.effectValue+1)},
+    formatEffect: x => formatInt(x),
     combine: GlyphCombiner.multiplyDecimal,
     enabledInDoomed: true,
   }

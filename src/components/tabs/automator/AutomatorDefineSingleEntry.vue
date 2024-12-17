@@ -147,12 +147,16 @@ export default {
   cursor: pointer;
   color: var(--color-automator-docs-font);
   background-color: var(--color-automator-controls-inactive);
+  background-image: linear-gradient(#ffffff88 -100%, transparent 49%, #00000022 50%, transparent 75%);
 }
 
 .c-delete-button:hover {
   background-color: var(--color-automator-error-background);
 }
 
+.s-base--dark .c-delete-button {
+  background-image: linear-gradient(#ffffff88 -100%,transparent 49%, #00000044 50%, transparent)
+}
 .l-single-definition-container {
   display: flex;
   flex-direction: row;

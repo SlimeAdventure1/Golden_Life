@@ -1,7 +1,7 @@
 body.t-s8 {
   height: 100%;
   color: black;
-  background: url("../images/s8-bg.jpg") no-repeat;
+  background: url("../images/background/s8-bg.jpg") no-repeat;
   background-attachment: fixed;
   background-color: white;
 
@@ -41,4 +41,19 @@ body.t-s8 {
 
 .t-s8 .c-tt-buy-button--locked:hover {
   background: #ef5350;
+}
+.c-multiplier-entry-root-container,
+.l-options-grid,
+.ttshop-container,
+.c-teresa-container,
+.l-effarig-relics, .l-effarig-shop, .l-effarig-run,
+.l-enslaved-top-container, .l-enslaved-shop-container, .c-enslaved-run-button,
+.c-v-unlock-container,  .c-v-unlock-container, .l-v-milestones-grid,
+.c-dark-matter-dimension-container,.o-laitela-run-button,.l-laitela-annihilation-container,
+.l-pelle-panel-container,
+.c-perk-network,
+div.vis-tooltip,
+.c-current-glyph-effects,.c-glyph-sacrifice-options,.l-expanding-control-box__container,.c-reality-reminder,
+.l-challenge-box,.o-tab-btn,.o-subtab__tooltip,.c-autobuyer-box-row{
+backdrop-filter: blur(1rem);
 }

@@ -9,9 +9,123 @@ export const changelog = [
    * }
    */
   {
-    date: [2024, 8, 12],
-    name: "Hi Ra",
+    date: [2024, 12, 17],
+    name: "Initial Legs / Early Access",
     info: `
+<b><i>Happy 2nd anniversary of the Reality Update!</i></b>
+<br>
+<br>
+Note: This mod is in early access and lacks non-gameplay content which will be added in later updates.
+<br>
+<br>
+<b>Major Things:</b><br>
+<ul>
+<li>Implemeted legs into the game</li>
+<li>Improved the overall game visuals, introducing textures.</li>
+<li>Added artworks for the Celestials. (WIP)</li>
+<li>Added various SFX.</li>
+<li>Added a new statistics subtab: Resource Gallery</li>
+<li>Added unique names to various mechanics</li>
+<ul>
+<li>Dimensions (WIP)</li>
+<li>Challenges and Celestial Realities</li>
+<li>Perks</li>
+<li>Ra Upgrades</li>
+</ul>
+<li>Added even more Nicolas Cage and secrets.</li>
+<li>Added new themes, both regular and secret.</li>
+</ul>
+<br><b>Improved Visuals:</b><br>
+<ul>
+<li style="font-family:cambria;font-weight:bold;font-size:2rem">Added a secondary font in the game.</li>
+<li>Redesigned the Autobuyer layouts.</li>
+<li>Added translucent progress bars into the following.</li>
+<ul>
+<li>Dimension Boost and Galaxies</li>
+<li>ID Purchase buttons</li>
+<li>Replicanti Upgrades</li>
+<li>Prestige Buttons; progessions are based on either autobuyer modes, challenge goals or next glyph level</li>
+<li>Singularity</li>
+</ul>
+<li>Achievement row backgrounds now work like Infinity upgrade Columns.</li>
+<li>Revamped the achievement images. Use the Legacy theme for the classic achievement images.</li>
+<li>Stylised the replicanti effects to be an organized table with more information</li>
+<li>Improved the Reality/Imaginary Upgrade lock visuals</li>
+<li>Adjusted the Celestial Navigation layout</li>
+<li>Added Background animation for Celestial Realities</li>
+<li>Added a typing effect for Celestial quotes during a sequence.</li>
+<li>Quote lines are more compact, reducing the Quote box amount needed</li>
+<li>Capped Infinity Dimension purchase buttons are stylized like a bought infinity upgrade</li>
+<li>Gave the Imaginary Upgrades a unique color scheme.</li>
+<li>Singularity Milestones now have different color schemes based on directions.</li>
+<li>Dimension rows with its inactive tiers in Lai'tela's Reality are more stylized.</li>
+<li>Dooming your reality alters the Reality tab</li>
+</ul>
+<br><b>New options for customization:</b><br>
+<ul>
+<li>Added visual options tab for the Automator.</li>
+<li>Added an option for names in various mechanics.</li>
+<li>Improved the Sidebar options, allowing you to switch sides, change width and display up to 4 different resources.</li>
+<li>Added a weird way to enable Autobuyer toggles in Antimatter Dimensions.</li>
+<li>Added a functionality to change the positions of the Prestige buttons.</li>
+<li>Added a toggle for new and old Reality Glyph visuals</li>
+<li>Added options for SFX</li>
+<li>Wobble</li>
+</ul>
+<br><b>Renames:</b><br>
+<ul>
+<li>Tachyon Particles ➔ Tachyons</li>
+<li>Tachyon Galaxies ➔ Tachyonic Galaxies</li>
+<li>Glyph Effects ➔ Diacritics (partially)</li>
+<li>Glyph Rarity ➔ Glyph Quality</li>
+<li>Teresa's Perk point Shop ➔ Teresa's Perk Shop</li>
+<li>Effarig's Shop ➔ Effarig's Glyph Shop</li>
+<li>Absolute Annulment ➔ Consecrated Calamity because Jazz prefers it that way</li>
+</ul>
+<br><b>Additional changes and information:</b><br>
+<ul>
+<li>Added new News.</li>
+<li>Added extra titles for celestials. (WIP)</li>
+<li>Added portraits for celestials.</li>
+<li>Added raw Glyph level to the Glyph level Factors (i.e. the glyph level without instability)</li>
+<li>Added text for uncapped RM past e1000 in Imaginary Upgrades tab.</li>
+<li>Added text for Paradox/Contradiction/Fallacy's 3rd milestone's effect in the Time Dilation tab.</li>
+<li>Extended the Matter scale statistics up to Milankovitch cycles.</li>
+<li>Gave Reality an unique text for first reset.</li>
+<li>Added an option to skip quote sequences (requires at least 2 lines.)</li>
+<li>Added an option to skip the credits</li>
+<li>Achievement 35 now requires having to be either online or offline for 6 hours.</li>
+<li>Changed matter scale text ("If every antimatter were...") to only change once per 100ms.</li>
+<li>Changed the BI upgrade order</li>
+<li>Infinity Upgrades can now be charged in Teresa's tab too.</li>
+<li>Made Confused theme more confusing.</li>
+<li>Increased the save slot limit to 5.</li>
+<li>the dimension phases Matter scale text works as if x is log of antimatter.</li>
+<li>Some minor format changes.</li>
+<li>Increased the save slot limit to 5.</li>
+</ul>
+<br><b>Balance Changes:</b><br>
+<ul>
+<li>Antimatter Dimensions now have a multiplier based on thr amount of unlocked Antimatter dimensions 
+(×1.25 for every non-first dimension unlocked)</li>
+<li>Changed the infinity upgrade order.</li>
+<li>Buffed BI upgrades.</li>
+<li>5x EP's starting cost cost is cheaper ( 500 => 100 )</li>
+<li>Improved IDL perk's effect.</li>
+<li>Reduced final singularity milestone even further (2.5e45 => 1e45)</li>
+</ul>
+<br><b>Bugfixes:</b><br>
+<ul>
+<li>Fixed the modern blind theme.</li>
+<li>Fixed a bug where a time glyph with the time shard power effect has an extra hidden dot.</li>
+<li>Fixed Dimensional Sacrifice display being incorrect in doomed Reality when having the achievement "IT'S OVER 9000"</li>
+</ul>
+`
+},
+{
+  date: [2024, 8, 12],
+  name: "Hi Ra",
+  info: `
 <b>Added things:</b><br>
 <ul>
 <li>Added a Spent TT as an Automator currency</li>
@@ -37,11 +151,11 @@ export const changelog = [
 </ul>
 <br>
 `
-  },
-  {
-    date: [2024, 5, 2],
-    name: "Celebrate Android Reality Update",
-    info: `
+},
+{
+  date: [2024, 5, 2],
+  name: "Celebrate Android Reality Update",
+  info: `
 Congratulations for the release of Android Reality Update! In order to celebrate this big milestone, we implemented
 some changes mainly based on the player comments and feedback from the Android version.
 <br>
@@ -111,8 +225,8 @@ affected by this bug</li>
 </ul>
 <br>
 `
-  },
-  {
+},
+{
     date: [2023, 7, 18],
     name: "Final Official Patch",
     info: `

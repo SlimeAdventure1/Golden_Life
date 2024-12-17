@@ -1,6 +1,7 @@
 import { GameMechanicState, SetPurchasableMechanicState } from "./game-mechanics";
 import { DC } from "./constants";
 import FullScreenAnimationHandler from "./full-screen-animation-handler";
+import { playAudio } from "../game";
 
 function giveEternityRewards(auto) {
   player.records.bestEternity.time = Math.min(player.records.thisEternity.time, player.records.bestEternity.time);
@@ -27,6 +28,7 @@ function giveEternityRewards(auto) {
       if (Enslaved.isRunning && completionCount > 5) EnslavedProgress.ec1.giveProgress();
     }
     player.challenge.eternity.requirementBits &= ~(1 << challenge.id);
+    if (!auto) AudioManagement.playSound("challenge_complete")
     respecTimeStudies(auto);
   }
 
@@ -106,6 +108,7 @@ export function eternity(force, auto, specialConditions = {}) {
 
   player.challenge.eternity.current = 0;
   if (!specialConditions.enteringEC && !Pelle.isDoomed) {
+    if(player.dilation.active)AudioManagement.playSound(auto?"dilation_exitauto":"dilation_exit")
     player.dilation.active = false;
   }
   resetInfinityRuns();
@@ -140,7 +143,7 @@ export function eternity(force, auto, specialConditions = {}) {
   ECTimeStudyState.invalidateCachedRequirements();
 
   PelleStrikes.eternity.trigger();
-
+  AudioManagement.playSound("reset_eternity")
   EventHub.dispatch(GAME_EVENT.ETERNITY_RESET_AFTER);
   return true;
 }
@@ -159,6 +162,7 @@ export function animateAndEternity(callback) {
       animateAndUndilate(callback);
     } else {
       eternityAnimation();
+      AudioManagement.playSound("reset_wait");
       setTimeout(() => {
         eternity();
         if (callback) callback();
@@ -342,10 +346,10 @@ class EPMultiplierState extends GameMechanicState {
     const costThresholds = EternityUpgrade.epMult.costIncreaseThresholds;
     const multPerUpgrade = [50, 100, 500, 1000];
     for (let i = 0; i < costThresholds.length; i++) {
-      const cost = Decimal.pow(multPerUpgrade[i], count).times(500);
+      const cost = Decimal.pow(multPerUpgrade[i], count).times(100);
       if (cost.lt(costThresholds[i])) return cost;
     }
-    return DC.E3.pow(count + Math.pow(Math.clampMin(count - 1334, 0), 1.2)).times(500);
+    return DC.E3.pow(count + Math.pow(Math.clampMin(count - 1334, 0), 1.2)).times(100);
   }
 }
 

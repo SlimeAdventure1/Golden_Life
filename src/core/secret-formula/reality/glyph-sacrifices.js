@@ -16,6 +16,10 @@ export const glyphSacrifice = {
         : "";
       return `Distant Galaxy scaling starts ${formatInt(amount)} later${nextGalaxyText}`;
     },
+    boostValue: added =>{
+      return Math.pow(1 + GlyphAlteration.sacrificeBoost("power",added ?? 0), 3)
+    },
+    boostdescription: amount => `Extra Dimension boost multiplier ${formatX(amount, 2, 2)}`,
     cap: () => GlyphSacrificeHandler.maxSacrificeForEffects
   },
   "infinity": {
@@ -27,6 +31,10 @@ export const glyphSacrifice = {
       return 1 + Math.log10(1 + Math.pow(capped, 0.2) / 100);
     },
     description: amount => `${formatX(amount, 2, 2)} bigger multiplier when buying 8th Infinity Dimension`,
+    boostValue: added =>{
+      return GlyphAlteration.sacrificeBoost("infinity",added ?? 0) / 50
+    },
+    boostdescription: amount => `Extra Infinity Dimension power +${format(amount, 3, 3)}`,
     cap: () => GlyphSacrificeHandler.maxSacrificeForEffects
   },
   "time": {
@@ -38,6 +46,10 @@ export const glyphSacrifice = {
       return Math.pow(1 + Math.pow(capped, 0.2) / 100, 2);
     },
     description: amount => `${formatX(amount, 2, 2)} bigger multiplier when buying 8th Time Dimension`,
+    boostValue: added =>{
+      return Math.pow(3, GlyphAlteration.sacrificeBoost("time",added ?? 0))
+    },
+    boostdescription: amount => `${formatX(amount, 2, 2)} extra Eternity gain`,
     cap: () => GlyphSacrificeHandler.maxSacrificeForEffects
   },
   "replication": {
@@ -57,6 +69,10 @@ export const glyphSacrifice = {
         : "";
       return `Replicanti Galaxy scaling starts ${formatInt(amount)} later${nextGalaxyText}`;
     },
+    boostValue: added =>{
+      return GlyphAlteration.sacrificeBoost("replication",added ?? 0) * 3
+    },
+    boostdescription: amount => `Extra Replicanti multiplier power +${format(amount, 2, 2)}`,
     cap: () => GlyphSacrificeHandler.maxSacrificeForEffects
   },
   "dilation": {
@@ -69,7 +85,11 @@ export const glyphSacrifice = {
         Math.log10(GlyphSacrificeHandler.maxSacrificeForEffects), 0.1);
       return Math.pow(Math.clampMin(capped, 1), exponent);
     },
-    description: amount => `Multiply Tachyon Particle gain by ${formatX(amount, 2, 2)}`,
+    description: amount => `Multiply Tachyon gain by ${formatX(amount, 2, 2)}`,
+    boostValue: added =>{
+      return 1 - GlyphAlteration.sacrificeBoost("dilation",added ?? 0) / 50
+    },
+    boostdescription: amount => `Starting Tachyonic Galaxy threshold multiplier ${formatX(amount, 3, 3)}`,
     cap: () => GlyphSacrificeHandler.maxSacrificeForEffects
   },
   "effarig": {
@@ -81,7 +101,11 @@ export const glyphSacrifice = {
       const capped = Math.clampMax(sac, 1e70);
       return 2 * Math.log10(capped / 1e20 + 1);
     },
-    description: amount => `+${formatPercents(amount / 100, 2)} additional Glyph rarity`,
+    description: amount => `+${formatPercents(amount / 100, 2)} additional Glyph quality`,
+    boostValue: added =>{
+      return GlyphAlteration.sacrificeBoost("effarig",added ?? 0) / 10
+    },
+    boostdescription: amount => `Extra Achievement multiplier power +${format(amount, 3, 3)}`,
     cap: () => 1e70
   },
   "reality": {
@@ -93,6 +117,10 @@ export const glyphSacrifice = {
       return Math.clampMax(1 + Math.sqrt(sac) / 15, 100);
     },
     description: amount => `Multiply Memory Chunk gain by ${formatX(amount, 2, 3)}`,
+    boostValue: added =>{
+      return 0
+    },
+    boostdescription: amount => `no`,
     cap: () => GlyphSacrificeHandler.maxSacrificeForEffects
   }
 };

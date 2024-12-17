@@ -83,19 +83,23 @@ export default {
       Antimatter Dimension Autobuyers can have their bulk upgraded once interval is below {{ formatInt(100) }} ms.
     </b>
     <b v-if="hasInstant">Autobuyers with "Instant" interval will trigger every game tick ({{ gameTickLength }}).</b>
-    <RealityAutobuyerBox class="c-reality-pos" />
-    <EternityAutobuyerBox class="c-eternity-pos" />
-    <BigCrunchAutobuyerBox class="c-infinity-pos" />
-    <GalaxyAutobuyerBox />
-    <DimensionBoostAutobuyerBox />
-    <TickspeedAutobuyerBox v-if="!hasContinuum" />
-    <template v-if="displayADAutobuyersIndividually">
+    <div class="c-autoprestige-box-row">
+    <RealityAutobuyerBox class="c-reality-pos" style="--fade: var(--color-reality);"/>
+    <EternityAutobuyerBox class="c-eternity-pos" style="--fade: var(--color-eternity);"/>
+    <BigCrunchAutobuyerBox class="c-infinity-pos" style="--fade: var(--color-infinity);"/>
+    </div>
+    <div class="c-autoprestige-box-row">
+    <GalaxyAutobuyerBox class="c-softreset-pos" style="--fade: var(--color-celestials);"/>
+    <DimensionBoostAutobuyerBox class="c-softreset-pos" style="--fade: #00ee00;"/>
+    </div>
+    <TickspeedAutobuyerBox v-if="!hasContinuum"  style="--fade: var(--color-accent);"/>
+    <div v-if="displayADAutobuyersIndividually" class="c-autoprestige-box-row" style="flex-wrap: wrap;">
       <DimensionAutobuyerBox
         v-for="tier in 8"
         :key="tier"
         :tier="tier"
       />
-    </template>
+    </div>
     <SimpleAutobuyersMultiBox />
   </div>
 </template>

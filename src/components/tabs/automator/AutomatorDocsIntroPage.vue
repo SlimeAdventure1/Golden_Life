@@ -22,7 +22,8 @@ export default {
     <b>Layout:</b> This Automator itself is split up into two halves; the left half contains your script and controls
     for starting, stopping, and repeating its execution, and the right half contains Automator information. Clicking
     <div class="fas fa-expand-arrows-alt c-automator-button-icon" /> in the top-right corner will expand the Automator
-    to take up the whole browser page for easier editing.
+    to take up the whole browser page for easier editing. In Legendary, you can now use 
+    <div class="fas fa-palette c-automator-button-icon" /> to change the looks of your Automator.
     <br>
     <br>
     <b>Editor Modes:</b> There are two different editors you can use to write your automator scripts - a block-based
@@ -72,6 +73,10 @@ export default {
   border: var(--var-border-width, 0.2rem) solid var(--color-automator-controls-border);
   border-radius: var(--var-border-radius, 0.3rem);
   color: var(--color-automator-docs-font);
+  background-image: linear-gradient(#ffffff88 -100%,transparent 49%, #00000022 50%, transparent 75%);
   background-color: var(--color-automator-controls-inactive);
+}
+.s-base--dark .c-automator-button-icon {
+  background-image: linear-gradient(#ffffff88 -100%,transparent 49%, #00000044 50%, transparent);
 }
 </style>

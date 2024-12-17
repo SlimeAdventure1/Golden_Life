@@ -3,9 +3,11 @@ export const ra = {
     teresa: {
       id: "teresa",
       name: "Teresa",
-      color: "#8596ea",
+      color: "#90a2fb",
+      //color: "#8596ea",
       chunkGain: "Eternity Points",
       memoryGain: "current RM",
+      symbol: () => Teresa.symbol,
       requiredUnlock: () => undefined,
       rawMemoryChunksPerSecond: () => 4 * Math.pow(Currency.eternityPoints.value.pLog10() / 1e4, 3),
       memoryProductionMultiplier: () => Ra.unlocks.teresaXP.effectOrDefault(1)
@@ -13,9 +15,11 @@ export const ra = {
     effarig: {
       id: "effarig",
       name: "Effarig",
-      color: "#ea8585",
+      color: "#e21717",
+      //color: "#ea8585",
       chunkGain: "Relic Shards gained",
       memoryGain: "best Glyph level",
+      symbol: () => Effarig.symbol,
       requiredUnlock: () => Ra.unlocks.effarigUnlock,
       rawMemoryChunksPerSecond: () => 4 * Math.pow(Effarig.shardsGained, 0.1),
       memoryProductionMultiplier: () => Ra.unlocks.effarigXP.effectOrDefault(1)
@@ -23,9 +27,11 @@ export const ra = {
     enslaved: {
       id: "enslaved",
       name: "The Nameless Ones",
-      color: "#f1aa7f",
+      color: "#d97639",
+      //color: "#f1aa7f",
       chunkGain: "Time Shards",
       memoryGain: "total time played",
+      symbol: () => Enslaved.symbol,
       requiredUnlock: () => Ra.unlocks.enslavedUnlock,
       rawMemoryChunksPerSecond: () => 4 * Math.pow(Currency.timeShards.value.pLog10() / 3e5, 2),
       memoryProductionMultiplier: () => Ra.unlocks.enslavedXP.effectOrDefault(1)
@@ -33,9 +39,11 @@ export const ra = {
     v: {
       id: "v",
       name: "V",
-      color: "#ead584",
+      color: "#d3b234",
+      //color: "#ead584",
       chunkGain: "Infinity Power",
       memoryGain: "total Memory levels",
+      symbol: () => V.symbol,
       requiredUnlock: () => Ra.unlocks.vUnlock,
       rawMemoryChunksPerSecond: () => 4 * Math.pow(Currency.infinityPower.value.pLog10() / 1e7, 1.5),
       memoryProductionMultiplier: () => Ra.unlocks.vXP.effectOrDefault(1)
@@ -44,7 +52,8 @@ export const ra = {
   unlocks: {
     autoTP: {
       id: 0,
-      reward: "Tachyon Particles are given immediately when Time Dilation is active",
+      name: "Paradoxical Radiation",
+      reward: "Tachyons are given immediately when Time Dilation is active",
       pet: "teresa",
       level: 1,
       displayIcon: `<span class="fas fa-atom"></span>`,
@@ -52,8 +61,9 @@ export const ra = {
     },
     chargedInfinityUpgrades: {
       id: 1,
+      name: "Omnimorphosis",
       reward: () => `Unlock Charged Infinity Upgrades. You get one more maximum
-        Charged Infinity Upgrade every ${formatInt(2)} levels`,
+        Charged Infinity Upgrade every ${formatInt(2)} levels. Access through Teresa's tab or infinity upgrades tab.`,
       effect: () => Math.min(12, Math.floor(Ra.pets.teresa.level / 2)),
       pet: "teresa",
       level: 2,
@@ -62,6 +72,7 @@ export const ra = {
     },
     teresaXP: {
       id: 2,
+      name: "Artificial Omniscience",
       reward: "All Memory Chunks produce more Memories based on Reality Machines",
       effect: () => 1 + Math.pow(Currency.realityMachines.value.pLog10() / 100, 0.5),
       pet: "teresa",
@@ -70,6 +81,7 @@ export const ra = {
     },
     alteredGlyphs: {
       id: 3,
+      name: "Marks of rebirth",
       reward: "Unlock Altered Glyphs, which grant new effects to Glyphs based on Glyph Sacrifice",
       pet: "teresa",
       level: 10,
@@ -78,6 +90,7 @@ export const ra = {
     },
     effarigUnlock: {
       id: 4,
+      name: "God's Volcabulary",
       reward: "Unlock Effarig's Memories",
       pet: "teresa",
       level: 8,
@@ -85,14 +98,16 @@ export const ra = {
     },
     perkShopIncrease: {
       id: 5,
-      reward: "Purchase caps are raised in Teresa's Perk Point Shop",
+      name: "Multifarious Godstore",
+      reward: "Purchase caps are raised in Teresa's Perk Shop",
       pet: "teresa",
       level: 15,
       displayIcon: `<span class="fas fa-project-diagram"></span>`
     },
     unlockDilationStartingTP: {
       id: 6,
-      reward: `In non-Celestial Realities, gain Tachyon Particles as if you reached the square root of your total
+      name: "Paradoxical Verisimilitude",
+      reward: `In non-Celestial Realities, gain Tachyons as if you reached the square root of your total
         antimatter in Dilation. Any multipliers to TP gain are applied retroactively, even outside Dilation`,
       effect: () => player.records.totalAntimatter.pow(0.5),
       pet: "teresa",
@@ -101,7 +116,8 @@ export const ra = {
     },
     extraGlyphChoicesAndRelicShardRarityAlwaysMax: {
       id: 7,
-      reward: () => `Get ${formatX(2)} Glyph choices and the bonus to Glyph rarity from Relic Shards
+      name: "Ascended Determination",
+      reward: () => `Get ${formatX(2)} Glyph choices and the bonus to Glyph quality from Relic Shards
         is always its maximum value`,
       effect: 2,
       pet: "effarig",
@@ -110,6 +126,7 @@ export const ra = {
     },
     unlockGlyphAlchemy: {
       id: 8,
+      name: "Sorcery of Symbols",
       reward: `Unlock Glyph Alchemy, which adds alchemical resources you can increase by Refining Glyphs. You unlock
         more resources through Effarig levels. Access through a new Reality tab.`,
       pet: "effarig",
@@ -118,6 +135,7 @@ export const ra = {
     },
     effarigXP: {
       id: 9,
+      name: "Souvenir's Sigil",
       reward: "All Memory Chunks produce more Memories based on highest Glyph level",
       effect: () => 1 + player.records.bestReality.glyphLevel / 7000,
       pet: "effarig",
@@ -126,6 +144,7 @@ export const ra = {
     },
     glyphEffectCount: {
       id: 10,
+      name: "Tongue of Transcendance",
       reward: () => `Glyphs always have ${formatInt(4)} effects, and Effarig Glyphs can now have up to ${formatInt(7)}`,
       pet: "effarig",
       level: 10,
@@ -133,6 +152,7 @@ export const ra = {
     },
     enslavedUnlock: {
       id: 11,
+      name: "Empty Evocation",
       reward: "Unlock Nameless's Memories",
       pet: "effarig",
       level: 8,
@@ -140,6 +160,7 @@ export const ra = {
     },
     relicShardGlyphLevelBoost: {
       id: 12,
+      name: "Refined Linguistics",
       reward: "Glyph level is increased based on Relic Shards gained",
       effect: () => 100 * Math.pow(Math.log10(Math.max(Effarig.shardsGained, 1)), 2),
       pet: "effarig",
@@ -148,7 +169,8 @@ export const ra = {
     },
     maxGlyphRarityAndShardSacrificeBoost: {
       id: 13,
-      reward: () => `Glyphs are always generated with ${formatPercents(1)} rarity and
+      name: "Lingo Perfectus",
+      reward: () => `Glyphs are always generated with ${formatPercents(1)} quality and
         Glyph Sacrifice gain is raised to a power based on Relic Shards`,
       effect: () => 1 + Effarig.maxRarityBoost / 100,
       pet: "effarig",
@@ -157,6 +179,7 @@ export const ra = {
     },
     blackHolePowerAutobuyers: {
       id: 14,
+      name: "Automatic Horizon",
       reward: "Unlock Black Hole power upgrade autobuyers",
       pet: "enslaved",
       level: 1,
@@ -165,6 +188,7 @@ export const ra = {
     },
     improvedStoredTime: {
       id: 15,
+      name: "Perceptive Enthusiasm",
       reward: "Stored game time is amplified and you can store more real time, increasing with Nameless levels",
       effects: {
         gameTimeAmplification: () => Math.pow(20, Math.clampMax(Ra.pets.enslaved.level, Ra.levelCap)),
@@ -177,6 +201,7 @@ export const ra = {
     },
     enslavedXP: {
       id: 16,
+      name: "Omnithymesia",
       reward: "All Memory Chunks produce more Memories based on total time played",
       effect: () => 1 + Math.log10(player.records.totalTimePlayed) / 200,
       pet: "enslaved",
@@ -185,6 +210,7 @@ export const ra = {
     },
     autoPulseTime: {
       id: 17,
+      name: "Vacuum Pulsation",
       reward: () => `Black Hole charging now only uses ${formatPercents(0.99)} of your game speed and you can
         automatically discharge ${formatPercents(0.01)} of your stored game time every ${formatInt(5)} ticks.`,
       pet: "enslaved",
@@ -194,6 +220,7 @@ export const ra = {
     },
     vUnlock: {
       id: 18,
+      name: "Echo's Ego",
       reward: "Unlock V's Memories",
       pet: "enslaved",
       level: 8,
@@ -201,6 +228,7 @@ export const ra = {
     },
     peakGamespeedDT: {
       id: 19,
+      name: "Capacious Superliminality",
       reward: "Gain more Dilated Time based on peak game speed in each Reality",
       effect: () => Math.max(Math.pow(Math.log10(player.celestials.ra.peakGamespeed) - 90, 3), 1),
       pet: "enslaved",
@@ -210,6 +238,7 @@ export const ra = {
     },
     allGamespeedGlyphs: {
       id: 20,
+      name: "Chants of Chronos",
       reward: `All basic Glyphs gain the increased game speed effect from Time Glyphs,
         and Time Glyphs gain an additional effect`,
       pet: "enslaved",
@@ -224,6 +253,7 @@ export const ra = {
     },
     instantECAndRealityUpgradeAutobuyers: {
       id: 21,
+      name: "Olympic Mechanism",
       reward: "Rebuyable Reality upgrades are bought automatically and Auto-Eternity Challenges happen instantly",
       pet: "v",
       level: 1,
@@ -232,6 +262,7 @@ export const ra = {
     },
     autoUnlockDilation: {
       id: 22,
+      name: "Paradoxical Immortality",
       reward: () => `In non-Celestial Realities, Time Dilation is unlocked automatically for free at
         ${formatInt(TimeStudy.dilation.totalTimeTheoremRequirement)} Time Theorems`,
       pet: "v",
@@ -240,6 +271,7 @@ export const ra = {
     },
     vXP: {
       id: 23,
+      name: "Pondering Potential",
       reward: "All Memory Chunks produce more Memories based on total Celestial levels.",
       effect: () => 1 + Ra.totalPetLevel / 50,
       pet: "v",
@@ -248,6 +280,7 @@ export const ra = {
     },
     unlockHardV: {
       id: 24,
+      name: "Abstruse Euphoria",
       reward: () => `Unlock Hard V-Achievements and unlock a Triad Study every ${formatInt(6)} levels.
         Triad Studies are located at the bottom of the Time Studies page`,
       effect: () => Math.floor(Ra.pets.v.level / 6),
@@ -258,6 +291,7 @@ export const ra = {
     },
     continuousTTBoost: {
       id: 25,
+      name: "Knowledge of the Stars",
       reward: "Time Theorems boost all forms of continuous non-dimension production",
       effects: {
         ttGen: () => Math.pow(10, 5 * Ra.theoremBoostFactor()),
@@ -276,6 +310,7 @@ export const ra = {
     },
     achievementTTMult: {
       id: 26,
+      name: "Bright Accomplishment",
       reward: "Achievement multiplier applies to Time Theorem generation",
       effect: () => Achievements.power,
       pet: "v",
@@ -285,7 +320,8 @@ export const ra = {
     },
     achievementPower: {
       id: 27,
-      reward: () => `Achievement multiplier is raised ${formatPow(1.5, 1, 1)}`,
+      name: "Exponential Prize",
+      reward: () => `Achievement multiplier is raised to ${formatPow(1.5, 1, 1)}`,
       effect: 1.5,
       pet: "v",
       level: 25,

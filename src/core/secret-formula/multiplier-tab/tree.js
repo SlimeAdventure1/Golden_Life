@@ -43,7 +43,7 @@ function getProps(resource, tier) {
   return newProps;
 }
 
-// Everything in multiplierTabTree is associated with values in multiplierTabValues. The only explicitly
+// Everything is multiplierTabTree is associated with values in multiplierTabValues. The only explicitly
 // initialized props here are the "root" props which are viewable on the tab with full breakdowns. After the initial
 // specification, all children props are dynamically added based on the arrays in the helper functions above
 export const multiplierTabTree = {

@@ -20,7 +20,7 @@ export default {
   computed: {
     styleObject() {
       return {
-        "background-color": this.value ? "var(--color-good)" : "var(--color-gh-purple)",
+        "--bg-dark": this.value ? "var(--color-good)" : "var(--color-gh-purple)",
       };
     },
   }

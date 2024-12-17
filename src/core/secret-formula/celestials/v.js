@@ -16,50 +16,68 @@ export const v = {
     realities: {
       id: 1,
       name: "Realities",
+      color: "var(--color-reality)",
+      symbol: "Ϟ",
       resource: () => Currency.realities.value,
       requirement: 10000,
       format: x => formatInt(x),
       progress: () => Currency.realities.value / 10000,
+      progress2: () => Currency.realities.value / 10000,
     },
     eternities: {
       id: 2,
       name: "Eternities",
+      color: "var(--color-eternity)",
+      symbol: "Δ",
       resource: () => Currency.eternities.value,
       requirement: 1e70,
       format: x => format(x, 2),
       progress: () => emphasizeEnd(Currency.eternities.value.pLog10() / 70),
+      progress2: () => Currency.eternities.value.pLog10() / 70,
     },
     infinities: {
       id: 3,
       name: "Infinities",
+      color: "var(--color-infinity)",
+      symbol: "∞",
       resource: () => Currency.infinitiesTotal.value,
       requirement: 1e160,
       format: x => format(x, 2),
       progress: () => emphasizeEnd(Currency.infinitiesTotal.value.pLog10() / 160),
+      progress2: () => Currency.infinitiesTotal.value.pLog10() / 160,
     },
     dilatedTime: {
       id: 4,
       name: "Dilated Time",
+      color: "var(--color-dilation)",
+      symbol: "Ψ",
       resource: () => player.records.thisReality.maxDT,
       requirement: DC.E320,
       format: x => format(x, 2),
       progress: () => emphasizeEnd(player.records.thisReality.maxDT.pLog10() / 320),
+      progress2: () => player.records.thisReality.maxDT.pLog10() / 320,
     },
     replicanti: {
       id: 5,
       name: "Replicanti",
+      color: "var(--color-replicanti)",
+      symbol: "Ξ",
       resource: () => player.records.thisReality.maxReplicanti,
       requirement: DC.E320000,
       format: x => format(x, 2),
       progress: () => emphasizeEnd(player.records.thisReality.maxReplicanti.pLog10() / 320000),
+      progress2: () => player.records.thisReality.maxReplicanti.pLog10() / 320000,
     },
     realityMachines: {
       id: 6,
       name: "Reality Machines",
+      color: "var(--color-teresa--base)",
+      symbol: '<i class="fas fa-cog"/>',
       resource: () => Currency.realityMachines.value,
       requirement: 1e60,
       format: x => format(x, 2),
       progress: () => emphasizeEnd(Currency.realityMachines.value.pLog10() / 60),
+      progress2: () => Currency.realityMachines.value.pLog10() / 60,
     },
   },
   runUnlocks: [
@@ -92,7 +110,8 @@ export const v = {
     {
       id: 2,
       name: "Se7en deadly matters",
-      description: value => `Get ${format(Decimal.pow10(value))} Infinity Points in Eternity Challenge 7.`,
+      description: value => `Get ${format(Decimal.pow10(value))} Infinity Points in 
+      ${player.options.naming.challenges?EternityChallenge(7).name:"Eternity Challenge 7"}.`,
       values: [6e5, 7.2e5, 8.4e5, 9.6e5, 1.08e6, 1.2e6],
       condition: () => V.isRunning && EternityChallenge(7).isRunning,
       currentValue: () => Currency.infinityPoints.value.log10(),
@@ -105,8 +124,9 @@ export const v = {
     {
       id: 3,
       name: "Young Boy",
-      description: value => `Get ${format(Decimal.pow10(value))} Antimatter in Eternity Challenge 12 without
-        unlocking Time Dilation.`,
+      description: value => `Get ${format(Decimal.pow10(value))} Antimatter in 
+      ${player.options.naming.challenges?EternityChallenge(12).name:"Eternity Challenge 12"} 
+      without unlocking Time Dilation.`,
       values: [400e6, 450e6, 500e6, 600e6, 700e6, 800e6],
       condition: () => V.isRunning && EternityChallenge(12).isRunning && !PlayerProgress.dilationUnlocked(),
       currentValue: () => Currency.antimatter.value.log10(),
@@ -132,7 +152,8 @@ export const v = {
     {
       id: 5,
       name: "Matterception",
-      description: value => `Get ${formatInt(value)} Dimension Boosts while Dilated and inside Eternity Challenge 5.`,
+      description: value => `Get ${formatInt(value)} Dimension Boosts while Dilated and inside 
+      ${player.options.naming.challenges?EternityChallenge(5).name:"Eternity Challenge 5"}.`,
       values: [51, 52, 53, 54, 55, 56],
       condition: () => V.isRunning && player.dilation.active && EternityChallenge(5).isRunning,
       currentValue: () => DimBoost.purchasedBoosts,
@@ -161,7 +182,7 @@ export const v = {
       id: 7,
       name: "Post-destination",
       description: value => `Get ${formatInt(400000)} Time Theorems with a /${format(Decimal.pow10(value), 2, 2)}
-        Black Hole or slower, without discharging or entering EC12.`,
+        Black Hole or slower, without discharging or entering ${player.options.naming.challenges?EternityChallenge(12).name:"EC12"}.`,
       values: [100, 150, 200, 250, 300],
       condition: () => V.isRunning,
       currentValue: () => (

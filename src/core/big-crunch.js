@@ -41,8 +41,10 @@ export function bigCrunchResetRequest(disableAnimation = false) {
   if (!disableAnimation && player.options.animations.bigCrunch && !FullScreenAnimationHandler.isDisplaying) {
     bigCrunchAnimation();
     setTimeout(bigCrunchReset, 1000);
+    AudioManagement.playSound("reset_implode")
   } else {
     bigCrunchReset();
+    AudioManagement.playSound("reset_crunch")
   }
 }
 

@@ -860,17 +860,16 @@ completed both EC11 and EC12 five times each.
 Dilating time will start a modified Eternity, called Time Dilation, in which all of your Antimatter/Infinity/Time
 Dimension multipliers’ <i>exponents</i> and the tickspeed multipliers’ <i>exponent</i> will be raised to
 ${formatPow(0.75, 2, 2)}, significantly reducing them. If you can reach ${formatPostBreak(Number.MAX_VALUE, 2)} IP
-to complete this Dilated Eternity, you will be rewarded with a new resource called Tachyon Particles.
+to complete this Dilated Eternity, you will be rewarded with a new resource called Tachyons.
 <br>
 <br>
-You can Dilate as many times as you want, but Tachyon Particles cannot be "farmed" like other resources. Tachyon
-Particles are never reduced, only increased, and they are increased up to a cap based on your TP multipliers and
+You can Dilate as many times as you want, but Tachyons cannot be "farmed" like other resources. Tachyons are never reduced, only increased, and they are increased up to a cap based on your TP multipliers and
 antimatter earned in the current Dilation. As a result, you generally cannot increase your TP unless
 you have gained a TP multiplier or are able to significantly increase your antimatter in Dilation.
 <br>
 <br>
-Tachyon Particles generate another currency called Dilated Time. Dilated Time is translated into Tachyon Galaxies by
-reaching thresholds similarly to the Tickspeed Upgrades gained from Time Dimensions. These Tachyon Galaxies are like
+Tachyons generate another currency called Dilated Time. Dilated Time is translated into Tachyonic Galaxies by
+reaching thresholds similarly to the Tickspeed Upgrades gained from Time Dimensions. These Tachyonic Galaxies are like
 Replicanti Galaxies in that they affect tickspeed as if they were Antimatter Galaxies but they do not increase the cost
 of your next Antimatter Galaxy.
 <br>
@@ -922,7 +921,7 @@ is higher RM gain than linear above ${formatPostBreak(DC.C10P16000D3)} EP.
 <br>
 <br>
 Glyph level scales off of a combination of Eternity Points, Replicanti, and Dilated Time, with a minimum level of
-${formatInt(1)}. The type, effects, and rarity of Glyphs are randomized.
+${formatInt(1)}. The type, effects, and quality of Glyphs are randomized.
 <br>
 <br>
 You get exactly ${formatInt(1)} Perk Point per Reality.
@@ -944,15 +943,15 @@ A Glyph is an equippable object that has four attributes:
 <b>Level</b> - This contributes to how strong your Glyph is, and it scales based how much of various
 resources you obtained in the Reality you gained it from.
 <br>
-<b>Rarity</b> - This is a percentage, between ${formatPercents(0)} and ${formatPercents(1)}, which also
+<b>Quality</b> - This is a percentage, between ${formatPercents(0)} and ${formatPercents(1)}, which also
 affects the strength of your Glyph. This is random, but can be influenced by various upgrades.
 The percentage is effectively a quality
 rating, higher values are better. Specific ranges of rarities are given names, such as Common or Uncommon.
 <br>
 <b>Effects</b> - These are the boosts that equipping the Glyph will give you, and can contain up to four effects.
-Glyphs with higher level or rarity will generally have more effects than weaker Glyphs.
+Glyphs with higher level or quality will generally have more effects than weaker Glyphs.
 <br>
-<b>Note: Your first Glyph will have a fixed effect and rarity, but its level will scale based on your progress before
+<b>Note: Your first Glyph will have a fixed effect and quality, but its level will scale based on your progress before
 any Reality content. Once you receive a Glyph, its attributes cannot be changed.</b>
 <br>
 <br>
@@ -1227,13 +1226,13 @@ Teresa is the first Celestial. They are unlocked by Achievement 147, which requi
 <br>
 On the main screen, there is a bar with a button above it that says "Pour RM". This allows you to put your RM into the
 container for a Reality Machine multiplier. RM which has been poured into the container cannot be retrieved.
-When you reach ${format(TeresaUnlocks.run.price)} RM inside of the container, you unlock Teresa's Reality.
+When you reach ${format(TeresaUnlocks.run.price)} RM inside of the container, you unlock Teresa's Reality / Michanipolis.
 <br>
 <br>
 When you complete Teresa's Reality,
 ${Teresa.runCompleted
     ? "your Glyph Sacrifice is multiplied based on the amount of antimatter gained during the run"
-    : "<div style='color: var(--color-bad);'>(complete Teresa's Reality to see the reward)</div>"}.
+    : "<div style='color: var(--color-bad);'>(complete Teresa's Reality / Michanipolis to see the reward)</div>"}.
 Completing Teresa's Reality is only part of the story; you need to keep pouring RM in order to progress. Once
 you are at ${format(TeresaUnlocks.effarig.price)} RM in the container, you will unlock the next Celestial.
 <br>
@@ -1261,7 +1260,7 @@ Reality from now on.
 <br>
 <br>
 Using Relic Shards, you can purchase multiple upgrades (see "Advanced Glyph Mechanics") which improve your Glyphs and
-allow you to filter them based on their effects and rarity when you are doing fully automated Realities.
+allow you to filter them based on their effects and quality when you are doing fully automated Realities.
 <br>
 <br>
 Effarig's final unlock is their own Reality at ${format(GameDatabase.celestials.effarig.unlocks.run.cost)} Relic
@@ -1308,24 +1307,24 @@ particular Glyph's type. Glyphs of the type you have the least sacrifice value i
 This mode does not have a threshold and always sacrifices your Glyphs.
 <br>
 <b>Number of effects:</b> Glyphs are given a score equal to the number of effects they have, and when multiple
-Glyphs have the same effect count, Glyphs with higher rarity will be picked. The threshold they are
+Glyphs have the same effect count, Glyphs with higher quality will be picked. The threshold they are
 compared to is specified by your input in the text box.
 <br>
-<b>Rarity Threshold Mode:</b> Glyphs are given a score equal to their rarity percent. The comparison threshold
+<b>Quality Threshold Mode:</b> Glyphs are given a score equal to their quality percent. The comparison threshold
 can be set individually per Glyph type.
 <br>
 <br>
 Additionally, there are two more advanced modes with some additional flexibility. You may not need these initially, but
 they can come in handy later on:
 <br>
-<b>Specified Effect Mode:</b> Glyphs are given a score equal to their rarity and checked against the rarity threshold
+<b>Specified Effect Mode:</b> Glyphs are given a score equal to their quality and checked against the quality threshold
 you specify, but this score is modified based on your inputs for effects. The Glyph will be checked for having a minimum
 number of effects and having all of the effects you choose, and its score is lowered by ${formatInt(200)} for every
 missing effect. This guarantees that any Glyph that does not have the effects you want will be below the threshold. You
 can forbid specific Glyph <i>types</i> by setting impossible conditions (eg. at least ${formatInt(6)} effects on a Power
 Glyph will prevent Power Glyphs from being selected).
 <br>
-<b>Effect Score Mode:</b> The score of a Glyph is calculated from its rarity plus the score of each effect it has,
+<b>Effect Score Mode:</b> The score of a Glyph is calculated from its quality plus the score of each effect it has,
 and you can set the threshold and values of each effect individually. Some possible ways this could be used:
 <br>
 - Giving a weaker effect a value of ${formatInt(5)} allows you to keep Glyphs without that effect as long as they are
@@ -1339,7 +1338,7 @@ will let you forbid entire types like Specified Effect Mode as well
 <br>
 <br>
 The Glyph Filter mode is a global setting which applies to all Glyph types at once; for example, you cannot filter
-power Glyphs with "Rarity Threshold" and time Glyphs with "Specified Effect". Selecting one mode will require
+power Glyphs with "Quality Threshold" and time Glyphs with "Specified Effect". Selecting one mode will require
 you to configure every Glyph type within its settings for proper filtering. Each filter mode has its own settings
 which will be kept if you switch to another mode.
 <br>
@@ -1353,7 +1352,7 @@ Glyph Presets are purchasable for ${format(GameDatabase.celestials.effarig.unloc
 Shards. This unlocks ${formatInt(7)} slots that allow you to save your currently equipped Glyphs into sets.
 You cannot overwrite a set, you must delete it first. When you load a set, each Glyph in it is found and equipped.
 If any are not found, it will display a warning, but equip all the rest regardless.
-When loading a set, you can be Level and/or Rarity sensitive. The best Glyph from the possible Glyphs
+When loading a set, you can be Level and/or Quality sensitive. The best Glyph from the possible Glyphs
 will always be the one equipped. Just like other groups of circular Glyphs, you can click any of them
 in order to bring up a modal summarizing the whole set of Glyphs.
 `,
@@ -1564,8 +1563,8 @@ In addition to all their other properties, Glyphs now have a <i>refinement value
 its associated Alchemy Resource it is worth. This value is based on the cube of the Glyph's level, scaled
 so that level ${formatInt(10000)} Glyphs correspond to ${formatInt(10000)} Alchemy Resources. A single Glyph itself,
 however, only gives ${formatPercents(GlyphSacrificeHandler.glyphRefinementEfficiency)} of this value when refined.
-These are values for ${formatPercents(1)} rarity Glyphs; Glyphs of lower rarity still have the same cap but give
-proportionally less resources. For example, a ${formatPercents(0.5)} rarity Glyph will give only half as much.
+These are values for ${formatPercents(1)} quality Glyphs; Glyphs of lower quality still have the same cap but give
+proportionally less resources. For example, a ${formatPercents(0.5)} quality Glyph will give only half as much.
 <br>
 <br>
 Alchemy Resources cannot be gained indefinitely; there is a per-resource cap which is based on the highest refinement
@@ -1820,19 +1819,35 @@ In addition, each Rift offers three milestone rewards for filling them up to a c
       name: "The Galaxy Generator",
       info: () => `
 When you reach ${formatInt(100)}% Recursion/Dispersion/Destruction, you unlock the <b>Galaxy Generator</b>, which can
-passively generate Galaxies. Generated Galaxies are like Replicanti Galaxies and Tachyon Galaxies in that they affect
+passively generate Galaxies. Generated Galaxies are like Replicanti Galaxies and Tachyonic Galaxies in that they affect
 tickspeed as if they were Antimatter Galaxies, but they do not increase the cost of your next Antimatter Galaxy. You
 also unlock five new upgrades. The first upgrade increases the base amount of Galaxies generated. The other four
 upgrades then give a multiplier to this base amount. The first two upgrades can be bought by spending antimatter and
-Generated Galaxies. Replicanti or Tachyon Galaxies cannot be spent for purchasing those upgrades.
+Generated Galaxies. Replicanti or Tachyonic Galaxies cannot be spent for purchasing those upgrades.
 <br>
 <br>
 The <b>Galaxy Generator</b> has a maximum number of Galaxies it can generate, which can only be increased by draining
-Rifts once the current cap has been reached.`,
+Rifts once the current cap has been reached.
+<br>
+<br>
+Est-ce la fin?
+`,
       isUnlocked: () => Pelle.hasGalaxyGenerator,
       tags: ["reality", "antimatter", "lategame", "endgame", "final", "pelle", "galaxy",
         "galaxies", "generator", "celestial"],
       tab: "celestials/pelle"
+    },
+    {
+      name: "VGhlIFNwb3Qu",
+      info: () => `
+      ${PlayerProgress.infinityUnlocked()? `VHJhcHBlZCBpbiBhIGJvdW5kbGVzcyBidXQgbGlnaHRsZXNzIHNwYWNlLg==<br><br>`: ""}
+      ${PlayerProgress.eternityUnlocked()? `RGl2aW5nIGluIHRoZSBoZWF0IGRlYXRoIG9mIHRoZSB1bml2ZXJzZS4=<br><br>`: ""}
+      ${PlayerProgress.realityUnlocked()? `VGhlIFJlYWxpdHkgeW91IGxpdmUgaW4gaXMgY3J1ZWwgdG8geW91Lg==<br><br>`: ""}
+      ${Teresa.isUnlocked? `RmVhciBjYW5ub3QgZXhpc3QgaWYgdGhlcmUgaXMgbm8gdW5rbm93bi4=<br><br>Tm8gbWF0dGVyIGhvdyBkYXJrLCBkZWVwIHRoaXMgcGxhY2UgaXMsIHdhdGNoIHRoZSBzcG90Lg==`: "<span style='color: var(--color-bad);'><b>V2F0Y2ggdGhlIHNwb3Qu</b></span>"}
+`,
+      isUnlocked: () => ui.view.theme === "S13",
+      tags: ["spot"],
+      tab: ""
     }
   ]
 };

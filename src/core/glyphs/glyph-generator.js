@@ -61,7 +61,6 @@ export const GlyphGenerator = {
   get isUniformityActive() {
     return player.realities <= 5 * this.uniformityGroups;
   },
-
   fakeSeed: Date.now() % Math.pow(2, 32),
   fakeSecondGaussian: null,
   /* eslint-disable lines-between-class-members */
@@ -191,7 +190,20 @@ export const GlyphGenerator = {
       effects: effectBitmask,
     };
   },
-
+  heliosGlyph() {
+    // Store the pre-Reality EP value in the glyph's rarity
+    const effects = orderedEffectList.filter(effect => effect.match("helios*"));
+    const effectBitmask = makeGlyphEffectBitmask(effects);
+    return {
+      id: undefined,
+      idx: null,
+      type: "helios",
+      strength: 3.5,
+      level: 1,
+      rawLevel: 1,
+      effects: effectBitmask,
+    };
+  },
   musicGlyph() {
     const rng = new GlyphGenerator.MusicGlyphRNG();
     const glyph =

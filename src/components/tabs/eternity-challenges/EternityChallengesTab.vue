@@ -68,7 +68,10 @@ export default {
     isChallengeVisible(challenge) {
       return challenge.completions > 0 || challenge.isUnlocked || challenge.hasUnlocked ||
         (this.showAllChallenges && PlayerProgress.realityUnlocked());
-    }
+    },
+    isChallengeAvailable(challenge) {
+      return challenge.completions > 0 || challenge.isUnlocked
+    },
   }
 };
 </script>
@@ -114,12 +117,15 @@ export default {
     <div v-else>
       You have seen all {{ formatInt(12) }} Eternity Challenges.
     </div>
+    <br>
     <ChallengeGrid
       v-slot="{ challenge }"
       :challenges="challenges"
       :is-challenge-visible="isChallengeVisible"
     >
-      <EternityChallengeBox :challenge="challenge" />
+      <EternityChallengeBox 
+      :challenge="challenge"
+      />
     </ChallengeGrid>
   </div>
 </template>

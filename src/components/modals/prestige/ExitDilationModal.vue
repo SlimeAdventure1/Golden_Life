@@ -17,7 +17,7 @@ export default {
   computed: {
     gainText() {
       if (this.tachyonGain.lte(0)) return `not gain anything`;
-      return `gain ${quantify("Tachyon Particle", this.tachyonGain, 2, 1)}`;
+      return `gain ${quantify("Tachyon", this.tachyonGain, 2, 1)}`;
     },
     isInEC() {
       return Player.anyChallenge instanceof EternityChallengeState;

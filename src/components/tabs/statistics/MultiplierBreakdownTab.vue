@@ -126,23 +126,37 @@ export default {
 .c-multiplier-subtab-btn {
   width: 100%;
   height: 4rem;
-  margin: 0 0.5rem -0.1rem;
-  z-index: 1;
+  margin: 0rem 0.5rem -0.1rem;
   text-align: center;
   font-family: Typewriter;
   font-size: 1rem;
-  font-weight: bold;
   color: var(--color-text);
-  background-color: var(--color-base);
+  background: linear-gradient(transparent,transparent),var(--leg-base);
   border: var(--var-border-width, 0.2rem) solid;
+  border-image: var(--leg-border) 3;
   border-radius: var(--var-border-radius, 0.5rem) var(--var-border-radius, 0.5rem) 0 0;
   cursor: pointer;
+  box-shadow: 0rem -.5rem 1.5rem #00000080 inset;
+  text-shadow: 0.1rem 0.1rem 0.3rem var(--color-text-inverted), -0.1rem -0.1rem 0.3rem var(--color-text-inverted);
+  position: relative;
+  top: 0.5rem;
+  transition-duration: 0.15s;
 }
-
+.c-multiplier-subtab-btn:hover {
+  top: 0rem;
+  box-shadow: 0rem 1rem 2rem -1rem #00000080 inset;
+  background: linear-gradient(var(--color-accent) -50%,transparent),var(--leg-base);
+}
 .c-multiplier-subtab-btn--active {
+  top: 0rem;
+  z-index: 1;
+  font-weight: bold;
+  box-shadow: 0rem 1rem 2rem -1rem #00000080 inset;
+  background: linear-gradient(var(--color-accent) -100%,transparent),var(--leg-base);
   border-bottom: none;
   padding-bottom: 0.2rem;
   cursor: default;
+  pointer-events: none;
 }
 
 .c-multiplier-tab-text-line {
@@ -160,10 +174,10 @@ export default {
   align-items: center;
   font-size: 40rem;
   color: var(--color-text);
-  text-shadow: 0 0 3rem;
+  text-shadow: 0 0 .75rem var(--color-accent),0 0 .75rem var(--color-accent),0 0 3rem;
   pointer-events: none;
   user-select: none;
-  opacity: 0.2;
+  opacity: 0.15;
   z-index: 1;
 }
 </style>

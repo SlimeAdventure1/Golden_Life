@@ -1,6 +1,11 @@
 <script>
+import FillBar from "@/components/FillBar";
+
 export default {
   name: "RealityButton",
+  components: {
+    FillBar
+  },
   data() {
     return {
       canReality: false,
@@ -12,13 +17,15 @@ export default {
       realityTime: 0,
       glyphLevel: 0,
       nextGlyphPercent: 0,
+      nextGlyphPercentWidth: 0,
       nextMachineEP: 0,
       shardsGained: 0,
       currentShardsRate: 0,
       bestShardRate: 0,
       bestShardRateVal: 0,
       ppGained: 0,
-      celestialRunText: ["", "", "", "", ""]
+      celestialRunText: ["", "", "", "", ""],
+      wobbly: false,
     };
   },
   computed: {
@@ -46,7 +53,7 @@ export default {
     },
     formatGlyphLevel() {
       if (this.glyphLevel >= 10000) return `Glyph level: ${formatInt(this.glyphLevel)}`;
-      return `Glyph level: ${formatInt(this.glyphLevel)} (${this.nextGlyphPercent} to next)`;
+      return `Glyph level: ${formatInt(this.glyphLevel)} <i>(${this.nextGlyphPercent} to next)</i>`;
     },
     showShardsRate() {
       return this.currentShardsRate;
@@ -59,15 +66,16 @@ export default {
         "c-reality-button--unlocked": this.canReality,
         "c-reality-button--locked": !this.canReality,
         "c-reality-button--special": this.showSpecialEffect,
+        "a-wobble-multi": this.wobbly
       };
     }
   },
   methods: {
-    percentToNextGlyphLevelText() {
+    percentToNextGlyphLevelText(unfixed) {
       const glyphState = getGlyphLevelInputs();
       let level = glyphState.actualLevel;
       if (!isFinite(level)) level = 0;
-      const decimalPoints = this.glyphLevel > 1000 ? 0 : 1;
+      const decimalPoints = unfixed ? 2 : this.glyphLevel > 1000 ? 0 : 1;
       return `${formatPercents(Math.min(((level - Math.floor(level))), 0.999), decimalPoints)}`;
     },
     update() {
@@ -96,13 +104,15 @@ export default {
       this.machinesGained = this.projectedRM.clampMax(MachineHandler.distanceToRMCap);
       this.realityTime = Time.thisRealityRealTime.totalMinutes;
       this.glyphLevel = gainedGlyphLevel().actualLevel;
-      this.nextGlyphPercent = this.percentToNextGlyphLevelText();
+      this.nextGlyphPercent = this.percentToNextGlyphLevelText(false);
+      this.nextGlyphPercentWidth = this.glyphLevel > 10000 ?"0%":this.percentToNextGlyphLevelText(true);
       this.nextMachineEP = EPforRM(this.machinesGained.plus(1));
       this.ppGained = multiplier;
       this.shardsGained = Effarig.shardsGained * multiplier;
       this.currentShardsRate = (this.shardsGained / Time.thisRealityRealTime.totalMinutes);
       this.bestShardRate = player.records.thisReality.bestRSmin * multiplier;
       this.bestShardRateVal = player.records.thisReality.bestRSminVal * multiplier;
+      this.wobbly = player.options.animations.wobbly;
 
       const teresaReward = this.formatScalingMultiplierText(
         "Glyph Sacrifice",
@@ -148,11 +158,19 @@ export default {
     >
       <div class="l-reality-button__contents">
         <template v-if="canReality">
-          <div class="c-reality-button__header">
-            Make a new Reality
+          <div style="z-index: 1;position: relative;">
+            <div class="o-prestige-description c-reality-button__header">
+              Make a new Reality
+            </div>
+            <div>{{ formatMachinesGained }} {{ formatMachineStats }}</div>
+            <div v-html="formatGlyphLevel"/>
           </div>
-          <div>{{ formatMachinesGained }} {{ formatMachineStats }}</div>
-          <div>{{ formatGlyphLevel }}</div>
+          <div class="o-fill-container">
+            <FillBar
+            class="o-fill-bar--reality"
+            :width="nextGlyphPercentWidth"
+          />
+        </div>
         </template>
         <template v-else-if="hasRealityStudy">
           <div>Get {{ format("1e4000") }} Eternity Points to unlock a new Reality</div>
@@ -165,21 +183,22 @@ export default {
           class="infotooltiptext"
         >
           <div>Other resources gained:</div>
-          <div>{{ quantifyInt("Perk Point", ppGained) }}</div>
-          <div v-if="shardsGained !== 0">
+          <div class="o-descriptionBlock">{{ quantifyInt("Perk Point", ppGained) }}</div>
+          <div v-if="shardsGained !== 0" class="o-descriptionBlock">
             {{ shardsGainedText }} ({{ format(currentShardsRate, 2) }}/min)
             <br>
             Peak: {{ format(bestShardRate, 2) }}/min at {{ format(bestShardRateVal, 2) }} RS
           </div>
           <div
             v-for="(celestialInfo, i) in celestialRunText"
+            v-if="celestialInfo[0]"
             :key="i"
           >
-            <span v-if="celestialInfo[0]">
+            <div v-if="celestialInfo[0]" class="o-descriptionBlock">
               {{ celestialInfo[1] }}
               <br>
               {{ celestialInfo[2] }}
-            </span>
+            </div>
           </div>
         </div>
       </div>
@@ -188,5 +207,8 @@ export default {
 </template>
 
 <style scoped>
-
+.c-reality-button--unlocked:hover>.l-reality-button__contents>.o-fill-containerl > .o-fill-bar--reality,
+.c-reality-button--special>.l-reality-button__contents>.o-fill-container > .o-fill-bar--reality {
+  background: linear-gradient(transparent -100%,var(--color-text) 300%);
+}
 </style>

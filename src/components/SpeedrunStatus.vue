@@ -144,8 +144,9 @@ export default {
   z-index: 5;
   font-size: 1.2rem;
   color: var(--color-text);
-  background-color: var(--color-base);
-  border: var(--var-border-width, 0.2rem) solid var(--color-accent);
+  background: var(--leg-base);
+  border: var(--var-border-width, 0.2rem) solid ;
+  border-image: var(--leg-border) 3;
   padding: 0.8rem 2rem;
   pointer-events: auto;
   -webkit-user-select: none;

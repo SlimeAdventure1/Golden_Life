@@ -25,6 +25,7 @@ export default {
       showTotalCompletions: false,
       isRunning: false,
       isUnlocked: false,
+      naming: false,
     };
   },
   computed: {
@@ -33,6 +34,9 @@ export default {
     },
     id() {
       return this.study.id;
+    },
+    label() {
+      return EternityChallenge(this.study.id).config.label;
     },
     config() {
       return this.study.config;
@@ -61,6 +65,7 @@ export default {
       this.showTotalCompletions = !Enslaved.isRunning || id !== 1;
       this.isRunning = EternityChallenge.current?.id === id;
       this.isUnlocked = ec.isUnlocked;
+      this.naming = player.options.naming.challenges
       if (!this.hasRequirement || id > 10) return;
       const requirement = this.requirement;
       if (this.hasNumberRequirement) {
@@ -83,7 +88,7 @@ export default {
     >
       EC{{ id }}
     </HintText>
-    Eternity Challenge {{ id }}
+    {{ naming ? label : "Eternity Challenge " + id}}
     ({{ formatInt(completions) }}<span v-if="showTotalCompletions">/{{ formatInt(5) }}</span>)
     <template v-if="hasRequirement">
       <br>

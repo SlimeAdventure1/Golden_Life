@@ -47,7 +47,7 @@ export default {
     @confirm="handleYesClick"
   >
     <template #header>
-      You are about to {{ isRestarting ? "restart" : "exit" }} {{ challengeName }}
+      You are about to {{ isRestarting ? "restart" : "exit" }} <br> {{ challengeName }}
     </template>
 
     <div class="c-modal-message__text">

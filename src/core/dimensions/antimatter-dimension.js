@@ -6,11 +6,14 @@ import { DimensionState } from "./dimension";
 // and invalidated every update.
 export function antimatterDimensionCommonMultiplier() {
   let multiplier = DC.D1;
-
+  let dimountmult = DC.D1
   multiplier = multiplier.times(Achievements.power);
   multiplier = multiplier.times(ShopPurchase.dimPurchases.currentMult);
   multiplier = multiplier.times(ShopPurchase.allDimPurchases.currentMult);
-
+  for (let i = 2; i <= 8; i++){
+    dimountmult = AntimatterDimension(i).amount.gt(0)?dimountmult.times(1.25):dimountmult
+  }
+  multiplier = multiplier.times(dimountmult);
   if (!EternityChallenge(9).isRunning) {
     multiplier = multiplier.times(Currency.infinityPower.value.pow(InfinityDimensions.powerConversionRate).max(1));
   }
@@ -672,5 +675,6 @@ export const AntimatterDimensions = {
     }
     // Production may overshoot the goal on the final tick of the challenge
     if (hasBigCrunchGoal) Currency.antimatter.dropTo(Player.infinityGoal);
+    if (Currency.antimatter.value.exponent>=9e15&&GameEnd.endState<END_STATE_MARKERS.FADE_AWAY) Currency.antimatter.dropTo(Player.infinityLimit);
   }
 };

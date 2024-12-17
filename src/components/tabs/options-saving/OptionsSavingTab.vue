@@ -134,7 +134,7 @@ export default {
           Import save
         </OptionsButton>
         <OptionsButton
-          class="o-primary-btn--option_font-x-large"
+          class="o-primary-btn--option_font-x-large o-primary-btn--hard_reset"
           :class="{ 'o-pelle-disabled-pointer': creditsClosed }"
           onclick="Modal.hardReset.show()"
         >
@@ -217,8 +217,9 @@ export default {
           Change Glyph RNG Seed
         </OptionsButton>
       </div>
-      <OpenModalHotkeysButton />
     </div>
+    <br>
+    <OpenModalHotkeysButton />
     <h2
       v-if="cloudAvailable"
       class="c-cloud-options-header"
@@ -313,3 +314,14 @@ export default {
     </div>
   </div>
 </template>
+
+<style scoped>
+ .o-primary-btn--hard_reset{
+  --bg-dark: #880000 !important;
+  --border: red !important;
+ }
+ .o-primary-btn--hard_reset:hover{
+  --bg-bright: #440000 !important;
+  --bg-dark: red !important;
+ }
+</style>

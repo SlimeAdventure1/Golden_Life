@@ -102,8 +102,8 @@ export default {
       dblClickZoomEnabled: false,
       center: false,
       fit: false,
-      zoomScaleSensitivity: 0.3,
-      minZoom: 0.64,
+      zoomScaleSensitivity: 0.25,
+      minZoom: 0.63,
       maxZoom: 1.5,
       beforePan: panLimiter,
     });
@@ -361,7 +361,7 @@ const CelestialNavigationViewportCache = {
           <feGaussianBlur
             in="SourceGraphic"
             result="blurred"
-            stdDeviation="2"
+            stdDeviation="5"
           />
           <feMerge>
             <feMergeNode in="blurred" />
