@@ -151,7 +151,7 @@ export default {
   height:30rem;
   margin-bottom: 1rem;
   border: var(--var-border-width, 0.3rem) solid;
-  border-image: var(--leg-border) 3 round;
+  border-image: var(--leg-border-render) 3 round;
   background-size: 54rem 30rem;
   background-position: center;
 }
