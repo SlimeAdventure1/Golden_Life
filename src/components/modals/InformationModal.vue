@@ -36,7 +36,7 @@ export default {
       <InformationModalButton
         name="GitHub repository"
         icon="fa-brands fa-github"
-        link="https://github.com/IvarK/AntimatterDimensionsSourceCode"
+        link="https://github.com/KrutaMason/ADLegendary"
       />
       <InformationModalButton
         name="Credits"

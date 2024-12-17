@@ -203,7 +203,7 @@ export default {
       const isReality = this.type === "reality";
       return {
         "pointer-events": this.onTouchDevice ? undefined : "none",
-        "border-image-source":isReality ?"var(--leg-border-reality)":"var(--leg-border)",
+        "border-image-source":isReality ?"var(--leg-border-reality-render)":"var(--leg-border-render)",
         //"border-image":`linear-gradient(${!isReality?borderColor:"var(--color-reality)"},white) 1`,
         //"box-shadow":`0 0 0 0.2rem ${this.baseColor} inset,0 0 0 0.4rem ${borderColor}44 inset`,
         color: this.textColor,
@@ -212,7 +212,7 @@ export default {
         "--effect-color":bg?"#1c751c":"#76EE76",
         "background-position":"center",
         "background-image": 
-        `url(../images/glyphs-alchemy/background-glyph_${bg?`transparentlight`:`transparentdark`}.png),
+        `url(images/glyphs-alchemy/background-glyph_${bg?`transparentlight`:`transparentdark`}.png),
         linear-gradient(${bg?"#ffffff":"#000000"} 25%,
         ${!isReality?borderColor:"var(--color-reality)"} 200%)`,
       };
@@ -229,7 +229,7 @@ export default {
         //"box-shadow": `0 0 0.5rem 0.1rem ${color}, 0 0 0.8rem ${color} inset`,
         animation: isReality ? "a-reality-glyph-tooltip-header-cycle 10s infinite" : undefined,
         color: this.textColor,
-        background: `url(../images/glyphs-alchemy/glyph-${bg?`pattern-light`:`pattern`}.png),
+        background: `url(images/glyphs-alchemy/glyph-${bg?`pattern-light`:`pattern`}.png),
         linear-gradient(${!isReality?color:"var(--color-reality)"} -125%, var(--cover) 125%)`,
         "background-position":"center",
         "background-origin": "border-box",

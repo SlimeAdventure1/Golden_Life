@@ -198,8 +198,8 @@ export default {
         border: percents === 0 ? "" : "0.1rem solid transparent",
         color: iconObj?.textColor ?? "black",
         background: isNerf
-          ? `url(../../../images/mult-breakdown-bar.png),repeating-linear-gradient(-45deg, #ff000040 0rem 0.4rem, ${iconObj?.color} 0.4rem 0.8rem)`
-          : `url(../../../images/mult-breakdown-bar.png),linear-gradient(${iconObj?.color},${iconObj?.color})`,
+          ? `url(images/mult-breakdown-bar.png),repeating-linear-gradient(-45deg, #ff000040 0rem 0.4rem, ${iconObj?.color} 0.4rem 0.8rem)`
+          : `url(images/mult-breakdown-bar.png),linear-gradient(${iconObj?.color},${iconObj?.color})`,
         animation:this.mouseoverIndex !== index?"25s a-mult-bar linear infinite":undefined,
         "text-shadow":`0.1rem 0.1rem 0.2rem ${(iconObj?.textColor && iconObj.textColor!=="var(--color-laitela--accent)") ?? "white"}, -0.1rem -0.1rem 0.2rem ${(iconObj?.textColor && iconObj.textColor!=="var(--color-laitela--accent)") ?? "white"}`,
         "box-shadow": `inset 0 0 0.5rem 0 black, inset 0 0 0 0.1rem ${iconObj?.color}`
@@ -473,7 +473,7 @@ export default {
   border-image: var(--leg-border) 3;
   padding: 0.5rem;
   font-weight: normal;
-  background: linear-gradient(transparent,var(--color-accent) 500%),var(--leg-base);
+  background: linear-gradient(transparent,var(--color-accent) 500%),var(--leg-base-render);
   background-position: center;
   box-shadow: 0rem -1rem 2rem #00000080 inset;
   text-shadow: 0.1rem 0.1rem 0.3rem var(--color-text-inverted);

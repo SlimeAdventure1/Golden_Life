@@ -401,7 +401,7 @@ export default {
         `0.1rem 0.2rem 0.3rem ${this.isCursedGlyph?"black":this.bgColor}, -0.04em 0.04em 0.08em ${color}`) : undefined,
         "border-radius": this.circular ? "50%" : "15%",
         "padding-bottom": this.bottomPadding,
-        "background-image": `url(../images/glyphs-alchemy/glyph-${this.bgColor === `black`?`pattern`:`pattern-light`}.png),
+        "background-image": `url(images/glyphs-alchemy/glyph-${this.bgColor === `black`?`pattern`:`pattern-light`}.png),
         linear-gradient(${this.bgColor} -20%,${this.borderColor} 200%)`,
         //"background-image": `${bgimg},linear-gradient(${this.bgColor} -20%,${this.borderColor} 250%)`,
         //"animation": getRarity(this.glyph.strength).name === "Celestial" ? "10s infinite linear a-celglyph": undefined,

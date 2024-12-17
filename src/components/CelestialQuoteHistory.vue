@@ -123,7 +123,7 @@ export default {
   width:10rem;
   color: var(--color-text);
   text-shadow: var(--text-shadow);
-  background: var(--lighting),linear-gradient(transparent -100%,var(--scoped-cel-color) 200%), var(--leg-base);
+  background: var(--lighting),linear-gradient(transparent -100%,var(--scoped-cel-color) 200%), var(--leg-base-render);
   --lighting:linear-gradient(#ffffff88 -100%,transparent 49%, #00000022 50%, transparent 75%);
   border: var(--var-border-width, 0.1rem) solid var(--scoped-cel-color);
   box-shadow: 0 0 1rem black inset, 0 0 0 0.2rem var(--scoped-cel-color) inset;

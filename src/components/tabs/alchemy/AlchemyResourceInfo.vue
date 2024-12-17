@@ -73,7 +73,7 @@ export default {
     isDoomed: () => Pelle.isDoomed,
     Background(){
       return{
-        background:`linear-gradient(135deg,${this.color} -25%,transparent 37.5%), var(--leg-base)`
+        background:`linear-gradient(135deg,${this.color} -25%,transparent 37.5%), var(--leg-base-render)`
       }
     },
     colorStyle(){

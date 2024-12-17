@@ -131,9 +131,9 @@ export default {
   font-family: Typewriter;
   font-size: 1rem;
   color: var(--color-text);
-  background: linear-gradient(transparent,transparent),var(--leg-base);
+  background: linear-gradient(transparent,transparent),var(--leg-base-render);
   border: var(--var-border-width, 0.2rem) solid;
-  border-image: var(--leg-border) 3;
+  border-image: var(--leg-border-render) 3;
   border-radius: var(--var-border-radius, 0.5rem) var(--var-border-radius, 0.5rem) 0 0;
   cursor: pointer;
   box-shadow: 0rem -.5rem 1.5rem #00000080 inset;

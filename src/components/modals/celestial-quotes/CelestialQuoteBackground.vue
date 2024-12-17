@@ -29,7 +29,7 @@ export default {
     },
     imageDisplay() {
       return {
-        "background-image": `url(../../../../images/quotes/${this.image})`,
+        "background-image": `url(images/quotes/${this.image})`,
         //"image-rendering": "pixelated"
 }},
   },

@@ -54,9 +54,9 @@ export default {
     min-width: 30rem;
     height:60rem;
     border: var(--var-border-width,0.3rem) solid;
-    border-image: var(--leg-border) 3;
+    border-image: var(--leg-border-render) 3;
     box-shadow: var(--box-shadow);
-    background: url(../../../../public/images/upgrades/bought.png),linear-gradient(transparent,var(--color-accent) 500%),var(--leg-base);
+    background: url(../../../../public/images/upgrades/bought.png),linear-gradient(transparent,var(--color-accent) 500%),var(--leg-base-render);
   background-position: center;
     overflow: auto;
     padding: 0.5rem;

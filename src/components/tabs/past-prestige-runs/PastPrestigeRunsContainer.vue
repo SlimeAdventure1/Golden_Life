@@ -318,7 +318,7 @@ export default {
 
 .c-past-runs-prestige {
   text-align: center;
-  background: linear-gradient(transparent,var(--color) 500%),var(--leg-base);
+  background: linear-gradient(transparent,var(--color) 500%),var(--leg-base-render);
   text-shadow: var(--text-shadow);
   min-width:25rem;
   padding:0.5rem 1rem;
