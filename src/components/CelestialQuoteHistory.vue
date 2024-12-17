@@ -136,7 +136,7 @@ export default {
 }
 
 .c-celestial-quote-history--button:hover {
-  background: var(--lighting),linear-gradient(transparent -100%,var(--scoped-cel-color) 100%), var(--leg-base);
+  background: var(--lighting),linear-gradient(transparent -100%,var(--scoped-cel-color) 100%), var(--leg-base-render);
 }
 .s-base--dark .c-celestial-quote-history--button{
   --lighting:linear-gradient(#ffffff88 -100%,transparent 49%, #00000044 50%, transparent)
