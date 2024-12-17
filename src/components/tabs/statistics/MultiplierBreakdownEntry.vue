@@ -470,7 +470,7 @@ export default {
   width: 100%;
   max-width: 100rem;
   border: var(--var-border-width, 0.2rem) solid;
-  border-image: var(--leg-border) 3;
+  border-image: var(--leg-border-render) 3;
   padding: 0.5rem;
   font-weight: normal;
   background: linear-gradient(transparent,var(--color-accent) 500%),var(--leg-base-render);
@@ -487,7 +487,7 @@ export default {
 
 .c-stacked-bars {
   border: var(--var-border-width, 0.3rem) solid;
-  border-image: var(--leg-border) 3;
+  border-image: var(--leg-border-render) 3;
   box-shadow: 0 0 1rem black inset;
   position: relative;
   width: 5rem;
