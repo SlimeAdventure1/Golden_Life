@@ -29,7 +29,7 @@ name: "CelestialPortraitsModal",
       return this.name === "laitela" ? `white` : `var(--color-${this.name}--base)`;
     },
     imageUrl() {
-      return `../images/celestials/portrait_${this.name}.png`;
+      return `../../../../images/celestials/portrait_${this.name}.png`;
     },
   },
   methods: {
