@@ -19,22 +19,26 @@ name: "CelestialPortraitsModal",
   data() {
     return {
         portraitName: undefined,
+        hasMatureContent: false,
     };
   },
   computed: {
     symbol() {
       return this.celestial.symbol;
     },
+    hasAdultDesigns: () => "laitela",
     color() {
       return this.name === "laitela" ? `white` : `var(--color-${this.name}--base)`;
     },
     imageUrl() {
+      if (!this.hasMatureContent && this.name === this.hasAdultDesigns) return `images/celestials/portrait_${this.name}_safe.png`
       return `images/celestials/portrait_${this.name}.png`;
     },
   },
   methods: {
     update() {
       this.portraitName = this.celestial.displayName
+      this.hasMatureContent = player.options.mature
     },
   },
 }

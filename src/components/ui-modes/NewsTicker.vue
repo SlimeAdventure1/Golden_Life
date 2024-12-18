@@ -8,6 +8,7 @@ export default {
   data() {
     return {
       enableAnimation: false,
+      hasMatureContent: false,
       fade:1,
     };
   },
@@ -32,6 +33,7 @@ export default {
         this.$refs.line.innerHTML = this.currentNews.text;
       }
       this.enableAnimation = player.options.news.includeAnimated;
+      this.hasMatureContent = player.options.mature;
       this.fade = GameEnd.endState>1&&GameEnd.endState<END_STATE_MARKERS.CREDITS_START? Math.clamp(1-(GameEnd.endState-3),0,1):1
     },
     restart() {
@@ -67,10 +69,10 @@ export default {
         const isAI = Math.random() < player.options.news.AIChance;
         this.currentNews = GameDatabase.news
           .filter(message => message.id.includes("ai") === isAI)
+          .filter(message => this.hasMatureContent ? !message.id.includes("m") : message)
           .filter(message => canShow(message))
           .randomElement();
       }
-
       this.recentTickers.push(this.currentNews.id);
       while (this.recentTickers.length > player.options.news.repeatBuffer) this.recentTickers.shift();
 
@@ -79,7 +81,10 @@ export default {
       }
 
       let text = this.currentNews.text;
-      if (Pelle.isDoomed) text = Pelle.transitionText(text,"THE END IS THE END IS THE END IS THE END IS THE END IS THE END IS THE END IS THE END IS THE END IS THE END IS THE END IS THE END IS THE END IS THE END IS THE END IS THE END IS THE END IS THE END IS THE END IS THE END IS THE END IS THE END IS THE END",Math.max(Math.min(GameEnd.endState**0.15,1),0))
+      if (Pelle.isDoomed) text = Pelle.transitionText(text,`THE END IS THE END IS THE END 
+      IS THE END IS THE END IS THE END IS THE END IS THE END IS THE END IS THE END IS 
+      THE END IS THE END IS THE END IS THE END IS THE END IS THE END IS THE END IS THE END 
+      IS THE END IS THE END IS THE END IS THE END IS THE END`,Math.max(Math.min(GameEnd.endState**0.15,1),0))
       if (STEAM) {
         window.openNewsLink = openExternalLink;
         text = text.replace(

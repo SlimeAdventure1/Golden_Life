@@ -110,7 +110,8 @@ class QuoteLine {
   }
 
   get image() {
-    return this._image;
+    return !player.options.mature && this._parent._celestial === "laitela" 
+    ? `placeholder_${this._parent._celestial}_safe.png` : this._image;
   }
 }
 

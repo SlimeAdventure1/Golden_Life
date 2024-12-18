@@ -101,7 +101,8 @@ export default {
   transform: translate(-50%, -50%);
   box-shadow:0 0 2rem black inset;
   text-shadow: 0.1rem 0.1rem 0.3rem black,-0.1rem -0.1rem 0.3rem black;
-  background: url(../../../../public/images/glyphs-alchemy/background-glyph_transparentdark.png),linear-gradient(transparent,black 75%),var(--leg-base--render);
+  background: url(../../../../public/images/glyphs-alchemy/background-glyph_transparentdark.png),
+  linear-gradient(transparent,black 75%),var(--leg-base-render);
   background-position: center;
 }
 

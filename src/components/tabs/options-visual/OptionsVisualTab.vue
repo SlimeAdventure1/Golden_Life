@@ -28,6 +28,7 @@ export default {
       prestigePosition: true,
       adbuyersSubtab: true,
       canPosition: true,
+      mature: true,
     };
   },
   computed: {
@@ -52,6 +53,9 @@ export default {
     adbuyersSubtab(newValue) {
       player.options.adbuyersSubtab = newValue;
     },
+    mature(newValue) {
+      player.options.mature = newValue;
+    },
   },
   methods: {
     update() {
@@ -62,6 +66,7 @@ export default {
       this.prestigePosition = options.prestigePosition;
       this.adbuyersSubtab = options.adbuyersSubtab;
       this.canPosition = PlayerProgress.hasBroken;
+      this.mature = options.mature;
     },
   }
 };
@@ -169,6 +174,13 @@ export default {
         >
           Open Sidebar Options
         </OptionsButton>
+      </div>
+      <div class="l-options-grid__row"> 
+        <PrimaryToggleButton
+          v-model="mature"
+          class="o-primary-btn--option l-options-grid__button"
+          label="Mature Content:"
+        />
       </div>
     </div>
     <br>

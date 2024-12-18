@@ -917,12 +917,12 @@ function recursiveTimeOut(fn, iterations, endFn) {
   else setTimeout(() => recursiveTimeOut(fn, iterations - 1, endFn), 0);
 }
 
-function afterSimulation(seconds, playerBefore) {
+function afterSimulation(seconds, playerBefore, newVolume) {
   if (seconds > 600) {
     const playerAfter = deepmergeAll([{}, player]);
     Modal.awayProgress.show({ playerBefore, playerAfter, seconds });
   }
-
+  player.options.audio.volume = newVolume
   GameUI.notify.showBlackHoles = true;
 }
 
@@ -946,6 +946,9 @@ export function simulateTime(seconds, real, fast) {
   }
 
   const playerStart = deepmergeAll([{}, player]);
+
+  let storedVolume = player.options.audio.volume
+  player.options.audio.volume = 0
 
   let totalGameTime;
 
@@ -1015,7 +1018,7 @@ export function simulateTime(seconds, real, fast) {
       loopFn(remaining);
     }
     GameStorage.postLoadStuff();
-    afterSimulation(seconds, playerStart);
+    afterSimulation(seconds, playerStart, storedVolume);
   } else {
     const progress = {};
     ui.view.modal.progressBar = {};
@@ -1074,7 +1077,7 @@ export function simulateTime(seconds, real, fast) {
           GameStorage.postLoadStuff();
         },
         then: () => {
-          afterSimulation(seconds, playerStart);
+          afterSimulation(seconds, playerStart, storedVolume);
         },
         progress
       });

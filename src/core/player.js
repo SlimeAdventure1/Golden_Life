@@ -778,6 +778,7 @@ window.player = {
       comma: 5,
       notation: 9
     },
+    mature: true,
     sidebarDisplayAmount:1,
     sidebarWidth:12.8,
     sidebarResourceType: [0,0,0,0],
@@ -795,9 +796,9 @@ window.player = {
     themeModern: "Normal",
     updateRate: 33,
     audio:{
-      volume:0,
+      volume:1,
       softreset: true,
-      notify:true,
+      notify: true,
     },
     newUI: true,
     naming: {

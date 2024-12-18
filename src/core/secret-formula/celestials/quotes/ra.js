@@ -28,7 +28,7 @@ export const raQuotes = {
     id: 2,
     requirement: () => Ra.pets.teresa.level >= 2,
     lines: [
-      { text: "Te... re... sa... I think I remember.",
+      { text: `Te... re... sa... I think I remember.`,
         //image: "ra_name.png",
         background: primaryBackground("teresa")
       }
@@ -49,7 +49,7 @@ export const raQuotes = {
     id: 4,
     requirement: () => Ra.pets.effarig.level >= 2,
     lines: [
-      { text: "Eff... a... rig. I remember Effarig being friendly.",
+      { text: `Eff... a... rig. I remember Effarig being friendly.`,
         //image: "ra_name.png",
         background: primaryBackground("effarig")
       }
@@ -70,7 +70,7 @@ export const raQuotes = {
     id: 6,
     requirement: () => Ra.pets.enslaved.level >= 2,
     lines: [
-      { text: "I cannot remember this one completely...",
+      { text: `I cannot remember this one completely...`,
         //image: "ra_name.png",
         background: primaryBackground("enslaved")
       }
@@ -80,7 +80,7 @@ export const raQuotes = {
     id: 7,
     requirement: () => Ra.pets.enslaved.level >= 15,
     lines: [
-      { text: "I am starting to remember... Why I am here... Why I am alone...",
+      { text: `I am starting to remember... Why I am here... Why I am alone...`,
         background: primaryBackground("enslaved"),
         //image: "ra_nameless.png"
       }, {
@@ -93,7 +93,7 @@ export const raQuotes = {
     id: 8,
     requirement: () => Ra.pets.v.level >= 2,
     lines: [
-      { text: "Had I met this one? So lonely, yet willingly so...",
+      { text: `Had I met this one? So lonely, yet willingly so...`,
         //image: "ra_name.png",
         background: primaryBackground("v")
       },
@@ -103,7 +103,7 @@ export const raQuotes = {
     id: 9,
     requirement: () => Ra.pets.v.level >= 15,
     lines: [
-      { text: "I think I met V once... I can remember the achievements.",
+      { text: `I think I met V once... I can remember the achievements.`,
         //image: "ra_v.png",
         background: primaryBackground("v")
       },
@@ -113,7 +113,7 @@ export const raQuotes = {
     id: 10,
     requirement: () => Ra.remembrance.isUnlocked,
     lines: [
-      { text: "I remembered something! Watch this!",
+      { text: `I remembered something! Watch this!`,
         //image: "ra_remembrance.png"
       }, {
         text: `Remembrance! I can focus even harder on remembering them now!`,
@@ -129,8 +129,8 @@ export const raQuotes = {
         <br> I can only copy the ones of my friends.`,
         //image: "ra_home.png"
       }, {
-        //text: `But... why am I hearing voices? Are they asking for help?`,
-        image: "ra_fear.png"
+        text: `But... why am I hearing voices? Are they asking for help?`,
+        //image: "ra_fear.png"
       }
     ]
   },
@@ -148,7 +148,7 @@ export const raQuotes = {
     id: 13,
     requirement: () => Ra.totalPetLevel === Ra.maxTotalPetLevel,
     lines: [
-      { text: "Finally, I remember everything... This darkness that banished me.",
+      { text: `Finally, I remember everything... This darkness that banished me.`,
         //image: "ra_max_1.png"
       }, {
         text: `Lai'tela... They were right to banish me.`,

@@ -9,6 +9,30 @@ export const changelog = [
    * }
    */
   {
+    date: [2024, 12, 18],
+    name: "Feedbacks And Fixes",
+    info: `
+This patch will have more information gradually.
+<br>
+<br><b>New Things:</b><br>
+<ul>
+<li>2024/12/18: Added a disclaimer about the mod having mature contents and sound effects. 
+(Currently only pops up when you import a save from vanila)</li>
+<li>2024/12/18: Added a toggle for mature contents, which can be found in both 
+the disclaimer modal and the visual options tab.</li>
+</ul>
+<br><b>Additional changes and information:</b><br>
+<ul>
+<li>2024/12/17: Fixed a bug where some images couldn't be rendered.</li>
+<li>2024/12/18: Added a thing in the previous patch.</li>
+<li>2024/12/18: Removed a jumpscare from a newsticker.</li>
+<li>2024/12/18 - End of Time: Added more newstickers</li>
+<li>2024/12/18: Fixed a bug where some themes weren't rendered properly.</li>
+<li>2024/12/18: Fixed a bug where a Ra quote wasn't rendered properly.</li>
+</ul>
+`
+},
+{
     date: [2024, 12, 17],
     name: "Initial Legs / Early Access",
     info: `
@@ -23,7 +47,7 @@ Note: This mod is in early access and lacks non-gameplay content which will be a
 <li>Implemeted legs into the game</li>
 <li>Improved the overall game visuals, introducing textures.</li>
 <li>Added artworks for the Celestials. (WIP)</li>
-<li>Added various SFX.</li>
+<li>Added various sound effects.</li>
 <li>Added a new statistics subtab: Resource Gallery</li>
 <li>Added unique names to various mechanics</li>
 <ul>
@@ -88,6 +112,7 @@ Note: This mod is in early access and lacks non-gameplay content which will be a
 <li>Added extra titles for celestials. (WIP)</li>
 <li>Added portraits for celestials.</li>
 <li>Added raw Glyph level to the Glyph level Factors (i.e. the glyph level without instability)</li>
+<li>Added extra info about glyph sacrifice boosts in the bonuses.</li>
 <li>Added text for uncapped RM past e1000 in Imaginary Upgrades tab.</li>
 <li>Added text for Paradox/Contradiction/Fallacy's 3rd milestone's effect in the Time Dilation tab.</li>
 <li>Extended the Matter scale statistics up to Milankovitch cycles.</li>
@@ -106,7 +131,7 @@ Note: This mod is in early access and lacks non-gameplay content which will be a
 </ul>
 <br><b>Balance Changes:</b><br>
 <ul>
-<li>Antimatter Dimensions now have a multiplier based on thr amount of unlocked Antimatter dimensions 
+<li>Antimatter Dimensions now have a multiplier based on the amount of unlocked Antimatter dimensions 
 (×1.25 for every non-first dimension unlocked)</li>
 <li>Changed the infinity upgrade order.</li>
 <li>Buffed BI upgrades.</li>

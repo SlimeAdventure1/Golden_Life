@@ -3,14 +3,14 @@ export const effarigQuotes = {
     id: 0,
     lines: [
       { text: "Welcome to my humble abode! <br> I am Effarig, and I govern Glyphs.",
-        image: "effarig_greet.png"
+        //image: "effarig_greet.png"
       }, {
         text: `I am different from Teresa; not as simplistic as you think. 
         <br> I use the shards of Glyphs to enforce my will. <br> I collect them for the bounty of this realm.`,
-        image: "effarig_relics.png"
+        //image: "effarig_relics.png"
       }, {
         text: "What are you waiting for? Get started.",
-        image: "effarig_greet.png"
+        //image: "effarig_greet.png"
       },
     ]
   },

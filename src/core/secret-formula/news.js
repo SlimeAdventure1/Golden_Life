@@ -2624,7 +2624,7 @@ export const news = [
     id: "a393",
     text: "Click here to gain more Antimatter",
     onClick() {
-      new Audio("audio/secret_jumpscare.wav").play() 
+      new Audio("audio/click_wrong.wav").play() 
     }
   },
   {
@@ -2696,7 +2696,8 @@ export const news = [
   },
   {
     id: "a402",
-    text:`Ant Tea Matress Die Mansions`,
+    text:`Try out the new Antimatter dimensions: Legendary's leggings!`,
+    isAdvertising: true
   },
   {
     id: "a403",
@@ -3473,18 +3474,6 @@ export const news = [
   {
     id: "l92",
     text:
-      `@celestials Please DO NOT announce to the server when you are going to dimboost. 
-      This has been a reoccurring issue, and I'm not sure why some deities have such under-developed 
-      reality skills that they think that a server full of mostly diabolical strangers would need to know that. 
-      No one is going to be impressed and give you a high-glyph (especially considering where that autobuyer has been). 
-      I don't want to add this to the rules, since it would be embarrassing for new celestials to 
-      see that we have a problem with this, but it is going to be enforced as a rule from now on. 
-      If it occurs, you will be pelle striked, then additional occurrences will be dealt with at the discretion of the monarchs. Thanks.`,
-    get unlocked() { return Pelle.isDoomed; }
-  },
-  {
-    id: "l93",
-    text:
       `Bob's Glyph reviews! Today's special review: Alchemy resource of Johnson. While I think the Johnson glyph has some ups and downs,
       its alchemy version is a disappointment compared to other resources. it's effect doesn't explain well and if you manage to understand it,
       the result is a complete waste of time and increase in anger. Basically it only happens when a reaction ticks after 2 minutes,
@@ -3493,26 +3482,18 @@ export const news = [
     get unlocked() { return Ra.unlocks.unlockGlyphAlchemy.isUnlocked; }
   },
   {
-    id: "l94",
+    id: "l93",
     text:
       `THE HELIOS GLYPH! THE HELIOS GLYPH IS REAL!`,
     get unlocked() { return Effarig.currentStage===4; }
   },
   {
-    id: "l95",
-    text:
-      `Why are you asking me about what genders celestials have? 
-      You brainmaggots don't know that celestials are genderless in canon. 
-      You dipshits decide to ignore that fact and that really pisses me off into the ground.`,
-    get unlocked() { return Teresa.isUnlocked; }
-  },
-  {
-    id: "l96",
+    id: "l94",
     text: `We live in an age where people treat celestials as their parental figures.`,
     get unlocked() { return Teresa.isUnlocked; }
   },
   {
-    id: "l97",
+    id: "l95",
     text:
       `What a fool you are. I'm a celestial! How can you kill a celestial?
        What a grand and intoxicating innocence. How could you be so naive? There is no escape. No Recall or Intervention can work in this place.
@@ -3520,39 +3501,39 @@ export const news = [
     get unlocked() { return Teresa.isUnlocked; }
   },
   {
-    id: "l98",
+    id: "l96",
     text:`Someone fixed the 18th Achievement row channel! Why is it hurting my eyes?`,
     get unlocked() { return Pelle.isDoomed; }
   },
   {
-    id: "l99",
+    id: "l97",
     text:`...Please, I don't want to die.`,
     get unlocked() { return Pelle.isDoomed; }
   },
   {
-    id: "l100",
+    id: "l98",
     text:`Click here to see Lai'tela's other 4 Dark Matter Dimensions`,
     get unlocked() { return Laitela.isUnlocked; },
     onClick() {Laitela.quotes.secret.show()}
   },
   {
-    id: "l101",
+    id: "l99",
     text:`Benzene Johnson`,
     get unlocked() { return V.isUnlocked; },
   },
   {
-    id: "l102",
+    id: "l100",
     text:`Destroyer, Can you read me? Alright so there is this thing called the I HAVE ALREADY WON, NO ONE CAN HELP YOU NOW`,
     get unlocked() { return Pelle.isDoomed; }
   },
   {
-    id: "l103",
+    id: "l101",
     text:`Dear Reddit, today, while creating a new reality, I accidentally contacted the diabolical of destruction. 
     Now he is on an unstoppable path of destruction. Am I the asshole?`,
     get unlocked() { return Pelle.isDoomed; }
   },
   {
-    id: "l104",
+    id: "l102",
     text:`Ahhh, is this the blood? The blood of the antimatter dimension?`,
     get unlocked() { return Pelle.isDoomed; }
   },
@@ -3562,8 +3543,32 @@ export const news = [
     get unlocked() { return Math.random() < 0.01; }
   },
   {
+    //felt like adding this
+    id: "r2",
+    text: "This news message is 1,000x rarer than all the others. Congratulations!",
+    get unlocked() { return Math.random() < 0.001; }
+  },
+  {
     id: "p1",
     text: "Is this a jojo reference?",
+  },
+  {
+    id: "m1",
+    text:`Why are you asking me about what genders celestials have? 
+    You brainmaggots don't know that celestials are genderless in canon. 
+    You dipshits decide to ignore that fact and that really pisses me off into the ground.`,
+    get unlocked() { return Teresa.isUnlocked; }
+  },
+  {
+    id: "m2",
+    text:`@celestials Please DO NOT announce to the server when you are going to dimboost. 
+    This has been a reoccurring issue, and I'm not sure why some deities have such under-developed 
+    reality skills that they think that a server full of mostly diabolical strangers would need to know that. 
+    No one is going to be impressed and give you a high-glyph (especially considering where that autobuyer has been). 
+    I don't want to add this to the rules, since it would be embarrassing for new celestials to 
+    see that we have a problem with this, but it is going to be enforced as a rule from now on. 
+    If it occurs, you will be pelle striked, then additional occurrences will be dealt with at the discretion of the monarchs. Thanks.`,
+    get unlocked() { return Pelle.isDoomed; }
   },
   /* eslint-disable max-len */
   {
