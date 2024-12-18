@@ -44,7 +44,7 @@ body.t-s1 {
   left: 0;
   z-index: 0;
   opacity: 1;
-  background-image: url("../images/snow1.png"), url("../images/snow2.png"), url("../images/snow3.png");
+  background-image: url("../images/background/snow1.png"), url("../images/background/snow2.png"), url("../images/background/snow3.png");
   animation: a-snow 10s linear infinite, a-snow-fade 10s cubic-bezier(0, 0.3, 1, 0.7) infinite;
   pointer-events: none;
 }
