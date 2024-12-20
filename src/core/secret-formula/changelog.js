@@ -23,12 +23,23 @@ the disclaimer modal and the visual options tab.</li>
 </ul>
 <br><b>Additional changes and information:</b><br>
 <ul>
-<li>2024/12/17: Fixed a bug where some images couldn't be rendered.</li>
 <li>2024/12/18: Added a thing in the previous patch.</li>
 <li>2024/12/18: Removed a jumpscare from a newsticker.</li>
 <li>2024/12/18 - End of Time: Added more newstickers</li>
+<li>2024/12/20: Applied sounds to some things.</li>
+<li>2024/12/20: Added records to Normal and Infinity Challenges tabs, and stars as completions to Eternity Challenges tab.</li>
+<li>2024/12/20: Applied the unique dimension names to DimBoost/Galaxy requirements</li>
+<li>2024/12/20: Added the Legendary Tester role in the credits. Note that there are no plans to bring 
+additional testers, since the mod's main objective is to improve graphics.</li>
+</ul>
+<br><b>Bugfixes:</b><br>
+<ul>
+<li>2024/12/17: Fixed a bug where some images couldn't be rendered.</li>
 <li>2024/12/18: Fixed a bug where some themes weren't rendered properly.</li>
 <li>2024/12/18: Fixed a bug where a Ra quote wasn't rendered properly.</li>
+<li>2024/12/20: Fixed a bug where the achievement "Gift from the Gods" showed the wrong challenge ID.</li>
+<li>2024/12/20: Fixed a bug where DimBoost and Galaxy buttons still have the translucent bars 
+in challenges where you normally can't purchase them.</li>
 </ul>
 `
 },

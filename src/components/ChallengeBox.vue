@@ -42,6 +42,7 @@ export default {
     return {
       inC1: Boolean,
       infinities: new Decimal(0),
+      bestTime: 0,
     };
   },
   computed: {
@@ -73,10 +74,18 @@ export default {
     }
   },
   methods: {
+    timeDisplayShort,
     update() {
       this.inC1 = this.name === "C1" && !this.isCompleted && !Player.isInAntimatterChallenge;
       this.infinities.copyFrom(Currency.infinities);
+      this.bestTime = this.completionString(this.name)
     },
+    completionString(id) {
+      if (id === "C1") return "";
+      let type = id.includes("IC") ? player.challenge.infinity.bestTimes.slice(0) : player.challenge.normal.bestTimes.slice(0)
+      let time = type[id.replace(/C|IC/,"") - (id.includes("IC") ? 1 : 2)]
+      return time < Number.MAX_VALUE ? `${timeDisplayShort(time)}` : "??:??:??";
+    }
   }
 };
 </script>
@@ -88,6 +97,13 @@ export default {
       class="l-hint-text--challenge"
     >
       {{ name }} : {{ label }}
+    </HintText>
+    <HintText
+      type="challenges"
+      class="l-hint-text--challenge"
+      style="width:100%;text-align:right"
+    >
+      {{this.bestTime}}
     </HintText>
     <slot name="top" />
     <div class="l-challenge-box__fill" />

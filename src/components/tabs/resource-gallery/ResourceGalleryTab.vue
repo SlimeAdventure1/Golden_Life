@@ -20,7 +20,10 @@ export default {
   },
   methods:{
     handleClick(id) {
-      if(this.resources[id].isUnlocked()) this.infoResourceId = this.resources[id].id;
+      if(this.resources[id].isUnlocked()) {
+        this.infoResourceId = this.resources[id].id
+        AudioManagement.playSound("click_light")
+      };
     },
   }
 }

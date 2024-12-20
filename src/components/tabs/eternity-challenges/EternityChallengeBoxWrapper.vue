@@ -44,6 +44,7 @@ export default {
   data() {
     return {
       challengeId: Number,
+      stars: "",
     };
   },
   computed: {
@@ -90,7 +91,21 @@ export default {
       if (this.canBeUnlocked) return "Unlock";
       return "Locked";
     }
-  }
+  },
+  methods: {
+    update() {
+      this.stars = this.completionStars(this.name)
+    },
+    completionStars(id) {
+      let text = "";
+      let stars = EternityChallenge(id.replace("EC","")).completions
+      if (stars < 6) for (let i = 0; i < stars; i++) {
+        text += "★"
+      }
+      else text = `${stars}★`
+      return text;
+    }
+  } 
 };
 </script>
 
@@ -101,6 +116,13 @@ export default {
       class="l-hint-text--challenge"
     >
       {{ name }} : {{ label }}
+    </HintText>
+    <HintText
+      type="challenges"
+      class="l-hint-text--challenge"
+      style="width:100%;text-align:right;font-weight: normal;"
+    >
+      {{this.stars}}
     </HintText>
     <slot name="top" />
     <div class="l-challenge-box__fill" />

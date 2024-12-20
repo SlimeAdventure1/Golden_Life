@@ -34,7 +34,9 @@ export default {
   computed: {
     isDoomed: () => Pelle.isDoomed,
     dimName() {
-      return AntimatterDimension(this.requirement.tier).displayName;
+      if (player.options.naming.dimensions) return `${AntimatterDimension(this.requirement.tier).uniqueName}s 
+      (${AntimatterDimension(this.requirement.tier).shortDisplayName})`
+      return `${AntimatterDimension(this.requirement.tier).displayName} Dimensions`;
     },
     buttonText() {
       if (this.lockText !== null) return this.lockText;
@@ -124,7 +126,7 @@ export default {
       class="l-dim-row__prestige-text c-dim-row__label c-dim-row__label--amount l-text-wrapper"
     >
       {{ typeName }} ({{ sumText }}):
-      requires {{ formatInt(requirement.amount) }} {{ dimName }} Dimensions
+      requires {{ formatInt(requirement.amount) }} {{ dimName }}
       <div class="l-scaling-text-wrapper">
         {{ hasIncreasedScaling ? costScalingText : "" }}
       </div>

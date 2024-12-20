@@ -25,7 +25,9 @@ export default {
   computed: {
     isDoomed: () => Pelle.isDoomed,
     dimName() {
-      return AntimatterDimension(this.requirement.tier).displayName;
+      if (player.options.naming.dimensions) return `${AntimatterDimension(this.requirement.tier).uniqueName}s 
+      (${AntimatterDimension(this.requirement.tier).shortDisplayName})`
+      return `${AntimatterDimension(this.requirement.tier).displayName} Dimensions`;
     },
     boostCountText() {
       if (this.requirementText) return this.requirementText;
@@ -73,7 +75,7 @@ export default {
   <div class="c-dimension-row c-antimatter-dim-row c-antimatter-prestige-row">
     <div class="l-dim-row__prestige-text c-dim-row__label c-dim-row__label--amount">
       Dimension Boost ({{ boostCountText }}):
-      requires {{ formatInt(requirement.amount) }} {{ dimName }} Dimensions
+      requires {{ formatInt(requirement.amount) }} {{ dimName }}
     </div>
     <PrimaryButton
       :enabled="isBuyable"

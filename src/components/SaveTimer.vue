@@ -56,10 +56,10 @@ export default {
   z-index: 5;
   text-align: left;
   color: var(--color-text);
-  background: var(--leg-base);
+  background: var(--leg-base-render);
   border-top: 0.1rem solid;
   border-right: 0.1rem solid;
-  border-image: var(--leg-border) 3;
+  border-image: var(--leg-border-render) 3;
   box-shadow: 0 0 1rem black;
   padding: 0 0.5rem;
   pointer-events: auto;

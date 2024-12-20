@@ -132,6 +132,7 @@ export default {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content: center;
   font-size: 1.5rem;
 }
 .o-single-number {

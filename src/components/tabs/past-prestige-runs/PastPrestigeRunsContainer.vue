@@ -1,4 +1,6 @@
 <script>
+import { AudioManagement } from '../../../game';
+
 function averageRun(allRuns) {
   // Filter out all runs which have the default infinite value for time, but if we're left with no valid runs then we
   // take just one entry so that the averages also have the same value and we don't get division by zero.
@@ -200,6 +202,7 @@ export default {
     },
     toggleShown() {
       player.shownRuns[this.singular] = !player.shownRuns[this.singular];
+      AudioManagement.playSound(player.shownRuns[this.singular]?"click_open":"click_close")
     },
     cellStyle(col, isHeader) {
       let width;
@@ -244,7 +247,7 @@ export default {
       <span class="o-run-drop-down-icon">
         <i :class="dropDownIconClass" />
       </span>
-      <span>
+      <span style="font-family:cambria;font-weight:bold;line-height:1.1;font-size:1.5rem">
         <h3>Last {{ formatInt(10) }} {{ plural }}:</h3>
       </span>
     </div>

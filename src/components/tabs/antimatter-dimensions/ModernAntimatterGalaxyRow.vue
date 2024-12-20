@@ -40,7 +40,9 @@ export default {
   computed: {
     isDoomed: () => Pelle.isDoomed,
     dimName() {
-      return AntimatterDimension(this.requirement.tier).shortDisplayName;
+      if (player.options.naming.dimensions) return `${AntimatterDimension(this.requirement.tier).uniqueName}s 
+      (${AntimatterDimension(this.requirement.tier).shortDisplayName})`
+      return `${AntimatterDimension(this.requirement.tier).shortDisplayName} Antimatter D`;
     },
     buttonText() {
       if (this.lockText !== null) return this.lockText;
@@ -121,7 +123,7 @@ export default {
         };
       }
       this.hasTutorial = Tutorial.isActive(TUTORIAL_STATE.GALAXY);
-      this.fillwidth = formatPercents(Math.max(((this.dimamount-this.previousrequirement.amount) / (this.requirement.amount-this.previousrequirement.amount)),0),2)
+      this.fillwidth = this.fillProgress()
     },
     buyGalaxy(bulk) {
       if (!this.canBeBought) return;
@@ -130,6 +132,11 @@ export default {
     formatGalaxies(num) {
       return num > 1e8 ? format(num, 2) : formatInt(num);
     },
+    fillProgress() {
+      let normalFill = formatPercents(Math.max(((this.dimamount-this.previousrequirement.amount) / (this.requirement.amount-this.previousrequirement.amount)),0),2)
+      if (NormalChallenge(8).isRunning||InfinityChallenge(7).isRunning||EternityChallenge(6).isRunning) return "0%"
+      return normalFill
+    }
   }
 };
 </script>
@@ -137,7 +144,7 @@ export default {
 <template>
   <div class="reset-container galaxy">
     <h4>{{ typeName }} ({{ sumText }})</h4>
-    <span>Requires: {{ formatInt(requirement.amount) }} {{ dimName }} Antimatter D</span>
+    <span>Requires: {{ formatInt(requirement.amount) }} {{ dimName }}</span>
     <span v-if="hasIncreasedScaling" v-html="costScalingText"/>
     <button
       :class="classObject"

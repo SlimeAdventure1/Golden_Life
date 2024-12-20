@@ -353,7 +353,7 @@ export const normalAchievements = [
     name: "Gift from the Gods",
     get description() {
       return `Complete ${player.options.naming.challenges?`
-        ${NormalChallenge(8).name} (C2)`:`the 8th Antimatter Dimension Autobuyer Challenge`} 
+        ${NormalChallenge(8).name} (C8)`:`the 8th Antimatter Dimension Autobuyer Challenge`} 
         in ${formatInt(3)} minutes or less.`;
     },
     checkRequirement: () => NormalChallenge(8).isOnlyActiveChallenge && Time.thisInfinityRealTime.totalMinutes <= 3,

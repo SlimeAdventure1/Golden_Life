@@ -57,7 +57,8 @@ export const resourceGallery = {
         related: [36],
         info: () => `The power of Dimensional Sacrifice comes with a price of the other dimensions <br><br>
         Unlocked at the 5th Dimension Boost, you can sacrifice all non-Eighth Dimensions for a nice boost of
-        the polyzettonic multiplier. <br><br> The more dimensions you sacrifice, the better its effect can become.`,
+        the polyzettonic multiplier. <br><br> The more dimensions you sacrifice, the better its effect can become. 
+        The sacrifice multiplier is initially based on the amount of your 1st Dimensions.`,
     },
     {
         id: 4,

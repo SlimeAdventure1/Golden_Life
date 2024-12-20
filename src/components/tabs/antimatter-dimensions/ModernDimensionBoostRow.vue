@@ -31,7 +31,9 @@ export default {
   computed: {
     isDoomed: () => Pelle.isDoomed,
     dimName() {
-      return AntimatterDimension(this.requirement.tier).shortDisplayName;
+      if (player.options.naming.dimensions) return `${AntimatterDimension(this.requirement.tier).uniqueName}s 
+      (${AntimatterDimension(this.requirement.tier).shortDisplayName})`
+      return `${AntimatterDimension(this.requirement.tier).shortDisplayName} Antimatter D`;
     },
     boostCountText() {
       if (this.requirementText) return this.requirementText;
@@ -69,11 +71,17 @@ export default {
       this.dimamount = Laitela.continuumUnlocked&&Laitela.continuumActive?AntimatterDimension(this.requirement.tier).continuumAmount:AntimatterDimension(this.requirement.tier).bought
       if (this.isDoomed) this.requirementText = formatInt(this.purchasedBoosts);
       this.hasTutorial = Tutorial.isActive(TUTORIAL_STATE.DIMBOOST);
-      this.fillwidth = formatPercents(Math.max((this.dimamount-this.previousrequirement.amount) / (this.requirement.amount-this.previousrequirement.amount),0),2)
+      this.fillwidth = this.fillProgress()
     },
     dimensionBoost(bulk) {
       if (!DimBoost.requirement.isSatisfied || !DimBoost.canBeBought) return;
       manualRequestDimensionBoost(bulk);
+    },
+    fillProgress() {
+      let normalFill = formatPercents(Math.max((this.dimamount-this.previousrequirement.amount) / (this.requirement.amount-this.previousrequirement.amount),0),2);
+      if (NormalChallenge(8).isRunning) return player.dimensionBoosts >= (InfinityChallenge(1).isRunning?2:5) ? "0%" : normalFill
+      if (Ra.isRunning) return player.dimensionBoosts >= 4 ? "0%" : normalFill
+      return normalFill
     }
   }
 };
@@ -82,7 +90,7 @@ export default {
 <template>
   <div class="reset-container dimboost">
     <h4>Dimension Boost ({{ boostCountText }})</h4>
-    <span>Requires: {{ formatInt(requirement.amount) }} {{ dimName }} Antimatter D</span>
+    <span>Requires: {{ formatInt(requirement.amount) }} {{ dimName }}</span>
     <button
       :class="classObject"
       @click.exact="dimensionBoost(true)"
