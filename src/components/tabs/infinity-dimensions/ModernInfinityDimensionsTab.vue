@@ -31,6 +31,7 @@ export default {
       creditsClosed: false,
       showLockedDimCostNote: true,
       showNewCap:false,
+      uniqueDimName: false,
     };
   },
   computed: {
@@ -67,6 +68,7 @@ export default {
       this.boughtTesseracts = Tesseracts.bought;
       this.extraTesseracts = Tesseracts.extra;
       this.creditsClosed = GameEnd.creditsEverClosed;
+      this.uniqueDimName = player.options.naming.dimensions;
     },
     maxAll() {
       InfinityDimensions.buyMax();
@@ -136,10 +138,10 @@ export default {
         @mouseenter="showNextCap(true)"
         @mouseleave="showNextCap(false)"
       >
-        <p>
+        <p class="c-infinity-dim-tab__tesseract-button__title">
           Buy a Tesseract ({{ tesseractCountString }})
         </p>
-        <p>Increase dimension caps by {{ formatInt(nextDimCapIncrease, 2) }}</p>
+        <p>Increase Dimension caps by {{ formatInt(nextDimCapIncrease, 2) }}</p>
         <p><b>Costs: {{ format(tesseractCost) }} IP</b></p>
       </button>
     </div>
@@ -147,7 +149,8 @@ export default {
       All Infinity Dimensions are limited to a single purchase.
     </div>
     <div v-else>
-      All Infinity Dimensions except for the 8th are limited to a maximum of <b style="color:var(--color-infinity)">
+      All Infinity Dimensions except for the {{ uniqueDimName ? "Polyzetton" : "the 8th" }} 
+      are limited to a maximum of <b style="color:var(--color-infinity)">
         {{ formatInt(totalDimCap) }}<i
         class="c-infinity-dim-tesseract__accent"
         :class="{'c-infinity-dim-tesseract__glow':showNewCap}"

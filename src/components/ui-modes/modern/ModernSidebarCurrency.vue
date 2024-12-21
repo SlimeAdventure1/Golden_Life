@@ -100,7 +100,7 @@ export default {
   background-color: var(--color-base);
   text-shadow: 0.1rem 0.1rem 0.3rem var(--color-text-inverted),-0.1rem -0.1rem 0.3rem var(--color-text-inverted);
   box-shadow: var(--box-shadow);
-  background: linear-gradient(-90deg, transparent,var(--color-accent) 400%),var(--leg-base);
+  background: linear-gradient(-90deg, transparent,var(--color-accent) 400%),var(--leg-base-render);
   border-right: 0.1rem solid var(--color-accent);
   border-bottom: 0.1rem solid var(--color-accent);
   padding: 1rem;

@@ -39,7 +39,8 @@ GameDatabase.celestials.descriptions = [
     name: "The Nameless Ones",
     effects() {
       return `Glyph levels are boosted to a minimum of ${formatInt(5000)}.
-      Infinity, Time, and 8th Antimatter Dimension purchases are limited to ${formatInt(1)} each.
+      Infinity, Time, and ${player.options.naming.dimensions ? `Antimatter ${AntimatterDimension(8).uniqueName}`
+       : "8th Antimatter Dimension"} purchases are limited to ${formatInt(1)} each.
       Antimatter Dimension multipliers are always Dilated (the Glyph effect still only applies in actual Dilation).
       Time Study 192 (uncapped Replicanti) is locked.
       The Black Hole is disabled.

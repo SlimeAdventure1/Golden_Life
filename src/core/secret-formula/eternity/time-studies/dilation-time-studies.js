@@ -19,25 +19,25 @@ export const dilationTimeStudies = [
   },
   {
     id: 2,
-    description: "Unlock the 5th Time Dimension",
+    description: () => `Unlock the ${player.options.naming.dimensions ? `Time ${TimeDimension(5).uniqueName}` : "5th Time Dimension"}`,
     cost: 1e6,
     requirement: () => PlayerProgress.dilationUnlocked()
   },
   {
     id: 3,
-    description: "Unlock the 6th Time Dimension",
+    description: () => `Unlock the ${player.options.naming.dimensions ? `Time ${TimeDimension(6).uniqueName}` : "6th Time Dimension"}`,
     cost: 1e7,
     requirement: () => TimeStudy.timeDimension(5).isBought
   },
   {
     id: 4,
-    description: "Unlock the 7th Time Dimension",
+    description: () => `Unlock the ${player.options.naming.dimensions ? `Time ${TimeDimension(7).uniqueName}` : "7th Time Dimension"}`,
     cost: 1e8,
     requirement: () => TimeStudy.timeDimension(6).isBought
   },
   {
     id: 5,
-    description: "Unlock the 8th Time Dimension",
+    description: () => `Unlock the ${player.options.naming.dimensions ? `Time ${TimeDimension(8).uniqueName}` : "8th Time Dimension"}`,
     cost: 1e9,
     requirement: () => TimeStudy.timeDimension(7).isBought
   },

@@ -26,6 +26,7 @@ export default {
       return Autobuyer.antimatterDimension(this.tier);
     },
     name() {
+      if (player.options.naming.dimensions) return `${AntimatterDimension(this.tier).uniqueName} Autobuyer`
       return `${AntimatterDimension(this.tier).shortDisplayName} Dimension Autobuyer`;
     },
     modeDisplay() {

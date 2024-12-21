@@ -67,12 +67,14 @@ export const pelleRifts = {
       {
         resource: "decay",
         requirement: 0.2,
-        description: "First rebuyable Pelle upgrade also affects 1st Infinity Dimension",
+        description: () => `First rebuyable Pelle upgrade also affects 
+        ${player.options.naming.dimensions ? `Infinity ${InfinityDimension(1).uniqueName}` : "1st Infinity Dimension"}`,
         effect: () => {
           const x = player.celestials.pelle.rebuyables.antimatterDimensionMult;
           return Decimal.pow(1e50, x - 9);
         },
-        formatEffect: x => `1st Infinity Dimension ${formatX(x, 2, 2)}`
+        formatEffect: x => `${player.options.naming.dimensions ? `Infinity ${InfinityDimension(1).uniqueName}`
+       : "1st Infinity Dimension"} ${formatX(x, 2, 2)}`
       },
       {
         resource: "decay",

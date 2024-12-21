@@ -16,8 +16,8 @@ export const normalChallenges = [
         ? "reach Infinity for the first time outside of a challenge."
         : "reach Infinity for the first time.";
     },
-    name: "1st Antimatter Dimension Autobuyer",
-    reward: "Upgradeable 1st Antimatter Dimension Autobuyer",
+    name: () => `${player.options.naming.dimensions ? `Antimatter ${AntimatterDimension(1).uniqueName}` : "1st  Antimatter Dimension"} Autobuyer`,
+    reward: () => `Upgradeable ${player.options.naming.dimensions ? `Antimatter ${AntimatterDimension(1).uniqueName}` : "1st  Antimatter Dimension"} Autobuyer`,
     lockedAt: DC.D0,
   },
   {
@@ -28,8 +28,8 @@ export const normalChallenges = [
     description:
       () => "buying Antimatter Dimensions or Tickspeed upgrades halts production of all Antimatter Dimensions. " +
       `Production gradually returns to normal over ${formatInt(3)} minutes.`,
-    name: "2nd Antimatter Dimension Autobuyer",
-    reward: "Upgradeable 2nd Antimatter Dimension Autobuyer",
+    name: () => `${player.options.naming.dimensions ? `Antimatter ${AntimatterDimension(2).uniqueName}` : "2nd  Antimatter Dimension"} Autobuyer`,
+    reward: () => `Upgradeable ${player.options.naming.dimensions ? `Antimatter ${AntimatterDimension(2).uniqueName}` : "2nd  Antimatter Dimension"} Autobuyer`,
     lockedAt: DC.D0,
   },
   {
@@ -37,11 +37,12 @@ export const normalChallenges = [
     label: "Primal Acceleration",
     legacyId: 3,
     isQuickResettable: false,
-    description:
-      `the 1st Antimatter Dimension is heavily weakened, but gets an uncapped exponentially increasing multiplier.
-        This multiplier resets after Dimension Boosts and Antimatter Galaxies.`,
-    name: "3rd Antimatter Dimension",
-    reward: "Upgradeable 3rd Antimatter Dimension Autobuyer",
+    description: 
+      () => `the ${player.options.naming.dimensions ? `Antimatter ${AntimatterDimension(1).uniqueName}`
+       : "1st Antimatter Dimension"} is heavily weakened, but gets an uncapped exponentially increasing multiplier. 
+      This multiplier resets after Dimension Boosts and Antimatter Galaxies.`,
+    name: () => `${player.options.naming.dimensions ? `Antimatter ${AntimatterDimension(3).uniqueName}` : "3rd  Antimatter Dimension"} Autobuyer`,
+    reward: () => `Upgradeable ${player.options.naming.dimensions ? `Antimatter ${AntimatterDimension(3).uniqueName}` : "3rd  Antimatter Dimension"} Autobuyer`,
     lockedAt: DC.D0,
   },
   {
@@ -51,8 +52,8 @@ export const normalChallenges = [
     isQuickResettable: false,
     description: "buying an Antimatter Dimension automatically erases all lower tier Antimatter Dimensions, " +
       "like a sacrifice without the boost.",
-    name: "4th Antimatter Dimension Autobuyer",
-    reward: "Upgradeable 4th Antimatter Dimension Autobuyer",
+    name: () => `${player.options.naming.dimensions ? `Antimatter ${AntimatterDimension(4).uniqueName}` : "4th  Antimatter Dimension"} Autobuyer`,
+    reward: () => `Upgradeable ${player.options.naming.dimensions ? `Antimatter ${AntimatterDimension(4).uniqueName}` : "4th  Antimatter Dimension"} Autobuyer`,
     lockedAt: DC.D0,
   },
   {
@@ -62,8 +63,8 @@ export const normalChallenges = [
     isQuickResettable: false,
     description:
       () => `the Tickspeed purchase multiplier starts at ${formatX(1.080, 0, 3)} instead of ${formatX(1.1245, 0, 3)}.`,
-    name: "5th Antimatter Dimension Autobuyer",
-    reward: "Upgradeable 5th Antimatter Dimension Autobuyer",
+    name: () => `${player.options.naming.dimensions ? `Antimatter ${AntimatterDimension(5).uniqueName}` : "5th  Antimatter Dimension"} Autobuyer`,
+    reward: () => `Upgradeable ${player.options.naming.dimensions ? `Antimatter ${AntimatterDimension(5).uniqueName}` : "5th  Antimatter Dimension"} Autobuyer`,
     lockedAt: DC.D0,
   },
   {
@@ -73,8 +74,8 @@ export const normalChallenges = [
     isQuickResettable: false,
     description: () => `upgrading each Antimatter Dimension costs the Antimatter Dimension ${formatInt(2)} tiers ` +
       "below it instead of antimatter. Antimatter Dimension prices are modified.",
-    name: "6th Antimatter Dimension Autobuyer",
-    reward: "Upgradeable 6th Antimatter Dimension Autobuyer",
+    name: () => `${player.options.naming.dimensions ? `Antimatter ${AntimatterDimension(6).uniqueName}` : "6th  Antimatter Dimension"} Autobuyer`,
+    reward: () => `Upgradeable ${player.options.naming.dimensions ? `Antimatter ${AntimatterDimension(6).uniqueName}` : "6th  Antimatter Dimension"} Autobuyer`,
     lockedAt: DC.D0,
   },
   {
@@ -85,8 +86,8 @@ export const normalChallenges = [
     description: () =>
       `the multiplier from buying ${formatInt(10)} Antimatter Dimensions is reduced to ${formatX(1)}. This increases by
         ${formatX(0.2, 1, 1)} per Dimension Boost, to a maximum of ${formatX(2)}, and is unaffected by any upgrades.`,
-    name: "7th Antimatter Dimension Autobuyer",
-    reward: "Upgradeable 7th Antimatter Dimension Autobuyer",
+    name: () => `${player.options.naming.dimensions ? `Antimatter ${AntimatterDimension(7).uniqueName}` : "7th  Antimatter Dimension"} Autobuyer`,
+    reward: () => `Upgradeable ${player.options.naming.dimensions ? `Antimatter ${AntimatterDimension(7).uniqueName}` : "7th  Antimatter Dimension"} Autobuyer`,
     lockedAt: DC.D0,
   },
   {
@@ -96,8 +97,8 @@ export const normalChallenges = [
     isQuickResettable: false,
     description: `Dimension Boosts provide no multiplier and Antimatter Galaxies cannot be bought. Dimensional
       Sacrifice resets antimatter and all Antimatter Dimensions, but also gives a significantly stronger multiplier.`,
-    name: "8th Antimatter Dimension Autobuyer",
-    reward: "Upgradeable 8th Antimatter Dimension Autobuyer",
+    name: () => `${player.options.naming.dimensions ? `Antimatter ${AntimatterDimension(8).uniqueName}` : "8th  Antimatter Dimension"} Autobuyer`,
+    reward: () => `Upgradeable ${player.options.naming.dimensions ? `Antimatter ${AntimatterDimension(8).uniqueName}` : "8th  Antimatter Dimension"} Autobuyer`,
     lockedAt: DC.D0,
   },
   {
@@ -139,8 +140,10 @@ export const normalChallenges = [
     legacyId: 7,
     isQuickResettable: false,
     description: () => `each Antimatter Dimension produces the Dimension ${formatInt(2)} tiers below it
-      instead of ${formatInt(1)}. Both 1st and 2nd Dimensions produce antimatter.
-      The 2nd, 4th, and 6th Dimensions are made stronger to compensate.`,
+      instead of ${formatInt(1)}. Both ${player.options.naming.dimensions ? `${AntimatterDimension(1).uniqueName}s and ${AntimatterDimension(2).uniqueName}s`
+       : "1st and 2nd Dimensions"} produce antimatter. 
+      The ${player.options.naming.dimensions ? `${AntimatterDimension(2).uniqueName}s, ${AntimatterDimension(4).uniqueName}s 
+        and ${AntimatterDimension(6).uniqueName}s` : "2nd, 4th and 6th Dimensions"} are made stronger to compensate.`,
     name: "Automated Big Crunches",
     reward: "Big Crunches Autobuyer",
     lockedAt: DC.D16,

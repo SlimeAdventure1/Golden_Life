@@ -145,14 +145,14 @@ export default {
 .c-multiplier-subtab-btn:hover {
   top: 0rem;
   box-shadow: 0rem 1rem 2rem -1rem #00000080 inset;
-  background: linear-gradient(var(--color-accent) -50%,transparent),var(--leg-base);
+  background: linear-gradient(var(--color-accent) -50%,transparent),var(--leg-base-render);
 }
 .c-multiplier-subtab-btn--active {
   top: 0rem;
   z-index: 1;
   font-weight: bold;
   box-shadow: 0rem 1rem 2rem -1rem #00000080 inset;
-  background: linear-gradient(var(--color-accent) -100%,transparent),var(--leg-base);
+  background: linear-gradient(var(--color-accent) -100%,transparent),var(--leg-base-render);
   border-bottom: none;
   padding-bottom: 0.2rem;
   cursor: default;

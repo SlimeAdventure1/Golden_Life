@@ -65,49 +65,49 @@ export const eternityMilestones = {
   },
   autobuyerID1: {
     eternities: 11,
-    reward: "Unlock the 1st Infinity Dimension Autobuyer",
+    reward: () => `Unlock the ${player.options.naming.dimensions ? `Infinity ${InfinityDimension(1).uniqueName}` : "1st Infinity Dimensions"} Autobuyer`,
     givenByPelle: () => PelleUpgrade.IDAutobuyers.isBought,
     pelleUseless: true
   },
   autobuyerID2: {
     eternities: 12,
-    reward: "Unlock the 2nd Infinity Dimension Autobuyer",
+    reward: () => `Unlock the ${player.options.naming.dimensions ? `Infinity ${InfinityDimension(2).uniqueName}` : "2nd Infinity Dimensions"} Autobuyer`,
     givenByPelle: () => PelleUpgrade.IDAutobuyers.isBought,
     pelleUseless: true
   },
   autobuyerID3: {
     eternities: 13,
-    reward: "Unlock the 3rd Infinity Dimension Autobuyer",
+    reward: () => `Unlock the ${player.options.naming.dimensions ? `Infinity ${InfinityDimension(3).uniqueName}` : "3rd Infinity Dimensions"} Autobuyer`,
     givenByPelle: () => PelleUpgrade.IDAutobuyers.isBought,
     pelleUseless: true
   },
   autobuyerID4: {
     eternities: 14,
-    reward: "Unlock the 4th Infinity Dimension Autobuyer",
+    reward: () => `Unlock the ${player.options.naming.dimensions ? `Infinity ${InfinityDimension(4).uniqueName}` : "4th Infinity Dimensions"} Autobuyer`,
     givenByPelle: () => PelleUpgrade.IDAutobuyers.isBought,
     pelleUseless: true
   },
   autobuyerID5: {
     eternities: 15,
-    reward: "Unlock the 5th Infinity Dimension Autobuyer",
+    reward: () => `Unlock the ${player.options.naming.dimensions ? `Infinity ${InfinityDimension(5).uniqueName}` : "5th Infinity Dimensions"} Autobuyer`,
     givenByPelle: () => PelleUpgrade.IDAutobuyers.isBought,
     pelleUseless: true
   },
   autobuyerID6: {
     eternities: 16,
-    reward: "Unlock the 6th Infinity Dimension Autobuyer",
+    reward: () => `Unlock the ${player.options.naming.dimensions ? `Infinity ${InfinityDimension(6).uniqueName}` : "6th Infinity Dimensions"} Autobuyer`,
     givenByPelle: () => PelleUpgrade.IDAutobuyers.isBought,
     pelleUseless: true
   },
   autobuyerID7: {
     eternities: 17,
-    reward: "Unlock the 7th Infinity Dimension Autobuyer",
+    reward: () => `Unlock the ${player.options.naming.dimensions ? `Infinity ${InfinityDimension(6).uniqueName}` : "7th Infinity Dimensions"} Autobuyer`,
     givenByPelle: () => PelleUpgrade.IDAutobuyers.isBought,
     pelleUseless: true
   },
   autobuyerID8: {
     eternities: 18,
-    reward: "Unlock the 8th Infinity Dimension Autobuyer",
+    reward: () => `Unlock the ${player.options.naming.dimensions ? `Infinity ${InfinityDimension(8).uniqueName}` : "8th Infinity Dimensions"} Autobuyer`,
     givenByPelle: () => PelleUpgrade.IDAutobuyers.isBought,
     pelleUseless: true
   },

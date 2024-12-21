@@ -150,7 +150,8 @@ export const secretAchievements = [
   {
     id: 41,
     name: "That dimension doesn’t exist",
-    description: "Try to purchase the 9th dimension."
+    description: "Try to purchase the 9th dimension.",
+    get description() { return `Try to purchase the ${player.options.naming.dimensions ? `Polyyotton` : "9th dimension"}.`},
   },
   {
     id: 42,

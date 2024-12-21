@@ -28,9 +28,9 @@ the disclaimer modal and the visual options tab.</li>
 <li>2024/12/18 - End of Time: Added more newstickers</li>
 <li>2024/12/20: Applied sounds to some things.</li>
 <li>2024/12/20: Added records to Normal and Infinity Challenges tabs, and stars as completions to Eternity Challenges tab.</li>
-<li>2024/12/20: Applied the unique dimension names to DimBoost/Galaxy requirements</li>
 <li>2024/12/20: Added the Legendary Tester role in the credits. Note that there are no plans to bring 
 additional testers, since the mod's main objective is to improve graphics.</li>
+<li>2024/12/21: Unique Dimension names are now fully applied.</li>
 </ul>
 <br><b>Bugfixes:</b><br>
 <ul>

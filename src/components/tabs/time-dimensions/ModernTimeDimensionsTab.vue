@@ -19,6 +19,7 @@ export default {
       incomeType: "",
       areAutobuyersUnlocked: false,
       showLockedDimCostNote: true,
+      uniqueDimName: false,
     };
   },
   computed: {
@@ -35,6 +36,7 @@ export default {
       this.shardsPerSecond.copyFrom(TimeDimension(1).productionPerSecond);
       this.incomeType = EternityChallenge(7).isRunning ? "Eighth Infinity Dimensions" : "Time Shards";
       this.areAutobuyersUnlocked = Autobuyer.timeDimension(1).isUnlocked;
+      this.uniqueDimName = player.options.naming.dimensions;
     },
     maxAll() {
       tryUnlockTimeDimensions();
@@ -98,7 +100,8 @@ export default {
       <div v-if="showLockedDimCostNote">
         Hold shift to see the Eternity Point cost for locked Time Dimensions.
       </div>
-      Any 8th Time Dimensions purchased above <b style="color:var(--color-eternity)">{{ formatInt(1e8) }}</b> will not further increase the multiplier.
+      Any {{ uniqueDimName ? "Time Polyzettons" : "8th Time Dimensions" }} 
+      purchased above <b style="color:var(--color-eternity)">{{ formatInt(1e8) }}</b> will not further increase the multiplier.
     </div>
   </div>
 </template>

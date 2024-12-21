@@ -214,7 +214,8 @@ export const perks = {
     family: PERK_FAMILY.REALITY,
     get description() {
       return `Auto-unlocks Reality once you have ${format(DC.E4000)} Eternity Points
-        and have unlocked Time Dimension 8.`;
+        and have unlocked ${player.options.naming.dimensions ? `Time ${TimeDimension(8).uniqueName}`
+       : "Time Dimension 8"}.`;
     },
     automatorPoints: 10,
     shortDescription: () => "Auto-unlock Reality",

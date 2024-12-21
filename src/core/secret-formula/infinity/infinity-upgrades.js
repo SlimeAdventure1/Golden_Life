@@ -25,11 +25,15 @@ export const infinityUpgrades = {
   dim18mult: {
     id: "18Mult",
     cost: 1,
-    description: "1st and 8th Antimatter Dimensions gain a multiplier based on Infinities",
+    description: () => `${player.options.naming.dimensions ? 
+      `Antimatter ${AntimatterDimension(1).uniqueName}s and Antimatter ${AntimatterDimension(8).uniqueName}s` : 
+      "1st and 8th Antimatter Dimensions"} gain a multiplier based on Infinities`,
     effect: () => dimInfinityMult(),
     formatEffect: value => formatX(value, 1, 1),
     charged: {
-      description: "1st and 8th Antimatter Dimensions gain a power effect based on Infinities and Teresa level",
+      description: () => `${player.options.naming.dimensions ? 
+        `Antimatter ${AntimatterDimension(1).uniqueName}s and Antimatter ${AntimatterDimension(8).uniqueName}s` : 
+        "1st and 8th Antimatter Dimensions"} gain a power effect based on Infinities and Teresa level`,
       effect: () => chargedDimInfinityMult(),
       formatEffect: value => formatPow(value, 4, 4)
     }
@@ -38,11 +42,15 @@ export const infinityUpgrades = {
     id: "27Mult",
     cost: 1,
     checkRequirement: () => InfinityUpgrade.dim18mult.isBought,
-    description: "2nd and 7th Antimatter Dimensions gain a multiplier based on Infinities",
+    description: () => `${player.options.naming.dimensions ? 
+      `Antimatter ${AntimatterDimension(2).uniqueName}s and Antimatter ${AntimatterDimension(7).uniqueName}s` : 
+      "2nd and 7th Antimatter Dimensions"} gain a multiplier based on Infinities`,
     effect: () => dimInfinityMult(),
     formatEffect: value => formatX(value, 1, 1),
     charged: {
-      description: "2nd and 7th Antimatter Dimensions gain a power effect based on Infinities and Teresa level",
+      description: () => `${player.options.naming.dimensions ? 
+        `Antimatter ${AntimatterDimension(2).uniqueName}s and Antimatter ${AntimatterDimension(7).uniqueName}s` : 
+        "2nd and 7th Antimatter Dimensions"} gain a power effect based on Infinities and Teresa level`,
       effect: () => chargedDimInfinityMult(),
       formatEffect: value => formatPow(value, 4, 4)
     }
@@ -51,11 +59,15 @@ export const infinityUpgrades = {
     id: "36Mult",
     cost: 1,
     checkRequirement: () => InfinityUpgrade.dim27mult.isBought,
-    description: "3rd and 6th Antimatter Dimensions gain a multiplier based on Infinities",
+    description: () => `${player.options.naming.dimensions ? 
+      `Antimatter ${AntimatterDimension(3).uniqueName}s and Antimatter ${AntimatterDimension(6).uniqueName}s` : 
+      "3rd and 6th Antimatter Dimensions"} gain a multiplier based on Infinities`,
     effect: () => dimInfinityMult(),
     formatEffect: value => formatX(value, 1, 1),
     charged: {
-      description: "3rd and 6th Antimatter Dimensions gain a power effect based on Infinities and Teresa level",
+      description: () => `${player.options.naming.dimensions ? 
+        `Antimatter ${AntimatterDimension(3).uniqueName}s and Antimatter ${AntimatterDimension(6).uniqueName}s` : 
+        "3rd and 6th Antimatter Dimensions"} gain a power effect based on Infinities and Teresa level`,
       effect: () => chargedDimInfinityMult(),
       formatEffect: value => formatPow(value, 4, 4)
     }
@@ -64,11 +76,15 @@ export const infinityUpgrades = {
     id: "45Mult",
     cost: 1,
     checkRequirement: () => InfinityUpgrade.dim36mult.isBought,
-    description: "4th and 5th Antimatter Dimensions gain a multiplier based on Infinities",
+    description: () => `${player.options.naming.dimensions ? 
+      `Antimatter ${AntimatterDimension(4).uniqueName}s and Antimatter ${AntimatterDimension(5).uniqueName}s` : 
+      "4th and 5th Antimatter Dimensions"} gain a multiplier based on Infinities`,
     effect: () => dimInfinityMult(),
     formatEffect: value => formatX(value, 1, 1),
     charged: {
-      description: "4th and 5th Antimatter Dimensions gain a power effect based on Infinities and Teresa level",
+      description: () => `${player.options.naming.dimensions ? 
+        `Antimatter ${AntimatterDimension(4).uniqueName}s and Antimatter ${AntimatterDimension(5).uniqueName}s` : 
+        "4th and 5th Antimatter Dimensions"} gain a power effect based on Infinities and Teresa level`,
       effect: () => chargedDimInfinityMult(),
       formatEffect: value => formatPow(value, 4, 4)
     }
@@ -131,11 +147,15 @@ export const infinityUpgrades = {
     id: "unspentBonus",
     cost: 5,
     checkRequirement: () => InfinityUpgrade.thisInfinityTimeMult.isBought,
-    description: "Multiplier to 1st Antimatter Dimension based on unspent Infinity Points",
+    description: () => `Multiplier to 
+    ${player.options.naming.dimensions?`Antimatter ${AntimatterDimension(1).uniqueName}`:"1st Antimatter Dimension"}
+     based on unspent Infinity Points`,
     effect: () => Currency.infinityPoints.value.dividedBy(2).pow(1.5).plus(1),
     formatEffect: value => formatX(value, 2, 2),
     charged: {
-      description: "Multiplier to 1st Antimatter Dimension based on unspent Infinity Points, powered by Teresa level",
+      description: () => `Multiplier to 
+      ${player.options.naming.dimensions?`Antimatter ${AntimatterDimension(1).uniqueName}`:"1st Antimatter Dimension"} 
+      based on unspent Infinity Points, powered by Teresa level`,
       effect: () => Currency.infinityPoints.value.dividedBy(2).pow(Math.sqrt(Ra.pets.teresa.level) * 1.5).plus(1),
       formatEffect: value => formatX(value, 2, 2)
     }

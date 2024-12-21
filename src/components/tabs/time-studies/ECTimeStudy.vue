@@ -41,6 +41,10 @@ export default {
     config() {
       return this.study.config;
     },
+    secondaryResource() {
+      const SR = this.config.secondary.resource;
+      return typeof SR === "function" ? SR() : SR;
+    },
     hasNumberRequirement() {
       return typeof this.study.requirementCurrent === "number";
     },
@@ -98,7 +102,7 @@ export default {
       <span v-else>
         {{ formatValue(requirement.current) }}/{{ formatValue(requirement.total) }}
         <br v-if="needsSecondLinebreak">
-        {{ config.secondary.resource }}
+        {{ secondaryResource }}
       </span>
     </template>
     <span v-if="isUnlocked && !isRunning"><br>Double click to start</span>

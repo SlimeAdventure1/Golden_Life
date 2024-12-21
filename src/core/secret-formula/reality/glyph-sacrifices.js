@@ -30,7 +30,8 @@ export const glyphSacrifice = {
       const capped = Math.clampMax(sac, GlyphSacrificeHandler.maxSacrificeForEffects);
       return 1 + Math.log10(1 + Math.pow(capped, 0.2) / 100);
     },
-    description: amount => `${formatX(amount, 2, 2)} bigger multiplier when buying 8th Infinity Dimension`,
+    description: amount => `${formatX(amount, 2, 2)} bigger multiplier when buying 
+    ${player.options.naming.dimensions ? `Infinity ${InfinityDimension(8).uniqueName}` : "8th Infinity Dimension"}`,
     boostValue: added =>{
       return GlyphAlteration.sacrificeBoost("infinity",added ?? 0) / 50
     },
@@ -45,7 +46,8 @@ export const glyphSacrifice = {
       const capped = Math.clampMax(sac, GlyphSacrificeHandler.maxSacrificeForEffects);
       return Math.pow(1 + Math.pow(capped, 0.2) / 100, 2);
     },
-    description: amount => `${formatX(amount, 2, 2)} bigger multiplier when buying 8th Time Dimension`,
+    description: amount => `${formatX(amount, 2, 2)} bigger multiplier when buying 
+    ${player.options.naming.dimensions ? `Time ${TimeDimension(8).uniqueName}` : "8th Time Dimension"}`,
     boostValue: added =>{
       return Math.pow(3, GlyphAlteration.sacrificeBoost("time",added ?? 0))
     },

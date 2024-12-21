@@ -4,57 +4,57 @@ export const normalAchievements = [
   {
     id: 11,
     name: "You gotta start somewhere",
-    description: "Buy a 1st Antimatter Dimension.",
+    get description() { return `Buy ${player.options.naming.dimensions ? 
+      `an Antimatter ${AntimatterDimension(1).uniqueName}` : "a 1st Antimatter Dimension"}.`; },
     checkEvent: GAME_EVENT.ACHIEVEMENT_EVENT_OTHER,
   },
   {
     id: 12,
     name: "100 antimatter is a lot",
-    description: "Buy a 2nd Antimatter Dimension.",
+    get description() { return `Buy a ${player.options.naming.dimensions ? 
+      `an Antimatter ${AntimatterDimension(2).uniqueName}` : "a 2nd Antimatter Dimension"}.`; },
     checkEvent: GAME_EVENT.ACHIEVEMENT_EVENT_OTHER,
   },
   {
     id: 13,
     name: "Half life 3 CONFIRMED",
-    description: "Buy a 3rd Antimatter Dimension.",
+    get description() { return `Buy ${player.options.naming.dimensions ? 
+      `an Antimatter ${AntimatterDimension(3).uniqueName}` : "a 3rd Antimatter Dimension"}.`; },
     checkEvent: GAME_EVENT.ACHIEVEMENT_EVENT_OTHER,
   },
   {
     id: 14,
     name: "L4D: Left 4 Dimensions",
-    description: "Buy a 4th Antimatter Dimension.",
+    get description() { return `Buy ${player.options.naming.dimensions ? 
+      `an Antimatter ${AntimatterDimension(4).uniqueName}` : "a 4th Antimatter Dimension"}.`; },
     checkEvent: GAME_EVENT.ACHIEVEMENT_EVENT_OTHER,
   },
   {
     id: 15,
     name: "5 Dimension Antimatter Punch",
-    description: "Buy a 5th Antimatter Dimension.",
+    get description() { return `Buy ${player.options.naming.dimensions ? 
+      `an Antimatter ${AntimatterDimension(5).uniqueName}` : "a 5th Antimatter Dimension"}.`; },
     checkEvent: GAME_EVENT.ACHIEVEMENT_EVENT_OTHER,
   },
   {
     id: 16,
     name: "We couldn't afford 9",
-    get description() {
-      return Enslaved.isRunning
-        ? "Buy a 6th Antimatter Dimension (they never amount to anything)"
-        : "Buy a 6th Antimatter Dimension.";
-    },
+    get description() { return `Buy ${player.options.naming.dimensions ? 
+      `an Antimatter ${AntimatterDimension(6).uniqueName}` : "a 6th Antimatter Dimension"}${Enslaved.isRunning ? `(they never amount to anything)` : "."}`; },
     checkEvent: GAME_EVENT.ACHIEVEMENT_EVENT_OTHER,
   },
   {
     id: 17,
     name: "Not a luck related achievement",
-    description: "Buy a 7th Antimatter Dimension.",
+    get description() { return `Buy ${player.options.naming.dimensions ? 
+      `an Antimatter ${AntimatterDimension(7).uniqueName}` : "a 7th Antimatter Dimension"}.`; },
     checkEvent: GAME_EVENT.ACHIEVEMENT_EVENT_OTHER,
   },
   {
     id: 18,
     name: "90 degrees to infinity",
-    get description() {
-      return Enslaved.isRunning
-        ? "Buy an 8th Antimatter Dimension (don't get used to it)"
-        : "Buy an 8th Antimatter Dimension.";
-    },
+    get description() { return `Buy ${player.options.naming.dimensions ? 
+      `an Antimatter ${AntimatterDimension(8).uniqueName}` : "an 8th Antimatter Dimension"}${Enslaved.isRunning ? `(don't get used to it)` : "."}`; },
     checkEvent: GAME_EVENT.ACHIEVEMENT_EVENT_OTHER,
   },
   {
@@ -76,9 +76,11 @@ export const normalAchievements = [
   {
     id: 23,
     name: "The 9th Dimension is a lie",
-    get description() { return `Have exactly ${formatInt(99)} 8th Antimatter Dimensions.`; },
+    get description() { return `Have exactly ${formatInt(99)} ${player.options.naming.dimensions ? 
+      `Antimatter ${AntimatterDimension(8).uniqueName}s` : "8th Antimatter Dimensions"}`; },
     checkRequirement: () => AntimatterDimension(8).amount.eq(99),
-    get reward() { return `8th Antimatter Dimensions are ${formatPercents(0.1)} stronger.`; },
+    get reward() { return `${player.options.naming.dimensions ? `Antimatter ${AntimatterDimension(8).uniqueName}s` 
+      : "8th Antimatter Dimensions"} are ${formatPercents(0.1)} stronger.`; },
     effect: 1.1
   },
   {
@@ -113,11 +115,13 @@ export const normalAchievements = [
     id: 28,
     name: "There's no point in doing that...",
     get description() {
-      return `Buy a single 1st Antimatter Dimension when you have over ${format(DC.E150)} of them.`;
+      return `Buy a single ${player.options.naming.dimensions ? 
+      `an Antimatter ${AntimatterDimension(1).uniqueName}` : "1st Antimatter Dimension"} when you have over ${format(DC.E150)} of them.`;
     },
     checkRequirement: () => AntimatterDimension(1).amount.exponent >= 150,
     checkEvent: GAME_EVENT.ACHIEVEMENT_EVENT_OTHER,
-    get reward() { return `1st Antimatter Dimensions are ${formatPercents(0.1)} stronger.`; },
+    get reward() { return `${player.options.naming.dimensions ? `Antimatter ${AntimatterDimension(1).uniqueName}s`
+       : "1st Antimatter Dimensions"} are ${formatPercents(0.1)} stronger.`; },
     effect: 1.1
   },
   {
@@ -126,7 +130,8 @@ export const normalAchievements = [
     get description() { return `Get any Antimatter Dimension multiplier over ${formatX(DC.E31)}.`; },
     checkRequirement: () => AntimatterDimensions.all.some(x => x.multiplier.exponent >= 31),
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
-    get reward() { return `1st Antimatter Dimensions are ${formatPercents(0.05)} stronger.`; },
+    get reward() { return `${player.options.naming.dimensions ? `Antimatter ${AntimatterDimension(1).uniqueName}s`
+       : "1st Antimatter Dimensions"} are ${formatPercents(0.05)} stronger.`; },
     effect: 1.05
   },
   {
@@ -153,7 +158,8 @@ export const normalAchievements = [
   {
     id: 34,
     name: "You didn't need it anyway",
-    description: "Infinity without having any 8th Antimatter Dimensions.",
+    get description() { return `Infinity without having any ${player.options.naming.dimensions ? 
+      `Antimatter ${AntimatterDimension(8).uniqueName}s` : "8th Antimatter Dimensions"}`; },
     checkRequirement: () => AntimatterDimension(8).totalAmount.eq(0),
     checkEvent: GAME_EVENT.BIG_CRUNCH_BEFORE,
     get reward() { return `Dimensions 1-7 are ${formatPercents(0.02)} stronger.`; },
@@ -228,9 +234,11 @@ export const normalAchievements = [
   {
     id: 43,
     name: "How the antitables have turned..",
-    description:
-      "Get the 8th Antimatter Dimension multiplier to be highest, 7th Antimatter Dimension multiplier " +
-      " second highest, etc.",
+    get description() {
+      return `Get the ${player.options.naming.dimensions ? `Antimatter ${AntimatterDimension(8).uniqueName}`
+       : "8th Antimatter Dimension"} multiplier to be highest, ${player.options.naming.dimensions ? `Antimatter ${AntimatterDimension(7).uniqueName}`
+       : "7th Antimatter Dimension"} multiplier second highest, etc.`;
+    },
     checkRequirement: () => {
       const multipliers = Array.range(1, 8).map(tier => AntimatterDimension(tier).multiplier);
       for (let i = 0; i < multipliers.length - 1; i++) {
@@ -240,8 +248,9 @@ export const normalAchievements = [
     },
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
     get reward() {
-      return `Each Antimatter Dimension gains a boost proportional to tier
-      (8th gets ${formatPercents(0.08)}, 7th gets ${formatPercents(0.07)}, etc.)`;
+      return `Each Antimatter Dimension gains a boost proportional to tier 
+      (${player.options.naming.dimensions ? `${AntimatterDimension(8).uniqueName}` : "8th"} 
+      gets ${formatPercents(0.08)}, ${player.options.naming.dimensions ? `${AntimatterDimension(7).uniqueName}` : "7th"} gets ${formatPercents(0.07)}, etc.)`;
     }
   },
   {
@@ -267,7 +276,8 @@ export const normalAchievements = [
   {
     id: 46,
     name: "Multidimensional",
-    get description() { return `Reach ${format(DC.E12)} of all Antimatter Dimensions except the 8th.`; },
+    get description() { return `Reach ${format(DC.E12)} of all Antimatter Dimensions except 
+    ${player.options.naming.dimensions ? `${AntimatterDimension(8).uniqueName}s` : "the 8th"}.`; },
     checkRequirement: () => AntimatterDimension(7).amount.exponent >= 12,
     checkEvent: GAME_EVENT.GAME_TICK_AFTER
   },
@@ -453,14 +463,15 @@ export const normalAchievements = [
     },
     checkRequirement: () => NormalChallenge(3).isOnlyActiveChallenge && Time.thisInfinityRealTime.totalSeconds <= 10,
     checkEvent: GAME_EVENT.BIG_CRUNCH_BEFORE,
-    get reward() { return `1st Antimatter Dimensions are ${formatPercents(0.5)} stronger.`; },
+    get reward() { return `${player.options.naming.dimensions ? `Antimatter ${AntimatterDimension(1).uniqueName}s` : 
+      "1st Antimatter Dimensions"} are ${formatPercents(0.5)} stronger.`; },
     effect: 1.5
   },
   {
     id: 71,
     name: "ERROR 909: Dimension not found",
-    get description() { return `Get to Infinity with only a single 1st Antimatter Dimension without Dimension Boosts
-      or Antimatter Galaxies, while in 
+    get description() { return `Get to Infinity with only a single ${player.options.naming.dimensions ? `Antimatter ${AntimatterDimension(1).uniqueName}` : 
+      "1st Antimatter Dimension"} without Dimension Boosts or Antimatter Galaxies, while in 
       ${player.options.naming.challenges?`${NormalChallenge(2).name} (C2)`:`the 2nd Antimatter Dimension Autobuyer Challenge`}.`;},
     checkRequirement: () =>
       NormalChallenge(2).isOnlyActiveChallenge &&
@@ -468,7 +479,8 @@ export const normalAchievements = [
       DimBoost.purchasedBoosts === 0 &&
       player.galaxies === 0,
     checkEvent: GAME_EVENT.BIG_CRUNCH_BEFORE,
-    get reward() { return `1st Antimatter Dimensions are ${formatInt(3)} times stronger.`; },
+    get reward() { return `${player.options.naming.dimensions ? `Antimatter ${AntimatterDimension(1).uniqueName}s` : 
+      "1st Antimatter Dimensions"} are ${formatInt(3)} times stronger.`; },
     effect: 3
   },
   {
@@ -505,7 +517,8 @@ export const normalAchievements = [
   {
     id: 75,
     name: "NEW DIMENSIONS???",
-    description: "Unlock the 4th Infinity Dimension.",
+    get description() { return `Unlock the ${player.options.naming.dimensions ? 
+      `Infinity ${InfinityDimension(4).uniqueName}`: "4th Infinity Dimension"}.`; },
     checkRequirement: () => InfinityDimension(4).isUnlocked,
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
     reward: "Your Achievement bonus affects Infinity Dimensions.",
@@ -698,7 +711,8 @@ export const normalAchievements = [
   {
     id: 98,
     name: "0 degrees from Infinity",
-    description: "Unlock the 8th Infinity Dimension.",
+    get description() { return `Unlock the ${player.options.naming.dimensions ? 
+      `Infinity ${InfinityDimension(8).uniqueName}`: "8th Infinity Dimension"}.`; },
     checkRequirement: () => InfinityDimension(8).isUnlocked,
     checkEvent: GAME_EVENT.GAME_TICK_AFTER
   },
@@ -1121,7 +1135,8 @@ export const normalAchievements = [
     name: "You really didn't need it anyway",
     get description() {
       return `Get ${formatInt(800)} Antimatter Galaxies without
-      buying 8th Antimatter Dimensions in your current Infinity.`;
+      buying ${player.options.naming.dimensions ? `Antimatter ${AntimatterDimension(8).uniqueName}s`
+       : "8th Antimatter Dimensions"} in your current Infinity.`;
     },
     checkRequirement: () => player.galaxies >= 800 && player.requirementChecks.infinity.noAD8,
     checkEvent: GAME_EVENT.GALAXY_RESET_AFTER,

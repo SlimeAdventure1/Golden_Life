@@ -38,7 +38,8 @@ export const normalTimeStudies = [
     // All requirements of an empty array will always evaluate to true, so this study is always purchasable
     requirement: [],
     reqType: TS_REQUIREMENT_TYPE.ALL,
-    description: "Tickspeed affects 1st Time Dimension with reduced effect",
+    description: () => `Tickspeed affects ${player.options.naming.dimensions ? `Time ${TimeDimension(1).uniqueName}`
+       : "1st Time Dimension"} with reduced effect`,
     effect: () => {
       const tickspeed = Tickspeed.current.dividedBy(1000);
       const firstPart = tickspeed.pow(0.005).times(0.95);
@@ -111,8 +112,8 @@ export const normalTimeStudies = [
     cost: 6,
     requirement: [32],
     reqType: TS_REQUIREMENT_TYPE.AT_LEAST_ONE,
-    description: () => `Antimatter Galaxy requirement increases by ${formatInt(52)}
-      8th Dimensions instead of ${formatInt(60)}`,
+    description: () => `Antimatter Galaxy requirement increases by ${formatInt(52)} 
+    ${player.options.naming.dimensions ? `${AntimatterDimension(8).uniqueName}s` : "8th Dimensions"} instead of ${formatInt(60)}`,
     effect: 52
   },
   {
@@ -156,7 +157,8 @@ export const normalTimeStudies = [
       () => Perk.studyECRequirement.isBought ||
         (!EternityChallenge(11).isUnlocked && !EternityChallenge(12).isUnlocked)],
     reqType: TS_REQUIREMENT_TYPE.DIMENSION_PATH,
-    description: "Dimensional Sacrifice affects 4th Infinity Dimension with greatly reduced effect",
+    description: () => `Dimensional Sacrifice affects ${player.options.naming.dimensions ? `Infinity ${InfinityDimension(4).uniqueName}`
+       : "4th Infinity Dimension"} with greatly reduced effect`,
     effect: () => Sacrifice.totalBoost.pow(0.04).clampMin(1),
     cap: DC.E30000,
     formatEffect: value => formatX(value, 2, 1)
@@ -166,7 +168,8 @@ export const normalTimeStudies = [
     cost: 5,
     requirement: [61, () => Perk.studyECRequirement.isBought || !EternityChallenge(11).isUnlocked],
     reqType: TS_REQUIREMENT_TYPE.DIMENSION_PATH,
-    description: "Dimensional Sacrifice affects 3rd Time Dimension with greatly reduced effect",
+    description: () => `Dimensional Sacrifice affects ${player.options.naming.dimensions ? `Time ${TimeDimension(3).uniqueName}`
+       : "3rd Time Dimension"} with greatly reduced effect`,
     effect: () => Sacrifice.totalBoost.pow(0.005).clampMin(1),
     cap: DC.E1300,
     formatEffect: value => formatX(value, 2, 1)
@@ -504,7 +507,8 @@ export const normalTimeStudies = [
     cost: 120,
     requirement: [193],
     reqType: TS_REQUIREMENT_TYPE.AT_LEAST_ONE,
-    description: "Dimensional Sacrifice boosts the 8th Antimatter Dimension even more",
+    description: () => `Dimensional Sacrifice boosts the ${player.options.naming.dimensions ? `Antimatter ${AntimatterDimension(8).uniqueName}`
+       : "8th Antimatter Dimension"} even more`,
     effect: () => {
       const totalBoost = Sacrifice.totalBoost;
       const firstPart = totalBoost.pow(7.6).clampMaxExponent(44000);
@@ -588,7 +592,8 @@ export const normalTimeStudies = [
     requirement: [214],
     reqType: TS_REQUIREMENT_TYPE.AT_LEAST_ONE,
     requiresST: [228],
-    description: "Dimensional Sacrifice affects 4th Time Dimension with reduced effect",
+    description: () => `Dimensional Sacrifice affects ${player.options.naming.dimensions ? `Time ${TimeDimension(4).uniqueName}`
+       : "4th Time Dimension"} with reduced effect`,
     effect: () => Math.max(Math.pow(Sacrifice.totalBoost.pLog10(), 10), 1),
     formatEffect: value => formatX(value, 2, 2)
   },
@@ -644,7 +649,8 @@ export const normalTimeStudies = [
     requirement: [227, 228],
     reqType: TS_REQUIREMENT_TYPE.AT_LEAST_ONE,
     requiresST: [233],
-    description: "Dimensional Sacrifice applies to 1st Antimatter Dimension",
+    description: () => `Dimensional Sacrifice applies to ${player.options.naming.dimensions ? `Antimatter ${AntimatterDimension(1).uniqueName}`
+       : "1st Antimatter Dimensions"}`,
     effect: () => Sacrifice.totalBoost,
   },
   // Note: These last 4 entries are the triad studies

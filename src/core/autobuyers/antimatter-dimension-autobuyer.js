@@ -12,6 +12,7 @@ export class AntimatterDimensionAutobuyerState extends UpgradeableAutobuyerState
   }
 
   get fullName() {
+    if (player.options.naming.dimensions) return `Antimatter ${AntimatterDimension(this.tier).uniqueName}`
     return `${this.name} Antimatter Dimension`;
   }
 

@@ -43,6 +43,10 @@ export default {
     overrideLabel() {
       return this.isBroken ? "Broken" : "";
     },
+    reward() {
+      const reward = this.challenge.config.reward;
+      return typeof reward === "function" ? reward() : reward;
+    },
   },
   methods: {
     update() {
@@ -74,7 +78,7 @@ export default {
       <DescriptionDisplay :config="descriptionDisplayConfig" />
     </template>
     <template #bottom>
-      <span :class="{ 'o-pelle-disabled': isDisabled }">Reward: {{ challenge.config.reward }}</span>
+      <span :class="{ 'o-pelle-disabled': isDisabled }">Reward: {{ reward }}</span>
     </template>
   </ChallengeBox>
 </template>

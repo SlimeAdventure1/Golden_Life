@@ -162,7 +162,8 @@ export const imaginaryUpgrades = [
     id: 15,
     cost: 1e9,
     requirement: () => `Reach ${format("1e1500000000000")} antimatter without
-      ever having any 1st Infinity Dimensions`,
+      ever having any ${player.options.naming.dimensions ? `Infinity ${InfinityDimension(1).uniqueName}s`
+       : "1st Infinity Dimensions"}`,
     hasFailed: () => player.requirementChecks.reality.maxID1.gt(0),
     checkRequirement: () => player.requirementChecks.reality.maxID1.eq(0) && player.antimatter.exponent >= 1.5e12,
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
@@ -185,7 +186,8 @@ export const imaginaryUpgrades = [
     hasFailed: () => false,
     checkRequirement: () => Laitela.maxAllowedDimension <= 6,
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
-    description: "Unlock the 2nd Dark Matter Dimension",
+    description: () => `Unlock the ${player.options.naming.dimensions ? `Dark Matter ${DarkMatterDimension(2).uniqueName}`
+       : "2nd Dark Matter Dimension"}`,
   },
   {
     name: "Chiral Oscillation",
@@ -196,7 +198,8 @@ export const imaginaryUpgrades = [
     checkRequirement: () => Singularity.singularitiesGained >= 20 &&
       Currency.darkEnergy.gte(Singularity.cap * SingularityMilestone.autoCondense.effectOrDefault(Infinity)),
     checkEvent: GAME_EVENT.SINGULARITY_RESET_BEFORE,
-    description: "Unlock the 3rd Dark Matter Dimension",
+    description: () => `Unlock the ${player.options.naming.dimensions ? `Dark Matter ${DarkMatterDimension(3).uniqueName}`
+       : "3rd Dark Matter Dimension"}`,
   },
   {
     name: "Dimensional Symmetry",
@@ -208,7 +211,8 @@ export const imaginaryUpgrades = [
     checkRequirement: () => Replicanti.galaxies.total + player.galaxies +
       player.dilation.totalTachyonGalaxies >= 80000,
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
-    description: "Unlock the 4th Dark Matter Dimension",
+    description: () => `Unlock the ${player.options.naming.dimensions ? `Dark Matter ${DarkMatterDimension(4).uniqueName}`
+       : "4th Dark Matter Dimension"}`,
   },
   {
     name: "Deterministic Radiation",

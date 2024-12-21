@@ -190,7 +190,7 @@ export default {
 }
 .o-fill-bar--infinity-dim {
   float:right;
-  background: linear-gradient(transparent -50%,var(--color-infinity) 350%);
+  background: linear-gradient(transparent -50%,var(--color-infinity) 200%);
 }
 
 </style>

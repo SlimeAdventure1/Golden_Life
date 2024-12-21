@@ -28,7 +28,8 @@ export const eternityChallenges = [
     pelleGoal: DC.E1750,
     goalIncrease: DC.E175,
     reward: {
-      description: "1st Infinity Dimension multiplier based on Infinity Power",
+      description: () => `${player.options.naming.dimensions ? `Infinity ${InfinityDimension(1).uniqueName}`
+       : "1st Infinity Dimension"} multiplier based on Infinity Power`,
       effect: completions => Currency.infinityPower.value.pow(1.5 / (700 - completions * 100)).clampMin(1),
       cap: DC.E100,
       formatEffect: value => formatX(value, 2, 1)
@@ -106,15 +107,21 @@ export const eternityChallenges = [
   {
     id: 7,
     label: "Refabricational Scheme",
-    description:
-      "1st Time Dimensions produce 8th Infinity Dimensions and 1st Infinity Dimensions produce " +
-      "7th Antimatter Dimensions. Tickspeed also directly applies to Infinity and Time Dimensions.",
+    description: () =>
+      `${player.options.naming.dimensions ? `Time ${TimeDimension(1).uniqueName}s`
+       : "1st Time Dimensions"} produce ${player.options.naming.dimensions ? `Infinity ${InfinityDimension(8).uniqueName}s`
+       : "8th Infinity Dimensions"} and ${player.options.naming.dimensions ? `Infinity ${InfinityDimension(1).uniqueName}s`
+       : "1st Infinity Dimensions"} produce 
+      ${player.options.naming.dimensions ? `Antimatter ${AntimatterDimension(7).uniqueName}s`
+       : "7th Antimatter Dimensions"}. Tickspeed also directly applies to Infinity and Time Dimensions.`,
     goal: DC.E2000,
     pelleGoal: DC.E2700,
     goalIncrease: DC.E530,
     effect: () => TimeDimension(1).productionPerSecond,
     reward: {
-      description: "1st Time Dimension produces 8th Infinity Dimensions",
+      description: () => `${player.options.naming.dimensions ? `Time ${TimeDimension(1).uniqueName}`
+       : "1st Time Dimension"} produces ${player.options.naming.dimensions ? `Infinity ${InfinityDimension(8).uniqueName}s`
+       : "8th Infinity Dimensions"}`,
       effect: completions => TimeDimension(1).productionPerSecond.pow(completions * 0.2).minus(1).clampMin(0),
       formatEffect: value => `${format(value, 2, 1)} per second`
     }

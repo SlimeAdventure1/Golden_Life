@@ -1551,7 +1551,6 @@
     width: 100%;
     height: 5rem;
     position: relative;
-    z-index: 1;
     border: var(--var-border-width, 0.1rem) solid black;
     box-shadow: 0 0 1rem black inset,#777777 inset 0px 0px 0px 2px;
     border-top-right-radius: 0;
