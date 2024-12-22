@@ -88,7 +88,12 @@ export const AD = {
     isActive: () => AntimatterDimension(1).isProducing,
     icon: MultiplierTabIcons.DIMENSION("AD"),
   },
-
+  discoveredDim: {
+    name: "Discovered Dimensions bonus",
+    multValue: dim => Decimal.pow(1.25, dim ? 1 : MultiplierTabHelper.activeDimCount("AD")-1),
+    isActive: () => AntimatterDimension(2).isProducing,
+    icon: MultiplierTabIcons.DIMENSION("AD"),
+  },
   dimboost: {
     name: dim => (dim ? `Dimboosts on AD ${dim}` : "Dimboosts"),
     multValue: dim => (dim

@@ -151,6 +151,8 @@ export default {
           <span :style="empowerStyle">{{ format(empowerThreshold) }} - formula drastically improved</span>
           <br>
           <span :style="boostStyle">{{ format(boostThreshold) }} - a boost depending on Glyph Sacrifice</span>
+          <br>
+          <span :style="boostStyle">The boosts will be displayed in the Glyph Sacrifice Boosts.</span>
         </b>
         <br><br>
         All effects from Glyph Sacrifice can no longer be increased once they reach {{ format(maxSacrifice) }}.

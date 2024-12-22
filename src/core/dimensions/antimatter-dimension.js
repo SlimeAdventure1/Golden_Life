@@ -11,7 +11,7 @@ export function antimatterDimensionCommonMultiplier() {
   multiplier = multiplier.times(ShopPurchase.dimPurchases.currentMult);
   multiplier = multiplier.times(ShopPurchase.allDimPurchases.currentMult);
   for (let i = 2; i <= 8; i++){
-    dimountmult = AntimatterDimension(i).amount.gt(0)?dimountmult.times(1.25):dimountmult
+    dimountmult = AntimatterDimension(i).isProducing ? dimountmult.times(1.25): dimountmult
   }
   multiplier = multiplier.times(dimountmult);
   if (!EternityChallenge(9).isRunning) {
@@ -201,7 +201,7 @@ function onBuyDimension(tier) {
   if (tier === 1) player.requirementChecks.eternity.noAD1 = false;
 }
 
-export function buyOneDimension(tier) {
+export function buyOneDimension(tier, playSound = false) {
   const dimension = AntimatterDimension(tier);
   if (Laitela.continuumActive || !dimension.isAvailableForPurchase || !dimension.isAffordable) return false;
 
@@ -224,10 +224,12 @@ export function buyOneDimension(tier) {
 
   onBuyDimension(tier);
 
+  if (playSound) AudioManagement.playSound("purchase_regular")
+
   return true;
 }
 
-export function buyManyDimension(tier) {
+export function buyManyDimension(tier, playSound = false) {
   const dimension = AntimatterDimension(tier);
   if (Laitela.continuumActive || !dimension.isAvailableForPurchase || !dimension.isAffordableUntil10) return false;
   const cost = dimension.costUntil10;
@@ -241,10 +243,12 @@ export function buyManyDimension(tier) {
 
   onBuyDimension(tier);
 
+  if (playSound) AudioManagement.playSound("purchase_regular")
+
   return true;
 }
 
-export function buyAsManyAsYouCanBuy(tier) {
+export function buyAsManyAsYouCanBuy(tier, playSound = false) {
   const dimension = AntimatterDimension(tier);
   if (Laitela.continuumActive || !dimension.isAvailableForPurchase || !dimension.isAffordable) return false;
   const howMany = dimension.howManyCanBuy;
@@ -258,6 +262,8 @@ export function buyAsManyAsYouCanBuy(tier) {
   dimension.bought += howMany;
 
   onBuyDimension(tier);
+
+  if (playSound) AudioManagement.playSound("purchase_regular")
 
   return true;
 }

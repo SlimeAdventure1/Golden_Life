@@ -30,7 +30,11 @@ export default {
       return `You are about to enter ${player.options.naming.challenges?this.challenge.config.label:"Challenge "+this.id}`;
     },
     reward() {
-      return `The reward for completing this challenge is: ${this.challenge._config.reward}`;
+      let rewardDescription = this.challenge._config.reward;
+      if (typeof rewardDescription === "function") {
+        rewardDescription = rewardDescription();
+      }
+      return `The reward for completing this challenge is: ${rewardDescription}`;
     },
     condition() {
       let conditionOfChallenge = this.challenge._config.description;

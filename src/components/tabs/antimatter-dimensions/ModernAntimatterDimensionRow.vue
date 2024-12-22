@@ -125,9 +125,9 @@ export default {
     buy() {
       if (this.isContinuumActive) return;
       if (this.howManyCanBuy === 1) {
-        buyOneDimension(this.tier);
+        buyOneDimension(this.tier, true);
       } else {
-        buyAsManyAsYouCanBuy(this.tier);
+        buyAsManyAsYouCanBuy(this.tier, true);
       }
     },
     showCostTitle(value) {

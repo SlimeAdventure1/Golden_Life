@@ -14,32 +14,45 @@ export const changelog = [
     info: `
 This patch will have more information gradually.
 <br>
-<br><b>New Things:</b><br>
+<br><b>December 22nd, 2024</b><br>
 <ul>
-<li>2024/12/18: Added a disclaimer about the mod having mature contents and sound effects. 
-(Currently only pops up when you import a save from vanila)</li>
-<li>2024/12/18: Added a toggle for mature contents, which can be found in both 
-the disclaimer modal and the visual options tab.</li>
+<li>Revamped this changelog.</li>
+<li>Applied sounds to Antimatter Dimension purchases.</li>
+<li>Added a note to the Altered Glyph's 1e60 boost.</li>
+<li>Added "Discovered Dimensions bonus" entry to the Multipler breakdown tab.</li>
+<li>Fixed a bug where Normal Challenge confirmations displayed the rewards wrong.</li>
 </ul>
-<br><b>Additional changes and information:</b><br>
+<br><b>December 21st, 2024:</b><br>
 <ul>
-<li>2024/12/18: Added a thing in the previous patch.</li>
-<li>2024/12/18: Removed a jumpscare from a newsticker.</li>
-<li>2024/12/18 - End of Time: Added more newstickers</li>
-<li>2024/12/20: Applied sounds to some things.</li>
-<li>2024/12/20: Added records to Normal and Infinity Challenges tabs, and stars as completions to Eternity Challenges tab.</li>
-<li>2024/12/20: Added the Legendary Tester role in the credits. Note that there are no plans to bring 
+<li>Unique Dimension names are now fully applied.</li>
+<li>Improved the tesseract button by a bit.</li>
+</ul>
+<br><b>December 20th, 2024:</b><br>
+<ul>
+<li>Applied sounds to some things.</li>
+<li>Added records to Normal and Infinity Challenges tabs, and stars as completions to Eternity Challenges tab.</li>
+<li>Added the Legendary Tester role in the credits. Note that there are no plans to bring 
 additional testers, since the mod's main objective is to improve graphics.</li>
-<li>2024/12/21: Unique Dimension names are now fully applied.</li>
-</ul>
-<br><b>Bugfixes:</b><br>
-<ul>
-<li>2024/12/17: Fixed a bug where some images couldn't be rendered.</li>
-<li>2024/12/18: Fixed a bug where some themes weren't rendered properly.</li>
-<li>2024/12/18: Fixed a bug where a Ra quote wasn't rendered properly.</li>
-<li>2024/12/20: Fixed a bug where the achievement "Gift from the Gods" showed the wrong challenge ID.</li>
-<li>2024/12/20: Fixed a bug where DimBoost and Galaxy buttons still have the translucent bars 
+<li>Applied the unique dimension names to DimBoost/Galaxy requirements</li>
+<li>Fixed a bug where the achievement "Gift from the Gods" showed the wrong challenge ID.</li>
+<li>Fixed a bug where DimBoost and Galaxy buttons still have the translucent bars 
 in challenges where you normally can't purchase them.</li>
+</ul>
+<br><b>December 18th, 2024:</b><br>
+<ul>
+<li>Added a disclaimer about the mod having mature contents and sound effects. 
+(Currently only pops up when you import a save from vanila)</li>
+<li>Added a toggle for mature contents, which can be found in both 
+the disclaimer modal and the visual options tab.</li>
+<li>Added a thing in the previous patch.</li>
+<li>Removed a jumpscare from a newsticker.</li>
+<li>Added more newstickers</li>
+<li>Fixed a bug where some themes weren't rendered properly.</li>
+<li>Fixed a bug where a Ra quote wasn't rendered properly.</li>
+</ul>
+<br><b>December 17th, 2024:</b><br>
+<ul>
+<li>Fixed a bug where some images couldn't be rendered.</li>
 </ul>
 `
 },

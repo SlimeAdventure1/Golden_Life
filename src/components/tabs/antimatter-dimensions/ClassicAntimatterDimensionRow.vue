@@ -140,11 +140,11 @@ export default {
     },
     buySingle() {
       if (this.isContinuumActive) return;
-      buyOneDimension(this.tier);
+      buyOneDimension(this.tier, true);
     },
     buyUntil10() {
       if (this.isContinuumActive) return;
-      buyManyDimension(this.tier);
+      buyManyDimension(this.tier, true);
     },
     showCostTitle(value) {
       return value.exponent < 1000000;
