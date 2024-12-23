@@ -770,7 +770,7 @@ button:focus {
   height: 100%;
   position: absolute;
   z-index: 999;
-  background: url("../images/loading.png") no-repeat;
+  background: url("../images/background/loading.png") no-repeat;
   background-color: black;
   background-position-x: 50%;
   background-position-y: 50%;
@@ -3534,19 +3534,19 @@ br {
 }
 
 .o-achievement--normal {
-  --bg-image: url("../images/normal achievements.png")
+  --bg-image: url("../images/visuals/normal achievements.png")
 }
 
 .t-legacy .o-achievement--normal {
-  --bg-image: url("../images/retro achievements.png")
+  --bg-image: url("../images/visuals/retro achievements.png")
 }
 
 .o-achievement--cancer {
-  --bg-image: url("../images/cancer achievements.png")
+  --bg-image: url("../images/visuals/cancer achievements.png")
 }
 
 .o-achievement--secret {
-  --bg-image: url("../images/secret achievements.png")
+  --bg-image: url("../images/visuals/secret achievements.png")
 }
 .o-achievement--unlocked {
   --bg-dark: #406b5c;
@@ -3559,13 +3559,13 @@ br {
   --border:#78978d;
 }
 .o-achievement--hidden {
-  --bg-image: url("../images/achhidden.png");
+  --bg-image: url("../images/visuals/achhidden.png");
   --bg-dark: hsl(0, 0%, 15%);
   --bg-light: hsl(0, 0%, 5%);
   --border: #666666;
 }
 .o-achievement--hidden:not(.o-achievement--secret){
-  background: url("../images/row18.gif");
+  background: url("../images/visuals/row18.gif");
 }
 .o-achievement:hover .o-achievement__tooltip {
   bottom: 11rem;
@@ -3702,7 +3702,7 @@ br {
   --bg-image: url(../images/upgrades/pelle.png);
 }
 .o-achievement--hidden:not(.o-achievement--secret) .o-achievement__tooltip {
-  background: url("../images/row18-dark.gif");
+  background: url("../images/visuals/row18-dark.gif");
   color:gray;
 }
 .o-achievement__tooltip__name {

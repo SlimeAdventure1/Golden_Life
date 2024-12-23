@@ -85,6 +85,7 @@ import UndoGlyphModal from "@/components/modals/UndoGlyphModal";
 import UpgradeMechanicLockModal from "@/components/modals/UpgradeMechanicLockModal";
 
 import S12GamesModal from "@/components/modals/secret-themes/S12GamesModal";
+import { AudioManagement } from "../game";
 
 let nextModalID = 0;
 export class Modal {

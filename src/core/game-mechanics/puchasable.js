@@ -39,12 +39,13 @@ export class PurchasableMechanicState extends GameMechanicState {
     return !this.isBought && this.isAffordable && this.isAvailableForPurchase;
   }
 
-  purchase() {
+  purchase(playSound = false, soundType = "purchase_upgrade") {
     if (!this.canBeBought) return false;
     this.currency.subtract(this.cost);
     this.isBought = true;
     this.onPurchased();
     GameUI.update();
+    if (playSound) AudioManagement.playSound(soundType)
     return true;
   }
 

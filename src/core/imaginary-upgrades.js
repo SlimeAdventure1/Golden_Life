@@ -55,6 +55,7 @@ class ImaginaryUpgradeState extends BitPurchasableMechanicState {
 
   toggleMechanicLock() {
     this.hasPlayerLock = !this.hasPlayerLock;
+    AudioManagement.playSound(this.hasPlayerLock?"click_open":"click_close")
   }
 
   // Note we don't actually show the modal if we already failed or unlocked it

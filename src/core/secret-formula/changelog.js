@@ -14,6 +14,15 @@ export const changelog = [
     info: `
 This patch will have more information gradually.
 <br>
+<br><b>December 23rd, 2024</b><br>
+<ul>
+<li>Applied sounds to various purchases and upgrades.</li>
+<li>Applied Unique Dimension names to Singularity milestones.</li>
+<li>"Fixed" a bug where the Black Hole canvas is still shown in Celestial Realities which have the black holes disabled 
+(Actually replaced it with an artwork)</li>
+<li>Fixed a bug in the text in the Antimatter Galaxy button which still had the effects of 
+Achievement 111 and 143, despite being disabled in Doomed Reality.</li>
+</ul>
 <br><b>December 22nd, 2024</b><br>
 <ul>
 <li>Revamped this changelog.</li>

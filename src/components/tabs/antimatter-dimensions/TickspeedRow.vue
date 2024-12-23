@@ -82,7 +82,7 @@ export default {
       <button
         v-tooltip="upgradeCount"
         :class="buttonClass()"
-        onclick="buyTickSpeed()"
+        onclick="buyTickSpeed(true)"
       >
         <span v-if="isContinuumActive">
           Tickspeed Continuum: {{ continuumString }}
@@ -102,7 +102,7 @@ export default {
         v-if="!isContinuumActive"
         class="o-primary-btn tickspeed-max-btn"
         :class="{ 'o-primary-btn--disabled': !isAffordable && !isContinuumActive }"
-        onclick="buyMaxTickSpeed()"
+        onclick="buyMaxTickSpeed(true)"
       >
         Buy Max
       </button>

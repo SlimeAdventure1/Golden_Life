@@ -119,10 +119,10 @@ export default {
         TimeDimension(this.tier).tryUnlock();
         return;
       }
-      buySingleTimeDimension(this.tier);
+      buySingleTimeDimension(this.tier, undefined, true);
     },
     buyMaxTimeDimension() {
-      buyMaxTimeDimension(this.tier);
+      buyMaxTimeDimension(this.tier, undefined, undefined, true);
     }
   }
 };

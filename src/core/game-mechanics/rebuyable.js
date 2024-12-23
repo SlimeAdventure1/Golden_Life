@@ -47,13 +47,14 @@ export class RebuyableMechanicState extends GameMechanicState {
     return this.isAffordable && this.isAvailableForPurchase && !this.isCapped;
   }
 
-  purchase() {
+  purchase(playSound = false, soundType = "purchase_rebuyable") {
     if (!this.canBeBought) return false;
     if (GameEnd.creditsEverClosed) return false;
     this.currency.subtract(this.cost);
     this.boughtAmount++;
     this.onPurchased();
     GameUI.update();
+    if (playSound) AudioManagement.playSound(soundType)
     return true;
   }
 

@@ -252,7 +252,7 @@ class InfinityDimensionState extends DimensionState {
   }
 
   // Only ever called from manual actions
-  buySingle() {
+  buySingle(playSound = false) {
     if (!this.isUnlocked) return this.unlock();
     if (!this.isAvailableForPurchase) return false;
     if (ImaginaryUpgrade(15).isLockingMechanics) {
@@ -273,10 +273,12 @@ class InfinityDimensionState extends DimensionState {
       player.eterc8ids -= 1;
     }
 
+    if (playSound) AudioManagement.playSound("purchase_regular")
+    
     return true;
   }
 
-  buyMax(auto) {
+  buyMax(auto, playSound = false) {
     if (!this.isAvailableForPurchase) return false;
     if (ImaginaryUpgrade(15).isLockingMechanics) {
       const lockString = this.tier === 1
@@ -309,6 +311,9 @@ class InfinityDimensionState extends DimensionState {
     if (EternityChallenge(8).isRunning) {
       player.eterc8ids -= costScaling.purchases;
     }
+    
+    if (playSound) AudioManagement.playSound("purchase_regular")
+    
     return true;
   }
 }

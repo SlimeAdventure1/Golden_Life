@@ -48,7 +48,7 @@ export default {
 <template>
   <button
     :class="classObject"
-    @click="upgrade.purchase()"
+    @click="upgrade.purchase(true)"
   >
     <DescriptionDisplay :config="upgrade.config" />
     <EffectDisplay

@@ -57,8 +57,7 @@ export default {
     },
     purchaseUpgrade() {
       if (RealityUpgrade(15).isLockingMechanics) RealityUpgrade(15).tryShowWarningModal();
-      else this.upgrade.purchase();
-      if (this.isAffordable)AudioManagement.playSound("upgrade_rebuyable")
+      else this.upgrade.purchase(true);
     }
   }
 };
@@ -80,7 +79,7 @@ export default {
     </button>
     <PrimaryButton
       class="l--spoon-btn-group__little-spoon o-primary-btn--small-spoon"
-      @click="upgrade.buyMax(false)"
+      @click="upgrade.buyMax(false,true)"
     >
       Max Eternity Point mult
     </PrimaryButton>

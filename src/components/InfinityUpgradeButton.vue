@@ -96,6 +96,10 @@ export default {
       const worstChallengeTime = GameCache.worstChallengeTime.value;
       const worstChallengeIndex = 2 + player.challenge.normal.bestTimes.indexOf(worstChallengeTime);
       this.worstChallengeString = `(Challenge ${worstChallengeIndex}: ${timeDisplayShort(worstChallengeTime)})`;
+    },
+    purchaseUpgrade() {
+      if (this.upgrade == InfinityUpgrade.ipMult) this.upgrade.purchase(undefined, true)
+      else this.upgrade.purchase(true);
     }
   }
 };
@@ -106,7 +110,7 @@ export default {
     :class="classObject"
     @mouseenter="showingCharged = canBeCharged"
     @mouseleave="showingCharged = false"
-    @click="upgrade.purchase()"
+    @click="purchaseUpgrade()"
   >
     <span :class="{ 'o-pelle-disabled': isUseless }">
       <DescriptionDisplay

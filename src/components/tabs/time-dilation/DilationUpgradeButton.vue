@@ -107,7 +107,7 @@ export default {
     <button
       :ach-tooltip="timeEstimate"
       :class="classObject"
-      @click="upgrade.purchase()"
+      @click="isRebuyable ? upgrade.purchase(undefined,'true') : upgrade.purchase(true)"
       @mouseover="isHovering = true"
       @mouseleave="isHovering = false"
     >

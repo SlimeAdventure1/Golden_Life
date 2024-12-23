@@ -149,7 +149,7 @@ export default {
         EternityChallenge(this.study.id).remainingCompletions === 0;
     },
     handleClick() {
-      if (!this.study.isBought&&this.isAvailableForPurchase)AudioManagement.playSound("upgrade")
+      if (!this.study.isBought&&this.isAvailableForPurchase)AudioManagement.playSound("purchase_upgrade")
       if (this.specialClick === null || !this.study.isBought) this.study.purchase();
       else this.specialClick();
     },

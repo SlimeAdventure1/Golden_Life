@@ -114,10 +114,10 @@ export default {
       }
     },
     buySingleInfinityDimension() {
-      InfinityDimension(this.tier).buySingle();
+      InfinityDimension(this.tier).buySingle(true);
     },
     buyMaxInfinityDimension() {
-      InfinityDimension(this.tier).buyMax(false);
+      InfinityDimension(this.tier).buyMax(false, true);
     },
   }
 };

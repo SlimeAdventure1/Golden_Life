@@ -61,7 +61,7 @@ const DIL_UPG_NAMES = [
   "dtGainPelle", "galaxyMultiplier", "tickspeedPower", "galaxyThresholdPelle", "flatDilationMult"
 ];
 
-export function buyDilationUpgrade(id, bulk = 1) {
+export function buyDilationUpgrade(id, bulk = 1, playSound = false) {
   if (GameEnd.creditsEverClosed) return false;
   // Upgrades 1-3 are rebuyable, and can be automatically bought in bulk with a perk shop upgrade
   const upgrade = DilationUpgrade[DIL_UPG_NAMES[id]];
@@ -101,6 +101,7 @@ export function buyDilationUpgrade(id, bulk = 1) {
       }
       Currency.tachyonParticles.multiply(Decimal.pow(retroactiveTPFactor, buying));
     }
+    if (playSound) AudioManagement.playSound("purchase_rebuyable")
   }
   return true;
 }
@@ -255,8 +256,8 @@ class RebuyableDilationUpgradeState extends RebuyableMechanicState {
     return this.config.reachedCap();
   }
 
-  purchase(bulk) {
-    buyDilationUpgrade(this.config.id, bulk);
+  purchase(bulk, playSound = false) {
+    buyDilationUpgrade(this.config.id, bulk, playSound);
   }
 }
 

@@ -36,7 +36,7 @@ export const shortcuts = [
     name: "Buy one Tickspeed",
     keys: ["shift", "t"],
     type: "bindRepeatableHotkey",
-    function: () => buyTickSpeed(),
+    function: () => buyTickSpeed(true),
     visible: true
   }, {
     name: "Buy max Tickspeed",

@@ -2,7 +2,7 @@ import { DC } from "../constants";
 
 import { DimensionState } from "./dimension";
 
-export function buySingleTimeDimension(tier, auto = false) {
+export function buySingleTimeDimension(tier, auto = false, playSound = false) {
   const dim = TimeDimension(tier);
   if (tier > 4) {
     if (!TimeStudy.timeDimension(tier).isBought) return false;
@@ -25,6 +25,7 @@ export function buySingleTimeDimension(tier, auto = false) {
   dim.amount = dim.amount.plus(1);
   dim.bought += 1;
   dim.cost = dim.nextCost(dim.bought);
+  if (playSound) AudioManagement.playSound("purchase_regular")
   return true;
 }
 
@@ -48,7 +49,7 @@ export function toggleAllTimeDims() {
   }
 }
 
-export function buyMaxTimeDimension(tier, portionToSpend = 1, isMaxAll = false) {
+export function buyMaxTimeDimension(tier, portionToSpend = 1, isMaxAll = false, playSound = false) {
   const canSpend = Currency.eternityPoints.value.times(portionToSpend);
   const dim = TimeDimension(tier);
   if (canSpend.lt(dim.cost)) return false;
@@ -77,6 +78,7 @@ export function buyMaxTimeDimension(tier, portionToSpend = 1, isMaxAll = false) 
   dim.amount = dim.amount.plus(bulk.quantity);
   dim.bought += bulk.quantity;
   dim.cost = dim.nextCost(dim.bought);
+  if (playSound) AudioManagement.playSound("purchase_regular")
   return true;
 }
 

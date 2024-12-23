@@ -170,7 +170,7 @@ export const PerkNetwork = {
     this.network.on("click", params => {
       const id = params.nodes[0];
       if (!isFinite(id)) return;
-      Perks.find(id).purchase();
+      Perks.find(id).purchase(true, "purchase_long");
       this.updatePerkColor();
       this.updatePerkSize();
     });

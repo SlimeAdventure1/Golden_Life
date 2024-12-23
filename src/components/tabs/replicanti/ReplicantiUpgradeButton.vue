@@ -73,7 +73,7 @@ export class ReplicantiUpgradeButtonSetup {
       :enabled="canBeBought"
       class="o-primary-btn--replicanti-upgrade"
       :class="{'o-primary-btn--replicanti-capped' : isCapped}"
-      @click="upgrade.purchase()"
+      @click="upgrade.purchase(true)"
     >
     <div style="z-index: 1;position: relative;">
       <span v-html="description" />

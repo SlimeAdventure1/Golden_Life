@@ -100,7 +100,7 @@ export default {
       :class="classObject"
       class="l-reality-upgrade-btn c-imaginary-upgrade-btn"
       @click.shift.exact="toggleLock(upgrade)"
-      @click.exact="upgrade.purchase()"
+      @click.exact="upgrade.purchase(true, isRebuyable ? 'purchase_longbuyable' : 'purchase_long')"
     >
       <HintText
         type="realityUpgrades"

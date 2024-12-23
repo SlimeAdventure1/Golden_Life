@@ -175,48 +175,52 @@ export class DarkMatterDimensionState extends DimensionState {
     return Math.ceil(Math.log(this.intervalPurchaseCap / this.interval) / Math.log(INTERVAL_PER_UPGRADE));
   }
 
-  buyManyInterval(x) {
+  buyManyInterval(x, playSound = false) {
     if (x > this.maxIntervalPurchases) return false;
     const cost = this.rawIntervalCost.times(
       Decimal.pow(this.intervalCostIncrease, x).minus(1)).div(this.intervalCostIncrease - 1).floor();
     if (!Currency.darkMatter.purchase(cost)) return false;
     this.data.intervalUpgrades += x;
+    if (playSound) AudioManagement.playSound("purchase_regular")
     return true;
   }
 
-  buyManyPowerDM(x) {
+  buyManyPowerDM(x, playSound = false) {
     const cost = this.rawPowerDMCost.times(
       Decimal.pow(this.powerDMCostIncrease, x).minus(1)).div(this.powerDMCostIncrease - 1).floor();
     if (!Currency.darkMatter.purchase(cost)) return false;
     this.data.powerDMUpgrades += x;
+    if (playSound) AudioManagement.playSound("purchase_regular")
     return true;
   }
 
-  buyManyPowerDE(x) {
+  buyManyPowerDE(x, playSound = false) {
     const cost = this.rawPowerDECost.times(
       Decimal.pow(this.powerDECostIncrease, x).minus(1)).div(this.powerDECostIncrease - 1).floor();
     if (!Currency.darkMatter.purchase(cost)) return false;
     this.data.powerDEUpgrades += x;
+    if (playSound) AudioManagement.playSound("purchase_regular")
     return true;
   }
 
-  buyInterval() {
-    return this.buyManyInterval(1);
+  buyInterval(playSound = false) {
+    return this.buyManyInterval(1, playSound);
   }
 
-  buyPowerDM() {
-    return this.buyManyPowerDM(1);
+  buyPowerDM(playSound = false) {
+    return this.buyManyPowerDM(1, playSound);
   }
 
-  buyPowerDE() {
-    return this.buyManyPowerDE(1);
+  buyPowerDE(playSound = false) {
+    return this.buyManyPowerDE(1, playSound);
   }
 
-  ascend() {
+  ascend(playSound = false) {
     if (this.interval > this.intervalPurchaseCap) return;
     this.data.ascensionCount++;
 
     // Immediately buy as many interval upgrades as possible
+    if (playSound) AudioManagement.playSound("purchase_regular")
     while (this.buyInterval());
   }
 

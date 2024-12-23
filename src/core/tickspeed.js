@@ -66,7 +66,7 @@ export function getTickSpeedMultiplier() {
   return perGalaxy.pow(galaxies - 2).times(baseMultiplier);
 }
 
-export function buyTickSpeed() {
+export function buyTickSpeed(playSound = false) {
   if (!Tickspeed.isAvailableForPurchase || !Tickspeed.isAffordable) return false;
 
   if (NormalChallenge(9).isRunning) {
@@ -78,11 +78,12 @@ export function buyTickSpeed() {
   player.records.thisInfinity.lastBuyTime = player.records.thisInfinity.time;
   player.requirementChecks.permanent.singleTickspeed++;
   if (NormalChallenge(2).isRunning) player.chall2Pow = 0;
+  if (playSound) AudioManagement.playSound("purchase_regular")
   GameUI.update();
   return true;
 }
 
-export function buyMaxTickSpeed() {
+export function buyMaxTickSpeed(playSound = false) {
   if (!Tickspeed.isAvailableForPurchase || !Tickspeed.isAffordable) return;
   let boughtTickspeed = false;
 
@@ -111,6 +112,7 @@ export function buyMaxTickSpeed() {
     player.records.thisInfinity.lastBuyTime = player.records.thisInfinity.time;
     if (NormalChallenge(2).isRunning) player.chall2Pow = 0;
   }
+  if (boughtTickspeed && playSound) AudioManagement.playSound("purchase_rebuyable")
 }
 
 export function resetTickspeed() {

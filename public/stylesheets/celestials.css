@@ -579,7 +579,7 @@
     position: relative;
     -webkit-background-clip: text;
     background-clip: text;
-    background-image: url("../images/noise.png");
+    background-image: url("../images/celestials/effarig_noise.png");
     animation: a-effarig-run-button--running-noise 15s infinite alternate;
     -webkit-text-fill-color: rgba(255, 0, 0, 50%);
 }

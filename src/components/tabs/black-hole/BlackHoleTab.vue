@@ -43,6 +43,10 @@ export default {
           throw new Error("Unrecognized BH offline pausing mode");
       }
     },
+    disabledImage() {
+      if (this.isDoomed) return "images/visuals/black_hole_disabled_doomed.png"
+      return "images/visuals/black_hole_disabled_enslaved.png"
+    }
   },
   mounted() {
     this.startAnimation();
@@ -150,23 +154,23 @@ export default {
 
 <template>
   <div class="l-black-hole-tab">
-    <div
-      v-if="isEnslaved || isDoomed"
+    <template v-if="isEnslaved || isDoomed">
+      <div
       class="c-black-hole-disabled-description"
-    >
-      <i v-if="isEnslaved">
+      :class="{'c-black-hole-disabled-description-doomed' : isDoomed}"
+      >
+        The physics of this Reality do not allow the existence of Black Holes.
+      </div>
+      <img 
+      class="c-black-hole-disabled-image"
+      :src="disabledImage"
+      >
+      <i 
+      class="c-black-hole-disabled-description"
+      v-if="isEnslaved">
         You must... seek... other methods...
-        <br>
-      </i>
-      The physics of this Reality do not allow the existence of Black Holes.
-      <br>
-      <canvas
-        ref="canvas"
-        class="c-black-hole-canvas"
-        width="400"
-        height="400"
-      />
-    </div>
+      </i>     
+    </template>
     <div
       v-else-if="!isUnlocked"
       class="l-pre-unlock-text"
@@ -206,7 +210,7 @@ export default {
         class="c-black-hole-canvas"
         width="400"
         height="400"
-      />
+        />
         <div :class="gridStyle()">
         <BlackHoleUpgradeRow
           v-for="(blackHole, i) in blackHoles"
@@ -254,7 +258,27 @@ export default {
 }
 
 .c-black-hole-disabled-description {
+  color: var(--color-text);
   font-size: 2.5rem;
   line-height: 1.5;
+  font-family: cambria;
+  font-weight: bold;
+  border-bottom: 0.1rem solid;
+  border-top: 0.1rem solid;
+  border-image: linear-gradient(90deg, transparent, var(--color-enslaved--base), transparent) 1;
+  background: linear-gradient(90deg, transparent, #f1aa7f66, transparent);
+  margin: 1rem;
+}
+.c-black-hole-disabled-description-doomed {
+  border-image: linear-gradient(90deg, transparent, var(--color-pelle--base), transparent) 1;
+  background: linear-gradient(90deg, transparent, #ed143d66, transparent);
+}
+.c-black-hole-disabled-image{
+  border: var(--var-border-width, 1.2rem) solid;
+  border-image: var(--leg-border-render) 12 round
+}
+.s-base--metro .c-black-hole-disabled-image{
+  border: var(--var-border-width, 0.3rem) solid;
+  border-image: var(--leg-border-render) 3 round
 }
 </style>

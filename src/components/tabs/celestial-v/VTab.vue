@@ -4,6 +4,7 @@ import GlyphSetPreview from "@/components/GlyphSetPreview";
 import PrimaryButton from "@/components/PrimaryButton";
 import { V_REDUCTION_MODE } from "@/core/secret-formula";
 import VUnlockRequirement from "./VUnlockRequirement";
+import { AudioManagement } from "../../../game";
 
 export default {
   name: "VTab",
@@ -136,6 +137,7 @@ export default {
       if (!Currency.perkPoints.purchase(hex.reductionCost)) return;
       const steps = hex.config.reductionStepSize ? hex.config.reductionStepSize : 1;
       player.celestials.v.goalReductionSteps[hex.id] += steps;
+      AudioManagement.playSound("purchase_regular")
       for (const unlock of VRunUnlocks.all) {
         unlock.tryComplete();
       }

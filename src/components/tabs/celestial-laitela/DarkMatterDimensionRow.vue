@@ -131,14 +131,14 @@ export default {
       if (!this.isIntervalCapped) this.hoverOverAscension = false;
     },
     handleIntervalClick() {
-      if (this.isIntervalCapped) DarkMatterDimension(this.tier).ascend();
-      else DarkMatterDimension(this.tier).buyInterval();
+      if (this.isIntervalCapped) DarkMatterDimension(this.tier).ascend(true);
+      else DarkMatterDimension(this.tier).buyInterval(true);
     },
     buyPowerDM() {
-      DarkMatterDimension(this.tier).buyPowerDM();
+      DarkMatterDimension(this.tier).buyPowerDM(true);
     },
     buyPowerDE() {
-      DarkMatterDimension(this.tier).buyPowerDE();
+      DarkMatterDimension(this.tier).buyPowerDE(true);
     },
     // All the values are internally Decimals and technically allowed to go above Infinity. This is a special case
     // however; it looks better in-game if we just format it as Infinity instead, as the resource used for these costs

@@ -198,8 +198,8 @@ export default {
         border: percents === 0 ? "" : "0.1rem solid transparent",
         color: iconObj?.textColor ?? "black",
         background: isNerf
-          ? `url(images/mult-breakdown-bar.png),repeating-linear-gradient(-45deg, #ff000040 0rem 0.4rem, ${iconObj?.color} 0.4rem 0.8rem)`
-          : `url(images/mult-breakdown-bar.png),linear-gradient(${iconObj?.color},${iconObj?.color})`,
+          ? `url(images/visuals/mult-breakdown-bar.png),repeating-linear-gradient(-45deg, #ff000040 0rem 0.4rem, ${iconObj?.color} 0.4rem 0.8rem)`
+          : `url(images/visuals/mult-breakdown-bar.png),linear-gradient(${iconObj?.color},${iconObj?.color})`,
         animation:this.mouseoverIndex !== index?"25s a-mult-bar linear infinite":undefined,
         "text-shadow":`0.1rem 0.1rem 0.2rem ${(iconObj?.textColor && iconObj.textColor!=="var(--color-laitela--accent)") ?? "white"}, -0.1rem -0.1rem 0.2rem ${(iconObj?.textColor && iconObj.textColor!=="var(--color-laitela--accent)") ?? "white"}`,
         "box-shadow": `inset 0 0 0.5rem 0 black, inset 0 0 0 0.1rem ${iconObj?.color}`
@@ -491,7 +491,7 @@ export default {
   box-shadow: 0 0 1rem black inset;
   position: relative;
   width: 5rem;
-  background: url(../../../../public/images/mult-breakdown-bar-empty.png);
+  background: url(../../../../public/images/visuals/mult-breakdown-bar-empty.png);
   margin-right: 1.5rem;
 }
 

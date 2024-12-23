@@ -62,7 +62,7 @@ export default {
      Mod Disclaimer
     </template>
     <div class="c-modal-message__text">
-      Antimatter Dimensions: Legendary introduces 2 things which may impact your visual gameplay 
+      Antimatter Dimensions: Legendary introduces new things which may impact your visual gameplay .
       <br>
       <br>
       <div class="c-visual-change-list">

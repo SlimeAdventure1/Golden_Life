@@ -310,14 +310,15 @@ class EPMultiplierState extends GameMechanicState {
     return this.cachedEffectValue.value;
   }
 
-  purchase() {
+  purchase(playSound = false) {
     if (!this.isAffordable) return false;
     Currency.eternityPoints.subtract(this.cost);
     ++this.boughtAmount;
+    if (playSound) AudioManagement.playSound("upgrade_rebuyable")
     return true;
   }
 
-  buyMax(auto) {
+  buyMax(auto,playSound = false) {
     if (!this.isAffordable) return false;
     if (RealityUpgrade(15).isLockingMechanics) {
       if (!auto) RealityUpgrade(15).tryShowWarningModal();
@@ -331,6 +332,7 @@ class EPMultiplierState extends GameMechanicState {
     if (!bulk) return false;
     Currency.eternityPoints.subtract(bulk.purchasePrice);
     this.boughtAmount += bulk.quantity;
+    if (playSound) AudioManagement.playSound("upgrade_rebuyable")
     return true;
   }
 

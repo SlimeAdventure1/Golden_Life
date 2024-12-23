@@ -632,9 +632,11 @@ export const news = [
   },
   {
     id: "a119",
-    text:
-      `Since when did we start reporting stuff like this? Half of it isn't even proper news, it's just jokes and
-      meta-references, it doesn't even make sens-HAHAHA DISREGARD THAT I SUCK COC-`
+    get text() {
+      return `Since when did we start reporting stuff like this? Half of it isn't even proper news, it's just jokes and
+      meta-references, it doesn't even make sens-HAHAHA DISREGARD THAT I SUCK 
+      ${player.options.mature?"COCKS LIKE A FUCKING-":"CO-"}`;
+    }
   },
   {
     id: "a120",
@@ -1398,9 +1400,10 @@ export const news = [
           to see the game.`,
         Legendary:
           `it has the colors intended for the Legendary. You just know it's the way the developer intended you
-          to see the game.`,
+          to see the mod.`,
         Legacy:
-          `it fits wirh my vanilla taste. Sometimes you just have to remember the old times.`,
+          `sometimes you just have to remember the old times. The developer knows that you don't 
+          have to give up everything once you have grown up.`,
         Hex:
           `it has some resemblance to a different game that is also enjoyable to play.`,
         Metro:
@@ -1451,9 +1454,10 @@ export const news = [
         S13:
           `the darkness is so beautiful. Remember to always watch the spot.`,
         S14:
-          `it adds further glory to our powerful empire. Together we will win this war and restore democracy to this universe!`,
+          `it makes our citizenship in this glorius empire have more worth. Remember what we are fighting for? 
+          To restore the universe's democracy! Antimateria prevails!!! Long live the light!!!`,
         S15:
-          `i'm a weeb.`,
+          `it has a soothing, peaceful qualities from the other cultures. Also because I am a weeb.`,
       };
       const reason = reasons[Theme.current().name.replace(/\s/gu, "")];
       return `Ah, a fellow ${theme} theme user. I see that you have impeccable taste.

@@ -55,7 +55,7 @@ export default {
   <div class="l-spoon-btn-group">
     <button
       :class="classObject"
-      @click="upgrade.purchase()"
+      @click="upgrade.purchase(true, 'purchase_longbuyable')"
     >
     <HintText
       type="perkShop"

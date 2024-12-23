@@ -101,7 +101,7 @@ export default {
       this.isMaxed = this.milestone.isMaxed;
       this.progressToNext = this.milestone.progressToNext;
       this.remainingSingularities = this.milestone.remainingSingularities;
-      this.description = this.milestone.description;
+      this.description = typeof this.milestone.description === "function" ? this.milestone.description() : this.milestone.description;
       this.effectDisplay = this.milestone.effectDisplay;
       this.isUnique = this.milestone.isUnique;
       if (!this.isUnique && !this.isMaxed) this.nextEffectDisplay = this.milestone.nextEffectDisplay;

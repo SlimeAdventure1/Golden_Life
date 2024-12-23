@@ -103,7 +103,11 @@ export const singularityMilestones = {
     limit: 4,
     description: "Dark Matter Dimension Autobuyers",
     effect: completions => completions,
-    effectFormat: x => ((x === 0) ? "No autobuyers" : `Autobuy up to the ${["1st", "2nd", "3rd", "4th"][x - 1]} DMD`),
+    effectFormat: x => ((x === 0) ? "No autobuyers" : `Autobuy up to the 
+    ${player.options.naming.dimensions ? `DM 
+      ${[DarkMatterDimension(1).uniqueName, DarkMatterDimension(2).uniqueName, 
+      DarkMatterDimension(3).uniqueName, DarkMatterDimension(4).uniqueName][x - 1]}`
+       : `${["1st", "2nd", "3rd", "4th"][x - 1]} DMD`}`),
     upgradeDirection: LAITELA_UPGRADE_DIRECTION.SELF_BOOST,
   },
   ascensionAutobuyers: {
@@ -112,7 +116,11 @@ export const singularityMilestones = {
     limit: 4,
     description: "DMD Ascension Autobuyers",
     effect: completions => completions,
-    effectFormat: x => ((x === 0) ? "No autobuyers" : `Ascend up to the ${["1st", "2nd", "3rd", "4th"][x - 1]} DMD`),
+    effectFormat: x => ((x === 0) ? "No autobuyers" : `Ascend up to the 
+    ${player.options.naming.dimensions ? `DM 
+      ${[DarkMatterDimension(1).uniqueName, DarkMatterDimension(2).uniqueName, 
+      DarkMatterDimension(3).uniqueName, DarkMatterDimension(4).uniqueName][x - 1]}`
+       : `${["1st", "2nd", "3rd", "4th"][x - 1]} DMD`}`),
     upgradeDirection: LAITELA_UPGRADE_DIRECTION.SELF_BOOST,
   },
   darkAutobuyerSpeed: {
@@ -211,7 +219,8 @@ export const singularityMilestones = {
     start: 5e11,
     repeat: 0,
     limit: 1,
-    description: "Annihilation mult. generates 4th DMD when Annihilation is available",
+    description: () => `Annihilation mult. generates ${player.options.naming.dimensions ? `DM PC`
+       : "4th DMD"} when Annihilation is available`,
     effect: () => Laitela.darkMatterMult,
     effectFormat: x => `${format(x, 2, 1)}/s`,
     upgradeDirection: LAITELA_UPGRADE_DIRECTION.SELF_BOOST,
@@ -220,7 +229,8 @@ export const singularityMilestones = {
     start: 5e12,
     repeat: 0,
     limit: 1,
-    description: "4th Dark Matter Dimension amount boosts Dark Matter and Dark Energy gain",
+    description: () => `${player.options.naming.dimensions ? `DM ${DarkMatterDimension(4).uniqueName}`
+       : "4th Dark Matter Dimension"} amount boosts Dark Matter and Dark Energy gain`,
     effect: () => Math.clampMin(DarkMatterDimension(4).amount.pow(0.03).toNumber(), 1),
     effectFormat: x => formatX(x, 2, 2),
     upgradeDirection: LAITELA_UPGRADE_DIRECTION.SELF_BOOST,
