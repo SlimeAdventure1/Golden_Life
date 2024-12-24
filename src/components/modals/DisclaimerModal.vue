@@ -21,7 +21,10 @@ export default {
       return [
         `This mod is intended for mature audiences. This means the mod has contents that may not be 
         suitable for younger audiences`,
-        `The mod now has various sound effects which may be tiresome after a long time. `
+        `The mod now has various sound effects which may be tiresome after a long time.`,
+        `This modal shows up every time you open this game, which can be turned off in 
+        "Open Confirmation Options" button in the Gameplay Options tab. The disclaimer also shows up 
+        when you import a save from the vanilla version.`
       ];
     },
     sliderProps() {
@@ -62,7 +65,7 @@ export default {
      Mod Disclaimer
     </template>
     <div class="c-modal-message__text">
-      Antimatter Dimensions: Legendary introduces new things which may impact your visual gameplay .
+      Antimatter Dimensions: Legendary introduces new things which may impact your visual gameplay.
       <br>
       <br>
       <div class="c-visual-change-list">

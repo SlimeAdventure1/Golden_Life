@@ -1,5 +1,10 @@
 export const confirmationTypes = [
   {
+    name: "Disclaimer when visiting the page",
+    option: "disclaimerModal",
+    isUnlocked: () => true,
+  }, 
+  {
     name: "Dimension Boost",
     option: "dimensionBoost",
     isUnlocked: () => PlayerProgress.infinityUnlocked() || player.galaxies > 0 || player.dimensionBoosts > 0,

@@ -183,7 +183,7 @@ class RaPetState extends GameMechanicState {
     this.memories -= this.memoryUpgradeCost;
     this.data.memoryUpgrades++;
 
-    AudioManagement.playSound("upgrade_memories");
+    AudioManagement.playSound("purchase_longbuyable")
   }
 
   purchaseChunkUpgrade() {
@@ -192,7 +192,7 @@ class RaPetState extends GameMechanicState {
     this.memories -= this.chunkUpgradeCost;
     this.data.chunkUpgrades++;
 
-    AudioManagement.playSound("upgrade_memories");
+    AudioManagement.playSound("purchase_longbuyable")
   }
 
   levelUp() {
@@ -202,7 +202,7 @@ class RaPetState extends GameMechanicState {
     this.level++;
     Ra.checkForUnlocks();
 
-    AudioManagement.playSound("upgrade_level")
+    AudioManagement.playSound("purchase_longbuyable")
   }
 
   get unlocks() {

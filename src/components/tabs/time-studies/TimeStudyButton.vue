@@ -155,7 +155,7 @@ export default {
     },
     shiftClick() {
       if (this.study.purchaseUntil) this.study.purchaseUntil();
-      if (this.study.purchaseUntil||(!this.study.isBought&&this.isAvailableForPurchase)) AudioManagement.playSound("shiftbuy")
+      if (this.study.purchaseUntil||(!this.study.isBought&&this.isAvailableForPurchase)) AudioManagement.playSound("purchase_rebuyable")
     }
   }
 };

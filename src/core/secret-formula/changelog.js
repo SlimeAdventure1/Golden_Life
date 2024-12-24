@@ -14,6 +14,12 @@ export const changelog = [
     info: `
 This patch will have more information gradually.
 <br>
+<br><b>December 24th, 2024</b><br>
+<ul>
+<li>The disclaimer modal now opens every time you open the game.</li>
+<li>Added a toggle to the above, which can be found in the confirmations button.</li>
+<li>Mature content option is now off by default.</li>
+</ul>
 <br><b>December 23rd, 2024</b><br>
 <ul>
 <li>Applied sounds to various purchases and upgrades.</li>

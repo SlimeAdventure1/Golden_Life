@@ -1104,6 +1104,14 @@ window.onload = function() {
     //document.getElementById("loading").style.animation = "a-legendary-start 1s ease";
     //setTimeout(() =>{document.getElementById("loading").style.display = "none"},1000)
   }, 500);
+  if (player.options.confirmations.disclaimerModal) {
+    window.disclaimerModal = setInterval(() => {
+      if (GameUI.initialized) {
+      Modal.disclaimer.show();
+      clearInterval(window.disclaimerModal);
+      }
+    }, 2000);
+  }
   if (!supportedBrowser) {
     GameIntervals.stop();
     document.getElementById("loading").style.display = "none";

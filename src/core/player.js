@@ -778,7 +778,7 @@ window.player = {
       comma: 5,
       notation: 9
     },
-    mature: true,
+    mature: false,
     sidebarDisplayAmount:1,
     sidebarWidth:12.8,
     sidebarResourceType: [0,0,0,0],
@@ -892,7 +892,8 @@ window.player = {
       antimatterGalaxy: true,
       dimensionBoost: true,
       switchAutomatorMode: true,
-      respecIAP: true
+      respecIAP: true,
+      disclaimerModal: true,
     },
     awayProgress: {
       antimatter: true,
