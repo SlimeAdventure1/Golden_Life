@@ -13,7 +13,8 @@ export default {
   data() {
     return {
       nextIC: 0,
-      showAllChallenges: false
+      showAllChallenges: false,
+      timeSum: null,
     };
   },
   computed: {
@@ -28,12 +29,17 @@ export default {
       return next === undefined
         ? "All Infinity Challenges unlocked"
         : `Next Infinity Challenge unlocks at ${format(next)} antimatter.`;
+    },
+    completedAllChallenges() {
+      return this.timeSum < Number.MAX_VALUE;
     }
   },
   methods: {
+    timeDisplayShort,
     update() {
       this.nextIC = InfinityChallenges.nextIC;
       this.showAllChallenges = player.options.showAllChallenges;
+      this.timeSum = player.challenge.infinity.bestTimes.sum()
     },
     isChallengeVisible(challenge) {
       return challenge.isUnlocked || (this.showAllChallenges && PlayerProgress.eternityUnlocked());
@@ -58,9 +64,22 @@ export default {
     >
       <InfinityChallengeBox :challenge="challenge" />
     </ChallengeGrid>
+    <div class="c-challenge-sum"  v-if="completedAllChallenges">
+      Sum of Infinity Challenge record times: {{ timeDisplayShort(timeSum) }}
+    </div>
   </div>
 </template>
 
 <style scoped>
-
+.c-challenge-sum {
+  font-size: 1.8rem;
+  font-family: cambria;
+  font-weight: bold;
+  line-height: 1.1;
+  border-bottom: 0.1rem solid;
+  border-top: 0.1rem solid;
+  padding: 0.5rem;
+  border-image: linear-gradient(90deg, transparent, var(--color-infinity), transparent) 1;
+  background: linear-gradient(90deg, transparent,color-mix(in srgb, var(--color-infinity) 30%, transparent), transparent);
+}
 </style>

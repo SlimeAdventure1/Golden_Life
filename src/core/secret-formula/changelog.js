@@ -12,8 +12,17 @@ export const changelog = [
     date: [2024, 12, 18],
     name: "Feedbacks And Fixes",
     info: `
-This patch will have more information gradually.
+If there was something you suggested but this update was missing, it should be in the next update.
 <br>
+<br>
+<b><i>This update has been concluded. Thank you for your feedbacks!</i></b>
+<br>
+<br>
+<b>December 25th, 2024. Happy Holidays and Merry Christmas!</b><br>
+<ul>
+<li>Added the sum of Challenge record times into the Challenges tabs.</li>
+<li>Added a new entry to the Resource Gallery Tab.</li>
+</ul>
 <br><b>December 24th, 2024</b><br>
 <ul>
 <li>The disclaimer modal now opens every time you open the game.</li>

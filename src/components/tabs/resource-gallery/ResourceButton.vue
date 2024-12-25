@@ -182,4 +182,9 @@ export default {
   --bg:magenta;
   --border:magenta;
 }
+.o-resource--blob{
+  color:white;
+  --bg:#fbc21b;
+  --border:#fbc21b;
+}
 </style>

@@ -676,5 +676,14 @@ export const resourceGallery = {
             `<br><br> Consider finding useless clips as a minigame.`:""}
         ${player.news.specialTickerData.paperclips>=100?
             `<br><br> Congratulations!`:""}`,
+    },
+    {
+        id: 41,
+        name: 'Blobs',
+        symbol: '\uE010',
+        isUnlocked: () => Themes.available().map(t => t.name).includes("S11"),
+        formatClass: "o-resource--blob",
+        formatValue: () => "\uE010",
+        info: () => `\uE010`,
     },]
 }

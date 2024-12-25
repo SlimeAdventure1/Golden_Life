@@ -50,5 +50,8 @@ export default {
     <div v-else>
       You have not completed all {{ name }}s yet.
     </div>
+    <div>
+    This tab will be removed in the next update.
+    </div>
   </div>
 </template>
