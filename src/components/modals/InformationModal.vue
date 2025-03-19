@@ -30,7 +30,7 @@ export default {
       It focuses on a complete overhaul of the game's graphics and visuals, 
       along with small additional non-gameplay content.
       <br><br>
-      This mod is intended for mature audience.
+      This mod can be played as long you're over 7. By reaching 28 years old, you can play AD Mythic.
     </div>
     <div class="l-socials">
       <InformationModalButton
